@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+<article class="row">
+  <div class="col-lg-8">
+    <img class="w-100 mb-3 rounded" src="{{ post.image_url() }}" alt="{{ post.title }}">
+    <h2>{{ post.title }}</h2>
+    <div class="text-muted mb-3">{{ post.category.title() }} • {{ post.created_at.strftime('%d/%m/%Y %H:%M') }}</div>
+    <div class="mb-5" style="white-space: pre-wrap;">{{ post.content|safe }}</div>
+  </div>
+  <aside class="col-lg-4">
+    <h6>Relacionadas</h6>
+    <ul class="list-unstyled">
+      {% for r in related %}
+      <li class="mb-2"><a class="text-decoration-none" href="{{ url_for('detail', slug=r.slug) }}">{{ r.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+</article>
+{% endblock %}

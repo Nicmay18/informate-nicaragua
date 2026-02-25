@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Informate al Instante Nicaragua</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body{
+  margin:0;
+  font-family:Arial, sans-serif;
+  background:#f4f6f8;
+}
+
+/* HEADER */
+
+header{
+  background:#0d47a1;
+  color:white;
+  padding:10px 14px;
+}
+
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.logo{
+  height:42px;
+}
+
+.brand h1{
+  margin:0;
+  font-size:18px;
+}
+
+.brand small{
+  font-size:12px;
+  color:#dbe7ff;
+}
+
+/* Hora + clima */
+
+.info-top{
+  text-align:right;
+  font-size:13px;
+}
+
+.info-top div{
+  margin-bottom:3px;
+}
+
+/* Barra inferior header */
+
+.header-bottom{
+  margin-top:10px;
+  padding-top:8px;
+  border-top:1px solid rgba(255,255,255,.2);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* Indicadores */
+
+.indicadores{
+  font-size:13px;
+  line-height:1.4;
+}
+
+/* Redes */
+
+.redes{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.redes a{
+  font-size:22px;
+  text-decoration:none;
+  color:white;
+}
+
+/* CONTENIDO */
+
+.container{
+  max-width:1000px;
+  margin:auto;
+  padding:15px;
+}
+
+.noticia{
+  background:white;
+  border-radius:8px;
+  overflow:hidden;
+  margin-bottom:18px;
+  box-shadow:0 3px 10px rgba(0,0,0,.08);
+  cursor:pointer;
+}
+
+.noticia img{
+  width:100%;
+  height:230px;
+  object-fit:cover;
+}
+
+.badge{
+  display:inline-block;
+  background:#0d47a1;
+  color:white;
+  font-size:12px;
+  padding:4px 8px;
+  border-radius:4px;
+  margin:10px 12px 0 12px;
+}
+
+.noticia h2{
+  margin:10px 12px;
+  font-size:20px;
+}
+
+.noticia p{
+  margin:0 12px 12px 12px;
+  color:#444;
+}
+
+.fecha{
+  margin:0 12px 12px 12px;
+  font-size:12px;
+  color:#777;
+}
+
+/* MODAL */
+
+#modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  padding:10px;
+  z-index:999;
+}
+
+#modalContent{
+  background:white;
+  max-width:800px;
+  width:100%;
+  max-height:90vh;
+  overflow:auto;
+  border-radius:8px;
+  padding:15px;
+}
+
+#modalContent img{
+  width:100%;
+  border-radius:6px;
+  margin-bottom:10px;
+}
+
+#modalContent h2{
+  margin-top:0;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+  <div class="header-top">
+    <div class="brand">
+      <img src="logo.png" class="logo">
+      <div>
+        <h1>INFORMATE AL INSTANTE</h1>
+        <small>Informate al instante Nicaragua</small>
+      </div>
+    </div>
+
+    <div class="info-top">
+      <div id="fechaHora">--</div>
+      <div id="clima">Managua: --</div>
+    </div>
+  </div>
+
+  <div class="header-bottom">
+
+    <div class="indicadores">
+      📊 <b>Indicadores Económicos (Nicaragua)</b><br>
+      Dólar BCN: C$ 36.6243<br>
+      Gasolina Regular: C$ 47.84 / ltr<br>
+      Gasolina Súper: C$ 49.03 / ltr<br>
+      Diésel: C$ 43.21 / ltr
+    </div>
+
+    <div class="redes">
+      <a href="https://www.facebook.com/profile.php?id=61578261125687&sk=about" target="_blank" title="Facebook">📘</a>
+      <a href="https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L" target="_blank" title="WhatsApp">🟢</a>
+      <a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank" title="Telegram">✈️</a>
+    </div>
+
+  </div>
+
+</header>
+
+
+<div class="container" id="listaNoticias">
+  Cargando noticias...
+</div>
+
+<!-- MODAL -->
+<div id="modal" onclick="cerrarModal()">
+  <div id="modalContent" onclick="event.stopPropagation()">
+    <h2 id="mTitulo"></h2>
+    <img id="mImagen">
+    <p id="mFecha" class="fecha"></p>
+    <p id="mContenido"></p>
+  </div>
+</div>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy } 
+from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
+  authDomain: "informate-instant-nicaragua.firebaseapp.com",
+  projectId: "informate-instant-nicaragua",
+  storageBucket: "informate-instant-nicaragua.appspot.com",
+  messagingSenderId: "24988088146",
+  appId: "1:24988088146:web:d26a207508da055668ec8b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+const lista = document.getElementById("listaNoticias");
+
+async function cargarNoticias(){
+
+  lista.innerHTML = "";
+
+  const q = query(
+    collection(db,"noticias"),
+    orderBy("fecha","desc")
+  );
+
+  const snap = await getDocs(q);
+
+  if(snap.empty){
+    lista.innerHTML = "No hay noticias publicadas.";
+    return;
+  }
+
+  snap.forEach(doc => {
+
+    const n = doc.data();
+
+    let fechaTxt = "";
+    if(n.fecha){
+      fechaTxt = n.fecha.toDate().toLocaleString("es-NI");
+    }
+
+    const div = document.createElement("div");
+    div.className = "noticia";
+
+    div.innerHTML = `
+      <img src="${n.imagen}">
+      <span class="badge">${n.categoria || "Nacional"}</span>
+      <h2>${n.titulo}</h2>
+      <p>${n.resumen}</p>
+      <p class="fecha">Publicado: ${fechaTxt}</p>
+    `;
+
+    div.onclick = () => abrirModal(n);
+
+    lista.appendChild(div);
+
+  });
+
+}
+
+function abrirModal(n){
+  document.getElementById("mTitulo").innerText = n.titulo;
+  document.getElementById("mImagen").src = n.imagen;
+
+  if(n.fecha){
+    document.getElementById("mFecha").innerText =
+      "Publicado: " + n.fecha.toDate().toLocaleString("es-NI");
+  }else{
+    document.getElementById("mFecha").innerText = "";
+  }
+
+  document.getElementById("mContenido").innerText = n.contenido;
+  document.getElementById("modal").style.display = "flex";
+}
+
+window.cerrarModal = function(){
+  document.getElementById("modal").style.display = "none";
+}
+
+cargarNoticias();
+
+</script>
+
+<script>
+// Hora
+function actualizarHora(){
+  document.getElementById("fechaHora").innerText =
+    new Date().toLocaleString("es-NI");
+}
+setInterval(actualizarHora,1000);
+actualizarHora();
+
+// Clima Managua
+async function cargarClima(){
+  try{
+    const url="https://api.open-meteo.com/v1/forecast?latitude=12.1364&longitude=-86.2514&current_weather=true";
+    const r=await fetch(url);
+    const d=await r.json();
+    document.getElementById("clima").innerText =
+      "Managua: " + d.current_weather.temperature + "°C";
+  }catch(e){
+    document.getElementById("clima").innerText="Managua: --";
+  }
+}
+cargarClima();
+</script>
+
+</body>
+</html>

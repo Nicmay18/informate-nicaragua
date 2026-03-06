@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Nicaragua Informate</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --primary: #0d47a1;
+    --primary-light: #1565c0;
+    --danger: #c62828;
+    --success: #2e7d32;
+    --warning: #f9a825;
+    --gray: #64748b;
+    --light: #f1f5f9;
+    --shadow: 0 4px 6px -1px rgba(0,0,0,.1);
+    --shadow-lg: 0 20px 25px -5px rgba(0,0,0,.1);
+    --sucesos: #c62828;
+    --deportes: #1565c0;
+    --internacionales: #2e7d32;
+    --tecnologia: #0288d1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+    color: #1e293b;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* LOGIN SCREEN */
+.login-screen {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+}
+
+.login-box {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,.25);
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    animation: slideUp 0.5s ease;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.login-logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 4px solid var(--primary);
+    margin-bottom: 20px;
+    object-fit: cover;
+}
+
+.login-box h2 {
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.login-box p {
+    color: var(--gray);
+    margin-bottom: 30px;
+    font-size: 14px;
+}
+
+.password-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    text-align: center;
+    letter-spacing: 2px;
+}
+
+.password-input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(13,71,161,0.1);
+}
+
+.login-btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(13,71,161,0.3);
+}
+
+.error-msg {
+    color: var(--danger);
+    font-size: 14px;
+    margin-top: 15px;
+    display: none;
+}
+
+/* MAIN APP (hidden until login) */
+.app-container {
+    display: none;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* HEADER */
+.admin-header {
+    background: white;
+    padding: 20px 30px;
+    border-radius: 16px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 3px solid var(--primary);
+    object-fit: cover;
+}
+
+.header-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+}
+
+.header-subtitle {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.logout-btn {
+    padding: 10px 20px;
+    background: #fee2e2;
+    color: var(--danger);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.view-site-btn {
+    padding: 10px 20px;
+    background: #dbeafe;
+    color: var(--primary);
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.view-site-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* GRID LAYOUT */
+.admin-grid {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 30px;
+}
+
+@media (max-width: 1000px) {
+    .admin-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* FORMULARIO */
+.form-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+.form-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 14px;
+}
+
+.form-input, .form-textarea, .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 15px;
+    transition: all 0.3s;
+    font-family: inherit;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(13,71,161,0.1);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.char-count {
+    text-align: right;
+    font-size: 12px;
+    color: var(--gray);
+    margin-top: 5px;
+}
+
+/* BOTONES DE ACCIÓN */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(13,71,161,0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success) 0%, #43a047 100%);
+    color: white;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(46,125,50,0.3);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, var(--warning) 0%, #f57f17 100%);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, var(--danger) 0%, #b71c1c 100%);
+    color: white;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* PANEL DE PUBLICACIÓN SOCIAL */
+.social-panel {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-title {
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.auto-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.toggle-switch {
+    width: 50px;
+    height: 26px;
+    background: #cbd5e1;
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.toggle-switch.active {
+    background: var(--success);
+}
+
+.toggle-switch::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.toggle-switch.active::after {
+    left: 27px;
+}
+
+/* REDES SOCIALES GRID */
+.social-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.social-btn {
+    padding: 16px;
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s;
+    font-size: 13px;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-btn i {
+    font-size: 24px;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.social-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+
+.social-btn:hover::before {
+    left: 100%;
+}
+
+.social-btn.facebook-1 {
+    background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
+}
+
+.social-btn.facebook-2 {
+    background: linear-gradient(135deg, #4267B2 0%, #365899 100%);
+}
+
+.social-btn.whatsapp {
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+}
+
+.social-btn.telegram {
+    background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);
+}
+
+.social-btn.publishing {
+    animation: pulse-border 1.5s infinite;
+    pointer-events: none;
+}
+
+.social-btn.success {
+    background: var(--success) !important;
+}
+
+@keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.4); }
+    50% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
+}
+
+/* BOTÓN PUBLICAR TODAS */
+.publish-all-btn {
+    width: 100%;
+    padding: 18px;
+    background: linear-gradient(90deg, #1877f2, #25D366, #0088cc);
+    background-size: 200% 100%;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s;
+    animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.publish-all-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+.publish-all-btn:disabled {
+    background: #94a3b8;
+    animation: none;
+    cursor: not-allowed;
+}
+
+/* ESTADÍSTICAS */
+.stats-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+.stat-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--primary);
+    display: block;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--gray);
+    margin-top: 5px;
+}
+
+/* PREVIEW CARD */
+.preview-card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin-top: 30px;
+}
+
+.preview-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.news-preview {
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.news-preview.has-content {
+    border-color: var(--primary);
+}
+
+.preview-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    background: #f1f5f9;
+}
+
+.preview-body {
+    padding: 20px;
+}
+
+.preview-category {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.preview-category.Sucesos { background: var(--sucesos); }
+.preview-category.Deportes { background: var(--deportes); }
+.preview-category.Internacionales { background: var(--internacionales); }
+.preview-category.Tecnología { background: var(--tecnologia); }
+
+.preview-title-text {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #1e293b;
+}
+
+.preview-resumen {
+    font-size: 14px;
+    color: var(--gray);
+    line-height: 1.6;
+}
+
+/* TOAST NOTIFICATIONS */
+.toast-container {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 10001;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.toast {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    animation: slideInRight 0.3s ease;
+    min-width: 300px;
+    border-left: 4px solid var(--success);
+}
+
+.toast.error { border-left-color: var(--danger); }
+.toast.warning { border-left-color: var(--warning); }
+.toast.info { border-left-color: var(--primary); }
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.toast-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.toast.success .toast-icon { background: #dcfce7; color: var(--success); }
+.toast.error .toast-icon { background: #fee2e2; color: var(--danger); }
+.toast.warning .toast-icon { background: #fef3c7; color: #d97706; }
+.toast.info .toast-icon { background: #dbeafe; color: var(--primary); }
+
+.toast-content {
+    flex: 1;
+}
+
+.toast-title {
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.toast-message {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+/* LOADING OVERLAY */
+.loading-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(255,255,255,0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.loading-overlay.active {
+    display: flex;
+}
+
+.spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid #e2e8f0;
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .admin-header {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .action-buttons {
+        grid-template-columns: 1fr;
+    }
+    
+    .social-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .toast-container {
+        left: 20px;
+        right: 20px;
+        bottom: 20px;
+    }
+    
+    .toast {
+        min-width: auto;
+    }
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+    <div class="login-box">
+        <img src="logo.png" alt="Logo" class="login-logo">
+        <h2>Panel de Administración</h2>
+        <p>Nicaragua Informate - Acceso restringido</p>
+        <input type="password" class="password-input" id="passwordInput" placeholder="••••••••" maxlength="20">
+        <button class="login-btn" onclick="checkPassword()">
+            <i class="fas fa-lock"></i> Acceder
+        </button>
+        <div class="error-msg" id="errorMsg">
+            <i class="fas fa-exclamation-circle"></i> Contraseña incorrecta
+        </div>
+    </div>
+</div>
+
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+</div>
+
+<!-- MAIN APP -->
+<div class="app-container" id="appContainer">
+    
+    <!-- HEADER -->
+    <header class="admin-header">
+        <div class="header-brand">
+            <img src="logo.png" alt="Logo" class="header-logo">
+            <div>
+                <div class="header-title">Nicaragua Informate</div>
+                <div class="header-subtitle">Panel de Administración</div>
+            </div>
+        </div>
+        <div class="header-actions">
+            <a href="index.html" class="view-site-btn" target="_blank">
+                <i class="fas fa-external-link-alt"></i> Ver Sitio
+            </a>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Salir
+            </button>
+        </div>
+    </header>
+
+    <div class="admin-grid">
+        
+        <!-- COLUMNA IZQUIERDA -->
+        <div class="main-column">
+            
+            <!-- FORMULARIO -->
+            <div class="form-card">
+                <div class="form-header">
+                    <h2 class="form-title">
+                        <i class="fas fa-plus-circle"></i>
+                        <span id="formTitle">Nueva Noticia</span>
+                    </h2>
+                    <button class="btn btn-warning btn-sm" id="btnCancelar" style="display:none;" onclick="cancelarEdicion()">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+
+                <form id="noticiaForm">
+                    <input type="hidden" id="editId">
+                    
+                    <div class="form-group">
+                        <label class="form-label">Título *</label>
+                        <input type="text" id="titulo" class="form-input" maxlength="200" placeholder="Título de la noticia" required>
+                        <div class="char-count"><span id="tituloCount">0</span>/200</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Resumen *</label>
+                        <textarea id="resumen" class="form-textarea" maxlength="300" placeholder="Breve resumen de la noticia" required></textarea>
+                        <div class="char-count"><span id="resumenCount">0</span>/300</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Contenido Completo *</label>
+                        <textarea id="contenido" class="form-textarea" placeholder="Contenido completo de la noticia" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">URL de Imagen *</label>
+                        <input type="url" id="imagen" class="form-input" placeholder="https://ejemplo.com/imagen.jpg" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Categoría *</label>
+                        <select id="categoria" class="form-select" required>
+                            <option value="">Seleccionar categoría</option>
+                            <option value="Sucesos">🚨 Sucesos</option>
+                            <option value="Deportes">⚽ Deportes</option>
+                            <option value="Internacionales">🌍 Internacionales</option>
+                            <option value="Tecnología">💻 Tecnología</option>
+                        </select>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-save"></i> Guardar Noticia
+                        </button>
+                        <button type="button" class="btn btn-success btn-block" onclick="guardarYPublicar()">
+                            <i class="fas fa-paper-plane"></i> Guardar y Publicar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- PREVIEW -->
+            <div class="preview-card">
+                <h3 class="preview-title">
+                    <i class="fas fa-eye"></i> Vista Previa
+                </h3>
+                <div class="news-preview" id="previewCard">
+                    <img src="" alt="Preview" class="preview-image" id="previewImg" style="display:none;">
+                    <div class="preview-body">
+                        <span class="preview-category" id="previewCat" style="display:none;">Categoría</span>
+                        <div class="preview-title-text" id="previewTitle">Título de la noticia</div>
+                        <div class="preview-resumen" id="previewResumen">El resumen aparecerá aquí...</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- COLUMNA DERECHA -->
+        <div class="side-column">
+            
+            <!-- PANEL SOCIAL -->
+            <div class="social-panel">
+                <div class="panel-header">
+                    <h3 class="panel-title">
+                        <i class="fas fa-share-alt"></i> Publicar en Redes
+                    </h3>
+                    <div class="auto-toggle">
+                        <span>Auto</span>
+                        <div class="toggle-switch" id="autoToggle" onclick="toggleAutoPublish()"></div>
+                    </div>
+                </div>
+
+                <div class="social-grid">
+                    <button class="social-btn facebook-1" onclick="publicarRedSocial('facebook', 1)" id="btnFb1">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Página 1<br><small>15K fans</small></span>
+                    </button>
+                    <button class="social-btn facebook-2" onclick="publicarRedSocial('facebook', 2)" id="btnFb2">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Página 2<br><small>9K fans</small></span>
+                    </button>
+                    <button class="social-btn whatsapp" onclick="publicarRedSocial('whatsapp')" id="btnWa">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp<br><small>Canal</small></span>
+                    </button>
+                    <button class="social-btn telegram" onclick="publicarRedSocial('telegram')" id="btnTg">
+                        <i class="fab fa-telegram-plane"></i>
+                        <span>Telegram<br><small>Canal</small></span>
+                    </button>
+                </div>
+
+                <button class="publish-all-btn" onclick="publicarTodas()" id="btnPublishAll">
+                    <i class="fas fa-rocket"></i>
+                    PUBLICAR EN TODAS LAS REDES
+                </button>
+            </div>
+
+            <!-- ESTADÍSTICAS -->
+            <div class="stats-card">
+                <h3 class="panel-title">
+                    <i class="fas fa-chart-bar"></i> Estadísticas
+                </h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-number" id="statTotal">0</span>
+                        <div class="stat-label">Total Noticias</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="statHoy">0</span>
+                        <div class="stat-label">Publicadas Hoy</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="statCategorias">4</span>
+                        <div class="stat-label">Categorías</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, getDocs, query, orderBy, addDoc, updateDoc, doc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "informate-instant-nicaragua.firebaseapp.com",
+    projectId: "informate-instant-nicaragua",
+    storageBucket: "informate-instant-nicaragua.appspot.com",
+    messagingSenderId: "24988088146",
+    appId: "1:24988088146:web:d26a207508da055668ec8b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// VARIABLES GLOBALES
+let noticias = [];
+let currentNoticia = null;
+let autoPublish = false;
+let editando = false;
+
+// CONTRASEÑA (cámbiala por una segura)
+const ADMIN_PASSWORD = "admin2025";
+
+// URLs de redes sociales
+const SOCIAL_URLS = {
+    facebook1: 'https://www.facebook.com/profile.php?id=61578261125687',
+    facebook2: 'https://www.facebook.com/profile.php?id=61577962970892',
+    whatsapp: 'https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L',
+    telegram: 'https://t.me/fHHjncJqMQM3NjZh'
+};
+
+// LOGIN
+window.checkPassword = function() {
+    const input = document.getElementById('passwordInput').value;
+    if(input === ADMIN_PASSWORD) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('appContainer').style.display = 'block';
+        localStorage.setItem('adminSession', 'true');
+        inicializar();
+    } else {
+        document.getElementById('errorMsg').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('errorMsg').style.display = 'none';
+        }, 3000);
+    }
+};
+
+window.logout = function() {
+    localStorage.removeItem('adminSession');
+    location.reload();
+};
+
+// Verificar sesión guardada
+if(localStorage.getItem('adminSession') === 'true') {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('appContainer').style.display = 'block';
+    inicializar();
+}
+
+// Enter en password
+document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
+    if(e.key === 'Enter') checkPassword();
+});
+
+async function inicializar() {
+    await cargarNoticias();
+    setupEventListeners();
+    updateStats();
+}
+
+async function cargarNoticias() {
+    showLoading(true);
+    try {
+        const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
+        const snap = await getDocs(q);
+        noticias = [];
+        snap.forEach(d => {
+            const data = d.data();
+            data.id = d.id;
+            noticias.push(data);
+        });
+    } catch(e) {
+        showToast('Error cargando noticias', 'error');
+    }
+    showLoading(false);
+}
+
+function setupEventListeners() {
+    // Contadores de caracteres
+    document.getElementById('titulo').addEventListener('input', (e) => {
+        document.getElementById('tituloCount').textContent = e.target.value.length;
+        updatePreview();
+    });
+    
+    document.getElementById('resumen').addEventListener('input', (e) => {
+        document.getElementById('resumenCount').textContent = e.target.value.length;
+        updatePreview();
+    });
+    
+    document.getElementById('imagen').addEventListener('input', updatePreview);
+    document.getElementById('categoria').addEventListener('change', updatePreview);
+    
+    // Formulario
+    document.getElementById('noticiaForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        await guardarNoticia(false);
+    });
+}
+
+function updatePreview() {
+    const titulo = document.getElementById('titulo').value || 'Título de la noticia';
+    const resumen = document.getElementById('resumen').value || 'El resumen aparecerá aquí...';
+    const imagen = document.getElementById('imagen').value;
+    const categoria = document.getElementById('categoria').value;
+    
+    document.getElementById('previewTitle').textContent = titulo;
+    document.getElementById('previewResumen').textContent = resumen;
+    
+    const previewImg = document.getElementById('previewImg');
+    if(imagen) {
+        previewImg.src = imagen;
+        previewImg.style.display = 'block';
+    } else {
+        previewImg.style.display = 'none';
+    }
+    
+    const previewCat = document.getElementById('previewCat');
+    if(categoria) {
+        previewCat.textContent = categoria;
+        previewCat.className = 'preview-category ' + categoria;
+        previewCat.style.display = 'inline-block';
+        document.getElementById('previewCard').classList.add('has-content');
+    } else {
+        previewCat.style.display = 'none';
+        document.getElementById('previewCard').classList.remove('has-content');
+    }
+}
+
+async function guardarNoticia(publicarDespues = false) {
+    showLoading(true);
+    
+    const noticiaData = {
+        titulo: document.getElementById('titulo').value,
+        resumen: document.getElementById('resumen').value,
+        contenido: document.getElementById('contenido').value,
+        imagen: document.getElementById('imagen').value,
+        categoria: document.getElementById('categoria').value,
+        fecha: serverTimestamp(),
+        autor: 'Admin'
+    };
+    
+    try {
+        if(editando && document.getElementById('editId').value) {
+            await updateDoc(doc(db, "noticias", document.getElementById('editId').value), noticiaData);
+            showToast('Noticia actualizada correctamente', 'success');
+        } else {
+            const docRef = await addDoc(collection(db, "noticias"), noticiaData);
+            noticiaData.id = docRef.id;
+            currentNoticia = noticiaData;
+            showToast('Noticia guardada correctamente', 'success');
+        }
+        
+        await cargarNoticias();
+        updateStats();
+        
+        if(publicarDespues && currentNoticia) {
+            setTimeout(() => publicarTodas(), 1000);
+        } else {
+            resetForm();
+        }
+        
+    } catch(e) {
+        showToast('Error guardando noticia', 'error');
+        console.error(e);
+    }
+    
+    showLoading(false);
+}
+
+window.guardarYPublicar = async function() {
+    if(!validarFormulario()) return;
+    await guardarNoticia(true);
+};
+
+function validarFormulario() {
+    const form = document.getElementById('noticiaForm');
+    if(!form.checkValidity()) {
+        form.reportValidity();
+        return false;
+    }
+    return true;
+}
+
+function resetForm() {
+    document.getElementById('noticiaForm').reset();
+    document.getElementById('editId').value = '';
+    document.getElementById('tituloCount').textContent = '0';
+    document.getElementById('resumenCount').textContent = '0';
+    document.getElementById('formTitle').textContent = 'Nueva Noticia';
+    document.getElementById('btnCancelar').style.display = 'none';
+    editando = false;
+    updatePreview();
+}
+
+window.cancelarEdicion = function() {
+    resetForm();
+};
+
+// PUBLICACIÓN A REDES SOCIALES
+window.toggleAutoPublish = function() {
+    autoPublish = !autoPublish;
+    const toggle = document.getElementById('autoToggle');
+    if(autoPublish) {
+        toggle.classList.add('active');
+        showToast('Auto-publicación activada', 'info');
+    } else {
+        toggle.classList.remove('active');
+    }
+    localStorage.setItem('autoPublish', autoPublish);
+};
+
+// Cargar preferencia
+if(localStorage.getItem('autoPublish') === 'true') {
+    autoPublish = true;
+    document.getElementById('autoToggle').classList.add('active');
+}
+
+window.publicarRedSocial = async function(platform, pageNum = null) {
+    if(!currentNoticia && !getFormData()) {
+        showToast('Primero guarda una noticia', 'warning');
+        return;
+    }
+    
+    const noticia = currentNoticia || getFormData();
+    const btnId = platform === 'facebook' ? `btnFb${pageNum}` : `btn${platform.charAt(0).toUpperCase() + platform.slice(1, 2)}`;
+    const btn = document.getElementById(btnId);
+    
+    btn.classList.add('publishing');
+    
+    try {
+        // Simular publicación (aquí conectas tus APIs reales)
+        await simulatePublish(platform, noticia, pageNum);
+        
+        btn.classList.remove('publishing');
+        btn.classList.add('success');
+        showToast(`Publicado en ${platform} ${pageNum || ''} ✓`, 'success');
+        
+        setTimeout(() => btn.classList.remove('success'), 3000);
+        
+        // Analytics
+        gtag('event', 'publish', {
+            'event_category': 'social',
+            'event_label': platform
+        });
+        
+    } catch(e) {
+        btn.classList.remove('publishing');
+        showToast(`Error publicando en ${platform}`, 'error');
+    }
+};
+
+window.publicarTodas = async function() {
+    if(!currentNoticia && !getFormData()) {
+        showToast('Primero guarda una noticia', 'warning');
+        return;
+    }
+    
+    const noticia = currentNoticia || getFormData();
+    const btn = document.getElementById('btnPublishAll');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+    
+    const redes = [
+        { platform: 'facebook', page: 1, delay: 0 },
+        { platform: 'facebook', page: 2, delay: 2000 },
+        { platform: 'whatsapp', delay: 4000 },
+        { platform: 'telegram', delay: 6000 }
+    ];
+    
+    for(const red of redes) {
+        setTimeout(async () => {
+            await publicarRedSocial(red.platform, red.page);
+        }, red.delay);
+    }
+    
+    setTimeout(() => {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fas fa-rocket"></i> PUBLICAR EN TODAS LAS REDES';
+        showToast('¡Publicación completada en todas las redes!', 'success');
+    }, 8000);
+};
+
+async function simulatePublish(platform, noticia, pageNum) {
+    // Aquí implementas las llamadas reales a las APIs
+    // Por ahora simula un delay
+    return new Promise(resolve => setTimeout(resolve, 1500));
+}
+
+function getFormData() {
+    if(!document.getElementById('titulo').value) return null;
+    
+    return {
+        titulo: document.getElementById('titulo').value,
+        resumen: document.getElementById('resumen').value,
+        contenido: document.getElementById('contenido').value,
+        imagen: document.getElementById('imagen').value,
+        categoria: document.getElementById('categoria').value
+    };
+}
+
+// ESTADÍSTICAS
+function updateStats() {
+    document.getElementById('statTotal').textContent = noticias.length;
+    
+    const hoy = new Date().toDateString();
+    const publicadasHoy = noticias.filter(n => {
+        if(n.fecha && n.fecha.toDate) {
+            return n.fecha.toDate().toDateString() === hoy;
+        }
+        return false;
+    }).length;
+    
+    document.getElementById('statHoy').textContent = publicadasHoy;
+}
+
+// UTILIDADES
+function showLoading(show) {
+    document.getElementById('loadingOverlay').classList.toggle('active', show);
+}
+
+function showToast(message, type = 'success') {
+    const container = document.getElementById('toastContainer');
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    
+    const icons = {
+        success: '✓',
+        error: '✕',
+        warning: '⚠',
+        info: 'ℹ'
+    };
+    
+    const titles = {
+        success: 'Éxito',
+        error: 'Error',
+        warning: 'Advertencia',
+        info: 'Información'
+    };
+    
+    toast.innerHTML = `
+        <div class="toast-icon">${icons[type]}</div>
+        <div class="toast-content">
+            <div class="toast-title">${titles[type]}</div>
+            <div class="toast-message">${message}</div>
+        </div>
+    `;
+    
+    container.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateX(100px)';
+        setTimeout(() => toast.remove(), 300);
+    }, 4000);
+}
+
+// Exponer funciones necesarias
+window.cargarNoticias = cargarNoticias;
+</script>
+
+</body>
+</html>

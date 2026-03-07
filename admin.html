@@ -1010,25 +1010,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* EMPTY STATE */
-.empty-state {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--gray);
-}
-
-.empty-state i {
-    font-size: 64px;
-    margin-bottom: 20px;
-    opacity: 0.3;
-}
-
-.empty-state h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #374151;
-}
-
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .admin-header {
@@ -1388,7 +1369,7 @@ body {
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
@@ -1413,14 +1394,6 @@ const itemsPerPage = 10;
 
 // CONTRASEÑA (cámbiala por una segura)
 const ADMIN_PASSWORD = "admin2025";
-
-// URLs de redes sociales
-const SOCIAL_URLS = {
-    facebook1: 'https://www.facebook.com/profile.php?id=61578261125687',
-    facebook2: 'https://www.facebook.com/profile.php?id=61577962970892',
-    whatsapp: 'https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L',
-    telegram: 'https://t.me/fHHjncJqMQM3NjZh'
-};
 
 // LOGIN
 window.checkPassword = function() {
@@ -1633,6 +1606,12 @@ window.editarNoticia = function(id) {
 
 // FUNCIÓN CORREGIDA: Preparar eliminación
 window.prepararEliminar = function(id) {
+    if(!id) {
+        console.error('ID es null o undefined');
+        showToast('Error: ID de noticia no válido', 'error');
+        return;
+    }
+    
     deleteId = id;
     const noticia = noticias.find(n => n.id === id);
     if(noticia) {
@@ -1643,9 +1622,14 @@ window.prepararEliminar = function(id) {
     document.getElementById('confirmModal').classList.add('active');
 };
 
-// FUNCIÓN CORREGIDA: Confirmar eliminación
+// FUNCIÓN CORREGIDA: Confirmar eliminación con validación completa
 window.confirmDelete = async function() {
-    if(!deleteId) {
+    console.log('Intentando eliminar, deleteId:', deleteId); // Debug
+    
+    // Validación estricta del ID
+    if(!deleteId || typeof deleteId !== 'string' || deleteId.trim() === '') {
+        console.error('ID inválido:', deleteId);
+        showToast('Error: No se pudo identificar la noticia a eliminar', 'error');
         closeModal();
         return;
     }
@@ -1654,16 +1638,22 @@ window.confirmDelete = async function() {
     showLoading(true);
     
     try {
-        await deleteDoc(doc(db, "noticias", deleteId));
+        // Crear referencia al documento con el ID validado
+        const noticiaRef = doc(db, "noticias", deleteId.trim());
+        console.log('Referencia creada:', noticiaRef); // Debug
+        
+        // Eliminar el documento
+        await deleteDoc(noticiaRef);
+        
         showToast('Noticia eliminada correctamente', 'success');
         await cargarNoticias();
     } catch(e) {
-        console.error(e);
+        console.error('Error completo:', e);
         showToast('Error eliminando noticia: ' + e.message, 'error');
+    } finally {
+        showLoading(false);
+        deleteId = null;
     }
-    
-    showLoading(false);
-    deleteId = null;
 };
 
 window.closeModal = function() {
@@ -2017,5 +2007,4 @@ window.cargarNoticias = cargarNoticias;
 
 </body>
 </html>
-
-      
+   

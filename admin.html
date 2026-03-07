@@ -1086,7 +1086,7 @@ body {
 <!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
-        <!-- LOGO DESDE GITHUB - REEMPLAZA LA URL CON LA TUYA -->
+        <!-- LOGO DESDE GITHUB - REEMPLAZA CON TU URL -->
         <img src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPO/main/logo.png" 
              alt="Logo" 
              class="login-logo" 
@@ -1137,7 +1137,7 @@ body {
     <!-- HEADER -->
     <header class="admin-header">
         <div class="header-brand">
-            <!-- LOGO DESDE GITHUB - REEMPLAZA LA URL -->
+            <!-- LOGO DESDE GITHUB - REEMPLAZA CON TU URL -->
             <img src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPO/main/logo.png" 
                  alt="Logo" 
                  class="header-logo" 
@@ -1373,13 +1373,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // ==========================================
-// CONFIGURACIÓN DE REDES SOCIALES
+// CONFIGURACIÓN DE TELEGRAM - YA CONFIGURADO
 // ==========================================
 
-// TELEGRAM - REEMPLAZA CON TUS DATOS REALES
 const TELEGRAM_CONFIG = {
-    token: '123456789:ABCdefGHIjklMNOpqrsTUVwxyz', // ← TU TOKEN DE @BotFather
-    chatId: '-1001234567890' // ← TU CHAT ID (con -100 al inicio)
+    token: '8654209233:AAG5SpBT7kjmq_wuD5KiNmNwxFlWbfufLwg', // TU TOKEN REAL
+    chatId: '-1003431574597' // TU CHAT ID REAL
 };
 
 // ==========================================
@@ -1844,19 +1843,12 @@ window.switchTab = function(tabName) {
 };
 
 // ==========================================
-// TELEGRAM - PUBLICACIÓN AUTOMÁTICA
+// TELEGRAM - PUBLICACIÓN AUTOMÁTICA (CONFIGURADO)
 // ==========================================
 
 window.publicarTelegram = async function() {
     if(!currentNoticia && !getFormData()) {
         showToast('Primero guarda una noticia', 'warning');
-        return;
-    }
-    
-    // Validar configuración
-    if(!TELEGRAM_CONFIG.token || TELEGRAM_CONFIG.token.includes('123456789')) {
-        showToast('⚠️ Configura tu token de Telegram en el código', 'error');
-        console.error('Token de Telegram no configurado');
         return;
     }
     

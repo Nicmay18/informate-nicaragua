@@ -70,7 +70,7 @@ body {
     border: 4px solid var(--primary);
     margin-bottom: 20px;
     object-fit: cover;
-    background: #f1f5f9;
+    background: white;
 }
 
 .login-box h2 {
@@ -162,7 +162,7 @@ body {
     border-radius: 50%;
     border: 3px solid var(--primary);
     object-fit: cover;
-    background: #f1f5f9;
+    background: white;
 }
 
 .header-title {
@@ -663,7 +663,7 @@ body {
 
 .social-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 12px;
     margin-bottom: 20px;
 }
@@ -694,18 +694,6 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.social-btn.facebook-1 {
-    background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
-}
-
-.social-btn.facebook-2 {
-    background: linear-gradient(135deg, #4267B2 0%, #365899 100%);
-}
-
-.social-btn.whatsapp {
-    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-}
-
 .social-btn.telegram {
     background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);
 }
@@ -727,8 +715,7 @@ body {
 .publish-all-btn {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(90deg, #1877f2, #25D366, #0088cc);
-    background-size: 200% 100%;
+    background: linear-gradient(135deg, #0088cc 0%, #005f8f 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -740,12 +727,6 @@ body {
     justify-content: center;
     gap: 12px;
     transition: all 0.3s;
-    animation: gradient-shift 3s ease infinite;
-}
-
-@keyframes gradient-shift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
 }
 
 .publish-all-btn:hover {
@@ -755,7 +736,6 @@ body {
 
 .publish-all-btn:disabled {
     background: #94a3b8;
-    animation: none;
     cursor: not-allowed;
 }
 
@@ -1033,7 +1013,7 @@ body {
     }
     
     .social-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
     }
     
     .stats-grid {
@@ -1106,9 +1086,18 @@ body {
 <!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
-        <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; border: 4px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold;">
+        <!-- LOGO DESDE GITHUB - REEMPLAZA LA URL CON LA TUYA -->
+        <img src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPO/main/logo.png" 
+             alt="Logo" 
+             class="login-logo" 
+             id="loginLogo"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        
+        <!-- LOGO DE RESPALDO (CSS) si la imagen falla -->
+        <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; border: 4px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: none; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold;">
             NI
         </div>
+        
         <h2>Panel de Administración</h2>
         <p>Nicaragua Informate - Acceso restringido</p>
         <input type="password" class="password-input" id="passwordInput" placeholder="••••••••" maxlength="20">
@@ -1148,9 +1137,18 @@ body {
     <!-- HEADER -->
     <header class="admin-header">
         <div class="header-brand">
-            <div style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: bold; flex-shrink: 0;">
+            <!-- LOGO DESDE GITHUB - REEMPLAZA LA URL -->
+            <img src="https://raw.githubusercontent.com/TU-USUARIO/TU-REPO/main/logo.png" 
+                 alt="Logo" 
+                 class="header-logo" 
+                 id="headerLogo"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+            
+            <!-- LOGO DE RESPALDO (CSS) -->
+            <div style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: none; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: bold; flex-shrink: 0;">
                 NI
             </div>
+            
             <div>
                 <div class="header-title">Nicaragua Informate</div>
                 <div class="header-subtitle">Panel de Administración</div>
@@ -1234,7 +1232,7 @@ body {
                             <button type="submit" class="btn btn-primary btn-block">
                                 <i class="fas fa-save"></i> Guardar Noticia
                             </button>
-                            <button type="button" class="btn btn-success btn-block" onclick="guardarYPublicar()">
+                            <button type="button" class="btn btn-success btn-block" onclick="guardarYPublicar()" id="btnGuardarPublicar">
                                 <i class="fas fa-paper-plane"></i> Guardar y Publicar
                             </button>
                         </div>
@@ -1274,27 +1272,20 @@ body {
                     </div>
 
                     <div class="social-grid">
-                        <button class="social-btn facebook-1" onclick="publicarRedSocial('facebook', 1)" id="btnFb1">
-                            <i class="fab fa-facebook-f"></i>
-                            <span>Página 1<br><small>15K fans</small></span>
-                        </button>
-                        <button class="social-btn facebook-2" onclick="publicarRedSocial('facebook', 2)" id="btnFb2">
-                            <i class="fab fa-facebook-f"></i>
-                            <span>Página 2<br><small>9K fans</small></span>
-                        </button>
-                        <button class="social-btn whatsapp" onclick="publicarRedSocial('whatsapp')" id="btnWa">
-                            <i class="fab fa-whatsapp"></i>
-                            <span>WhatsApp<br><small>Canal</small></span>
-                        </button>
-                        <button class="social-btn telegram" onclick="publicarRedSocial('telegram')" id="btnTg">
+                        <button class="social-btn telegram" onclick="publicarTelegram()" id="btnTg">
                             <i class="fab fa-telegram-plane"></i>
-                            <span>Telegram<br><small>Canal</small></span>
+                            <span>Telegram<br><small>Automático ✅</small></span>
                         </button>
+                    </div>
+                    
+                    <div style="margin-top: 15px; padding: 15px; background: #f8fafc; border-radius: 8px; font-size: 13px; color: var(--gray); border: 1px solid #e2e8f0;">
+                        <i class="fas fa-info-circle" style="color: var(--primary);"></i>
+                        <strong>Facebook y WhatsApp:</strong> Comparte manualmente desde el sitio
                     </div>
 
                     <button class="publish-all-btn" onclick="publicarTodas()" id="btnPublishAll">
-                        <i class="fas fa-rocket"></i>
-                        PUBLICAR EN TODAS LAS REDES
+                        <i class="fab fa-telegram-plane"></i>
+                        PUBLICAR EN TELEGRAM
                     </button>
                 </div>
 
@@ -1350,13 +1341,11 @@ body {
                         </tr>
                     </thead>
                     <tbody id="newsTableBody">
-                        <!-- Las noticias se cargan aquí -->
                     </tbody>
                 </table>
             </div>
 
             <div class="pagination" id="pagination">
-                <!-- Paginación se genera aquí -->
             </div>
         </div>
     </div>
@@ -1383,7 +1372,20 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+// ==========================================
+// CONFIGURACIÓN DE REDES SOCIALES
+// ==========================================
+
+// TELEGRAM - REEMPLAZA CON TUS DATOS REALES
+const TELEGRAM_CONFIG = {
+    token: '123456789:ABCdefGHIjklMNOpqrsTUVwxyz', // ← TU TOKEN DE @BotFather
+    chatId: '-1001234567890' // ← TU CHAT ID (con -100 al inicio)
+};
+
+// ==========================================
 // VARIABLES GLOBALES
+// ==========================================
+
 let noticias = [];
 let currentNoticia = null;
 let autoPublish = false;
@@ -1391,11 +1393,12 @@ let editando = false;
 let deleteId = null;
 let currentPage = 1;
 const itemsPerPage = 10;
-
-// CONTRASEÑA (cámbiala por una segura)
 const ADMIN_PASSWORD = "admin2025";
 
+// ==========================================
 // LOGIN
+// ==========================================
+
 window.checkPassword = function() {
     const input = document.getElementById('passwordInput').value;
     if(input === ADMIN_PASSWORD) {
@@ -1416,23 +1419,29 @@ window.logout = function() {
     location.reload();
 };
 
-// Verificar sesión guardada
 if(localStorage.getItem('adminSession') === 'true') {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appContainer').style.display = 'block';
     inicializar();
 }
 
-// Enter en password
 document.getElementById('passwordInput')?.addEventListener('keypress', (e) => {
     if(e.key === 'Enter') checkPassword();
 });
+
+// ==========================================
+// INICIALIZACIÓN
+// ==========================================
 
 async function inicializar() {
     await cargarNoticias();
     setupEventListeners();
     updateStats();
 }
+
+// ==========================================
+// CARGAR NOTICIAS
+// ==========================================
 
 async function cargarNoticias() {
     showLoading(true);
@@ -1455,7 +1464,10 @@ async function cargarNoticias() {
     showLoading(false);
 }
 
-// FUNCIÓN CORREGIDA: Renderizar tabla con data attributes
+// ==========================================
+// RENDERIZAR TABLA
+// ==========================================
+
 function renderizarTabla() {
     const tbody = document.getElementById('newsTableBody');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -1468,7 +1480,6 @@ function renderizarTabla() {
         );
     }
     
-    // Paginación
     const totalPages = Math.ceil(filtered.length / itemsPerPage);
     const start = (currentPage - 1) * itemsPerPage;
     const paginated = filtered.slice(start, start + itemsPerPage);
@@ -1483,14 +1494,11 @@ function renderizarTabla() {
             </tr>
         `;
     } else {
-        // Usar createElement en lugar de innerHTML para evitar problemas con IDs
         tbody.innerHTML = '';
         
         paginated.forEach(n => {
             const tr = document.createElement('tr');
             tr.className = 'news-item';
-            
-            // Validar que el ID existe
             const noticiaId = n.id || '';
             
             tr.innerHTML = `
@@ -1524,7 +1532,6 @@ function renderizarTabla() {
             tbody.appendChild(tr);
         });
         
-        // Agregar event listeners a los botones
         tbody.querySelectorAll('.action-btn.view').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = e.currentTarget.getAttribute('data-id');
@@ -1542,13 +1549,11 @@ function renderizarTabla() {
         tbody.querySelectorAll('.action-btn.delete').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 const id = e.currentTarget.getAttribute('data-id');
-                console.log('Botón eliminar clickeado, ID:', id); // Debug
                 if(id) prepararEliminar(id);
             });
         });
     }
     
-    // Renderizar paginación
     renderizarPaginacion(totalPages);
 }
 
@@ -1561,11 +1566,7 @@ function renderizarPaginacion(totalPages) {
     
     let html = '';
     for(let i = 1; i <= totalPages; i++) {
-        html += `
-            <button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="cambiarPagina(${i})">
-                ${i}
-            </button>
-        `;
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="cambiarPagina(${i})">${i}</button>`;
     }
     pagination.innerHTML = html;
 }
@@ -1580,19 +1581,15 @@ window.buscarNoticias = function() {
     renderizarTabla();
 };
 
+// ==========================================
+// VER NOTICIA
+// ==========================================
+
 window.verNoticia = function(id) {
-    if(!id) {
-        showToast('ID de noticia no válido', 'error');
-        return;
-    }
-    
+    if(!id) return;
     const noticia = noticias.find(n => n.id === id);
-    if(!noticia) {
-        showToast('Noticia no encontrada', 'error');
-        return;
-    }
+    if(!noticia) return;
     
-    // Abrir en nueva pestaña simulando la vista del sitio
     const modal = window.open('', '_blank', 'width=800,height=600');
     modal.document.write(`
         <html>
@@ -1618,22 +1615,17 @@ window.verNoticia = function(id) {
     `);
 };
 
+// ==========================================
+// EDITAR NOTICIA
+// ==========================================
+
 window.editarNoticia = function(id) {
-    if(!id) {
-        showToast('ID de noticia no válido', 'error');
-        return;
-    }
-    
+    if(!id) return;
     const noticia = noticias.find(n => n.id === id);
-    if(!noticia) {
-        showToast('Noticia no encontrada', 'error');
-        return;
-    }
+    if(!noticia) return;
     
-    // Cambiar a tab de crear
     switchTab('create');
     
-    // Llenar formulario
     document.getElementById('editId').value = noticia.id;
     document.getElementById('titulo').value = noticia.titulo;
     document.getElementById('resumen').value = noticia.resumen;
@@ -1641,12 +1633,10 @@ window.editarNoticia = function(id) {
     document.getElementById('imagen').value = noticia.imagen;
     document.getElementById('categoria').value = noticia.categoria;
     
-    // Actualizar contadores y preview
     document.getElementById('tituloCount').textContent = noticia.titulo.length;
     document.getElementById('resumenCount').textContent = noticia.resumen.length;
     updatePreview();
     
-    // Cambiar UI
     document.getElementById('formTitle').textContent = 'Editar Noticia';
     document.getElementById('btnCancelar').style.display = 'inline-flex';
     editando = true;
@@ -1655,83 +1645,43 @@ window.editarNoticia = function(id) {
     showToast('Noticia cargada para edición', 'info');
 };
 
-// FUNCIÓN CORREGIDA: Preparar eliminación con validación estricta
+// ==========================================
+// ELIMINAR NOTICIA
+// ==========================================
+
 window.prepararEliminar = function(id) {
-    console.log('prepararEliminar llamado con ID:', id, 'tipo:', typeof id);
-    
-    // Validación estricta del ID
     if(!id) {
-        console.error('ID es falsy:', id);
-        showToast('Error: ID de noticia no válido (es null/undefined)', 'error');
-        return;
-    }
-    
-    if(typeof id !== 'string') {
-        console.error('ID no es string:', typeof id);
-        id = String(id);
-    }
-    
-    id = id.trim();
-    
-    if(id === '') {
-        console.error('ID es string vacío');
-        showToast('Error: ID de noticia está vacío', 'error');
+        showToast('Error: ID no válido', 'error');
         return;
     }
     
     deleteId = id;
     const noticia = noticias.find(n => n.id === id);
-    
     if(noticia) {
         document.getElementById('confirmText').textContent = `¿Eliminar "${noticia.titulo.substring(0, 50)}${noticia.titulo.length > 50 ? '...' : ''}"? Esta acción no se puede deshacer.`;
     } else {
         document.getElementById('confirmText').textContent = '¿Eliminar esta noticia? Esta acción no se puede deshacer.';
     }
-    
     document.getElementById('confirmModal').classList.add('active');
 };
 
-// FUNCIÓN CORREGIDA: Confirmar eliminación
 window.confirmDelete = async function() {
-    console.log('confirmDelete llamado, deleteId:', deleteId, 'tipo:', typeof deleteId);
-    
-    // Validación estricta del ID
     if(!deleteId) {
-        console.error('deleteId es null o undefined');
-        showToast('Error: No hay noticia seleccionada para eliminar', 'error');
         closeModal();
         return;
     }
     
-    if(typeof deleteId !== 'string' || deleteId.trim() === '') {
-        console.error('deleteId no es string válido:', deleteId);
-        showToast('Error: ID de noticia inválido', 'error');
-        closeModal();
-        return;
-    }
-    
-    const idToDelete = deleteId.trim();
-    
+    const idToDelete = deleteId;
     closeModal();
     showLoading(true);
     
     try {
-        console.log('Creando referencia para ID:', idToDelete);
-        
-        // Crear referencia al documento
         const noticiaRef = doc(db, "noticias", idToDelete);
-        console.log('Referencia creada:', noticiaRef);
-        
-        // Eliminar el documento
         await deleteDoc(noticiaRef);
-        
-        console.log('Noticia eliminada exitosamente');
         showToast('Noticia eliminada correctamente', 'success');
-        
-        // Recargar noticias
         await cargarNoticias();
     } catch(e) {
-        console.error('Error completo al eliminar:', e);
+        console.error('Error eliminando:', e);
         showToast('Error eliminando noticia: ' + e.message, 'error');
     } finally {
         showLoading(false);
@@ -1744,8 +1694,11 @@ window.closeModal = function() {
     deleteId = null;
 };
 
+// ==========================================
+// FORMULARIO Y PREVIEW
+// ==========================================
+
 function setupEventListeners() {
-    // Contadores de caracteres
     document.getElementById('titulo').addEventListener('input', (e) => {
         document.getElementById('tituloCount').textContent = e.target.value.length;
         updatePreview();
@@ -1759,7 +1712,6 @@ function setupEventListeners() {
     document.getElementById('imagen').addEventListener('input', updatePreview);
     document.getElementById('categoria').addEventListener('change', updatePreview);
     
-    // Formulario
     document.getElementById('noticiaForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         await guardarNoticia(false);
@@ -1798,6 +1750,10 @@ function updatePreview() {
     }
 }
 
+// ==========================================
+// GUARDAR NOTICIA
+// ==========================================
+
 async function guardarNoticia(publicarDespues = false) {
     showLoading(true);
     
@@ -1827,7 +1783,7 @@ async function guardarNoticia(publicarDespues = false) {
         updateStats();
         
         if(publicarDespues && currentNoticia) {
-            setTimeout(() => publicarTodas(), 1000);
+            setTimeout(() => publicarTelegram(), 500);
         } else {
             resetForm();
         }
@@ -1871,23 +1827,103 @@ window.cancelarEdicion = function() {
     showToast('Edición cancelada', 'info');
 };
 
+// ==========================================
 // TABS
+// ==========================================
+
 window.switchTab = function(tabName) {
-    // Actualizar botones
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById('tab-' + tabName).classList.add('active');
     
-    // Actualizar contenido
     document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
     document.getElementById('section-' + tabName).classList.add('active');
     
-    // Si es lista, recargar
     if(tabName === 'list') {
         cargarNoticias();
     }
 };
 
-// PUBLICACIÓN SOCIAL
+// ==========================================
+// TELEGRAM - PUBLICACIÓN AUTOMÁTICA
+// ==========================================
+
+window.publicarTelegram = async function() {
+    if(!currentNoticia && !getFormData()) {
+        showToast('Primero guarda una noticia', 'warning');
+        return;
+    }
+    
+    // Validar configuración
+    if(!TELEGRAM_CONFIG.token || TELEGRAM_CONFIG.token.includes('123456789')) {
+        showToast('⚠️ Configura tu token de Telegram en el código', 'error');
+        console.error('Token de Telegram no configurado');
+        return;
+    }
+    
+    const noticia = currentNoticia || getFormData();
+    const btn = document.getElementById('btnTg');
+    
+    btn.classList.add('publishing');
+    
+    try {
+        const emoji = {
+            'Sucesos': '🚨',
+            'Deportes': '⚽',
+            'Internacionales': '🌍',
+            'Tecnología': '💻'
+        }[noticia.categoria] || '📰';
+        
+        const mensaje = `${emoji} *${noticia.titulo}*\n\n${noticia.resumen}\n\n📲 [Leer más](https://informate-web.vercel.app/)\n\n#Nicaragua #${noticia.categoria}`;
+        
+        const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_CONFIG.token}/sendMessage`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                chat_id: TELEGRAM_CONFIG.chatId,
+                text: mensaje,
+                parse_mode: 'Markdown',
+                disable_web_page_preview: false
+            })
+        });
+        
+        const data = await response.json();
+        
+        if(data.ok) {
+            btn.classList.remove('publishing');
+            btn.classList.add('success');
+            showToast('✅ Publicado en Telegram exitosamente', 'success');
+            setTimeout(() => btn.classList.remove('success'), 3000);
+        } else {
+            throw new Error(data.description || 'Error desconocido');
+        }
+        
+    } catch(e) {
+        btn.classList.remove('publishing');
+        console.error('Error Telegram:', e);
+        showToast('Error Telegram: ' + e.message, 'error');
+    }
+};
+
+window.publicarTodas = async function() {
+    if(!currentNoticia && !getFormData()) {
+        showToast('Primero guarda una noticia', 'warning');
+        return;
+    }
+    
+    const btn = document.getElementById('btnPublishAll');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
+    
+    await publicarTelegram();
+    
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fab fa-telegram-plane"></i> PUBLICAR EN TELEGRAM';
+};
+
+// ==========================================
+// AUTO PUBLICACIÓN
+// ==========================================
+
 window.toggleAutoPublish = function() {
     autoPublish = !autoPublish;
     const toggle = document.getElementById('autoToggle');
@@ -1900,115 +1936,15 @@ window.toggleAutoPublish = function() {
     localStorage.setItem('autoPublish', autoPublish);
 };
 
-// Cargar preferencia
 if(localStorage.getItem('autoPublish') === 'true') {
     autoPublish = true;
     document.getElementById('autoToggle').classList.add('active');
 }
 
-window.publicarRedSocial = async function(platform, pageNum = null) {
-    if(!currentNoticia && !getFormData()) {
-        showToast('Primero guarda una noticia', 'warning');
-        return;
-    }
-    
-    const noticia = currentNoticia || getFormData();
-    const btnId = platform === 'facebook' ? `btnFb${pageNum}` : `btn${platform.charAt(0).toUpperCase() + platform.slice(1, 2)}`;
-    const btn = document.getElementById(btnId);
-    
-    btn.classList.add('publishing');
-    
-    try {
-        // Simular llamada a API (reemplazar con tu endpoint real)
-        await new Promise(resolve => setTimeout(resolve, 1500));
-        
-        btn.classList.remove('publishing');
-        btn.classList.add('success');
-        showToast(`Publicado en ${platform} ${pageNum || ''} ✓`, 'success');
-        
-        setTimeout(() => btn.classList.remove('success'), 3000);
-        
-    } catch(e) {
-        btn.classList.remove('publishing');
-        // Fallback: abrir en nueva ventana
-        const url = getShareUrl(platform, noticia, pageNum);
-        window.open(url, '_blank', 'width=600,height=400');
-        showToast(`Abriendo ${platform}...`, 'info');
-    }
-};
-
-window.publicarTodas = async function() {
-    if(!currentNoticia && !getFormData()) {
-        showToast('Primero guarda una noticia', 'warning');
-        return;
-    }
-    
-    const noticia = currentNoticia || getFormData();
-    const btn = document.getElementById('btnPublishAll');
-    btn.disabled = true;
-    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Publicando...';
-    
-    const redes = [
-        { platform: 'facebook', page: 1, delay: 0 },
-        { platform: 'facebook', page: 2, delay: 1500 },
-        { platform: 'whatsapp', delay: 3000 },
-        { platform: 'telegram', delay: 4500 }
-    ];
-    
-    for(const red of redes) {
-        setTimeout(() => {
-            publicarRedSocial(red.platform, red.page);
-        }, red.delay);
-    }
-    
-    setTimeout(() => {
-        btn.disabled = false;
-        btn.innerHTML = '<i class="fas fa-rocket"></i> PUBLICAR EN TODAS LAS REDES';
-        showToast('¡Publicación completada!', 'success');
-    }, 7000);
-};
-
-function getShareUrl(platform, noticia, pageNum) {
-    const mensaje = encodeURIComponent(generarMensaje(noticia));
-    const link = encodeURIComponent(`https://informate-web.vercel.app/#${noticia.id || ''}`);
-    
-    switch(platform) {
-        case 'facebook':
-            return `https://www.facebook.com/sharer/sharer.php?u=${link}&quote=${mensaje}`;
-        case 'whatsapp':
-            return `https://wa.me/?text=${mensaje}%20${link}`;
-        case 'telegram':
-            return `https://t.me/share/url?url=${link}&text=${mensaje}`;
-        default:
-            return '#';
-    }
-}
-
-function generarMensaje(noticia) {
-    const emoji = {
-        'Sucesos': '🚨',
-        'Deportes': '⚽',
-        'Internacionales': '🌍',
-        'Tecnología': '💻'
-    }[noticia.categoria] || '📰';
-    
-    return `${emoji} ${noticia.titulo}\n\n${noticia.resumen}\n\n📲 Leer más: https://informate-web.vercel.app/\n\n#Nicaragua #Noticias #${noticia.categoria}`;
-}
-
-function getFormData() {
-    const titulo = document.getElementById('titulo').value.trim();
-    if(!titulo) return null;
-    
-    return {
-        titulo: titulo,
-        resumen: document.getElementById('resumen').value.trim(),
-        contenido: document.getElementById('contenido').value.trim(),
-        imagen: document.getElementById('imagen').value.trim(),
-        categoria: document.getElementById('categoria').value
-    };
-}
-
+// ==========================================
 // ESTADÍSTICAS
+// ==========================================
+
 function updateStats() {
     document.getElementById('statTotal').textContent = noticias.length;
     
@@ -2023,7 +1959,10 @@ function updateStats() {
     document.getElementById('statHoy').textContent = publicadasHoy;
 }
 
+// ==========================================
 // UTILIDADES
+// ==========================================
+
 function showLoading(show) {
     document.getElementById('loadingOverlay').classList.toggle('active', show);
 }
@@ -2077,6 +2016,19 @@ function formatearFecha(fecha) {
     return fecha;
 }
 
+function getFormData() {
+    const titulo = document.getElementById('titulo').value.trim();
+    if(!titulo) return null;
+    
+    return {
+        titulo: titulo,
+        resumen: document.getElementById('resumen').value.trim(),
+        contenido: document.getElementById('contenido').value.trim(),
+        imagen: document.getElementById('imagen').value.trim(),
+        categoria: document.getElementById('categoria').value
+    };
+}
+
 // Cerrar modal al hacer clic fuera
 document.getElementById('confirmModal').addEventListener('click', function(e) {
     if(e.target === this) {
@@ -2084,8 +2036,14 @@ document.getElementById('confirmModal').addEventListener('click', function(e) {
     }
 });
 
-// Exponer funciones necesarias
+// ==========================================
+// EXPONER FUNCIONES GLOBALES
+// ==========================================
+
 window.cargarNoticias = cargarNoticias;
+window.publicarTelegram = publicarTelegram;
+window.guardarYPublicar = guardarYPublicar;
+window.publicarTodas = publicarTodas;
 </script>
 
 </body>

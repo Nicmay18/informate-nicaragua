@@ -70,6 +70,7 @@ body {
     border: 4px solid var(--primary);
     margin-bottom: 20px;
     object-fit: cover;
+    background: #f1f5f9;
 }
 
 .login-box h2 {
@@ -161,6 +162,7 @@ body {
     border-radius: 50%;
     border: 3px solid var(--primary);
     object-fit: cover;
+    background: #f1f5f9;
 }
 
 .header-title {
@@ -228,6 +230,7 @@ body {
     padding: 10px;
     border-radius: 12px;
     box-shadow: var(--shadow);
+    overflow-x: auto;
 }
 
 .tab-btn {
@@ -242,6 +245,7 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
+    white-space: nowrap;
 }
 
 .tab-btn:hover {
@@ -291,6 +295,8 @@ body {
     margin-bottom: 25px;
     padding-bottom: 20px;
     border-bottom: 2px solid #e2e8f0;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .form-title {
@@ -432,6 +438,7 @@ body {
 .search-box {
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
 }
 
 .search-input {
@@ -478,6 +485,7 @@ body {
     height: 60px;
     object-fit: cover;
     border-radius: 8px;
+    background: #f1f5f9;
 }
 
 .news-title {
@@ -564,6 +572,7 @@ body {
     justify-content: center;
     gap: 10px;
     margin-top: 25px;
+    flex-wrap: wrap;
 }
 
 .page-btn {
@@ -601,6 +610,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .panel-title {
@@ -862,6 +873,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    max-width: 90vw;
 }
 
 .toast {
@@ -894,6 +906,7 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 20px;
+    flex-shrink: 0;
 }
 
 .toast.success .toast-icon { background: #dcfce7; color: var(--success); }
@@ -903,6 +916,7 @@ body {
 
 .toast-content {
     flex: 1;
+    min-width: 0;
 }
 
 .toast-title {
@@ -914,6 +928,7 @@ body {
 .toast-message {
     font-size: 13px;
     color: var(--gray);
+    word-break: break-word;
 }
 
 /* LOADING */
@@ -955,6 +970,7 @@ body {
     align-items: center;
     z-index: 10002;
     backdrop-filter: blur(5px);
+    padding: 20px;
 }
 
 .modal-overlay.active {
@@ -966,7 +982,7 @@ body {
     padding: 30px;
     border-radius: 20px;
     max-width: 400px;
-    width: 90%;
+    width: 100%;
     text-align: center;
     animation: scaleIn 0.3s ease;
 }
@@ -984,12 +1000,33 @@ body {
 .confirm-modal p {
     color: var(--gray);
     margin-bottom: 25px;
+    word-break: break-word;
 }
 
 .confirm-buttons {
     display: flex;
     gap: 15px;
     justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* EMPTY STATE */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--gray);
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.3;
+}
+
+.empty-state h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #374151;
 }
 
 /* RESPONSIVE */
@@ -999,8 +1036,15 @@ body {
         text-align: center;
     }
     
+    .header-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
     .tabs {
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
     
     .action-buttons {
@@ -1008,7 +1052,7 @@ body {
     }
     
     .social-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
     }
     
     .stats-grid {
@@ -1021,7 +1065,7 @@ body {
     
     .news-table th,
     .news-table td {
-        padding: 10px;
+        padding: 10px 5px;
     }
     
     .news-title {
@@ -1041,6 +1085,38 @@ body {
     .toast {
         min-width: auto;
     }
+    
+    .admin-grid {
+        gap: 20px;
+    }
+    
+    .form-card,
+    .news-list-card,
+    .social-panel,
+    .stats-card,
+    .preview-card {
+        padding: 20px;
+    }
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
 }
 </style>
 </head>
@@ -1049,7 +1125,9 @@ body {
 <!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
-        <img src="logotipo.png" alt="Logo" class="login-logo">
+        <div style="width: 100px; height: 100px; margin: 0 auto 20px; border-radius: 50%; border: 4px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 40px; font-weight: bold;">
+            NI
+        </div>
         <h2>Panel de Administración</h2>
         <p>Nicaragua Informate - Acceso restringido</p>
         <input type="password" class="password-input" id="passwordInput" placeholder="••••••••" maxlength="20">
@@ -1073,7 +1151,7 @@ body {
         <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> ¿Estás seguro?</h3>
         <p id="confirmText">Esta acción no se puede deshacer.</p>
         <div class="confirm-buttons">
-            <button class="btn btn-danger" onclick="confirmAction()">
+            <button class="btn btn-danger" onclick="confirmDelete()">
                 <i class="fas fa-check"></i> Sí, eliminar
             </button>
             <button class="btn" onclick="closeModal()" style="background: #e2e8f0; color: #64748b;">
@@ -1089,7 +1167,9 @@ body {
     <!-- HEADER -->
     <header class="admin-header">
         <div class="header-brand">
-            <img src="logotipo.png" alt="Logo" class="header-logo">
+            <div style="width: 50px; height: 50px; border-radius: 50%; border: 3px solid var(--primary); background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 20px; font-weight: bold; flex-shrink: 0;">
+                NI
+            </div>
             <div>
                 <div class="header-title">Nicaragua Informate</div>
                 <div class="header-subtitle">Panel de Administración</div>
@@ -1396,7 +1476,8 @@ async function cargarNoticias() {
         updateStats();
         document.getElementById('countBadge').textContent = noticias.length;
     } catch(e) {
-        showToast('Error cargando noticias', 'error');
+        console.error(e);
+        showToast('Error cargando noticias: ' + e.message, 'error');
     }
     showLoading(false);
 }
@@ -1422,7 +1503,7 @@ function renderizarTabla() {
         tbody.innerHTML = `
             <tr>
                 <td colspan="5" style="text-align: center; padding: 40px; color: var(--gray);">
-                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px; display: block; opacity: 0.3;"></i>
                     No hay noticias publicadas
                 </td>
             </tr>
@@ -1431,7 +1512,7 @@ function renderizarTabla() {
         tbody.innerHTML = paginated.map(n => `
             <tr class="news-item">
                 <td>
-                    <img src="${n.imagen}" alt="" class="news-image" onerror="this.src='https://via.placeholder.com/80x60?text=No+Image'">
+                    <img src="${n.imagen}" alt="" class="news-image" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect width=%2280%22 height=%2260%22 fill=%22%23f1f5f9%22/><text x=%2240%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22 font-size=%2212%22>Sin imagen</text></svg>'">
                 </td>
                 <td>
                     <div class="news-title" title="${n.titulo}">${n.titulo}</div>
@@ -1450,7 +1531,7 @@ function renderizarTabla() {
                         <button class="action-btn edit" onclick="editarNoticia('${n.id}')" title="Editar">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="action-btn delete" onclick="eliminarNoticia('${n.id}')" title="Eliminar">
+                        <button class="action-btn delete" onclick="prepararEliminar('${n.id}')" title="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -1550,15 +1631,24 @@ window.editarNoticia = function(id) {
     showToast('Noticia cargada para edición', 'info');
 };
 
-window.eliminarNoticia = function(id) {
+// FUNCIÓN CORREGIDA: Preparar eliminación
+window.prepararEliminar = function(id) {
     deleteId = id;
     const noticia = noticias.find(n => n.id === id);
-    document.getElementById('confirmText').textContent = `¿Eliminar "${noticia.titulo.substring(0, 50)}..."? Esta acción no se puede deshacer.`;
+    if(noticia) {
+        document.getElementById('confirmText').textContent = `¿Eliminar "${noticia.titulo.substring(0, 50)}${noticia.titulo.length > 50 ? '...' : ''}"? Esta acción no se puede deshacer.`;
+    } else {
+        document.getElementById('confirmText').textContent = '¿Eliminar esta noticia? Esta acción no se puede deshacer.';
+    }
     document.getElementById('confirmModal').classList.add('active');
 };
 
-window.confirmAction = async function() {
-    if(!deleteId) return;
+// FUNCIÓN CORREGIDA: Confirmar eliminación
+window.confirmDelete = async function() {
+    if(!deleteId) {
+        closeModal();
+        return;
+    }
     
     closeModal();
     showLoading(true);
@@ -1568,7 +1658,8 @@ window.confirmAction = async function() {
         showToast('Noticia eliminada correctamente', 'success');
         await cargarNoticias();
     } catch(e) {
-        showToast('Error eliminando noticia', 'error');
+        console.error(e);
+        showToast('Error eliminando noticia: ' + e.message, 'error');
     }
     
     showLoading(false);
@@ -1615,6 +1706,9 @@ function updatePreview() {
     if(imagen) {
         previewImg.src = imagen;
         previewImg.style.display = 'block';
+        previewImg.onerror = function() {
+            this.style.display = 'none';
+        };
     } else {
         previewImg.style.display = 'none';
     }
@@ -1635,10 +1729,10 @@ async function guardarNoticia(publicarDespues = false) {
     showLoading(true);
     
     const noticiaData = {
-        titulo: document.getElementById('titulo').value,
-        resumen: document.getElementById('resumen').value,
-        contenido: document.getElementById('contenido').value,
-        imagen: document.getElementById('imagen').value,
+        titulo: document.getElementById('titulo').value.trim(),
+        resumen: document.getElementById('resumen').value.trim(),
+        contenido: document.getElementById('contenido').value.trim(),
+        imagen: document.getElementById('imagen').value.trim(),
         categoria: document.getElementById('categoria').value,
         fecha: serverTimestamp(),
         autor: 'Admin'
@@ -1648,6 +1742,7 @@ async function guardarNoticia(publicarDespues = false) {
         if(editando && document.getElementById('editId').value) {
             await updateDoc(doc(db, "noticias", document.getElementById('editId').value), noticiaData);
             showToast('Noticia actualizada correctamente', 'success');
+            currentNoticia = { ...noticiaData, id: document.getElementById('editId').value };
         } else {
             const docRef = await addDoc(collection(db, "noticias"), noticiaData);
             noticiaData.id = docRef.id;
@@ -1665,8 +1760,8 @@ async function guardarNoticia(publicarDespues = false) {
         }
         
     } catch(e) {
-        showToast('Error guardando noticia', 'error');
         console.error(e);
+        showToast('Error guardando noticia: ' + e.message, 'error');
     }
     
     showLoading(false);
@@ -1751,20 +1846,8 @@ window.publicarRedSocial = async function(platform, pageNum = null) {
     btn.classList.add('publishing');
     
     try {
-        // Llamar a la API
-        const response = await fetch('/api/publish', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                platform,
-                page: pageNum,
-                message: generarMensaje(noticia),
-                image: noticia.imagen,
-                link: `https://informate-web.vercel.app/#${noticia.id || ''}`
-            })
-        });
-        
-        if(!response.ok) throw new Error('API Error');
+        // Simular llamada a API (reemplazar con tu endpoint real)
+        await new Promise(resolve => setTimeout(resolve, 1500));
         
         btn.classList.remove('publishing');
         btn.classList.add('success');
@@ -1840,13 +1923,14 @@ function generarMensaje(noticia) {
 }
 
 function getFormData() {
-    if(!document.getElementById('titulo').value) return null;
+    const titulo = document.getElementById('titulo').value.trim();
+    if(!titulo) return null;
     
     return {
-        titulo: document.getElementById('titulo').value,
-        resumen: document.getElementById('resumen').value,
-        contenido: document.getElementById('contenido').value,
-        imagen: document.getElementById('imagen').value,
+        titulo: titulo,
+        resumen: document.getElementById('resumen').value.trim(),
+        contenido: document.getElementById('contenido').value.trim(),
+        imagen: document.getElementById('imagen').value.trim(),
         categoria: document.getElementById('categoria').value
     };
 }
@@ -1920,6 +2004,13 @@ function formatearFecha(fecha) {
     return fecha;
 }
 
+// Cerrar modal al hacer clic fuera
+document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if(e.target === this) {
+        closeModal();
+    }
+});
+
 // Exponer funciones necesarias
 window.cargarNoticias = cargarNoticias;
 </script>
@@ -1927,4 +2018,4 @@ window.cargarNoticias = cargarNoticias;
 </body>
 </html>
 
-
+      

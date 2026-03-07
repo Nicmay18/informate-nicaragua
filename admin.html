@@ -1455,6 +1455,7 @@ async function cargarNoticias() {
     showLoading(false);
 }
 
+// FUNCIÓN CORREGIDA: Renderizar tabla con data attributes
 function renderizarTabla() {
     const tbody = document.getElementById('newsTableBody');
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
@@ -1482,8 +1483,17 @@ function renderizarTabla() {
             </tr>
         `;
     } else {
-        tbody.innerHTML = paginated.map(n => `
-            <tr class="news-item">
+        // Usar createElement en lugar de innerHTML para evitar problemas con IDs
+        tbody.innerHTML = '';
+        
+        paginated.forEach(n => {
+            const tr = document.createElement('tr');
+            tr.className = 'news-item';
+            
+            // Validar que el ID existe
+            const noticiaId = n.id || '';
+            
+            tr.innerHTML = `
                 <td>
                     <img src="${n.imagen}" alt="" class="news-image" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2280%22 height=%2260%22><rect width=%2280%22 height=%2260%22 fill=%22%23f1f5f9%22/><text x=%2240%22 y=%2235%22 text-anchor=%22middle%22 fill=%22%2394a3b8%22 font-size=%2212%22>Sin imagen</text></svg>'">
                 </td>
@@ -1498,19 +1508,44 @@ function renderizarTabla() {
                 </td>
                 <td>
                     <div class="news-actions">
-                        <button class="action-btn view" onclick="verNoticia('${n.id}')" title="Ver">
+                        <button class="action-btn view" data-id="${noticiaId}" title="Ver">
                             <i class="fas fa-eye"></i>
                         </button>
-                        <button class="action-btn edit" onclick="editarNoticia('${n.id}')" title="Editar">
+                        <button class="action-btn edit" data-id="${noticiaId}" title="Editar">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="action-btn delete" onclick="prepararEliminar('${n.id}')" title="Eliminar">
+                        <button class="action-btn delete" data-id="${noticiaId}" title="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 </td>
-            </tr>
-        `).join('');
+            `;
+            
+            tbody.appendChild(tr);
+        });
+        
+        // Agregar event listeners a los botones
+        tbody.querySelectorAll('.action-btn.view').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.getAttribute('data-id');
+                if(id) verNoticia(id);
+            });
+        });
+        
+        tbody.querySelectorAll('.action-btn.edit').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.getAttribute('data-id');
+                if(id) editarNoticia(id);
+            });
+        });
+        
+        tbody.querySelectorAll('.action-btn.delete').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.getAttribute('data-id');
+                console.log('Botón eliminar clickeado, ID:', id); // Debug
+                if(id) prepararEliminar(id);
+            });
+        });
     }
     
     // Renderizar paginación
@@ -1546,8 +1581,16 @@ window.buscarNoticias = function() {
 };
 
 window.verNoticia = function(id) {
+    if(!id) {
+        showToast('ID de noticia no válido', 'error');
+        return;
+    }
+    
     const noticia = noticias.find(n => n.id === id);
-    if(!noticia) return;
+    if(!noticia) {
+        showToast('Noticia no encontrada', 'error');
+        return;
+    }
     
     // Abrir en nueva pestaña simulando la vista del sitio
     const modal = window.open('', '_blank', 'width=800,height=600');
@@ -1576,8 +1619,16 @@ window.verNoticia = function(id) {
 };
 
 window.editarNoticia = function(id) {
+    if(!id) {
+        showToast('ID de noticia no válido', 'error');
+        return;
+    }
+    
     const noticia = noticias.find(n => n.id === id);
-    if(!noticia) return;
+    if(!noticia) {
+        showToast('Noticia no encontrada', 'error');
+        return;
+    }
     
     // Cambiar a tab de crear
     switchTab('create');
@@ -1604,51 +1655,83 @@ window.editarNoticia = function(id) {
     showToast('Noticia cargada para edición', 'info');
 };
 
-// FUNCIÓN CORREGIDA: Preparar eliminación
+// FUNCIÓN CORREGIDA: Preparar eliminación con validación estricta
 window.prepararEliminar = function(id) {
+    console.log('prepararEliminar llamado con ID:', id, 'tipo:', typeof id);
+    
+    // Validación estricta del ID
     if(!id) {
-        console.error('ID es null o undefined');
-        showToast('Error: ID de noticia no válido', 'error');
+        console.error('ID es falsy:', id);
+        showToast('Error: ID de noticia no válido (es null/undefined)', 'error');
+        return;
+    }
+    
+    if(typeof id !== 'string') {
+        console.error('ID no es string:', typeof id);
+        id = String(id);
+    }
+    
+    id = id.trim();
+    
+    if(id === '') {
+        console.error('ID es string vacío');
+        showToast('Error: ID de noticia está vacío', 'error');
         return;
     }
     
     deleteId = id;
     const noticia = noticias.find(n => n.id === id);
+    
     if(noticia) {
         document.getElementById('confirmText').textContent = `¿Eliminar "${noticia.titulo.substring(0, 50)}${noticia.titulo.length > 50 ? '...' : ''}"? Esta acción no se puede deshacer.`;
     } else {
         document.getElementById('confirmText').textContent = '¿Eliminar esta noticia? Esta acción no se puede deshacer.';
     }
+    
     document.getElementById('confirmModal').classList.add('active');
 };
 
-// FUNCIÓN CORREGIDA: Confirmar eliminación con validación completa
+// FUNCIÓN CORREGIDA: Confirmar eliminación
 window.confirmDelete = async function() {
-    console.log('Intentando eliminar, deleteId:', deleteId); // Debug
+    console.log('confirmDelete llamado, deleteId:', deleteId, 'tipo:', typeof deleteId);
     
     // Validación estricta del ID
-    if(!deleteId || typeof deleteId !== 'string' || deleteId.trim() === '') {
-        console.error('ID inválido:', deleteId);
-        showToast('Error: No se pudo identificar la noticia a eliminar', 'error');
+    if(!deleteId) {
+        console.error('deleteId es null o undefined');
+        showToast('Error: No hay noticia seleccionada para eliminar', 'error');
         closeModal();
         return;
     }
+    
+    if(typeof deleteId !== 'string' || deleteId.trim() === '') {
+        console.error('deleteId no es string válido:', deleteId);
+        showToast('Error: ID de noticia inválido', 'error');
+        closeModal();
+        return;
+    }
+    
+    const idToDelete = deleteId.trim();
     
     closeModal();
     showLoading(true);
     
     try {
-        // Crear referencia al documento con el ID validado
-        const noticiaRef = doc(db, "noticias", deleteId.trim());
-        console.log('Referencia creada:', noticiaRef); // Debug
+        console.log('Creando referencia para ID:', idToDelete);
+        
+        // Crear referencia al documento
+        const noticiaRef = doc(db, "noticias", idToDelete);
+        console.log('Referencia creada:', noticiaRef);
         
         // Eliminar el documento
         await deleteDoc(noticiaRef);
         
+        console.log('Noticia eliminada exitosamente');
         showToast('Noticia eliminada correctamente', 'success');
+        
+        // Recargar noticias
         await cargarNoticias();
     } catch(e) {
-        console.error('Error completo:', e);
+        console.error('Error completo al eliminar:', e);
         showToast('Error eliminando noticia: ' + e.message, 'error');
     } finally {
         showLoading(false);
@@ -2007,4 +2090,3 @@ window.cargarNoticias = cargarNoticias;
 
 </body>
 </html>
-   

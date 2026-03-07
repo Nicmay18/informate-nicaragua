@@ -127,7 +127,7 @@ body {
     display: none;
 }
 
-/* MAIN APP (hidden until login) */
+/* MAIN APP */
 .app-container {
     display: none;
     max-width: 1400px;
@@ -219,6 +219,49 @@ body {
     color: white;
 }
 
+/* TABS */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    border: none;
+    background: transparent;
+    color: var(--gray);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tab-btn:hover {
+    background: #f1f5f9;
+}
+
+.tab-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+/* CONTENT SECTIONS */
+.content-section {
+    display: none;
+}
+
+.content-section.active {
+    display: block;
+}
+
 /* GRID LAYOUT */
 .admin-grid {
     display: grid;
@@ -299,7 +342,7 @@ body {
     margin-top: 5px;
 }
 
-/* BOTONES DE ACCIÓN */
+/* BOTONES */
 .action-buttons {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -351,11 +394,200 @@ body {
     color: white;
 }
 
+.btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+}
+
 .btn-block {
     width: 100%;
 }
 
-/* PANEL DE PUBLICACIÓN SOCIAL */
+/* LISTA DE NOTICIAS */
+.news-list-card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.list-title {
+    font-size: 20px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    padding: 10px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    font-size: 14px;
+    width: 250px;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.news-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.news-table th {
+    text-align: left;
+    padding: 15px;
+    background: #f8fafc;
+    font-weight: 700;
+    color: #374151;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.news-table td {
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: top;
+}
+
+.news-item:hover {
+    background: #f8fafc;
+}
+
+.news-image {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.news-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 5px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.news-category {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: white;
+}
+
+.news-category.Sucesos { background: var(--sucesos); }
+.news-category.Deportes { background: var(--deportes); }
+.news-category.Internacionales { background: var(--internacionales); }
+.news-category.Tecnología { background: var(--tecnologia); }
+
+.news-date {
+    font-size: 13px;
+    color: var(--gray);
+}
+
+.news-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    font-size: 14px;
+}
+
+.action-btn.edit {
+    background: #dbeafe;
+    color: var(--primary);
+}
+
+.action-btn.edit:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.action-btn.delete {
+    background: #fee2e2;
+    color: var(--danger);
+}
+
+.action-btn.delete:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.action-btn.view {
+    background: #dcfce7;
+    color: var(--success);
+}
+
+.action-btn.view:hover {
+    background: var(--success);
+    color: white;
+}
+
+/* PAGINACIÓN */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.page-btn {
+    padding: 10px 16px;
+    border: 2px solid #e2e8f0;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+}
+
+.page-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.page-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* PANEL SOCIAL */
 .social-panel {
     background: white;
     padding: 25px;
@@ -418,7 +650,6 @@ body {
     left: 27px;
 }
 
-/* REDES SOCIALES GRID */
 .social-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -452,21 +683,6 @@ body {
     box-shadow: 0 8px 20px rgba(0,0,0,0.2);
 }
 
-.social-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-}
-
-.social-btn:hover::before {
-    left: 100%;
-}
-
 .social-btn.facebook-1 {
     background: linear-gradient(135deg, #1877f2 0%, #166fe5 100%);
 }
@@ -497,7 +713,6 @@ body {
     50% { box-shadow: 0 0 0 10px rgba(255,255,255,0); }
 }
 
-/* BOTÓN PUBLICAR TODAS */
 .publish-all-btn {
     width: 100%;
     padding: 18px;
@@ -574,7 +789,7 @@ body {
     margin-top: 5px;
 }
 
-/* PREVIEW CARD */
+/* PREVIEW */
 .preview-card {
     background: white;
     padding: 25px;
@@ -625,11 +840,6 @@ body {
     margin-bottom: 10px;
 }
 
-.preview-category.Sucesos { background: var(--sucesos); }
-.preview-category.Deportes { background: var(--deportes); }
-.preview-category.Internacionales { background: var(--internacionales); }
-.preview-category.Tecnología { background: var(--tecnologia); }
-
 .preview-title-text {
     font-size: 18px;
     font-weight: 700;
@@ -643,7 +853,7 @@ body {
     line-height: 1.6;
 }
 
-/* TOAST NOTIFICATIONS */
+/* TOAST */
 .toast-container {
     position: fixed;
     bottom: 30px;
@@ -706,7 +916,7 @@ body {
     color: var(--gray);
 }
 
-/* LOADING OVERLAY */
+/* LOADING */
 .loading-overlay {
     position: fixed;
     inset: 0;
@@ -735,11 +945,62 @@ body {
     to { transform: rotate(360deg); }
 }
 
+/* MODAL CONFIRMACIÓN */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10002;
+    backdrop-filter: blur(5px);
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.confirm-modal {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    animation: scaleIn 0.3s ease;
+}
+
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.confirm-modal h3 {
+    margin-bottom: 15px;
+    color: #1e293b;
+}
+
+.confirm-modal p {
+    color: var(--gray);
+    margin-bottom: 25px;
+}
+
+.confirm-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
     .admin-header {
         flex-direction: column;
         text-align: center;
+    }
+    
+    .tabs {
+        flex-wrap: wrap;
     }
     
     .action-buttons {
@@ -752,6 +1013,23 @@ body {
     
     .stats-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .news-table {
+        font-size: 12px;
+    }
+    
+    .news-table th,
+    .news-table td {
+        padding: 10px;
+    }
+    
+    .news-title {
+        max-width: 150px;
+    }
+    
+    .search-input {
+        width: 100%;
     }
     
     .toast-container {
@@ -771,7 +1049,7 @@ body {
 <!-- LOGIN SCREEN -->
 <div class="login-screen" id="loginScreen">
     <div class="login-box">
-        <img src="logo.png" alt="Logo" class="login-logo">
+        <img src="logotipo.png" alt="Logo" class="login-logo">
         <h2>Panel de Administración</h2>
         <p>Nicaragua Informate - Acceso restringido</p>
         <input type="password" class="password-input" id="passwordInput" placeholder="••••••••" maxlength="20">
@@ -789,13 +1067,29 @@ body {
     <div class="spinner"></div>
 </div>
 
+<!-- MODAL CONFIRMACIÓN -->
+<div class="modal-overlay" id="confirmModal">
+    <div class="confirm-modal">
+        <h3><i class="fas fa-exclamation-triangle" style="color: var(--warning);"></i> ¿Estás seguro?</h3>
+        <p id="confirmText">Esta acción no se puede deshacer.</p>
+        <div class="confirm-buttons">
+            <button class="btn btn-danger" onclick="confirmAction()">
+                <i class="fas fa-check"></i> Sí, eliminar
+            </button>
+            <button class="btn" onclick="closeModal()" style="background: #e2e8f0; color: #64748b;">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- MAIN APP -->
 <div class="app-container" id="appContainer">
     
     <!-- HEADER -->
     <header class="admin-header">
         <div class="header-brand">
-            <img src="logo.png" alt="Logo" class="header-logo">
+            <img src="logotipo.png" alt="Logo" class="header-logo">
             <div>
                 <div class="header-title">Nicaragua Informate</div>
                 <div class="header-subtitle">Panel de Administración</div>
@@ -811,150 +1105,201 @@ body {
         </div>
     </header>
 
-    <div class="admin-grid">
-        
-        <!-- COLUMNA IZQUIERDA -->
-        <div class="main-column">
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('create')" id="tab-create">
+            <i class="fas fa-plus-circle"></i> Crear Noticia
+        </button>
+        <button class="tab-btn" onclick="switchTab('list')" id="tab-list">
+            <i class="fas fa-list"></i> Ver Noticias <span id="countBadge" style="background: var(--primary); color: white; padding: 2px 8px; border-radius: 10px; font-size: 12px; margin-left: 5px;">0</span>
+        </button>
+    </div>
+
+    <!-- TAB: CREAR NOTICIA -->
+    <div class="content-section active" id="section-create">
+        <div class="admin-grid">
             
-            <!-- FORMULARIO -->
-            <div class="form-card">
-                <div class="form-header">
-                    <h2 class="form-title">
-                        <i class="fas fa-plus-circle"></i>
-                        <span id="formTitle">Nueva Noticia</span>
-                    </h2>
-                    <button class="btn btn-warning btn-sm" id="btnCancelar" style="display:none;" onclick="cancelarEdicion()">
-                        <i class="fas fa-times"></i> Cancelar
-                    </button>
-                </div>
-
-                <form id="noticiaForm">
-                    <input type="hidden" id="editId">
-                    
-                    <div class="form-group">
-                        <label class="form-label">Título *</label>
-                        <input type="text" id="titulo" class="form-input" maxlength="200" placeholder="Título de la noticia" required>
-                        <div class="char-count"><span id="tituloCount">0</span>/200</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Resumen *</label>
-                        <textarea id="resumen" class="form-textarea" maxlength="300" placeholder="Breve resumen de la noticia" required></textarea>
-                        <div class="char-count"><span id="resumenCount">0</span>/300</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Contenido Completo *</label>
-                        <textarea id="contenido" class="form-textarea" placeholder="Contenido completo de la noticia" required></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">URL de Imagen *</label>
-                        <input type="url" id="imagen" class="form-input" placeholder="https://ejemplo.com/imagen.jpg" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Categoría *</label>
-                        <select id="categoria" class="form-select" required>
-                            <option value="">Seleccionar categoría</option>
-                            <option value="Sucesos">🚨 Sucesos</option>
-                            <option value="Deportes">⚽ Deportes</option>
-                            <option value="Internacionales">🌍 Internacionales</option>
-                            <option value="Tecnología">💻 Tecnología</option>
-                        </select>
-                    </div>
-
-                    <div class="action-buttons">
-                        <button type="submit" class="btn btn-primary btn-block">
-                            <i class="fas fa-save"></i> Guardar Noticia
-                        </button>
-                        <button type="button" class="btn btn-success btn-block" onclick="guardarYPublicar()">
-                            <i class="fas fa-paper-plane"></i> Guardar y Publicar
+            <!-- COLUMNA IZQUIERDA -->
+            <div class="main-column">
+                
+                <div class="form-card">
+                    <div class="form-header">
+                        <h2 class="form-title">
+                            <i class="fas fa-plus-circle"></i>
+                            <span id="formTitle">Nueva Noticia</span>
+                        </h2>
+                        <button type="button" class="btn btn-warning btn-sm" id="btnCancelar" style="display:none;" onclick="cancelarEdicion()">
+                            <i class="fas fa-times"></i> Cancelar Edición
                         </button>
                     </div>
-                </form>
-            </div>
 
-            <!-- PREVIEW -->
-            <div class="preview-card">
-                <h3 class="preview-title">
-                    <i class="fas fa-eye"></i> Vista Previa
-                </h3>
-                <div class="news-preview" id="previewCard">
-                    <img src="" alt="Preview" class="preview-image" id="previewImg" style="display:none;">
-                    <div class="preview-body">
-                        <span class="preview-category" id="previewCat" style="display:none;">Categoría</span>
-                        <div class="preview-title-text" id="previewTitle">Título de la noticia</div>
-                        <div class="preview-resumen" id="previewResumen">El resumen aparecerá aquí...</div>
-                    </div>
+                    <form id="noticiaForm">
+                        <input type="hidden" id="editId">
+                        
+                        <div class="form-group">
+                            <label class="form-label">Título *</label>
+                            <input type="text" id="titulo" class="form-input" maxlength="200" placeholder="Título de la noticia" required>
+                            <div class="char-count"><span id="tituloCount">0</span>/200</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Resumen *</label>
+                            <textarea id="resumen" class="form-textarea" maxlength="300" placeholder="Breve resumen de la noticia" required></textarea>
+                            <div class="char-count"><span id="resumenCount">0</span>/300</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Contenido Completo *</label>
+                            <textarea id="contenido" class="form-textarea" rows="6" placeholder="Contenido completo de la noticia" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">URL de Imagen *</label>
+                            <input type="url" id="imagen" class="form-input" placeholder="https://ejemplo.com/imagen.jpg" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Categoría *</label>
+                            <select id="categoria" class="form-select" required>
+                                <option value="">Seleccionar categoría</option>
+                                <option value="Sucesos">🚨 Sucesos</option>
+                                <option value="Deportes">⚽ Deportes</option>
+                                <option value="Internacionales">🌍 Internacionales</option>
+                                <option value="Tecnología">💻 Tecnología</option>
+                            </select>
+                        </div>
+
+                        <div class="action-buttons">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                <i class="fas fa-save"></i> Guardar Noticia
+                            </button>
+                            <button type="button" class="btn btn-success btn-block" onclick="guardarYPublicar()">
+                                <i class="fas fa-paper-plane"></i> Guardar y Publicar
+                            </button>
+                        </div>
+                    </form>
                 </div>
-            </div>
 
-        </div>
-
-        <!-- COLUMNA DERECHA -->
-        <div class="side-column">
-            
-            <!-- PANEL SOCIAL -->
-            <div class="social-panel">
-                <div class="panel-header">
-                    <h3 class="panel-title">
-                        <i class="fas fa-share-alt"></i> Publicar en Redes
+                <!-- PREVIEW -->
+                <div class="preview-card">
+                    <h3 class="preview-title">
+                        <i class="fas fa-eye"></i> Vista Previa
                     </h3>
-                    <div class="auto-toggle">
-                        <span>Auto</span>
-                        <div class="toggle-switch" id="autoToggle" onclick="toggleAutoPublish()"></div>
+                    <div class="news-preview" id="previewCard">
+                        <img src="" alt="Preview" class="preview-image" id="previewImg" style="display:none;">
+                        <div class="preview-body">
+                            <span class="preview-category" id="previewCat" style="display:none;">Categoría</span>
+                            <div class="preview-title-text" id="previewTitle">Título de la noticia</div>
+                            <div class="preview-resumen" id="previewResumen">El resumen aparecerá aquí...</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="social-grid">
-                    <button class="social-btn facebook-1" onclick="publicarRedSocial('facebook', 1)" id="btnFb1">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Página 1<br><small>15K fans</small></span>
-                    </button>
-                    <button class="social-btn facebook-2" onclick="publicarRedSocial('facebook', 2)" id="btnFb2">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Página 2<br><small>9K fans</small></span>
-                    </button>
-                    <button class="social-btn whatsapp" onclick="publicarRedSocial('whatsapp')" id="btnWa">
-                        <i class="fab fa-whatsapp"></i>
-                        <span>WhatsApp<br><small>Canal</small></span>
-                    </button>
-                    <button class="social-btn telegram" onclick="publicarRedSocial('telegram')" id="btnTg">
-                        <i class="fab fa-telegram-plane"></i>
-                        <span>Telegram<br><small>Canal</small></span>
-                    </button>
-                </div>
-
-                <button class="publish-all-btn" onclick="publicarTodas()" id="btnPublishAll">
-                    <i class="fas fa-rocket"></i>
-                    PUBLICAR EN TODAS LAS REDES
-                </button>
             </div>
 
-            <!-- ESTADÍSTICAS -->
-            <div class="stats-card">
-                <h3 class="panel-title">
-                    <i class="fas fa-chart-bar"></i> Estadísticas
-                </h3>
-                <div class="stats-grid">
-                    <div class="stat-item">
-                        <span class="stat-number" id="statTotal">0</span>
-                        <div class="stat-label">Total Noticias</div>
+            <!-- COLUMNA DERECHA -->
+            <div class="side-column">
+                
+                <!-- PANEL SOCIAL -->
+                <div class="social-panel">
+                    <div class="panel-header">
+                        <h3 class="panel-title">
+                            <i class="fas fa-share-alt"></i> Publicar en Redes
+                        </h3>
+                        <div class="auto-toggle">
+                            <span>Auto</span>
+                            <div class="toggle-switch" id="autoToggle" onclick="toggleAutoPublish()"></div>
+                        </div>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="statHoy">0</span>
-                        <div class="stat-label">Publicadas Hoy</div>
+
+                    <div class="social-grid">
+                        <button class="social-btn facebook-1" onclick="publicarRedSocial('facebook', 1)" id="btnFb1">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Página 1<br><small>15K fans</small></span>
+                        </button>
+                        <button class="social-btn facebook-2" onclick="publicarRedSocial('facebook', 2)" id="btnFb2">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Página 2<br><small>9K fans</small></span>
+                        </button>
+                        <button class="social-btn whatsapp" onclick="publicarRedSocial('whatsapp')" id="btnWa">
+                            <i class="fab fa-whatsapp"></i>
+                            <span>WhatsApp<br><small>Canal</small></span>
+                        </button>
+                        <button class="social-btn telegram" onclick="publicarRedSocial('telegram')" id="btnTg">
+                            <i class="fab fa-telegram-plane"></i>
+                            <span>Telegram<br><small>Canal</small></span>
+                        </button>
                     </div>
-                    <div class="stat-item">
-                        <span class="stat-number" id="statCategorias">4</span>
-                        <div class="stat-label">Categorías</div>
+
+                    <button class="publish-all-btn" onclick="publicarTodas()" id="btnPublishAll">
+                        <i class="fas fa-rocket"></i>
+                        PUBLICAR EN TODAS LAS REDES
+                    </button>
+                </div>
+
+                <!-- ESTADÍSTICAS -->
+                <div class="stats-card">
+                    <h3 class="panel-title">
+                        <i class="fas fa-chart-bar"></i> Estadísticas
+                    </h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-number" id="statTotal">0</span>
+                            <div class="stat-label">Total Noticias</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="statHoy">0</span>
+                            <div class="stat-label">Publicadas Hoy</div>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number" id="statCategorias">4</span>
+                            <div class="stat-label">Categorías</div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
+
+    <!-- TAB: LISTA DE NOTICIAS -->
+    <div class="content-section" id="section-list">
+        <div class="news-list-card">
+            <div class="list-header">
+                <h2 class="list-title">
+                    <i class="fas fa-newspaper"></i> Noticias Publicadas
+                </h2>
+                <div class="search-box">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Buscar noticia..." onkeyup="buscarNoticias()">
+                    <button class="btn btn-primary btn-sm" onclick="cargarNoticias()">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+                <table class="news-table">
+                    <thead>
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Título</th>
+                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="newsTableBody">
+                        <!-- Las noticias se cargan aquí -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- Paginación se genera aquí -->
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- TOAST CONTAINER -->
@@ -963,15 +1308,15 @@ body {
 <!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy, addDoc, updateDoc, doc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy, addDoc, updateDoc, deleteDoc, doc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDtoF36mNC6ymgCBKPydc9fr5JEbc4WoOE",
-  authDomain: "informate-instant-nicara-2ec56.firebaseapp.com",
-  projectId: "informate-instant-nicara-2ec56",
-  storageBucket: "informate-instant-nicara-2ec56.firebasestorage.app",
-  messagingSenderId: "978021185096",
-  appId: "1:978021185096:web:41d966fad7b5076d044a7d"
+    apiKey: "TU_API_KEY",
+    authDomain: "informate-instant-nicaragua.firebaseapp.com",
+    projectId: "informate-instant-nicaragua",
+    storageBucket: "informate-instant-nicaragua.appspot.com",
+    messagingSenderId: "24988088146",
+    appId: "1:24988088146:web:d26a207508da055668ec8b"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -982,6 +1327,9 @@ let noticias = [];
 let currentNoticia = null;
 let autoPublish = false;
 let editando = false;
+let deleteId = null;
+let currentPage = 1;
+const itemsPerPage = 10;
 
 // CONTRASEÑA (cámbiala por una segura)
 const ADMIN_PASSWORD = "admin2025";
@@ -1044,11 +1392,193 @@ async function cargarNoticias() {
             data.id = d.id;
             noticias.push(data);
         });
+        renderizarTabla();
+        updateStats();
+        document.getElementById('countBadge').textContent = noticias.length;
     } catch(e) {
         showToast('Error cargando noticias', 'error');
     }
     showLoading(false);
 }
+
+function renderizarTabla() {
+    const tbody = document.getElementById('newsTableBody');
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    
+    let filtered = noticias;
+    if(searchTerm) {
+        filtered = noticias.filter(n => 
+            n.titulo.toLowerCase().includes(searchTerm) || 
+            n.categoria.toLowerCase().includes(searchTerm)
+        );
+    }
+    
+    // Paginación
+    const totalPages = Math.ceil(filtered.length / itemsPerPage);
+    const start = (currentPage - 1) * itemsPerPage;
+    const paginated = filtered.slice(start, start + itemsPerPage);
+    
+    if(paginated.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align: center; padding: 40px; color: var(--gray);">
+                    <i class="fas fa-inbox" style="font-size: 48px; margin-bottom: 15px; display: block;"></i>
+                    No hay noticias publicadas
+                </td>
+            </tr>
+        `;
+    } else {
+        tbody.innerHTML = paginated.map(n => `
+            <tr class="news-item">
+                <td>
+                    <img src="${n.imagen}" alt="" class="news-image" onerror="this.src='https://via.placeholder.com/80x60?text=No+Image'">
+                </td>
+                <td>
+                    <div class="news-title" title="${n.titulo}">${n.titulo}</div>
+                </td>
+                <td>
+                    <span class="news-category ${n.categoria}">${n.categoria}</span>
+                </td>
+                <td>
+                    <div class="news-date">${formatearFecha(n.fecha)}</div>
+                </td>
+                <td>
+                    <div class="news-actions">
+                        <button class="action-btn view" onclick="verNoticia('${n.id}')" title="Ver">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn edit" onclick="editarNoticia('${n.id}')" title="Editar">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="action-btn delete" onclick="eliminarNoticia('${n.id}')" title="Eliminar">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+        `).join('');
+    }
+    
+    // Renderizar paginación
+    renderizarPaginacion(totalPages);
+}
+
+function renderizarPaginacion(totalPages) {
+    const pagination = document.getElementById('pagination');
+    if(totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+    
+    let html = '';
+    for(let i = 1; i <= totalPages; i++) {
+        html += `
+            <button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="cambiarPagina(${i})">
+                ${i}
+            </button>
+        `;
+    }
+    pagination.innerHTML = html;
+}
+
+window.cambiarPagina = function(page) {
+    currentPage = page;
+    renderizarTabla();
+};
+
+window.buscarNoticias = function() {
+    currentPage = 1;
+    renderizarTabla();
+};
+
+window.verNoticia = function(id) {
+    const noticia = noticias.find(n => n.id === id);
+    if(!noticia) return;
+    
+    // Abrir en nueva pestaña simulando la vista del sitio
+    const modal = window.open('', '_blank', 'width=800,height=600');
+    modal.document.write(`
+        <html>
+        <head>
+            <title>${noticia.titulo}</title>
+            <style>
+                body { font-family: Arial; max-width: 700px; margin: 0 auto; padding: 20px; }
+                img { width: 100%; border-radius: 10px; margin-bottom: 20px; }
+                .category { background: #0d47a1; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px; }
+                h1 { color: #1e293b; }
+                .date { color: #64748b; margin: 10px 0; }
+                .content { line-height: 1.8; color: #374151; }
+            </style>
+        </head>
+        <body>
+            <img src="${noticia.imagen}" onerror="this.style.display='none'">
+            <span class="category">${noticia.categoria}</span>
+            <h1>${noticia.titulo}</h1>
+            <div class="date">${formatearFecha(noticia.fecha)}</div>
+            <div class="content">${noticia.contenido.replace(/\\n/g, '<br>')}</div>
+        </body>
+        </html>
+    `);
+};
+
+window.editarNoticia = function(id) {
+    const noticia = noticias.find(n => n.id === id);
+    if(!noticia) return;
+    
+    // Cambiar a tab de crear
+    switchTab('create');
+    
+    // Llenar formulario
+    document.getElementById('editId').value = noticia.id;
+    document.getElementById('titulo').value = noticia.titulo;
+    document.getElementById('resumen').value = noticia.resumen;
+    document.getElementById('contenido').value = noticia.contenido;
+    document.getElementById('imagen').value = noticia.imagen;
+    document.getElementById('categoria').value = noticia.categoria;
+    
+    // Actualizar contadores y preview
+    document.getElementById('tituloCount').textContent = noticia.titulo.length;
+    document.getElementById('resumenCount').textContent = noticia.resumen.length;
+    updatePreview();
+    
+    // Cambiar UI
+    document.getElementById('formTitle').textContent = 'Editar Noticia';
+    document.getElementById('btnCancelar').style.display = 'inline-flex';
+    editando = true;
+    currentNoticia = noticia;
+    
+    showToast('Noticia cargada para edición', 'info');
+};
+
+window.eliminarNoticia = function(id) {
+    deleteId = id;
+    const noticia = noticias.find(n => n.id === id);
+    document.getElementById('confirmText').textContent = `¿Eliminar "${noticia.titulo.substring(0, 50)}..."? Esta acción no se puede deshacer.`;
+    document.getElementById('confirmModal').classList.add('active');
+};
+
+window.confirmAction = async function() {
+    if(!deleteId) return;
+    
+    closeModal();
+    showLoading(true);
+    
+    try {
+        await deleteDoc(doc(db, "noticias", deleteId));
+        showToast('Noticia eliminada correctamente', 'success');
+        await cargarNoticias();
+    } catch(e) {
+        showToast('Error eliminando noticia', 'error');
+    }
+    
+    showLoading(false);
+    deleteId = null;
+};
+
+window.closeModal = function() {
+    document.getElementById('confirmModal').classList.remove('active');
+    deleteId = null;
+};
 
 function setupEventListeners() {
     // Contadores de caracteres
@@ -1164,14 +1694,32 @@ function resetForm() {
     document.getElementById('formTitle').textContent = 'Nueva Noticia';
     document.getElementById('btnCancelar').style.display = 'none';
     editando = false;
+    currentNoticia = null;
     updatePreview();
 }
 
 window.cancelarEdicion = function() {
     resetForm();
+    showToast('Edición cancelada', 'info');
 };
 
-// PUBLICACIÓN A REDES SOCIALES
+// TABS
+window.switchTab = function(tabName) {
+    // Actualizar botones
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById('tab-' + tabName).classList.add('active');
+    
+    // Actualizar contenido
+    document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+    document.getElementById('section-' + tabName).classList.add('active');
+    
+    // Si es lista, recargar
+    if(tabName === 'list') {
+        cargarNoticias();
+    }
+};
+
+// PUBLICACIÓN SOCIAL
 window.toggleAutoPublish = function() {
     autoPublish = !autoPublish;
     const toggle = document.getElementById('autoToggle');
@@ -1203,8 +1751,20 @@ window.publicarRedSocial = async function(platform, pageNum = null) {
     btn.classList.add('publishing');
     
     try {
-        // Simular publicación (aquí conectas tus APIs reales)
-        await simulatePublish(platform, noticia, pageNum);
+        // Llamar a la API
+        const response = await fetch('/api/publish', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                platform,
+                page: pageNum,
+                message: generarMensaje(noticia),
+                image: noticia.imagen,
+                link: `https://informate-web.vercel.app/#${noticia.id || ''}`
+            })
+        });
+        
+        if(!response.ok) throw new Error('API Error');
         
         btn.classList.remove('publishing');
         btn.classList.add('success');
@@ -1212,15 +1772,12 @@ window.publicarRedSocial = async function(platform, pageNum = null) {
         
         setTimeout(() => btn.classList.remove('success'), 3000);
         
-        // Analytics
-        gtag('event', 'publish', {
-            'event_category': 'social',
-            'event_label': platform
-        });
-        
     } catch(e) {
         btn.classList.remove('publishing');
-        showToast(`Error publicando en ${platform}`, 'error');
+        // Fallback: abrir en nueva ventana
+        const url = getShareUrl(platform, noticia, pageNum);
+        window.open(url, '_blank', 'width=600,height=400');
+        showToast(`Abriendo ${platform}...`, 'info');
     }
 };
 
@@ -1237,28 +1794,49 @@ window.publicarTodas = async function() {
     
     const redes = [
         { platform: 'facebook', page: 1, delay: 0 },
-        { platform: 'facebook', page: 2, delay: 2000 },
-        { platform: 'whatsapp', delay: 4000 },
-        { platform: 'telegram', delay: 6000 }
+        { platform: 'facebook', page: 2, delay: 1500 },
+        { platform: 'whatsapp', delay: 3000 },
+        { platform: 'telegram', delay: 4500 }
     ];
     
     for(const red of redes) {
-        setTimeout(async () => {
-            await publicarRedSocial(red.platform, red.page);
+        setTimeout(() => {
+            publicarRedSocial(red.platform, red.page);
         }, red.delay);
     }
     
     setTimeout(() => {
         btn.disabled = false;
         btn.innerHTML = '<i class="fas fa-rocket"></i> PUBLICAR EN TODAS LAS REDES';
-        showToast('¡Publicación completada en todas las redes!', 'success');
-    }, 8000);
+        showToast('¡Publicación completada!', 'success');
+    }, 7000);
 };
 
-async function simulatePublish(platform, noticia, pageNum) {
-    // Aquí implementas las llamadas reales a las APIs
-    // Por ahora simula un delay
-    return new Promise(resolve => setTimeout(resolve, 1500));
+function getShareUrl(platform, noticia, pageNum) {
+    const mensaje = encodeURIComponent(generarMensaje(noticia));
+    const link = encodeURIComponent(`https://informate-web.vercel.app/#${noticia.id || ''}`);
+    
+    switch(platform) {
+        case 'facebook':
+            return `https://www.facebook.com/sharer/sharer.php?u=${link}&quote=${mensaje}`;
+        case 'whatsapp':
+            return `https://wa.me/?text=${mensaje}%20${link}`;
+        case 'telegram':
+            return `https://t.me/share/url?url=${link}&text=${mensaje}`;
+        default:
+            return '#';
+    }
+}
+
+function generarMensaje(noticia) {
+    const emoji = {
+        'Sucesos': '🚨',
+        'Deportes': '⚽',
+        'Internacionales': '🌍',
+        'Tecnología': '💻'
+    }[noticia.categoria] || '📰';
+    
+    return `${emoji} ${noticia.titulo}\n\n${noticia.resumen}\n\n📲 Leer más: https://informate-web.vercel.app/\n\n#Nicaragua #Noticias #${noticia.categoria}`;
 }
 
 function getFormData() {
@@ -1329,10 +1907,24 @@ function showToast(message, type = 'success') {
     }, 4000);
 }
 
+function formatearFecha(fecha) {
+    if(!fecha) return "Fecha no disponible";
+    if(fecha.toDate) {
+        return fecha.toDate().toLocaleString("es-NI", {
+            day: 'numeric', 
+            month: 'short', 
+            hour: '2-digit', 
+            minute: '2-digit'
+        });
+    }
+    return fecha;
+}
+
 // Exponer funciones necesarias
 window.cargarNoticias = cargarNoticias;
 </script>
 
 </body>
 </html>
-                    
+
+

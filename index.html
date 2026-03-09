@@ -31,7 +31,7 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
-<!-- ADSENSE -->
+<!-- ADSENSE - Script principal (ID de editor) -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
 
 <style>
@@ -1022,6 +1022,7 @@ audio{
   gap:10px;
 }
 
+/* ADSENSE CONTAINER MEJORADO */
 .ad-box{
   background:#fff;
   padding:28px;
@@ -1046,6 +1047,14 @@ audio{
   font-weight:600;
   text-transform:uppercase;
   letter-spacing:1px;
+}
+
+/* Estilos específicos para el anuncio de AdSense */
+.adsbygoogle{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:250px;
 }
 
 /* MODAL MEJORADO */
@@ -1648,17 +1657,14 @@ audio{
       </div>
     </div>
 
-    <!-- ANUNCIO GOOGLE ADSENSE -->
+    <!-- ANUNCIO GOOGLE ADSENSE - CORREGIDO CON ID DE CLIENTE -->
     <div class="ad-box">
       <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-4115203339551838"
+           style="display:block; width:100%; min-height:250px;"
+           data-ad-client="ca-3830460324"
            data-ad-slot="8408634019"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
-      <script>
-           (adsbygoogle = window.adsbygoogle || []).push({});
-      </script>
     </div>
 
   </aside>
@@ -1801,47 +1807,279 @@ let categoria = "Todas";
 let currentNoticia = null;
 let noticiasEnviadas = new Set();
 
-// Función para enviar noticia a Telegram
-async function enviarATelegram(noticia) {
-  if (noticiasEnviadas.has(noticia.id)) return;
+// CONFIGURACIÓN FACEBOOK (ya tienes tus tokens)
+const FACEBOOK_CONFIG = {
+  // Cuenta 1 - Principal
+  cuenta1: {
+    pageId: "ID_DE_TU_PAGINA_1", // Reemplaza con tu ID real
+    accessToken: "TU_TOKEN_LARGO_AQUI_1" // Reemplaza con tu token real
+  },
+  // Cuenta 2 - Secundaria  
+  cuenta2: {
+    pageId: "ID_DE_TU_PAGINA_2", // Reemplaza con tu ID real
+    accessToken: "TU_TOKEN_LARGO_AQUI_2" // Reemplaza con tu token real
+  }
+};
+
+// CONFIGURACIÓN WHATSAPP (CallMeBot - gratis)
+const WHATSAPP_CONFIG = {
+  apiKey: "TU_API_KEY_CALLMEBOT", // Regístrate en callmebot.com
+  phone: "505XXXXXXXX" // Tu número con código 505
+};
+
+// IMAGEN POR DEFECTO PARA TELEGRAM (debe ser URL pública)
+const IMAGEN_DEFAULT_TELEGRAM = "https://i.imgur.com/8Km9tLL.jpg"; // Cambia esto por tu imagen en Imgur
+
+// FUNCIÓN PARA OBTENER URL DE IMAGEN VÁLIDA PARA TELEGRAM
+function obtenerUrlImagenTelegram(noticia) {
+  let imageUrl = noticia.imagen || '';
   
+  console.log('Imagen original de noticia:', imageUrl);
+  
+  // Si no hay imagen, usar default
+  if (!imageUrl || imageUrl === '') {
+    console.log('Usando imagen default');
+    return IMAGEN_DEFAULT_TELEGRAM;
+  }
+  
+  // Si ya es URL completa (http/https), usarla directamente
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    // Si es de imgur o cloudinary, está bien
+    if (imageUrl.includes('imgur.com') || 
+        imageUrl.includes('cloudinary.com') || 
+        imageUrl.includes('ibb.co') ||
+        imageUrl.includes('postimg.cc')) {
+      console.log('URL externa detectada:', imageUrl);
+      return imageUrl;
+    }
+    
+    // Si es de nuestro dominio, puede que no funcione para Telegram
+    // Intentar de todos modos
+    console.log('URL completa pero no es hosting externo:', imageUrl);
+    return imageUrl;
+  }
+  
+  // Si es ruta relativa, construir URL completa
+  // PERO Telegram probablemente no pueda acceder a ella
+  const urlCompleta = 'https://informate-instant-nicaragua.vercel.app/' + imageUrl.replace(/^\//, '');
+  console.log('URL construida (puede no funcionar en Telegram):', urlCompleta);
+  
+  // Retornar la URL pero advertir que puede fallar
+  return urlCompleta;
+}
+
+// FUNCIÓN PARA ENVIAR A FACEBOOK
+async function enviarAFacebook(noticia, cuenta) {
   try {
-    const mensaje = `
+    const config = FACEBOOK_CONFIG[cuenta];
+    if (!config || !config.accessToken || config.accessToken.includes('TU_TOKEN')) {
+      console.log(`Facebook ${cuenta} no configurado`);
+      return false;
+    }
+
+    const mensaje = `🔴 ${noticia.categoria.toUpperCase()}
+
+📰 ${noticia.titulo}
+
+${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
+
+🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+#Nicaragua #Noticias #${noticia.categoria}`;
+
+    const url = `https://graph.facebook.com/v18.0/${config.pageId}/feed`;
+    
+    const params = new URLSearchParams({
+      message: mensaje,
+      link: `https://informate-instant-nicaragua.vercel.app/#${noticia.id}`,
+      access_token: config.accessToken
+    });
+
+    // Si hay imagen pública, agregarla
+    const imageUrl = obtenerUrlImagenTelegram(noticia);
+    if (imageUrl && (imageUrl.includes('imgur.com') || imageUrl.includes('cloudinary.com'))) {
+      params.append('picture', imageUrl);
+    }
+
+    const response = await fetch(url, {
+      method: 'POST',
+      body: params
+    });
+
+    const result = await response.json();
+    
+    if (response.ok && result.id) {
+      console.log(`✅ Facebook ${cuenta}: Publicado`);
+      mostrarToastTelegram(`✅ Facebook ${cuenta === 'cuenta1' ? 'Principal' : 'Secundario'}: Publicado`);
+      return true;
+    } else {
+      console.error(`Error Facebook ${cuenta}:`, result);
+      return false;
+    }
+
+  } catch (error) {
+    console.error(`Error Facebook ${cuenta}:`, error);
+    return false;
+  }
+}
+
+// FUNCIÓN PARA ENVIAR A WHATSAPP
+async function enviarAWhatsApp(noticia) {
+  try {
+    if (!WHATSAPP_CONFIG.apiKey || WHATSAPP_CONFIG.apiKey.includes('TU_API_KEY')) {
+      console.log('WhatsApp no configurado');
+      return false;
+    }
+
+    const mensaje = `🔴 *${noticia.categoria.toUpperCase()}*
+
+📰 *${noticia.titulo}*
+
+📝 ${noticia.resumen || noticia.contenido?.substring(0, 150) + '...'}
+
+🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+📅 ${formatearFecha(noticia.fecha)}`;
+
+    const encodedMsg = encodeURIComponent(mensaje);
+    const url = `https://api.callmebot.com/whatsapp.php?phone=${WHATSAPP_CONFIG.phone}&text=${encodedMsg}&apikey=${WHATSAPP_CONFIG.apiKey}`;
+
+    const response = await fetch(url);
+    
+    if (response.ok) {
+      console.log('✅ WhatsApp: Enviado');
+      mostrarToastTelegram('✅ WhatsApp: Enviado');
+      return true;
+    } else {
+      console.error('Error WhatsApp:', await response.text());
+      return false;
+    }
+
+  } catch (error) {
+    console.error('Error WhatsApp:', error);
+    return false;
+  }
+}
+
+// FUNCIÓN EMAIL (backup si fallan las APIs)
+function enviarEmailNotificacion(noticia) {
+  const subject = `[NICARAGUA INFORMATE] ${noticia.categoria}: ${noticia.titulo}`;
+  const body = `Título: ${noticia.titulo}
+Categoría: ${noticia.categoria}
+Link: https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+PARA FACEBOOK:
+---
+🔴 ${noticia.categoria.toUpperCase()}
+
+📰 ${noticia.titulo}
+
+${noticia.resumen || ''}
+
+🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+#Nicaragua #Noticias #${noticia.categoria}
+---
+
+PARA WHATSAPP:
+---
 🔴 *${noticia.categoria.toUpperCase()}*
 
 📰 *${noticia.titulo}*
 
-📝 ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
+${noticia.resumen || ''}
 
-🔗 Leer más: https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+---`;
 
-📅 ${formatearFecha(noticia.fecha)}
-    `;
+  window.open(`mailto:tuemail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
+}
+
+// FUNCIÓN PARA ENVIAR A TELEGRAM CON IMAGEN
+async function enviarATelegram(noticia) {
+  if (noticiasEnviadas.has(noticia.id)) return;
+  
+  console.log('=== ENVIANDO A TELEGRAM ===');
+  console.log('Noticia:', noticia.titulo);
+  
+  try {
+    // Obtener URL de imagen válida
+    const imageUrl = obtenerUrlImagenTelegram(noticia);
     
-    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+    console.log('URL final para Telegram:', imageUrl);
     
-    const response = await fetch(url, {
+    // Preparar caption
+    const caption = `🔴 *${noticia.categoria.toUpperCase()}*\n\n📰 *${noticia.titulo}*\n\n📝 ${noticia.resumen || noticia.contenido?.substring(0, 150) + '...'}\n\n🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}\n\n📅 ${formatearFecha(noticia.fecha)}`;
+    
+    // PRIMERO: Intentar enviar con sendPhoto
+    console.log('Intentando sendPhoto...');
+    
+    const formData = new FormData();
+    formData.append('chat_id', TELEGRAM_CHAT_ID);
+    formData.append('photo', imageUrl);
+    formData.append('caption', caption);
+    formData.append('parse_mode', 'Markdown');
+    
+    const responsePhoto = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text: mensaje,
-        parse_mode: 'Markdown',
-        disable_web_page_preview: false
-      })
+      body: formData
     });
     
-    if (response.ok) {
+    const resultPhoto = await responsePhoto.json();
+    console.log('Resultado sendPhoto:', resultPhoto);
+    
+    if (responsePhoto.ok && resultPhoto.ok) {
+      console.log('✅ Éxito con sendPhoto');
       noticiasEnviadas.add(noticia.id);
-      mostrarToastTelegram(`✅ "${noticia.titulo.substring(0, 30)}..." enviada a Telegram`);
-      console.log('Noticia enviada a Telegram:', noticia.titulo);
-    } else {
-      console.error('Error enviando a Telegram:', await response.text());
+      mostrarToastTelegram(`✅ "${noticia.titulo.substring(0, 30)}..." enviada con imagen`);
+      return;
     }
+    
+    // Si falla sendPhoto, intentar con sendMediaGroup o sendMessage con link
+    console.log('❌ sendPhoto falló, intentando método alternativo...');
+    
+    // Intentar enviar como documento si la imagen es local
+    if (!imageUrl.includes('imgur.com') && !imageUrl.includes('cloudinary.com')) {
+      // La imagen probablemente no es accesible públicamente
+      console.log('Imagen no accesible públicamente, enviando solo texto con link');
+      throw new Error('Imagen no pública');
+    }
+    
+    // Si llegamos aquí, algo extraño pasó
+    throw new Error(resultPhoto.description || 'Error desconocido');
+    
   } catch (error) {
     console.error('Error en enviarATelegram:', error);
+    
+    // FALLBACK: Enviar mensaje de texto con preview de link
+    const mensajeTexto = `🔴 *${noticia.categoria.toUpperCase()}*\n\n📰 *${noticia.titulo}*\n\n📝 ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}\n\n🔗 [Leer más en el sitio](https://informate-instant-nicaragua.vercel.app/#${noticia.id})\n\n📅 ${formatearFecha(noticia.fecha)}`;
+    
+    try {
+      const responseMsg = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          chat_id: TELEGRAM_CHAT_ID,
+          text: mensajeTexto,
+          parse_mode: 'Markdown',
+          disable_web_page_preview: false // Esto permite que Telegram genere preview del link
+        })
+      });
+      
+      const resultMsg = await responseMsg.json();
+      console.log('Resultado sendMessage:', resultMsg);
+      
+      if (responseMsg.ok) {
+        noticiasEnviadas.add(noticia.id);
+        mostrarToastTelegram(`✅ Enviada (sin imagen - usa hosting externo)`);
+      } else {
+        mostrarToastTelegram(`❌ Error: ${resultMsg.description}`);
+      }
+      
+    } catch (msgError) {
+      console.error('Error en fallback:', msgError);
+      mostrarToastTelegram(`❌ Error enviando a Telegram`);
+    }
   }
 }
 
@@ -1875,9 +2113,19 @@ async function cargar(){
         data.id = d.id;
         todas.push(data);
         
-        // Si es noticia nueva, enviar a Telegram y mostrar notificación
+        // Si es noticia nueva, enviar a TODAS las plataformas
         if (!noticiasAnteriores.has(d.id) && noticiasAnteriores.size > 0) {
+          // Enviar a Telegram (siempre)
           enviarATelegram(data);
+          
+          // Enviar a Facebook (si está configurado)
+          enviarAFacebook(data, 'cuenta1');
+          enviarAFacebook(data, 'cuenta2');
+          
+          // Enviar a WhatsApp (si está configurado)
+          enviarAWhatsApp(data);
+          
+          // Mostrar notificación en el sitio
           mostrarPushNotificacion(data.titulo);
         }
       });
@@ -1885,6 +2133,9 @@ async function cargar(){
       pintar();
       cargarPopulares();
       cargarTrending();
+      
+      // Inicializar AdSense después de cargar contenido
+      inicializarAdSense();
     }, (error) => {
       console.error("Error en tiempo real:", error);
       // Fallback a carga normal
@@ -1911,9 +2162,32 @@ async function cargarManual() {
     pintar();
     cargarPopulares();
     cargarTrending();
+    
+    // Inicializar AdSense después de cargar contenido
+    inicializarAdSense();
   } catch(e) {
     console.error("Error carga manual:", e);
     document.getElementById("lista").innerHTML = '<div style="text-align:center;padding:60px;color:#64748b;"><i class="fas fa-exclamation-circle" style="font-size:48px;margin-bottom:16px;color:#ef4444;"></i><p>Error cargando noticias. Intenta recargar.</p></div>';
+  }
+}
+
+// FUNCIÓN PARA INICIALIZAR ADSENSE
+function inicializarAdSense() {
+  try {
+    // Esperar a que el script de AdSense esté cargado
+    if (window.adsbygoogle && window.adsbygoogle.loaded) {
+      // Buscar todos los anuncios no inicializados
+      const ads = document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status="done"])');
+      ads.forEach(ad => {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+        console.log('AdSense inicializado:', ad);
+      });
+    } else {
+      // Si aún no está cargado, esperar un poco
+      setTimeout(inicializarAdSense, 1000);
+    }
+  } catch(e) {
+    console.error('Error inicializando AdSense:', e);
   }
 }
 
@@ -2318,4 +2592,3 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
- 

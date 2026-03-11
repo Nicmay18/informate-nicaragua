@@ -1,0 +1,28 @@
+{
+  "version": 2,
+  "routes": [
+    {
+      "src": "/ads.txt",
+      "dest": "/public/ads.txt"
+    },
+    {
+      "src": "/privacidad",
+      "dest": "/public/privacidad.html"
+    },
+    {
+      "src": "/terminos",
+      "dest": "/public/terminos.html"
+    },
+    {
+      "src": "/cookies",
+      "dest": "/public/cookies.html"
+    },
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}

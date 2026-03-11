@@ -2,344 +2,2603 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Informate al Instante Nicaragua</title>
+<title>Nicaragua Informate al Instante | Noticias de Nicaragua</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
+<!-- 🔒 SEO MEJORADO -->
+<meta name="description" content="Noticias de Nicaragua al momento. Sucesos, deportes, tecnología, economía, cultura e internacionales. Tu fuente confiable de información.">
+<meta name="news_keywords" content="noticias nicaragua, sucesos nicaragua, economia nicaragua, cultura nicaragua, deportes nicaragua, tecnologia nicaragua, nicaragua hoy">
+<meta name="author" content="Nicaragua Informate">
+<meta name="robots" content="index,follow">
+<meta name="googlebot" content="index,follow">
+<meta name="language" content="Spanish">
+<meta name="geo.region" content="NI">
+<meta name="geo.placename" content="Nicaragua">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Nicaragua Informate al Instante">
+<meta property="og:description" content="Noticias de Nicaragua al momento, sucesos, deportes, tecnología e internacionales.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://informate-instant-nicaragua.vercel.app/">
+<meta property="og:image" content="https://informate-instant-nicaragua.vercel.app/logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="es_NI">
+<meta property="og:site_name" content="Nicaragua Informate">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nicaragua Informate al Instante">
+<meta name="twitter:description" content="Noticias de Nicaragua al momento, sucesos, deportes, tecnología e internacionales.">
+<meta name="twitter:image" content="https://informate-instant-nicaragua.vercel.app/logo.png">
+
+<!-- 📈 Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "Nicaragua Informate",
+  "url": "https://informate-instant-nicaragua.vercel.app/",
+  "logo": "https://informate-instant-nicaragua.vercel.app/logo.png",
+  "description": "Noticias de Nicaragua al momento",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "NI"
+  }
+}
+</script>
+
+<!-- Preconnect para velocidad -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="dns-prefetch" href="https://api.open-meteo.com">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B6J61WEP"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-W1B6J61WEP');
+</script>
+
+<!-- AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
+
 <style>
+:root{
+  --azul:#0d47a1;
+  --azul2:#1565c0;
+  --azul3:#42a5f5;
+  --sucesos:#c62828;
+  --deportes:#2e7d32;
+  --inter:#6a1b9a;
+  --tecnologia:#0288d1;
+  --nacionales:#e65100;
+  --economia:#f59e0b;
+  --cultura:#8b5cf6;
+  --espectaculos:#ec4899;
+  --gris:#f8fafc;
+  --sombra:0 4px 6px -1px rgba(0,0,0,.1);
+  --sombra-lg:0 20px 25px -5px rgba(0,0,0,.1);
+  --telegram:#0088cc;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
 body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#f4f6f8;
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  background:linear-gradient(180deg,#f8fafc 0%,#f1f5f9 100%);
+  color:#1e293b;
+  line-height:1.6;
+  overflow-x:hidden;
 }
 
-/* HEADER */
-
-header{
-  background:#0d47a1;
-  color:white;
-  padding:10px 14px;
-}
-
-.header-top{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-.logo{
-  height:42px;
-}
-
-.brand h1{
-  margin:0;
-  font-size:18px;
-}
-
-.brand small{
-  font-size:12px;
-  color:#dbe7ff;
-}
-
-/* Hora + clima */
-
-.info-top{
-  text-align:right;
-  font-size:13px;
-}
-
-.info-top div{
-  margin-bottom:3px;
-}
-
-/* Barra inferior header */
-
-.header-bottom{
-  margin-top:10px;
-  padding-top:8px;
-  border-top:1px solid rgba(255,255,255,.2);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-/* Indicadores */
-
-.indicadores{
-  font-size:13px;
-  line-height:1.4;
-}
-
-/* Redes */
-
-.redes{
-  display:flex;
-  gap:10px;
-  align-items:center;
-}
-
-.redes a{
-  font-size:22px;
-  text-decoration:none;
-  color:white;
-}
-
-/* CONTENIDO */
-
-.container{
-  max-width:1000px;
-  margin:auto;
-  padding:15px;
-}
-
-.noticia{
-  background:white;
-  border-radius:8px;
+/* 💰 ESTILOS PARA ANUNCIOS */
+.ad-container{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  margin:24px 0;
+  box-shadow:var(--sombra);
+  border:2px dashed #cbd5e1;
+  text-align:center;
+  position:relative;
   overflow:hidden;
-  margin-bottom:18px;
-  box-shadow:0 3px 10px rgba(0,0,0,.08);
-  cursor:pointer;
 }
 
-.noticia img{
+.ad-container::before{
+  content:"Publicidad";
+  position:absolute;
+  top:8px;
+  right:12px;
+  font-size:10px;
+  color:#94a3b8;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.ad-top{
+  margin-bottom:32px;
+}
+
+.ad-inline{
+  grid-column:1/-1;
+  margin:16px 0;
+}
+
+.adsbygoogle{
+  display:block;
   width:100%;
-  height:230px;
-  object-fit:cover;
+  min-height:250px;
 }
 
-.badge{
-  display:inline-block;
-  background:#0d47a1;
-  color:white;
-  font-size:12px;
-  padding:4px 8px;
-  border-radius:4px;
-  margin:10px 12px 0 12px;
+.visit-counter{
+  position:fixed;
+  top:20px;
+  right:20px;
+  background:linear-gradient(135deg,#10b981 0%,#059669 100%);
+  color:#fff;
+  padding:12px 20px;
+  border-radius:50px;
+  font-size:14px;
+  font-weight:700;
+  box-shadow:0 4px 15px rgba(16,185,129,0.4);
+  z-index:1000;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
+  transition:all 0.3s ease;
 }
 
-.noticia h2{
-  margin:10px 12px;
+.visit-counter:hover{
+  transform:translateY(-2px);
+  box-shadow:0 8px 25px rgba(16,185,129,0.5);
+}
+
+.visit-counter i{
+  animation:pulse 2s infinite;
+  font-size:16px;
+}
+
+@keyframes pulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.6;transform:scale(1.2)}
+}
+
+.telegram-toast{
+  position:fixed;
+  top:80px;
+  right:20px;
+  background:linear-gradient(135deg,var(--telegram) 0%,#00a8e6 100%);
+  color:#fff;
+  padding:16px 20px;
+  border-radius:12px;
+  font-size:13px;
+  font-weight:600;
+  box-shadow:0 8px 32px rgba(0,136,204,0.4);
+  z-index:999;
+  display:none;
+  align-items:center;
+  gap:12px;
+  max-width:300px;
+  animation:slideIn 0.4s ease;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
+}
+
+.telegram-toast.show{
+  display:flex;
+}
+
+.telegram-toast i{
+  font-size:24px;
+}
+
+@keyframes slideIn{
+  from{transform:translateX(400px);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+
+.ticker{
+  background:linear-gradient(90deg,#0f172a 0%,#1e293b 100%);
+  color:#fff;
+  font-size:14px;
+  padding:12px 0;
+  overflow:hidden;
+  border-bottom:3px solid var(--azul);
+  position:relative;
+}
+
+.ticker::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:0;
+  bottom:0;
+  width:100px;
+  background:linear-gradient(90deg,#0f172a,transparent);
+  z-index:2;
+  pointer-events:none;
+}
+
+.ticker::after{
+  content:"";
+  position:absolute;
+  right:0;
+  top:0;
+  bottom:0;
+  width:100px;
+  background:linear-gradient(270deg,#1e293b,transparent);
+  z-index:2;
+  pointer-events:none;
+}
+
+.ticker-content{
+  display:flex;
+  animation:ticker 35s linear infinite;
+  white-space:nowrap;
+}
+
+.ticker-item{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  padding:0 40px;
+  font-weight:600;
+  position:relative;
+}
+
+.ticker-item::after{
+  content:"•";
+  position:absolute;
+  right:0;
+  color:#475569;
   font-size:20px;
 }
 
-.noticia p{
-  margin:0 12px 12px 12px;
-  color:#444;
+.ticker-item span{
+  color:#60a5fa;
+  font-weight:800;
+  background:rgba(96,165,250,0.15);
+  padding:4px 12px;
+  border-radius:20px;
+  border:1px solid rgba(96,165,250,0.3);
 }
 
-.fecha{
-  margin:0 12px 12px 12px;
+@keyframes ticker{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+.topbar{
+  background:rgba(255,255,255,0.95);
+  padding:20px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:var(--sombra);
+  position:relative;
+  z-index:100;
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(226,232,240,0.8);
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  font-weight:900;
+  font-size:24px;
+  color:var(--azul);
+  text-decoration:none;
+  transition:all 0.3s;
+}
+
+.logo-img{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  object-fit:cover;
+  border:4px solid var(--azul);
+  box-shadow:0 8px 24px rgba(13,71,161,.25);
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo:hover .logo-img{
+  transform:scale(1.15) rotate(8deg);
+  box-shadow:0 12px 32px rgba(13,71,161,.4);
+}
+
+.logo-text{
+  display:flex;
+  flex-direction:column;
+}
+
+.logo-title{
+  font-size:26px;
+  font-weight:900;
+  color:var(--azul);
+  line-height:1.1;
+  letter-spacing:-0.5px;
+  background:linear-gradient(135deg,var(--azul) 0%,var(--azul2) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+.logo-subtitle{
+  font-size:13px;
+  color:#64748b;
+  font-weight:600;
+  margin-top:4px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.infoTop{
+  text-align:right;
+  font-size:15px;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+
+#hora{
+  font-weight:800;
+  color:var(--azul);
+  font-size:18px;
+  background:linear-gradient(135deg,var(--azul),var(--azul2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
+#clima{
+  color:#475569;
+  font-size:14px;
+  font-weight:600;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:#f1f5f9;
+  padding:8px 16px;
+  border-radius:20px;
+  border:1px solid #e2e8f0;
+}
+
+.menu{
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  padding:16px;
+  background:rgba(255,255,255,0.9);
+  position:sticky;
+  top:0;
+  z-index:90;
+  box-shadow:0 4px 20px rgba(0,0,0,.08);
+  backdrop-filter:blur(20px);
+  flex-wrap:wrap;
+  border-bottom:1px solid #e2e8f0;
+}
+
+.menu button{
+  border:none;
+  background:#f1f5f9;
+  font-weight:700;
+  cursor:pointer;
+  padding:10px 16px;
+  color:#475569;
+  border-radius:50px;
+  transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size:13px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  border:2px solid transparent;
+}
+
+.menu button:hover{
+  background:#e2e8f0;
+  transform:translateY(-3px);
+  box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.menu button.active{
+  background:linear-gradient(135deg,var(--azul) 0%,var(--azul2) 100%);
+  color:#fff;
+  box-shadow:0 8px 24px rgba(13,71,161,.35);
+  transform:translateY(-2px);
+  border-color:rgba(255,255,255,0.3);
+}
+
+.radio{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:24px;
+  padding:20px;
+  background:linear-gradient(90deg,#dc2626 0%,#b91c1c 100%);
+  color:#fff;
+  font-weight:700;
+  position:relative;
+  overflow:hidden;
+  border-bottom:3px solid rgba(255,255,255,0.2);
+}
+
+.radio::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  animation:backgroundMove 20s linear infinite;
+}
+
+@keyframes backgroundMove{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(60px)}
+}
+
+.live-indicator{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-size:15px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  position:relative;
+  z-index:1;
+  font-weight:800;
+  text-shadow:0 2px 4px rgba(0,0,0,0.3);
+}
+
+.live-pulse{
+  width:12px;
+  height:12px;
+  background:#fff;
+  border-radius:50%;
+  animation:livePulse 1.5s infinite;
+  box-shadow:0 0 20px rgba(255,255,255,0.8);
+}
+
+@keyframes livePulse{
+  0%,100%{transform:scale(1);opacity:1}
+  50%{transform:scale(1.5);opacity:0.5}
+}
+
+audio{
+  width:320px;
+  height:40px;
+  border-radius:20px;
+  position:relative;
+  z-index:1;
+  filter:drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+}
+
+.main-wrapper{
+  max-width:1400px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:220px 1fr 320px;
+  gap:32px;
+  padding:32px;
+}
+
+.sidebar-left{
+  display:flex;
+  flex-direction:column;
+  gap:24px;
+}
+
+.social-box{
+  background:linear-gradient(145deg,var(--azul) 0%,var(--azul2) 100%);
+  color:#fff;
+  padding:28px;
+  border-radius:20px;
+  box-shadow:var(--sombra-lg);
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.social-box::before{
+  content:"";
+  position:absolute;
+  top:-50%;
+  left:-50%;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);
+  animation:rotate 15s linear infinite;
+}
+
+@keyframes rotate{
+  from{transform:rotate(0deg)}
+  to{transform:rotate(360deg)}
+}
+
+.social-box h3{
+  font-size:20px;
+  margin-bottom:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  position:relative;
+  z-index:1;
+  font-weight:800;
+}
+
+.social-box p{
+  font-size:14px;
+  opacity:.95;
+  margin-bottom:24px;
+  line-height:1.5;
+  position:relative;
+  z-index:1;
+}
+
+.social-buttons-vertical{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  position:relative;
+  z-index:1;
+}
+
+.social-btn-large{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  padding:14px;
+  border-radius:12px;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  font-size:14px;
+  transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border:2px solid rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
+}
+
+.social-btn-large:hover{
+  transform:translateX(8px) scale(1.02);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+  border-color:rgba(255,255,255,0.4);
+}
+
+.social-btn-large.facebook{background:#1877F2}
+.social-btn-large.whatsapp{background:#25D366}
+.social-btn-large.telegram{background:#0088cc}
+
+.trending-sidebar h4{
+  font-size:16px;
+  color:#475569;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+}
+
+.trending-item{
+  padding:20px 20px 20px 44px;
+  background:#fff;
+  border-radius:16px;
+  margin-bottom:16px;
+  box-shadow:var(--sombra);
+  cursor:pointer;
+  transition:all .3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-left:4px solid transparent;
+  position:relative;
+}
+
+.trending-item:hover{
+  border-left-color:var(--azul);
+  transform:translateX(8px) translateY(-4px);
+  box-shadow:var(--sombra-lg);
+}
+
+.trending-item .trending-title{
+  font-weight:700;
+  line-height:1.5;
+  color:#1e293b;
+  font-size:14px;
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.trending-item .trending-meta{
   font-size:12px;
-  color:#777;
+  color:#64748b;
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  font-weight:600;
 }
 
-/* MODAL */
+.trending-number{
+  position:absolute;
+  left:-12px;
+  top:16px;
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  color:#fff;
+  font-size:14px;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.25);
+  border:3px solid #fff;
+}
+
+.trending-item:nth-child(1) .trending-number{
+  background:linear-gradient(135deg,#ef4444 0%,#dc2626 100%);
+  animation:pulse-fire 2s infinite;
+}
+
+.trending-item:nth-child(2) .trending-number{
+  background:linear-gradient(135deg,#f97316 0%,#ea580c 100%);
+}
+
+.trending-item:nth-child(3) .trending-number{
+  background:linear-gradient(135deg,#eab308 0%,#ca8a04 100%);
+}
+
+@keyframes pulse-fire{
+  0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.7);}
+  50%{box-shadow:0 0 0 12px rgba(239,68,68,0);}
+}
+
+.trending-loading{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:32px;
+  color:#64748b;
+  font-size:14px;
+  font-weight:600;
+}
+
+.ad-whatsapp{
+  background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);
+  color:#fff;
+  padding:24px;
+  border-radius:20px;
+  margin-bottom:32px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:0 8px 32px rgba(37,211,102,0.3);
+  transition:all 0.3s ease;
+  border:2px solid rgba(255,255,255,0.2);
+}
+
+.ad-whatsapp:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(37,211,102,0.4);
+}
+
+.ad-whatsapp::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+  background-size:30px 30px;
+  animation:patternMove 10s linear infinite;
+}
+
+@keyframes patternMove{
+  0%{background-position:0 0}
+  100%{background-position:30px 30px}
+}
+
+.icon-wa{
+  width:60px;
+  height:60px;
+  background:rgba(255,255,255,0.2);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:28px;
+  position:relative;
+  z-index:1;
+  backdrop-filter:blur(10px);
+  border:2px solid rgba(255,255,255,0.3);
+  animation:waBounce 2s infinite;
+}
+
+@keyframes waBounce{
+  0%,100%{transform:scale(1)}
+  50%{transform:scale(1.1)}
+}
+
+.content-main{
+  min-width:0;
+}
+
+.hero-layout{
+  display:grid;
+  grid-template-columns:1.3fr 1fr;
+  gap:24px;
+  margin-bottom:40px;
+}
+
+.hero-main{
+  position:relative;
+  border-radius:24px;
+  overflow:hidden;
+  min-height:520px;
+  color:#fff;
+  cursor:pointer;
+  box-shadow:var(--sombra-lg);
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border:1px solid rgba(255,255,255,0.1);
+}
+
+.hero-main:hover{
+  transform:translateY(-8px);
+  box-shadow:0 30px 60px -12px rgba(0,0,0,.25);
+}
+
+.hero-main img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.hero-main:hover img{
+  transform:scale(1.08);
+}
+
+.hero-main::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 40%,rgba(0,0,0,.2) 100%);
+}
+
+.hero-content{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:40px;
+  z-index:2;
+}
+
+.hero-badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:var(--sucesos);
+  color:#fff;
+  padding:8px 18px;
+  border-radius:50px;
+  font-size:13px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:20px;
+  box-shadow:0 8px 24px rgba(198,40,40,.5);
+  border:2px solid rgba(255,255,255,0.2);
+}
+
+.hero-content h2{
+  margin:0 0 20px 0;
+  font-size:36px;
+  line-height:1.15;
+  font-weight:900;
+  text-shadow:0 4px 12px rgba(0,0,0,.5);
+  letter-spacing:-0.5px;
+}
+
+.hero-content p{
+  font-size:17px;
+  opacity:.95;
+  line-height:1.7;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  font-weight:500;
+}
+
+.hero-meta{
+  display:flex;
+  gap:24px;
+  margin-top:24px;
+  font-size:14px;
+  opacity:.9;
+  font-weight:600;
+}
+
+.hero-side{
+  display:flex;
+  flex-direction:column;
+  gap:20px;
+}
+
+.side-item{
+  display:flex;
+  gap:16px;
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--sombra);
+  cursor:pointer;
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border:2px solid #e2e8f0;
+  height:calc(33.333% - 14px);
+}
+
+.side-item:hover{
+  transform:translateX(12px) translateY(-4px);
+  box-shadow:var(--sombra-lg);
+  border-color:var(--azul);
+}
+
+.side-item img{
+  width:140px;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.5s ease;
+}
+
+.side-item:hover img{
+  transform:scale(1.15);
+}
+
+.side-content{
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  flex:1;
+}
+
+.side-tag{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:8px;
+  font-size:12px;
+  color:#fff;
+  font-weight:800;
+  text-transform:uppercase;
+  margin-bottom:10px;
+  width:fit-content;
+  letter-spacing:0.5px;
+}
+
+.side-item h3{
+  font-size:16px;
+  line-height:1.5;
+  font-weight:800;
+  color:#1e293b;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+.section-title{
+  font-size:24px;
+  font-weight:900;
+  color:#1e293b;
+  margin:40px 0 24px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding-bottom:16px;
+  border-bottom:3px solid #e2e8f0;
+  letter-spacing:-0.5px;
+}
+
+.section-title::after{
+  content:"";
+  flex:1;
+  height:4px;
+  background:linear-gradient(90deg,var(--azul) 0%,var(--azul3) 50%,transparent 100%);
+  border-radius:2px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:24px;
+}
+
+.card{
+  background:#fff;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:var(--sombra);
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border:2px solid #e2e8f0;
+  position:relative;
+}
+
+.card:hover{
+  transform:translateY(-12px);
+  box-shadow:0 25px 50px -12px rgba(0,0,0,.15);
+  border-color:var(--azul);
+}
+
+.card-image-wrapper{
+  position:relative;
+  overflow:hidden;
+  height:220px;
+}
+
+.card img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card:hover img{
+  transform:scale(1.12);
+}
+
+.card-overlay{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.7) 0%,transparent 60%);
+  opacity:0;
+  transition:opacity 0.4s ease;
+  display:flex;
+  align-items:flex-end;
+  padding:20px;
+}
+
+.card:hover .card-overlay{
+  opacity:1;
+}
+
+.card-overlay-text{
+  color:#fff;
+  font-weight:700;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.card-body{
+  padding:24px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+}
+
+.tag{
+  display:inline-block;
+  padding:6px 16px;
+  border-radius:50px;
+  font-size:12px;
+  color:#fff;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:14px;
+  width:fit-content;
+  box-shadow:0 4px 12px rgba(0,0,0,.2);
+  border:2px solid rgba(255,255,255,0.2);
+}
+
+.tag.Sucesos{background:var(--sucesos)}
+.tag.Deportes{background:var(--deportes)}
+.tag.Internacionales{background:var(--inter)}
+.tag.Tecnología{background:var(--tecnologia)}
+.tag.Nacionales{background:var(--nacionales)}
+.tag.Economía{background:var(--economia)}
+.tag.Cultura{background:var(--cultura)}
+.tag.Espectáculos{background:var(--espectaculos)}
+
+.card h3{
+  font-size:19px;
+  line-height:1.4;
+  margin-bottom:14px;
+  color:#1e293b;
+  font-weight:800;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  letter-spacing:-0.3px;
+}
+
+.card p{
+  color:#64748b;
+  font-size:15px;
+  line-height:1.7;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  flex:1;
+}
+
+.card-footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:2px solid #e2e8f0;
+  font-size:13px;
+  color:#94a3b8;
+  font-weight:600;
+}
+
+.read-more{
+  color:var(--azul);
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  transition:all 0.3s ease;
+}
+
+.card:hover .read-more{
+  gap:12px;
+  color:var(--azul2);
+}
+
+.sidebar-right{
+  display:flex;
+  flex-direction:column;
+  gap:28px;
+}
+
+.popular-box{
+  background:#fff;
+  padding:28px;
+  border-radius:20px;
+  box-shadow:var(--sombra);
+  border:2px solid #e2e8f0;
+}
+
+.popular-box h4{
+  font-size:18px;
+  margin-bottom:20px;
+  color:#1e293b;
+  font-weight:800;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.ad-box{
+  background:#fff;
+  padding:28px;
+  border-radius:20px;
+  box-shadow:var(--sombra);
+  min-height:280px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:2px dashed #cbd5e1;
+  position:relative;
+  overflow:hidden;
+}
+
+.ad-box::before{
+  content:"Publicidad";
+  position:absolute;
+  top:12px;
+  right:12px;
+  font-size:11px;
+  color:#94a3b8;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.adsbygoogle{
+  display:block;
+  width:100%;
+  height:100%;
+  min-height:250px;
+}
 
 #modal{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.6);
+  background:rgba(15,23,42,.95);
   display:none;
   justify-content:center;
   align-items:center;
-  padding:10px;
-  z-index:999;
+  z-index:9999;
+  padding:24px;
+  backdrop-filter:blur(12px);
 }
 
 #modalContent{
-  background:white;
-  max-width:800px;
+  background:#fff;
   width:100%;
+  max-width:900px;
   max-height:90vh;
-  overflow:auto;
-  border-radius:8px;
-  padding:15px;
+  overflow-y:auto;
+  border-radius:24px;
+  position:relative;
+  animation:modalIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow:0 50px 100px -20px rgba(0,0,0,.5);
+  border:1px solid rgba(255,255,255,0.1);
 }
 
-#modalContent img{
+@keyframes modalIn{
+  from{opacity:0;transform:scale(0.9) translateY(40px)}
+  to{opacity:1;transform:scale(1) translateY(0)}
+}
+
+.modal-header{
+  position:relative;
+  height:450px;
+  overflow:hidden;
+}
+
+.modal-header img{
   width:100%;
-  border-radius:6px;
-  margin-bottom:10px;
+  height:100%;
+  object-fit:cover;
 }
 
-#modalContent h2{
-  margin-top:0;
+.modal-header::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 50%,transparent 100%);
+}
+
+.modal-title-wrap{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:48px;
+  color:#fff;
+  z-index:2;
+}
+
+.modal-body{
+  padding:40px 48px;
+}
+
+.modal-meta{
+  display:flex;
+  gap:28px;
+  color:#64748b;
+  font-size:15px;
+  margin-bottom:28px;
+  padding-bottom:28px;
+  border-bottom:2px solid #e2e8f0;
+  font-weight:600;
+}
+
+.modal-text{
+  font-size:18px;
+  line-height:1.9;
+  color:#334155;
+  font-weight:500;
+}
+
+.modal-text p{
+  margin-bottom:20px;
+}
+
+.close-btn{
+  position:absolute;
+  top:24px;
+  right:24px;
+  width:52px;
+  height:52px;
+  background:rgba(255,255,255,.25);
+  backdrop-filter:blur(20px);
+  border:2px solid rgba(255,255,255,.4);
+  border-radius:50%;
+  color:#fff;
+  font-size:28px;
+  cursor:pointer;
+  z-index:10;
+  transition:all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:300;
+}
+
+.close-btn:hover{
+  background:rgba(255,255,255,.4);
+  transform:rotate(90deg) scale(1.1);
+}
+
+.floating-share{
+  position:fixed;
+  bottom:28px;
+  right:28px;
+  width:64px;
+  height:64px;
+  background:linear-gradient(135deg,var(--azul) 0%,var(--azul2) 100%);
+  color:#fff;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 12px 32px rgba(13,71,161,.4);
+  transition:all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index:100;
+  border:none;
+  border:3px solid rgba(255,255,255,0.3);
+}
+
+.floating-share:hover{
+  transform:scale(1.15) rotate(15deg);
+  box-shadow:0 16px 40px rgba(13,71,161,.5);
+}
+
+.footer{
+  margin-top:80px;
+  background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
+  color:#fff;
+  padding:80px 32px 32px;
+  position:relative;
+  overflow:hidden;
+}
+
+.footer::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:6px;
+  background:linear-gradient(90deg,var(--azul),var(--sucesos),var(--deportes),var(--inter));
+  animation:rainbow 3s linear infinite;
+  background-size:200% 100%;
+}
+
+@keyframes rainbow{
+  0%{background-position:0% 50%}
+  100%{background-position:200% 50%}
+}
+
+.footer-grid{
+  max-width:1200px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:48px;
+  margin-bottom:48px;
+}
+
+.footer-brand{
+  font-size:28px;
+  font-weight:900;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  letter-spacing:-0.5px;
+}
+
+.footer-logo{
+  width:60px;
+  height:60px;
+  border-radius:50%;
+  border:4px solid var(--azul);
+  object-fit:cover;
+  box-shadow:0 8px 24px rgba(13,71,161,.4);
+}
+
+.footer-desc{
+  color:#94a3b8;
+  line-height:1.8;
+  margin-bottom:28px;
+  font-size:15px;
+}
+
+.footer-section h4{
+  color:#fff;
+  font-size:18px;
+  margin-bottom:24px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:800;
+}
+
+.footer-links{
+  list-style:none;
+}
+
+.footer-links li{
+  margin:14px 0;
+  color:#94a3b8;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:600;
+  font-size:15px;
+}
+
+.footer-links li:hover{
+  color:#fff;
+  transform:translateX(8px);
+}
+
+.footer-bottom{
+  max-width:1200px;
+  margin:0 auto;
+  padding-top:32px;
+  border-top:1px solid #334155;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:20px;
+  color:#64748b;
+  font-size:15px;
+  font-weight:600;
+}
+
+::-webkit-scrollbar{
+  width:10px;
+  height:10px;
+}
+
+::-webkit-scrollbar-track{
+  background:#f1f5f9;
+  border-radius:5px;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(var(--azul),var(--azul2));
+  border-radius:5px;
+  border:2px solid #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(var(--azul2),var(--azul3));
+}
+
+@media(max-width:1200px){
+  .main-wrapper{
+    grid-template-columns:1fr 300px;
+    gap:24px;
+    padding:24px;
+  }
+  .sidebar-left{display:none}
+}
+
+@media(max-width:900px){
+  .main-wrapper{
+    grid-template-columns:1fr;
+    padding:20px;
+  }
+  .sidebar-right{display:none}
+  .hero-layout{grid-template-columns:1fr}
+  .hero-main{min-height:450px}
+  .grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  
+  .visit-counter{
+    top:12px;
+    right:12px;
+    font-size:12px;
+    padding:10px 14px;
+  }
+  
+  .telegram-toast{
+    top:70px;
+    right:12px;
+    left:12px;
+    max-width:none;
+  }
+  
+  .logo-img{
+    width:55px;
+    height:55px;
+  }
+  .logo-title{
+    font-size:20px;
+  }
+  .logo-subtitle{
+    display:none;
+  }
+  
+  .menu button{
+    padding:10px 18px;
+    font-size:13px;
+  }
+  
+  audio{
+    width:100%;
+    max-width:300px;
+  }
+  
+  .hero-content h2{
+    font-size:28px;
+  }
+  
+  .modal-header{
+    height:300px;
+  }
+  .modal-body{
+    padding:28px;
+  }
+  .modal-text{
+    font-size:16px;
+  }
+}
+
+@media(max-width:600px){
+  .topbar{
+    flex-direction:column;
+    gap:16px;
+    text-align:center;
+    padding:16px;
+  }
+  .infoTop{
+    text-align:center;
+    align-items:center;
+  }
+  .menu{
+    gap:8px;
+    padding:16px;
+  }
+  .menu button{
+    padding:8px 14px;
+    font-size:12px;
+  }
+  .hero-main{
+    min-height:380px;
+  }
+  .hero-content{
+    padding:24px;
+  }
+  .hero-content h2{
+    font-size:24px;
+  }
+  .side-item{
+    flex-direction:column;
+    height:auto;
+  }
+  .side-item img{
+    width:100%;
+    height:160px;
+  }
+  .footer-grid{
+    grid-template-columns:1fr;
+    gap:32px;
+  }
+  .footer-bottom{
+    flex-direction:column;
+    text-align:center;
+  }
+  .floating-share{
+    width:56px;
+    height:56px;
+    font-size:20px;
+  }
+}
+
+.skeleton{
+  background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);
+  background-size:200% 100%;
+  animation:shimmer 1.5s infinite;
+  border-radius:12px;
+}
+
+@keyframes shimmer{
+  0%{background-position:200% 0}
+  100%{background-position:-200% 0}
+}
+
+.push-notification{
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%) translateY(-100px);
+  background:#fff;
+  padding:20px 28px;
+  border-radius:16px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+  z-index:10000;
+  display:flex;
+  align-items:center;
+  gap:16px;
+  border-left:4px solid var(--azul);
+  transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width:90%;
+  width:400px;
+}
+
+.push-notification.show{
+  transform:translateX(-50%) translateY(0);
+}
+
+.push-notification i{
+  font-size:24px;
+  color:var(--azul);
+}
+
+.push-content h4{
+  font-size:16px;
+  font-weight:800;
+  color:#1e293b;
+  margin-bottom:4px;
+}
+
+.push-content p{
+  font-size:14px;
+  color:#64748b;
 }
 </style>
 </head>
 
 <body>
 
-<header>
+<div class="push-notification" id="pushNotification">
+  <i class="fas fa-bell"></i>
+  <div class="push-content">
+    <h4>🔔 Nueva noticia</h4>
+    <p id="pushText">Se ha publicado una nueva noticia</p>
+  </div>
+</div>
 
-  <div class="header-top">
-    <div class="brand">
-      <img src="logo.png" class="logo">
-      <div>
-        <h1>INFORMATE AL INSTANTE</h1>
-        <small>Informate al instante Nicaragua</small>
+<div class="telegram-toast" id="telegramToast">
+  <i class="fab fa-telegram"></i>
+  <span id="telegramText">Noticia enviada a Telegram</span>
+</div>
+
+<div class="visit-counter" id="visitCounter">
+  <i class="fas fa-eye"></i>
+  <span id="visitCount">Cargando...</span>
+</div>
+
+<div class="ticker">
+  <div class="ticker-content">
+    <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
+    <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
+    <div class="ticker-item">⛽ Súper: <span>C$ 49.03/ltr</span></div>
+    <div class="ticker-item">🛢 Diésel: <span>C$ 43.21/ltr</span></div>
+    <div class="ticker-item">📅 <span id="tickerDate"></span></div>
+    <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
+    <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
+    <div class="ticker-item">⛽ Súper: <span>C$ 49.03/ltr</span></div>
+    <div class="ticker-item">🛢 Diésel: <span>C$ 43.21/ltr</span></div>
+    <div class="ticker-item">📅 <span id="tickerDate2"></span></div>
+  </div>
+</div>
+
+<div class="topbar">
+  <a href="#" class="logo" onclick="location.reload()">
+    <img src="logo.png" alt="Logo Nicaragua Informate" class="logo-img" loading="lazy" onerror="this.src='https://via.placeholder.com/70?text=NI'">
+    <div class="logo-text">
+      <span class="logo-title">Nicaragua Informate</span>
+      <span class="logo-subtitle">Tu fuente de noticias confiable</span>
+    </div>
+  </a>
+  <div class="infoTop">
+    <div id="hora">--</div>
+    <div id="clima">⛅ Cargando...</div>
+  </div>
+</div>
+
+<div class="menu">
+  <button class="active" onclick="cambiar('Todas',this)">🔥 Última hora</button>
+  <button onclick="cambiar('Sucesos',this)">🚨 Sucesos</button>
+  <button onclick="cambiar('Nacionales',this)">🇳🇮 Nacionales</button>
+  <button onclick="cambiar('Economía',this)">💰 Economía</button>
+  <button onclick="cambiar('Cultura',this)">🎨 Cultura</button>
+  <button onclick="cambiar('Espectáculos',this)">⭐ Espectáculos</button>
+  <button onclick="cambiar('Deportes',this)">⚽ Deportes</button>
+  <button onclick="cambiar('Internacionales',this)">🌍 Internacionales</button>
+  <button onclick="cambiar('Tecnología',this)">💻 Tecnología</button>
+</div>
+
+<div class="radio">
+  <div class="live-indicator">
+    <span class="live-pulse"></span>
+    🔴 Radio en Vivo 24/7
+  </div>
+  <audio controls src="https://streaming.rcs.com.ni:8080/radioamerica" preload="none"></audio>
+</div>
+
+<div class="main-wrapper">
+
+  <aside class="sidebar-left">
+    
+    <div class="social-box">
+      <h3>🚀 Síguenos</h3>
+      <p>Únete a nuestra comunidad y recibe noticias al instante</p>
+      
+      <div class="social-buttons-vertical">
+        <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" class="social-btn-large facebook">
+          <i class="fab fa-facebook-f"></i> Facebook Principal
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" class="social-btn-large facebook" style="background:#166fe5;">
+          <i class="fab fa-facebook-f"></i> Facebook Secundario
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L" target="_blank" class="social-btn-large whatsapp">
+          <i class="fab fa-whatsapp"></i> Canal WhatsApp
+        </a>
+        <a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank" class="social-btn-large telegram">
+          <i class="fab fa-telegram-plane"></i> Telegram
+        </a>
       </div>
     </div>
 
-    <div class="info-top">
-      <div id="fechaHora">--</div>
-      <div id="clima">Managua: --</div>
+    <div class="trending-sidebar">
+      <h4>🔥 Trending Now</h4>
+      <div id="trendingContainer">
+        <div class="trending-loading">
+          <i class="fas fa-spinner fa-spin"></i> Cargando tendencias...
+        </div>
+      </div>
     </div>
-  </div>
+    
+  </aside>
 
-  <div class="header-bottom">
+  <main class="content-main">
 
-    <div class="indicadores">
-      📊 <b>Indicadores Económicos (Nicaragua)</b><br>
-      Dólar BCN: C$ 36.6243<br>
-      Gasolina Regular: C$ 47.84 / ltr<br>
-      Gasolina Súper: C$ 49.03 / ltr<br>
-      Diésel: C$ 43.21 / ltr
+    <div id="portada"></div>
+
+    <!-- 💰 ANUNCIO DESPUÉS DE PORTADA -->
+    <div class="ad-container ad-top">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-4115203339551838"
+           data-ad-slot="8408634019"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
     </div>
 
-    <div class="redes">
-      <a href="https://www.facebook.com/profile.php?id=61578261125687&sk=about" target="_blank" title="Facebook">📘</a>
-      <a href="https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L" target="_blank" title="WhatsApp">🟢</a>
-      <a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank" title="Telegram">✈️</a>
+    <div class="ad-whatsapp" onclick="window.open('https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L','_blank')">
+      <div class="icon-wa">
+        <i class="fab fa-whatsapp"></i>
+      </div>
+      <div style="position:relative;z-index:1;">
+        <div style="font-weight:800;font-size:20px;margin-bottom:6px;">📢 ¿Tienes una noticia?</div>
+        <div style="font-size:15px;opacity:.95;">Envíala a nuestro canal de WhatsApp</div>
+        <div style="font-size:13px;opacity:.8;margin-top:10px;font-weight:600;">
+          <i class="fas fa-paper-plane"></i> Click para unirte al canal
+        </div>
+      </div>
     </div>
 
-  </div>
+    <h2 class="section-title">📰 Más Noticias</h2>
+    <div id="lista" class="grid">
+      <div class="card skeleton" style="height:400px;"></div>
+      <div class="card skeleton" style="height:400px;"></div>
+    </div>
 
-</header>
+  </main>
 
+  <aside class="sidebar-right">
+    
+    <div class="popular-box">
+      <h4>⭐ Más Populares</h4>
+      <div id="popularPosts">
+        <div style="display:flex;gap:12px;margin-bottom:16px;">
+          <div class="skeleton" style="width:60px;height:60px;flex-shrink:0;"></div>
+          <div style="flex:1;">
+            <div class="skeleton" style="height:16px;margin-bottom:8px;"></div>
+            <div class="skeleton" style="height:12px;width:60%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<div class="container" id="listaNoticias">
-  Cargando noticias...
+    <div class="ad-box">
+      <ins class="adsbygoogle"
+           style="display:block; width:100%; min-height:250px;"
+           data-ad-client="ca-pub-4115203339551838"
+           data-ad-slot="8408634019"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>
+
+  </aside>
+
 </div>
 
-<!-- MODAL -->
 <div id="modal" onclick="cerrarModal()">
   <div id="modalContent" onclick="event.stopPropagation()">
-    <h2 id="mTitulo"></h2>
-    <img id="mImagen">
-    <p id="mFecha" class="fecha"></p>
-    <p id="mContenido"></p>
+    <button class="close-btn" onclick="cerrarModal()">×</button>
+    <div class="modal-header">
+      <img id="mImg" src="" alt="" loading="lazy">
+      <div class="modal-title-wrap">
+        <span id="mCat" class="tag"></span>
+        <h2 id="mTitulo" style="font-size:36px;font-weight:900;line-height:1.2;margin-top:16px;letter-spacing:-0.5px;"></h2>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="modal-meta">
+        <span id="mFecha">📅 </span>
+        <span>⏱️ <span id="mReadTime">3</span> min lectura</span>
+        <span id="mViews">👁️ <span id="viewCount">0</span> vistas</span>
+      </div>
+      <div class="modal-text" id="mCont"></div>
+
+      <!-- 💰 ANUNCIO DENTRO DEL ARTÍCULO -->
+      <div class="ad-container" style="margin:32px 0;">
+        <ins class="adsbygoogle"
+             style="display:block; text-align:center;"
+             data-ad-layout="in-article"
+             data-ad-format="fluid"
+             data-ad-client="ca-pub-4115203339551838"
+             data-ad-slot="8408634019"></ins>
+      </div>
+
+      <div style="margin-top:40px;padding-top:32px;border-top:3px solid #e2e8f0;">
+        <h4 style="margin-bottom:20px;color:#1e293b;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;">
+          <i class="fas fa-share-alt"></i> Compartir Noticia
+        </h4>
+        
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <button onclick="shareFacebook()" style="padding:16px;background:#1877f2;color:#fff;border:none;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:700;transition:all 0.3s ease;border:2px solid transparent;">
+            <i class="fab fa-facebook-f" style="font-size:24px;"></i>
+            Facebook
+          </button>
+          <button onclick="shareTwitter()" style="padding:16px;background:#1da1f2;color:#fff;border:none;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:700;transition:all 0.3s ease;border:2px solid transparent;">
+            <i class="fab fa-twitter" style="font-size:24px;"></i>
+            Twitter
+          </button>
+          <button onclick="shareWhatsApp()" style="padding:16px;background:#25d366;color:#fff;border:none;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:700;transition:all 0.3s ease;border:2px solid transparent;">
+            <i class="fab fa-whatsapp" style="font-size:24px;"></i>
+            WhatsApp
+          </button>
+          <button onclick="copyLink()" style="padding:16px;background:#64748b;color:#fff;border:none;border-radius:12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;font-size:13px;font-weight:700;transition:all 0.3s ease;border:2px solid transparent;">
+            <i class="fas fa-link" style="font-size:24px;"></i>
+            Copiar
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
+<button class="floating-share" onclick="sharePage()" title="Compartir página">
+  <i class="fas fa-share-alt"></i>
+</button>
+
+<footer class="footer">
+  <div class="footer-grid">
+    
+    <div>
+      <div class="footer-bottom">
+  <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
+  <div style="display:flex;gap:24px;">
+    <a href="/privacidad" style="color:#64748b;text-decoration:none;">Privacidad</a>
+    <a href="/terminos" style="color:#64748b;text-decoration:none;">Términos</a>
+    <a href="/cookies" style="color:#64748b;text-decoration:none;">Cookies</a>
+  </div>
+</div>
+    
+    <div class="footer-section">
+      <h4>📂 Secciones</h4>
+      <ul class="footer-links">
+        <li onclick="cambiar('Todas', document.querySelector('.menu button'))"><i class="fas fa-fire"></i> Última Hora</li>
+        <li onclick="cambiar('Sucesos', document.querySelectorAll('.menu button')[1])"><i class="fas fa-exclamation-triangle"></i> Sucesos</li>
+        <li onclick="cambiar('Nacionales', document.querySelectorAll('.menu button')[2])"><i class="fas fa-flag"></i> Nacionales</li>
+        <li onclick="cambiar('Economía', document.querySelectorAll('.menu button')[3])"><i class="fas fa-chart-line"></i> Economía</li>
+        <li onclick="cambiar('Cultura', document.querySelectorAll('.menu button')[4])"><i class="fas fa-palette"></i> Cultura</li>
+        <li onclick="cambiar('Espectáculos', document.querySelectorAll('.menu button')[5])"><i class="fas fa-star"></i> Espectáculos</li>
+        <li onclick="cambiar('Deportes', document.querySelectorAll('.menu button')[6])"><i class="fas fa-futbol"></i> Deportes</li>
+        <li onclick="cambiar('Internacionales', document.querySelectorAll('.menu button')[7])"><i class="fas fa-globe"></i> Internacionales</li>
+        <li onclick="cambiar('Tecnología', document.querySelectorAll('.menu button')[8])"><i class="fas fa-laptop"></i> Tecnología</li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>📊 Indicadores</h4>
+      <ul class="footer-links">
+        <li><i class="fas fa-dollar-sign"></i> Dólar: C$36.62</li>
+        <li><i class="fas fa-gas-pump"></i> Gasolina: C$47.84</li>
+        <li><i class="fas fa-oil-can"></i> Diésel: C$43.21</li>
+        <li><i class="fas fa-coins"></i> Euro: C$39.50</li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>📢 Síguenos</h4>
+      <ul class="footer-links">
+        <li onclick="window.open('https://www.facebook.com/profile.php?id=61578261125687','_blank')"><i class="fab fa-facebook"></i> Facebook Principal</li>
+        <li onclick="window.open('https://www.facebook.com/profile.php?id=61577962970892','_blank')"><i class="fab fa-facebook"></i> Facebook Secundario</li>
+        <li onclick="window.open('https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L','_blank')"><i class="fab fa-whatsapp"></i> WhatsApp</li>
+        <li onclick="window.open('https://t.me/fHHjncJqMQM3NjZh','_blank')"><i class="fab fa-telegram"></i> Telegram</li>
+      </ul>
+    </div>
+    
+  </div>
+  
+  <div class="footer-bottom">
+    <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
+    <div style="display:flex;gap:24px;">
+      <span style="cursor:pointer;" onclick="alert('Política de privacidad en desarrollo')">Privacidad</span>
+      <span style="cursor:pointer;" onclick="alert('Términos de uso en desarrollo')">Términos</span>
+      <span style="cursor:pointer;" onclick="alert('Configuración de cookies en desarrollo')">Cookies</span>
+    </div>
+  </div>
+</footer>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } 
-from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, increment, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
   authDomain: "informate-instant-nicaragua.firebaseapp.com",
   projectId: "informate-instant-nicaragua",
-  storageBucket: "informate-instant-nicaragua.appspot.com",
+  storageBucket: "informate-instant-nicaragua.firebasestorage.app",
   messagingSenderId: "24988088146",
-  appId: "1:24988088146:web:d26a207508da055668ec8b"
+  appId: "1:24988088146:web:d26a207508da055668ec8b",
+  measurementId: "G-W1B6J61WEP"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const lista = document.getElementById("listaNoticias");
+// 🔒 CONFIGURACIÓN SEGURA - Tokens desde localStorage
+const TELEGRAM_BOT_TOKEN = localStorage.getItem("tg_token") || "";
+const TELEGRAM_CHAT_ID = "-1003431574597";
 
-async function cargarNoticias(){
+const FACEBOOK_CONFIG = {
+  cuenta1: {
+    pageId: "61578261125687",
+    accessToken: localStorage.getItem("fb_token_1") || ""
+  },
+  cuenta2: {
+    pageId: "61577962970892",
+    accessToken: localStorage.getItem("fb_token_2") || ""
+  }
+};
 
-  lista.innerHTML = "";
+const emoji = {
+  'Sucesos': '🚨',
+  'Nacionales': '🇳🇮',
+  'Política': '🏛',
+  'Economía': '💰',
+  'Cultura': '🎭',
+  'Espectáculos': '⭐',
+  'Deportes': '⚽',
+  'Tecnología': '💻',
+  'Internacionales': '🌍'
+};
 
-  const q = query(
-    collection(db,"noticias"),
-    orderBy("fecha","desc")
-  );
+const PROCESSED_KEY = 'noticiasProcesadas_v4';
 
-  const snap = await getDocs(q);
+const getProcessedNews = () => {
+  try {
+    const data = localStorage.getItem(PROCESSED_KEY);
+    const parsed = data ? JSON.parse(data) : {};
+    const ahora = Date.now();
+    const limite = 7 * 24 * 60 * 60 * 1000;
+    Object.keys(parsed).forEach(id => {
+      if (ahora - (parsed[id].timestamp || 0) > limite) {
+        delete parsed[id];
+      }
+    });
+    return parsed;
+  } catch(e) {
+    return {};
+  }
+};
 
-  if(snap.empty){
-    lista.innerHTML = "No hay noticias publicadas.";
+const markNewsAsProcessed = (id, platforms = []) => {
+  const processed = getProcessedNews();
+  const existing = processed[id] || { platforms: [] };
+  processed[id] = {
+    timestamp: Date.now(),
+    platforms: [...new Set([...existing.platforms, ...platforms])],
+    date: new Date().toISOString()
+  };
+  const entries = Object.entries(processed).slice(-100);
+  localStorage.setItem(PROCESSED_KEY, JSON.stringify(Object.fromEntries(entries)));
+};
+
+const isNewsProcessed = (id, platform = null) => {
+  const processed = getProcessedNews();
+  if (!processed[id]) return false;
+  if (platform) {
+    return processed[id].platforms?.includes(platform) || false;
+  }
+  return true;
+};
+
+let todas = [];
+let categoria = "Todas";
+let currentNoticia = null;
+
+const IMAGEN_DEFAULT_TELEGRAM = "https://i.imgur.com/8Km9tLL.jpg";
+
+function obtenerUrlImagen(noticia) {
+  let imageUrl = noticia.imagen || '';
+  if (!imageUrl || imageUrl === '') {
+    return IMAGEN_DEFAULT_TELEGRAM;
+  }
+  if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+    return imageUrl;
+  }
+  return 'https://informate-instant-nicaragua.vercel.app/' + imageUrl.replace(/^\//, '');
+}
+
+function getEmoji(categoria) {
+  return emoji[categoria] || '📰';
+}
+
+// 🔒 VALIDACIÓN DE TOKENS ANTES DE ENVIAR
+async function enviarAFacebook(noticia, cuenta) {
+  const config = FACEBOOK_CONFIG[cuenta];
+  
+  // Validar que existe token configurado
+  if (!config || !config.accessToken || config.accessToken === "") {
+    console.log(`⚠️ Facebook ${cuenta}: Token no configurado en localStorage`);
+    console.log(`💡 Usa: localStorage.setItem("fb_token_${cuenta === 'cuenta1' ? '1' : '2'}", "TU_TOKEN_AQUI")`);
+    return false;
+  }
+  
+  if (isNewsProcessed(noticia.id, `facebook_${cuenta}`)) {
+    console.log(`Facebook ${cuenta}: Ya enviado, omitiendo...`);
+    return true;
+  }
+  
+  try {
+    const mensaje = `🔴 ${noticia.categoria.toUpperCase()}
+
+📰 ${noticia.titulo}
+
+${noticia.resumen || noticia.contenido?.substring(0, 200) + '...' || ''}
+
+🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+#Nicaragua #Noticias #${noticia.categoria}`;
+    
+    const url = `https://graph.facebook.com/v18.0/${config.pageId}/feed`;
+    const params = new URLSearchParams({
+      message: mensaje,
+      link: `https://informate-instant-nicaragua.vercel.app/#${noticia.id}`,
+      access_token: config.accessToken
+    });
+    
+    const imageUrl = obtenerUrlImagen(noticia);
+    if (imageUrl && (imageUrl.includes('imgur.com') || imageUrl.includes('cloudinary.com') || imageUrl.includes('ibb.co'))) {
+      params.append('picture', imageUrl);
+    }
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      body: params
+    });
+    
+    const result = await response.json();
+    if (response.ok && (result.id || result.post_id)) {
+      console.log(`✅ Facebook ${cuenta}: Publicado`);
+      markNewsAsProcessed(noticia.id, [`facebook_${cuenta}`]);
+      mostrarToastTelegram(`✅ Facebook ${cuenta === 'cuenta1' ? 'Principal' : 'Secundario'}: Publicado`);
+      return true;
+    } else {
+      console.error(`Error Facebook ${cuenta}:`, result);
+      mostrarToastTelegram(`❌ Facebook ${cuenta}: ${result.error?.message || 'Error'}`);
+      return false;
+    }
+  } catch (error) {
+    console.error(`Error Facebook ${cuenta}:`, error);
+    mostrarToastTelegram(`❌ Error de conexión Facebook ${cuenta}`);
+    return false;
+  }
+}
+
+async function enviarATelegram(noticia) {
+  // Validar token
+  if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "") {
+    console.log("⚠️ Telegram: Token no configurado en localStorage");
+    console.log('💡 Usa: localStorage.setItem("tg_token", "TU_TOKEN_AQUI")');
+    return false;
+  }
+  
+  if (isNewsProcessed(noticia.id, 'telegram')) {
+    console.log(`Telegram: ${noticia.id} ya enviado, omitiendo...`);
+    return true;
+  }
+  
+  console.log('=== ENVIANDO A TELEGRAM ===');
+  try {
+    const imageUrl = obtenerUrlImagen(noticia);
+    const catEmoji = getEmoji(noticia.categoria);
+    const mensaje = `${catEmoji} *${noticia.categoria.toUpperCase()}*
+
+📰 *${noticia.titulo}*
+
+📝 ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...' || ''}
+
+📲 *Leer noticia completa:*
+👉 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+⏰ ${formatearFecha(noticia.fecha)}
+👁️ ${noticia.vistas || 0} vistas
+
+🔖 #Nicaragua #${noticia.categoria.replace(/\s/g, '')} #Noticias${noticia.categoria === 'Nacionales' ? ' #NicaraguaHoy' : ''}`;
+    
+    const formData = new FormData();
+    formData.append('chat_id', TELEGRAM_CHAT_ID);
+    formData.append('photo', imageUrl);
+    formData.append('caption', mensaje);
+    formData.append('parse_mode', 'Markdown');
+    
+    const responsePhoto = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
+      method: 'POST',
+      body: formData
+    });
+    
+    const resultPhoto = await responsePhoto.json();
+    if (responsePhoto.ok && resultPhoto.ok) {
+      console.log('✅ Telegram: Enviado con imagen');
+      markNewsAsProcessed(noticia.id, ['telegram']);
+      mostrarToastTelegram(`✅ Telegram: Enviada con imagen`);
+      return true;
+    }
+    
+    console.log('⚠️ Telegram: Fallback a texto con preview...');
+    const responseMsg = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: mensaje,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: false
+      })
+    });
+    
+    if (responseMsg.ok) {
+      markNewsAsProcessed(noticia.id, ['telegram']);
+      mostrarToastTelegram(`✅ Telegram: Enviada (texto + preview)`);
+      return true;
+    }
+  } catch (error) {
+    console.error('Error Telegram:', error);
+    mostrarToastTelegram(`❌ Error Telegram: ${error.message}`);
+    return false;
+  }
+}
+
+function mostrarToastTelegram(texto) {
+  const toast = document.getElementById('telegramToast');
+  document.getElementById('telegramText').textContent = texto;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+function mostrarPushNotificacion(titulo) {
+  const notif = document.getElementById('pushNotification');
+  document.getElementById('pushText').textContent = `"${titulo.substring(0, 40)}..."`;
+  notif.classList.add('show');
+  setTimeout(() => notif.classList.remove('show'), 5000);
+}
+
+// 🔔 NOTIFICACIONES DEL NAVEGADOR
+function solicitarPermisoNotificaciones() {
+  if (!("Notification" in window)) {
+    console.log("Este navegador no soporta notificaciones");
+    return;
+  }
+  
+  if (Notification.permission === "granted") {
+    return true;
+  } else if (Notification.permission !== "denied") {
+    Notification.requestPermission().then(permission => {
+      if (permission === "granted") {
+        console.log("✅ Permiso de notificaciones concedido");
+      }
+    });
+  }
+}
+
+function enviarNotificacionNavegador(titulo, cuerpo, icono = "logo.png") {
+  if (Notification.permission === "granted") {
+    new Notification(titulo, {
+      body: cuerpo,
+      icon: icono,
+      badge: icono,
+      tag: "nueva-noticia",
+      requireInteraction: false
+    });
+  }
+}
+
+async function incrementarVisita() {
+  try {
+    const visitanteId = obtenerIdVisitante();
+    const hoy = new Date().toDateString();
+    const claveVisita = `visita_${hoy}_${visitanteId}`;
+    if (localStorage.getItem(claveVisita)) {
+      const total = await obtenerTotalVisitas();
+      document.getElementById('visitCount').innerText = total.toLocaleString();
+      return;
+    }
+    localStorage.setItem(claveVisita, 'true');
+    const statsRef = doc(db, "estadisticas", "visitas");
+    await updateDoc(statsRef, {
+      total: increment(1),
+      ultimaVisita: new Date()
+    });
+    const total = await obtenerTotalVisitas();
+    document.getElementById('visitCount').innerText = total.toLocaleString();
+    if (total % 100 === 0) {
+      await enviarEstadisticasTelegram(total);
+    }
+  } catch(e) {
+    console.error("Error contador:", e);
+  }
+}
+
+function obtenerIdVisitante() {
+  let id = localStorage.getItem('visitanteId');
+  if (!id) {
+    id = 'v_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('visitanteId', id);
+  }
+  return id;
+}
+
+async function obtenerTotalVisitas() {
+  try {
+    const statsRef = doc(db, "estadisticas", "visitas");
+    const docSnap = await getDoc(statsRef);
+    if (docSnap.exists()) {
+      return docSnap.data().total || 0;
+    } else {
+      await setDoc(statsRef, { total: 1, ultimaVisita: new Date() });
+      return 1;
+    }
+  } catch(e) {
+    return 0;
+  }
+}
+
+async function cargar(){
+  try {
+    // Solicitar permiso de notificaciones al cargar
+    solicitarPermisoNotificaciones();
+    
+    const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
+    onSnapshot(q, (snap) => {
+      const noticiasAnteriores = new Set(todas.map(n => n.id));
+      const nuevasNoticias = [];
+      snap.forEach(d => {
+        const data = d.data();
+        data.id = d.id;
+        nuevasNoticias.push(data);
+        if (!noticiasAnteriores.has(d.id) && noticiasAnteriores.size > 0) {
+          console.log('🆕 Nueva noticia:', data.titulo);
+          
+          // Enviar a redes (solo si hay tokens configurados)
+          enviarATelegram(data);
+          setTimeout(() => enviarAFacebook(data, 'cuenta1'), 1000);
+          setTimeout(() => enviarAFacebook(data, 'cuenta2'), 2000);
+          
+          // Mostrar notificaciones
+          mostrarPushNotificacion(data.titulo);
+          enviarNotificacionNavegador("🔔 Nueva noticia", data.titulo, data.imagen || "logo.png");
+        }
+      });
+      
+      todas = nuevasNoticias.sort((a, b) => {
+        const fechaA = a.fecha?.seconds || a.fecha?.toMillis?.() || 0;
+        const fechaB = b.fecha?.seconds || b.fecha?.toMillis?.() || 0;
+        return fechaB - fechaA;
+      });
+      
+      pintar();
+      cargarPopulares();
+      cargarTrending();
+      inicializarAdSense();
+    });
+    incrementarVisita();
+  } catch(e) {
+    console.error("Error cargando:", e);
+  }
+}
+
+function inicializarAdSense() {
+  try {
+    if (window.adsbygoogle) {
+      const ads = document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status="done"])');
+      ads.forEach(ad => {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      });
+    }
+  } catch(e) {
+    console.error('Error AdSense:', e);
+  }
+}
+
+async function incrementarVistasNoticia(id) {
+  try {
+    const noticiaRef = doc(db, "noticias", id);
+    await updateDoc(noticiaRef, { vistas: increment(1) });
+    const noticia = todas.find(n => n.id === id);
+    if (noticia) {
+      noticia.vistas = (noticia.vistas || 0) + 1;
+    }
+  } catch(e) {
+    console.error("Error incrementando vistas:", e);
+  }
+}
+
+function cargarPopulares(){
+  // 📈 ORDENAR POR VISTAS REALES (Trending real)
+  const populares = [...todas]
+    .sort((a, b) => (b.vistas || 0) - (a.vistas || 0))
+    .slice(0, 5);
+    
+  const container = document.getElementById("popularPosts");
+  if(populares.length === 0){
+    container.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:20px;">No hay noticias</p>';
+    return;
+  }
+  container.innerHTML = populares.map((n) => `
+    <div style="display:flex;gap:14px;margin-bottom:16px;cursor:pointer;" onclick="abrirPorId('${n.id}')">
+      <div style="width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;">
+        <img src="${n.imagen}" loading="lazy" style="width:100%;height:100%;object-fit:cover;" alt="${n.titulo}">
+      </div>
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;line-height:1.4;color:#1e293b;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
+          ${n.titulo}
+        </div>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">
+          ${n.categoria} • 👁️ ${n.vistas || 0} vistas
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function cargarTrending(){
+  // 🔥 TRENDING REAL - Ordenado por vistas, no por fecha
+  const trending = [...todas]
+    .sort((a, b) => (b.vistas || 0) - (a.vistas || 0))
+    .slice(0, 3);
+    
+  const container = document.getElementById("trendingContainer");
+  
+  if (trending.length === 0) {
+    container.innerHTML = '<div class="trending-loading">No hay tendencias aún</div>';
+    return;
+  }
+  
+  container.innerHTML = trending.map((n, index) => `
+    <div class="trending-item" onclick="abrirPorId('${n.id}')">
+      <div class="trending-number">${index + 1}</div>
+      <div class="trending-title">${n.titulo}</div>
+      <div class="trending-meta">
+        <i class="fas fa-fire"></i> ${n.vistas || 0} vistas • ${formatearFecha(n.fecha)} • ${n.categoria}
+      </div>
+    </div>
+  `).join('');
+}
+
+function pintar(){
+  const portada = document.getElementById("portada");
+  portada.innerHTML = "";
+  document.getElementById("lista").innerHTML = "";
+
+  let datos = categoria === "Todas" ? todas : todas.filter(n => n.categoria === categoria);
+  
+  if(!datos.length){
+    document.getElementById("lista").innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#64748b;">
+      <div style="font-size:48px;margin-bottom:16px;">📭</div>
+      <p>No hay noticias en esta categoría</p>
+    </div>`;
     return;
   }
 
-  snap.forEach(doc => {
+  const principal = datos[0];
+  const laterales = datos.slice(1, 4);
+  const resto = datos.slice(4, 12);
 
-    const n = doc.data();
-
-    let fechaTxt = "";
-    if(n.fecha){
-      fechaTxt = n.fecha.toDate().toLocaleString("es-NI");
-    }
-
-    const div = document.createElement("div");
-    div.className = "noticia";
-
-    div.innerHTML = `
-      <img src="${n.imagen}">
-      <span class="badge">${n.categoria || "Nacional"}</span>
-      <h2>${n.titulo}</h2>
-      <p>${n.resumen}</p>
-      <p class="fecha">Publicado: ${fechaTxt}</p>
+  if(principal){
+    const hero = document.createElement("div");
+    hero.className = "hero-layout";
+    hero.innerHTML = `
+      <div class="hero-main" onclick="abrirPorId('${principal.id}')">
+        <img src="${principal.imagen}" loading="lazy" alt="${principal.titulo}">
+        <div class="hero-content">
+          <span class="hero-badge"><i class="fas fa-circle" style="font-size:8px;"></i> ${principal.categoria}</span>
+          <h2>${principal.titulo}</h2>
+          <p>${principal.resumen || principal.contenido?.substring(0, 150) + '...' || ''}</p>
+          <div class="hero-meta">
+            <span><i class="far fa-calendar"></i> ${formatearFecha(principal.fecha)}</span>
+            <span><i class="far fa-eye"></i> ${principal.vistas || 0} vistas</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-side">
+        ${laterales.map(n => `
+          <div class="side-item" onclick="abrirPorId('${n.id}')">
+            <img src="${n.imagen}" loading="lazy" alt="${n.titulo}">
+            <div class="side-content">
+              <span class="side-tag ${n.categoria}">${n.categoria}</span>
+              <h3>${n.titulo}</h3>
+              <div style="font-size:12px;color:#64748b;margin-top:8px;">
+                <i class="fas fa-eye"></i> ${n.vistas || 0} vistas
+              </div>
+            </div>
+          </div>
+        `).join("")}
+      </div>
     `;
-
-    div.onclick = () => abrirModal(n);
-
-    lista.appendChild(div);
-
-  });
-
-}
-
-function abrirModal(n){
-  document.getElementById("mTitulo").innerText = n.titulo;
-  document.getElementById("mImagen").src = n.imagen;
-
-  if(n.fecha){
-    document.getElementById("mFecha").innerText =
-      "Publicado: " + n.fecha.toDate().toLocaleString("es-NI");
-  }else{
-    document.getElementById("mFecha").innerText = "";
+    portada.appendChild(hero);
   }
 
-  document.getElementById("mContenido").innerText = n.contenido;
+  resto.forEach((n, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.onclick = () => abrirPorId(n.id);
+    card.innerHTML = `
+      <div class="card-image-wrapper">
+        <img src="${n.imagen}" loading="lazy" alt="${n.titulo}">
+        <div class="card-overlay">
+          <span class="card-overlay-text">Leer artículo <i class="fas fa-arrow-right"></i></span>
+        </div>
+      </div>
+      <div class="card-body">
+        <span class="tag ${n.categoria}">${n.categoria}</span>
+        <h3>${n.titulo}</h3>
+        <p>${n.resumen || n.contenido?.substring(0, 120) + '...' || ''}</p>
+        <div class="card-footer">
+          <span><i class="far fa-clock"></i> ${formatearFecha(n.fecha)}</span>
+          <span><i class="fas fa-eye"></i> ${n.vistas || 0} vistas</span>
+        </div>
+      </div>
+    `;
+    document.getElementById("lista").appendChild(card);
+    
+    // 💰 Insertar anuncio cada 4 noticias
+    if ((index + 1) % 4 === 0 && index < resto.length - 1) {
+      const adDiv = document.createElement("div");
+      adDiv.className = "ad-container ad-inline";
+      adDiv.innerHTML = `
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-4115203339551838"
+             data-ad-slot="8408634019"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      `;
+      document.getElementById("lista").appendChild(adDiv);
+    }
+  });
+}
+
+window.cambiar = function(cat, btn){
+  categoria = cat;
+  document.querySelectorAll(".menu button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  pintar();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+};
+
+window.abrirPorId = async function(id){
+  const n = todas.find(x => x.id === id);
+  if(n) {
+    await incrementarVistasNoticia(id);
+    abrir(n);
+  }
+};
+
+function abrir(n){
+  currentNoticia = n;
+  document.getElementById("mCat").className = "tag " + n.categoria;
+  document.getElementById("mCat").innerText = n.categoria;
+  document.getElementById("mTitulo").innerText = n.titulo;
+  document.getElementById("mImg").src = n.imagen;
+  document.getElementById("mCont").innerHTML = formatearContenido(n.contenido);
+  document.getElementById("mFecha").innerHTML = `<i class="far fa-calendar"></i> ${formatearFecha(n.fecha)}`;
+  document.getElementById("viewCount").innerText = n.vistas || 0;
   document.getElementById("modal").style.display = "flex";
+  document.body.style.overflow = "hidden";
+  history.pushState({id: n.id}, n.titulo, "#" + n.id);
+  
+  // Inicializar anuncio dentro del modal
+  setTimeout(() => {
+    if (window.adsbygoogle) {
+      const modalAd = document.querySelector('#modalContent .adsbygoogle');
+      if (modalAd && !modalAd.getAttribute('data-adsbygoogle-status')) {
+        (adsbygoogle = window.adsbygoogle || []).push({});
+      }
+    }
+  }, 100);
+}
+
+function formatearContenido(texto) {
+  if (!texto) return '<p style="color:#94a3b8;">Contenido no disponible</p>';
+  return texto.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
 }
 
 window.cerrarModal = function(){
   document.getElementById("modal").style.display = "none";
+  document.body.style.overflow = "";
+  history.pushState({}, document.title, window.location.pathname);
+  currentNoticia = null;
+};
+
+function formatearFecha(fecha){
+  if(!fecha) return "Fecha no disponible";
+  if(fecha.toDate){
+    const d = fecha.toDate();
+    const ahora = new Date();
+    const diff = (ahora - d) / 1000;
+    if (diff < 60) return 'Hace un momento';
+    if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
+    if (diff < 86400) return `Hace ${Math.floor(diff/3600)} horas`;
+    if (diff < 172800) return 'Ayer';
+    return d.toLocaleString("es-NI", {day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'});
+  }
+  return fecha;
 }
 
-cargarNoticias();
+window.shareFacebook = function(){
+  if(!currentNoticia) return;
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
+  window.open(url, '_blank');
+};
 
+window.shareTwitter = function(){
+  if(!currentNoticia) return;
+  const text = encodeURIComponent(currentNoticia.titulo);
+  const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`;
+  window.open(url, '_blank');
+};
+
+window.shareWhatsApp = function(){
+  if(!currentNoticia) return;
+  const text = encodeURIComponent(`*${currentNoticia.titulo}*\n\n${window.location.href}`);
+  window.open(`https://wa.me/?text=${text}`, '_blank');
+};
+
+window.copyLink = function(){
+  if(!currentNoticia) return;
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    alert('Enlace copiado al portapapeles');
+  });
+};
+
+window.sharePage = function(){
+  if(navigator.share){
+    navigator.share({
+      title: "Nicaragua Informate",
+      text: "Noticias de Nicaragua al momento",
+      url: window.location.href
+    });
+  } else {
+    window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href), "_blank");
+  }
+};
+
+async function enviarEstadisticasTelegram(visitas) {
+  if (!TELEGRAM_BOT_TOKEN) return;
+  
+  try {
+    const mensaje = `📊 *Estadísticas*
+
+👥 Visitas: *${visitas.toLocaleString()}*
+📅 ${new Date().toLocaleDateString('es-NI')}`;
+    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: mensaje,
+        parse_mode: 'Markdown'
+      })
+    });
+  } catch(e) {}
+}
+
+cargar();
+
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape") window.cerrarModal();
+});
+
+window.addEventListener("popstate", () => {
+  if(!location.hash) window.cerrarModal();
+  else {
+    const id = location.hash.substring(1);
+    const noticia = todas.find(n => n.id === id);
+    if (noticia) abrir(noticia);
+  }
+});
 </script>
 
 <script>
-// Hora
 function actualizarHora(){
-  document.getElementById("fechaHora").innerText =
-    new Date().toLocaleString("es-NI");
-}
-setInterval(actualizarHora,1000);
-actualizarHora();
-
-// Clima Managua
-async function cargarClima(){
-  try{
-    const url="https://api.open-meteo.com/v1/forecast?latitude=12.1364&longitude=-86.2514&current_weather=true";
-    const r=await fetch(url);
-    const d=await r.json();
-    document.getElementById("clima").innerText =
-      "Managua: " + d.current_weather.temperature + "°C";
-  }catch(e){
-    document.getElementById("clima").innerText="Managua: --";
+  try {
+    const ahora = new Date();
+    const opciones = {weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'};
+    const fechaStr = ahora.toLocaleDateString("es-NI", opciones);
+    document.getElementById("hora").innerText = fechaStr;
+    document.getElementById("tickerDate").innerText = ahora.toLocaleDateString("es-NI", {weekday: 'short', day: 'numeric', month: 'short'});
+    document.getElementById("tickerDate2").innerText = ahora.toLocaleDateString("es-NI", {weekday: 'short', day: 'numeric', month: 'short'});
+  } catch(e) {
+    console.error("Error hora:", e);
   }
 }
-cargarClima();
+
+actualizarHora();
+setInterval(actualizarHora, 1000);
+
+async function cargarClima(){
+  const climaEl = document.getElementById("clima");
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 5000);
+    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=12.1364&longitude=-86.2514&current_weather=true", {
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const temp = Math.round(d.current_weather.temperature);
+    const iconos = {
+      0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
+      45: "🌫️", 48: "🌫️", 51: "🌦️", 53: "🌧️",
+      55: "🌧️", 61: "🌧️", 63: "🌧️", 65: "🌧️",
+      71: "❄️", 73: "❄️", 75: "❄️", 95: "⛈️", 96: "⛈️", 99: "⛈️"
+    };
+    const icono = iconos[d.current_weather.weathercode] || "🌡️";
+    climaEl.innerHTML = `${icono} <strong>Managua ${temp}°C</strong>`;
+  } catch(e) {
+    climaEl.innerHTML = "🌡️ <strong>Managua --°C</strong>";
+    setTimeout(cargarClima, 30000);
+  }
+}
+
+setTimeout(cargarClima, 1000);
+
+// ⚡ Precarga de imágenes críticas
+window.addEventListener('load', () => {
+  todas.slice(0, 6).forEach(n => {
+    if (n.imagen) {
+      const img = new Image();
+      img.src = n.imagen;
+    }
+  });
+});
 </script>
 
 </body>

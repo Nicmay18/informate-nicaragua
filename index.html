@@ -23,15 +23,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B6J61WEP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-W1B6J61WEP');
 </script>
 
-<!-- ADSENSE - Script principal (ID de editor) -->
+<!-- ADSENSE -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
 
 <style>
@@ -43,6 +43,7 @@
   --deportes:#2e7d32;
   --inter:#6a1b9a;
   --tecnologia:#0288d1;
+  --nacionales:#e65100;
   --gris:#f8fafc;
   --sombra:0 4px 6px -1px rgba(0,0,0,.1);
   --sombra-lg:0 20px 25px -5px rgba(0,0,0,.1);
@@ -59,7 +60,6 @@ body{
   overflow-x:hidden;
 }
 
-/* CONTADOR DE VISITAS MEJORADO */
 .visit-counter{
   position:fixed;
   top:20px;
@@ -95,7 +95,6 @@ body{
   50%{opacity:.6;transform:scale(1.2)}
 }
 
-/* NOTIFICACIÓN TELEGRAM */
 .telegram-toast{
   position:fixed;
   top:80px;
@@ -130,7 +129,6 @@ body{
   to{transform:translateX(0);opacity:1}
 }
 
-/* TICKER MEJORADO */
 .ticker{
   background:linear-gradient(90deg,#0f172a 0%,#1e293b 100%);
   color:#fff;
@@ -202,7 +200,6 @@ body{
   100%{transform:translateX(-50%)}
 }
 
-/* HEADER CON LOGO MEJORADO */
 .topbar{
   background:rgba(255,255,255,0.95);
   padding:20px 32px;
@@ -298,7 +295,6 @@ body{
   border:1px solid #e2e8f0;
 }
 
-/* MENÚ MEJORADO */
 .menu{
   display:flex;
   justify-content:center;
@@ -344,7 +340,6 @@ body{
   border-color:rgba(255,255,255,0.3);
 }
 
-/* RADIO MEJORADO */
 .radio{
   display:flex;
   justify-content:center;
@@ -408,7 +403,6 @@ audio{
   filter:drop-shadow(0 4px 12px rgba(0,0,0,0.2));
 }
 
-/* LAYOUT PRINCIPAL MEJORADO */
 .main-wrapper{
   max-width:1400px;
   margin:0 auto;
@@ -424,7 +418,6 @@ audio{
   gap:24px;
 }
 
-/* REDES SOCIALES MEJORADO */
 .social-box{
   background:linear-gradient(145deg,var(--azul) 0%,var(--azul2) 100%);
   color:#fff;
@@ -507,7 +500,6 @@ audio{
 .social-btn-large.whatsapp{background:#25D366}
 .social-btn-large.telegram{background:#0088cc}
 
-/* TRENDING MEJORADO */
 .trending-sidebar h4{
   font-size:16px;
   color:#475569;
@@ -605,7 +597,6 @@ audio{
   font-weight:600;
 }
 
-/* AD WHATSAPP MEJORADO */
 .ad-whatsapp{
   background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);
   color:#fff;
@@ -947,6 +938,7 @@ audio{
 .tag.Deportes{background:var(--deportes)}
 .tag.Internacionales{background:var(--inter)}
 .tag.Tecnología{background:var(--tecnologia)}
+.tag.Nacionales{background:var(--nacionales)}
 
 .card h3{
   font-size:19px;
@@ -1022,7 +1014,6 @@ audio{
   gap:10px;
 }
 
-/* ADSENSE CONTAINER MEJORADO */
 .ad-box{
   background:#fff;
   padding:28px;
@@ -1049,7 +1040,6 @@ audio{
   letter-spacing:1px;
 }
 
-/* Estilos específicos para el anuncio de AdSense */
 .adsbygoogle{
   display:block;
   width:100%;
@@ -1057,7 +1047,6 @@ audio{
   min-height:250px;
 }
 
-/* MODAL MEJORADO */
 #modal{
   position:fixed;
   inset:0;
@@ -1195,7 +1184,6 @@ audio{
   box-shadow:0 16px 40px rgba(13,71,161,.5);
 }
 
-/* FOOTER MEJORADO */
 .footer{
   margin-top:80px;
   background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);
@@ -1303,7 +1291,6 @@ audio{
   font-weight:600;
 }
 
-/* SCROLLBAR MEJORADO */
 ::-webkit-scrollbar{
   width:10px;
   height:10px;
@@ -1324,7 +1311,6 @@ audio{
   background:linear-gradient(var(--azul2),var(--azul3));
 }
 
-/* RESPONSIVE MEJORADO */
 @media(max-width:1200px){
   .main-wrapper{
     grid-template-columns:1fr 300px;
@@ -1446,7 +1432,6 @@ audio{
   }
 }
 
-/* LOADING SKELETON */
 .skeleton{
   background:linear-gradient(90deg,#f1f5f9 25%,#e2e8f0 50%,#f1f5f9 75%);
   background-size:200% 100%;
@@ -1459,7 +1444,6 @@ audio{
   100%{background-position:-200% 0}
 }
 
-/* NOTIFICACIÓN PUSH */
 .push-notification{
   position:fixed;
   top:20px;
@@ -1504,7 +1488,6 @@ audio{
 
 <body>
 
-<!-- NOTIFICACIÓN PUSH -->
 <div class="push-notification" id="pushNotification">
   <i class="fas fa-bell"></i>
   <div class="push-content">
@@ -1513,19 +1496,16 @@ audio{
   </div>
 </div>
 
-<!-- NOTIFICACIÓN TELEGRAM -->
 <div class="telegram-toast" id="telegramToast">
   <i class="fab fa-telegram"></i>
   <span id="telegramText">Noticia enviada a Telegram</span>
 </div>
 
-<!-- CONTADOR DE VISITAS -->
 <div class="visit-counter" id="visitCounter">
   <i class="fas fa-eye"></i>
   <span id="visitCount">Cargando...</span>
 </div>
 
-<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-content">
     <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
@@ -1541,10 +1521,9 @@ audio{
   </div>
 </div>
 
-<!-- HEADER -->
 <div class="topbar">
   <a href="#" class="logo" onclick="location.reload()">
-    <img src="logotipo.png" alt="Logo" class="logo-img" onerror="this.src='https://via.placeholder.com/70?text=NI'">
+    <img src="logo.png" alt="Logo Nicaragua Informate" class="logo-img" onerror="this.src='https://via.placeholder.com/70?text=NI'">
     <div class="logo-text">
       <span class="logo-title">Nicaragua Informate</span>
       <span class="logo-subtitle">Tu fuente de noticias confiable</span>
@@ -1556,16 +1535,15 @@ audio{
   </div>
 </div>
 
-<!-- MENÚ -->
 <div class="menu">
   <button class="active" onclick="cambiar('Todas',this)">🔥 Última hora</button>
   <button onclick="cambiar('Sucesos',this)">🚨 Sucesos</button>
+  <button onclick="cambiar('Nacionales',this)">🇳🇮 Nacionales</button>
   <button onclick="cambiar('Deportes',this)">⚽ Deportes</button>
   <button onclick="cambiar('Internacionales',this)">🌍 Internacionales</button>
   <button onclick="cambiar('Tecnología',this)">💻 Tecnología</button>
 </div>
 
-<!-- RADIO -->
 <div class="radio">
   <div class="live-indicator">
     <span class="live-pulse"></span>
@@ -1574,13 +1552,10 @@ audio{
   <audio controls src="https://streaming.rcs.com.ni:8080/radioamerica" preload="none"></audio>
 </div>
 
-<!-- MAIN WRAPPER -->
 <div class="main-wrapper">
 
-  <!-- SIDEBAR IZQUIERDA -->
   <aside class="sidebar-left">
     
-    <!-- REDES SOCIALES -->
     <div class="social-box">
       <h3>🚀 Síguenos</h3>
       <p>Únete a nuestra comunidad y recibe noticias al instante</p>
@@ -1601,7 +1576,6 @@ audio{
       </div>
     </div>
 
-    <!-- TRENDING -->
     <div class="trending-sidebar">
       <h4>🔥 Trending Now</h4>
       <div id="trendingContainer">
@@ -1613,12 +1587,10 @@ audio{
     
   </aside>
 
-  <!-- CONTENIDO CENTRAL -->
   <main class="content-main">
 
     <div id="portada"></div>
 
-    <!-- ANUNCIO WHATSAPP -->
     <div class="ad-whatsapp" onclick="window.open('https://whatsapp.com/channel/0029VbC3gewG8l5GEFHoAy0L','_blank')">
       <div class="icon-wa">
         <i class="fab fa-whatsapp"></i>
@@ -1640,10 +1612,8 @@ audio{
 
   </main>
 
-  <!-- SIDEBAR DERECHA -->
   <aside class="sidebar-right">
     
-    <!-- POPULARES -->
     <div class="popular-box">
       <h4>⭐ Más Populares</h4>
       <div id="popularPosts">
@@ -1657,11 +1627,10 @@ audio{
       </div>
     </div>
 
-    <!-- ANUNCIO GOOGLE ADSENSE - CORREGIDO CON ID DE CLIENTE -->
     <div class="ad-box">
       <ins class="adsbygoogle"
            style="display:block; width:100%; min-height:250px;"
-           data-ad-client="ca-3830460324"
+           data-ad-client="ca-pub-4115203339551838"
            data-ad-slot="8408634019"
            data-ad-format="auto"
            data-full-width-responsive="true"></ins>
@@ -1671,7 +1640,6 @@ audio{
 
 </div>
 
-<!-- MODAL -->
 <div id="modal" onclick="cerrarModal()">
   <div id="modalContent" onclick="event.stopPropagation()">
     <button class="close-btn" onclick="cerrarModal()">×</button>
@@ -1690,7 +1658,6 @@ audio{
       </div>
       <div class="modal-text" id="mCont"></div>
 
-      <!-- BOTONES DE COMPARTIR -->
       <div style="margin-top:40px;padding-top:32px;border-top:3px solid #e2e8f0;">
         <h4 style="margin-bottom:20px;color:#1e293b;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800;">
           <i class="fas fa-share-alt"></i> Compartir Noticia
@@ -1719,18 +1686,16 @@ audio{
   </div>
 </div>
 
-<!-- BOTÓN FLOTANTE -->
 <button class="floating-share" onclick="sharePage()" title="Compartir página">
   <i class="fas fa-share-alt"></i>
 </button>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-grid">
     
     <div>
       <div class="footer-brand">
-        <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.src='https://via.placeholder.com/60?text=NI'">
+        <img src="logo.png" alt="Logo Nicaragua Informate" class="footer-logo" onerror="this.src='https://via.placeholder.com/60?text=NI'">
         Nicaragua Informate
       </div>
       <p class="footer-desc">
@@ -1743,9 +1708,10 @@ audio{
       <ul class="footer-links">
         <li onclick="cambiar('Todas', document.querySelector('.menu button'))"><i class="fas fa-fire"></i> Última Hora</li>
         <li onclick="cambiar('Sucesos', document.querySelectorAll('.menu button')[1])"><i class="fas fa-exclamation-triangle"></i> Sucesos</li>
-        <li onclick="cambiar('Deportes', document.querySelectorAll('.menu button')[2])"><i class="fas fa-futbol"></i> Deportes</li>
-        <li onclick="cambiar('Internacionales', document.querySelectorAll('.menu button')[3])"><i class="fas fa-globe"></i> Internacionales</li>
-        <li onclick="cambiar('Tecnología', document.querySelectorAll('.menu button')[4])"><i class="fas fa-laptop"></i> Tecnología</li>
+        <li onclick="cambiar('Nacionales', document.querySelectorAll('.menu button')[2])"><i class="fas fa-flag"></i> Nacionales</li>
+        <li onclick="cambiar('Deportes', document.querySelectorAll('.menu button')[3])"><i class="fas fa-futbol"></i> Deportes</li>
+        <li onclick="cambiar('Internacionales', document.querySelectorAll('.menu button')[4])"><i class="fas fa-globe"></i> Internacionales</li>
+        <li onclick="cambiar('Tecnología', document.querySelectorAll('.menu button')[5])"><i class="fas fa-laptop"></i> Tecnología</li>
       </ul>
     </div>
     
@@ -1781,102 +1747,136 @@ audio{
   </div>
 </footer>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, updateDoc, increment, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
+// ✅ CONFIGURACIÓN CORREGIDA - PROYECTO VIEJO CON NOTICIAS
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
+  apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
   authDomain: "informate-instant-nicaragua.firebaseapp.com",
   projectId: "informate-instant-nicaragua",
-  storageBucket: "informate-instant-nicaragua.appspot.com",
+  storageBucket: "informate-instant-nicaragua.firebasestorage.app",
   messagingSenderId: "24988088146",
-  appId: "1:24988088146:web:d26a207508da055668ec8b"
+  appId: "1:24988088146:web:d26a207508da055668ec8b",
+  measurementId: "G-W1B6J61WEP"
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// Configuración de Telegram Bot
-const TELEGRAM_BOT_TOKEN = "8654209233:AAG5SpBT7kjmq_wuD5KiNmNwxFlWbfufLwg";
+// TOKEN SEGURO - Obtener de localStorage o usar el proporcionado
+const TELEGRAM_BOT_TOKEN = localStorage.getItem("tg_token") || "8654209233:AAG5SpBT7kjmq_wuD5KiNmNwxFlWbfufLwg";
 const TELEGRAM_CHAT_ID = "-1003431574597";
+
+const FACEBOOK_CONFIG = {
+  cuenta1: {
+    pageId: "61578261125687",
+    accessToken: "EAANHXQ58A0IBQ1ZBB3ILNYh9dhck5wXHKfedarJ0RGVsu8AcR709B4fcqLoYJGkmj8tu4az"
+  },
+  cuenta2: {
+    pageId: "61577962970892",
+    accessToken: "EAANHXQ58A0IBQ1ZBB3ILNYh9dhck5wXHKfedarJ0RGVsu8AcR709B4fcqLoYJGkmj8tu4az"
+  }
+};
+
+// EMOJIS POR CATEGORÍA
+const emoji = {
+  'Sucesos': '🚨',
+  'Nacionales': '🇳🇮',
+  'Política': '🏛',
+  'Economía': '💰',
+  'Cultura': '🎭',
+  'Deportes': '⚽',
+  'Tecnología': '💻',
+  'Internacionales': '🌍'
+};
+
+// SISTEMA ANTI-DUPLICADOS MEJORADO
+const PROCESSED_KEY = 'noticiasProcesadas_v4';
+
+const getProcessedNews = () => {
+  try {
+    const data = localStorage.getItem(PROCESSED_KEY);
+    const parsed = data ? JSON.parse(data) : {};
+    
+    // Limpiar noticias antiguas (más de 7 días)
+    const ahora = Date.now();
+    const limite = 7 * 24 * 60 * 60 * 1000;
+    
+    Object.keys(parsed).forEach(id => {
+      if (ahora - (parsed[id].timestamp || 0) > limite) {
+        delete parsed[id];
+      }
+    });
+    
+    return parsed;
+  } catch(e) {
+    return {};
+  }
+};
+
+const markNewsAsProcessed = (id, platforms = []) => {
+  const processed = getProcessedNews();
+  const existing = processed[id] || { platforms: [] };
+  
+  processed[id] = {
+    timestamp: Date.now(),
+    platforms: [...new Set([...existing.platforms, ...platforms])],
+    date: new Date().toISOString()
+  };
+  
+  const entries = Object.entries(processed).slice(-100);
+  localStorage.setItem(PROCESSED_KEY, JSON.stringify(Object.fromEntries(entries)));
+};
+
+const isNewsProcessed = (id, platform = null) => {
+  const processed = getProcessedNews();
+  if (!processed[id]) return false;
+  if (platform) {
+    return processed[id].platforms?.includes(platform) || false;
+  }
+  return true;
+};
 
 let todas = [];
 let categoria = "Todas";
 let currentNoticia = null;
-let noticiasEnviadas = new Set();
 
-// CONFIGURACIÓN FACEBOOK (ya tienes tus tokens)
-const FACEBOOK_CONFIG = {
-  // Cuenta 1 - Principal
-  cuenta1: {
-    pageId: "ID_DE_TU_PAGINA_1", // Reemplaza con tu ID real
-    accessToken: "TU_TOKEN_LARGO_AQUI_1" // Reemplaza con tu token real
-  },
-  // Cuenta 2 - Secundaria  
-  cuenta2: {
-    pageId: "ID_DE_TU_PAGINA_2", // Reemplaza con tu ID real
-    accessToken: "TU_TOKEN_LARGO_AQUI_2" // Reemplaza con tu token real
-  }
-};
+const IMAGEN_DEFAULT_TELEGRAM = "https://i.imgur.com/8Km9tLL.jpg";
 
-// CONFIGURACIÓN WHATSAPP (CallMeBot - gratis)
-const WHATSAPP_CONFIG = {
-  apiKey: "TU_API_KEY_CALLMEBOT", // Regístrate en callmebot.com
-  phone: "505XXXXXXXX" // Tu número con código 505
-};
-
-// IMAGEN POR DEFECTO PARA TELEGRAM (debe ser URL pública)
-const IMAGEN_DEFAULT_TELEGRAM = "https://i.imgur.com/8Km9tLL.jpg"; // Cambia esto por tu imagen en Imgur
-
-// FUNCIÓN PARA OBTENER URL DE IMAGEN VÁLIDA PARA TELEGRAM
-function obtenerUrlImagenTelegram(noticia) {
+function obtenerUrlImagen(noticia) {
   let imageUrl = noticia.imagen || '';
   
-  console.log('Imagen original de noticia:', imageUrl);
-  
-  // Si no hay imagen, usar default
   if (!imageUrl || imageUrl === '') {
-    console.log('Usando imagen default');
     return IMAGEN_DEFAULT_TELEGRAM;
   }
   
-  // Si ya es URL completa (http/https), usarla directamente
   if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
-    // Si es de imgur o cloudinary, está bien
-    if (imageUrl.includes('imgur.com') || 
-        imageUrl.includes('cloudinary.com') || 
-        imageUrl.includes('ibb.co') ||
-        imageUrl.includes('postimg.cc')) {
-      console.log('URL externa detectada:', imageUrl);
-      return imageUrl;
-    }
-    
-    // Si es de nuestro dominio, puede que no funcione para Telegram
-    // Intentar de todos modos
-    console.log('URL completa pero no es hosting externo:', imageUrl);
     return imageUrl;
   }
   
-  // Si es ruta relativa, construir URL completa
-  // PERO Telegram probablemente no pueda acceder a ella
-  const urlCompleta = 'https://informate-instant-nicaragua.vercel.app/' + imageUrl.replace(/^\//, '');
-  console.log('URL construida (puede no funcionar en Telegram):', urlCompleta);
-  
-  // Retornar la URL pero advertir que puede fallar
-  return urlCompleta;
+  return 'https://informate-instant-nicaragua.vercel.app/' + imageUrl.replace(/^\//, '');
 }
 
-// FUNCIÓN PARA ENVIAR A FACEBOOK
-async function enviarAFacebook(noticia, cuenta) {
-  try {
-    const config = FACEBOOK_CONFIG[cuenta];
-    if (!config || !config.accessToken || config.accessToken.includes('TU_TOKEN')) {
-      console.log(`Facebook ${cuenta} no configurado`);
-      return false;
-    }
+function getEmoji(categoria) {
+  return emoji[categoria] || '📰';
+}
 
+async function enviarAFacebook(noticia, cuenta) {
+  const config = FACEBOOK_CONFIG[cuenta];
+  
+  if (isNewsProcessed(noticia.id, `facebook_${cuenta}`)) {
+    console.log(`Facebook ${cuenta}: Ya enviado, omitiendo...`);
+    return true;
+  }
+  
+  if (!config || !config.accessToken) {
+    console.log(`Facebook ${cuenta}: No configurado`);
+    return false;
+  }
+
+  try {
     const mensaje = `🔴 ${noticia.categoria.toUpperCase()}
 
 📰 ${noticia.titulo}
@@ -1886,7 +1886,7 @@ ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
 🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
 
 #Nicaragua #Noticias #${noticia.categoria}`;
-
+    
     const url = `https://graph.facebook.com/v18.0/${config.pageId}/feed`;
     
     const params = new URLSearchParams({
@@ -1895,9 +1895,8 @@ ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
       access_token: config.accessToken
     });
 
-    // Si hay imagen pública, agregarla
-    const imageUrl = obtenerUrlImagenTelegram(noticia);
-    if (imageUrl && (imageUrl.includes('imgur.com') || imageUrl.includes('cloudinary.com'))) {
+    const imageUrl = obtenerUrlImagen(noticia);
+    if (imageUrl && (imageUrl.includes('imgur.com') || imageUrl.includes('cloudinary.com') || imageUrl.includes('ibb.co'))) {
       params.append('picture', imageUrl);
     }
 
@@ -1908,116 +1907,54 @@ ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
 
     const result = await response.json();
     
-    if (response.ok && result.id) {
+    if (response.ok && (result.id || result.post_id)) {
       console.log(`✅ Facebook ${cuenta}: Publicado`);
+      markNewsAsProcessed(noticia.id, [`facebook_${cuenta}`]);
       mostrarToastTelegram(`✅ Facebook ${cuenta === 'cuenta1' ? 'Principal' : 'Secundario'}: Publicado`);
       return true;
     } else {
       console.error(`Error Facebook ${cuenta}:`, result);
+      mostrarToastTelegram(`❌ Facebook ${cuenta}: ${result.error?.message || 'Error'}`);
       return false;
     }
 
   } catch (error) {
     console.error(`Error Facebook ${cuenta}:`, error);
+    mostrarToastTelegram(`❌ Error de conexión Facebook ${cuenta}`);
     return false;
   }
 }
 
-// FUNCIÓN PARA ENVIAR A WHATSAPP
-async function enviarAWhatsApp(noticia) {
-  try {
-    if (!WHATSAPP_CONFIG.apiKey || WHATSAPP_CONFIG.apiKey.includes('TU_API_KEY')) {
-      console.log('WhatsApp no configurado');
-      return false;
-    }
-
-    const mensaje = `🔴 *${noticia.categoria.toUpperCase()}*
-
-📰 *${noticia.titulo}*
-
-📝 ${noticia.resumen || noticia.contenido?.substring(0, 150) + '...'}
-
-🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
-
-📅 ${formatearFecha(noticia.fecha)}`;
-
-    const encodedMsg = encodeURIComponent(mensaje);
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${WHATSAPP_CONFIG.phone}&text=${encodedMsg}&apikey=${WHATSAPP_CONFIG.apiKey}`;
-
-    const response = await fetch(url);
-    
-    if (response.ok) {
-      console.log('✅ WhatsApp: Enviado');
-      mostrarToastTelegram('✅ WhatsApp: Enviado');
-      return true;
-    } else {
-      console.error('Error WhatsApp:', await response.text());
-      return false;
-    }
-
-  } catch (error) {
-    console.error('Error WhatsApp:', error);
-    return false;
-  }
-}
-
-// FUNCIÓN EMAIL (backup si fallan las APIs)
-function enviarEmailNotificacion(noticia) {
-  const subject = `[NICARAGUA INFORMATE] ${noticia.categoria}: ${noticia.titulo}`;
-  const body = `Título: ${noticia.titulo}
-Categoría: ${noticia.categoria}
-Link: https://informate-instant-nicaragua.vercel.app/#${noticia.id}
-
-PARA FACEBOOK:
----
-🔴 ${noticia.categoria.toUpperCase()}
-
-📰 ${noticia.titulo}
-
-${noticia.resumen || ''}
-
-🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
-
-#Nicaragua #Noticias #${noticia.categoria}
----
-
-PARA WHATSAPP:
----
-🔴 *${noticia.categoria.toUpperCase()}*
-
-📰 *${noticia.titulo}*
-
-${noticia.resumen || ''}
-
-🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
----`;
-
-  window.open(`mailto:tuemail@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`);
-}
-
-// FUNCIÓN PARA ENVIAR A TELEGRAM CON IMAGEN
 async function enviarATelegram(noticia) {
-  if (noticiasEnviadas.has(noticia.id)) return;
+  if (isNewsProcessed(noticia.id, 'telegram')) {
+    console.log(`Telegram: ${noticia.id} ya enviado, omitiendo...`);
+    return true;
+  }
   
   console.log('=== ENVIANDO A TELEGRAM ===');
-  console.log('Noticia:', noticia.titulo);
   
   try {
-    // Obtener URL de imagen válida
-    const imageUrl = obtenerUrlImagenTelegram(noticia);
+    const imageUrl = obtenerUrlImagen(noticia);
+    const catEmoji = getEmoji(noticia.categoria);
     
-    console.log('URL final para Telegram:', imageUrl);
-    
-    // Preparar caption
-    const caption = `🔴 *${noticia.categoria.toUpperCase()}*\n\n📰 *${noticia.titulo}*\n\n📝 ${noticia.resumen || noticia.contenido?.substring(0, 150) + '...'}\n\n🔗 https://informate-instant-nicaragua.vercel.app/#${noticia.id}\n\n📅 ${formatearFecha(noticia.fecha)}`;
-    
-    // PRIMERO: Intentar enviar con sendPhoto
-    console.log('Intentando sendPhoto...');
+    const mensaje = `${catEmoji} *${noticia.categoria.toUpperCase()}*
+
+📰 *${noticia.titulo}*
+
+📝 ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}
+
+📲 *Leer noticia completa:*
+👉 https://informate-instant-nicaragua.vercel.app/#${noticia.id}
+
+⏰ ${formatearFecha(noticia.fecha)}
+👁️ ${noticia.vistas || 0} vistas
+
+🔖 #Nicaragua #${noticia.categoria.replace(/\s/g, '')} #Noticias${noticia.categoria === 'Nacionales' ? ' #NicaraguaHoy' : ''}`;
     
     const formData = new FormData();
     formData.append('chat_id', TELEGRAM_CHAT_ID);
     formData.append('photo', imageUrl);
-    formData.append('caption', caption);
+    formData.append('caption', mensaje);
     formData.append('parse_mode', 'Markdown');
     
     const responsePhoto = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendPhoto`, {
@@ -2026,64 +1963,39 @@ async function enviarATelegram(noticia) {
     });
     
     const resultPhoto = await responsePhoto.json();
-    console.log('Resultado sendPhoto:', resultPhoto);
     
     if (responsePhoto.ok && resultPhoto.ok) {
-      console.log('✅ Éxito con sendPhoto');
-      noticiasEnviadas.add(noticia.id);
-      mostrarToastTelegram(`✅ "${noticia.titulo.substring(0, 30)}..." enviada con imagen`);
-      return;
+      console.log('✅ Telegram: Enviado con imagen');
+      markNewsAsProcessed(noticia.id, ['telegram']);
+      mostrarToastTelegram(`✅ Telegram: Enviada con imagen`);
+      return true;
     }
     
-    // Si falla sendPhoto, intentar con sendMediaGroup o sendMessage con link
-    console.log('❌ sendPhoto falló, intentando método alternativo...');
+    console.log('⚠️ Telegram: Fallback a texto con preview...');
+    const responseMsg = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        chat_id: TELEGRAM_CHAT_ID,
+        text: mensaje,
+        parse_mode: 'Markdown',
+        disable_web_page_preview: false
+      })
+    });
     
-    // Intentar enviar como documento si la imagen es local
-    if (!imageUrl.includes('imgur.com') && !imageUrl.includes('cloudinary.com')) {
-      // La imagen probablemente no es accesible públicamente
-      console.log('Imagen no accesible públicamente, enviando solo texto con link');
-      throw new Error('Imagen no pública');
+    if (responseMsg.ok) {
+      markNewsAsProcessed(noticia.id, ['telegram']);
+      mostrarToastTelegram(`✅ Telegram: Enviada (texto + preview)`);
+      return true;
     }
-    
-    // Si llegamos aquí, algo extraño pasó
-    throw new Error(resultPhoto.description || 'Error desconocido');
     
   } catch (error) {
-    console.error('Error en enviarATelegram:', error);
-    
-    // FALLBACK: Enviar mensaje de texto con preview de link
-    const mensajeTexto = `🔴 *${noticia.categoria.toUpperCase()}*\n\n📰 *${noticia.titulo}*\n\n📝 ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...'}\n\n🔗 [Leer más en el sitio](https://informate-instant-nicaragua.vercel.app/#${noticia.id})\n\n📅 ${formatearFecha(noticia.fecha)}`;
-    
-    try {
-      const responseMsg = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({
-          chat_id: TELEGRAM_CHAT_ID,
-          text: mensajeTexto,
-          parse_mode: 'Markdown',
-          disable_web_page_preview: false // Esto permite que Telegram genere preview del link
-        })
-      });
-      
-      const resultMsg = await responseMsg.json();
-      console.log('Resultado sendMessage:', resultMsg);
-      
-      if (responseMsg.ok) {
-        noticiasEnviadas.add(noticia.id);
-        mostrarToastTelegram(`✅ Enviada (sin imagen - usa hosting externo)`);
-      } else {
-        mostrarToastTelegram(`❌ Error: ${resultMsg.description}`);
-      }
-      
-    } catch (msgError) {
-      console.error('Error en fallback:', msgError);
-      mostrarToastTelegram(`❌ Error enviando a Telegram`);
-    }
+    console.error('Error Telegram:', error);
+    mostrarToastTelegram(`❌ Error Telegram: ${error.message}`);
+    return false;
   }
 }
 
-// Mostrar toast de Telegram
 function mostrarToastTelegram(texto) {
   const toast = document.getElementById('telegramToast');
   document.getElementById('telegramText').textContent = texto;
@@ -2091,7 +2003,6 @@ function mostrarToastTelegram(texto) {
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-// Mostrar notificación push
 function mostrarPushNotificacion(titulo) {
   const notif = document.getElementById('pushNotification');
   document.getElementById('pushText').textContent = `"${titulo.substring(0, 40)}..."`;
@@ -2099,53 +2010,103 @@ function mostrarPushNotificacion(titulo) {
   setTimeout(() => notif.classList.remove('show'), 5000);
 }
 
+async function incrementarVisita() {
+  try {
+    const visitanteId = obtenerIdVisitante();
+    const hoy = new Date().toDateString();
+    const claveVisita = `visita_${hoy}_${visitanteId}`;
+    
+    if (localStorage.getItem(claveVisita)) {
+      const total = await obtenerTotalVisitas();
+      document.getElementById('visitCount').innerText = total.toLocaleString();
+      return;
+    }
+    
+    localStorage.setItem(claveVisita, 'true');
+    
+    const statsRef = doc(db, "estadisticas", "visitas");
+    await updateDoc(statsRef, {
+      total: increment(1),
+      ultimaVisita: new Date()
+    });
+    
+    const total = await obtenerTotalVisitas();
+    document.getElementById('visitCount').innerText = total.toLocaleString();
+    
+    if (total % 100 === 0) {
+      await enviarEstadisticasTelegram(total);
+    }
+    
+  } catch(e) {
+    console.error("Error contador:", e);
+  }
+}
+
+function obtenerIdVisitante() {
+  let id = localStorage.getItem('visitanteId');
+  if (!id) {
+    id = 'v_' + Math.random().toString(36).substr(2, 9);
+    localStorage.setItem('visitanteId', id);
+  }
+  return id;
+}
+
+async function obtenerTotalVisitas() {
+  try {
+    const statsRef = doc(db, "estadisticas", "visitas");
+    const docSnap = await getDoc(statsRef);
+    if (docSnap.exists()) {
+      return docSnap.data().total || 0;
+    } else {
+      await setDoc(statsRef, { total: 1, ultimaVisita: new Date() });
+      return 1;
+    }
+  } catch(e) {
+    return 0;
+  }
+}
+
 async function cargar(){
   try {
-    // Usar onSnapshot para tiempo real
     const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
     
     onSnapshot(q, (snap) => {
       const noticiasAnteriores = new Set(todas.map(n => n.id));
-      todas = [];
+      const nuevasNoticias = [];
       
       snap.forEach(d => {
         const data = d.data();
         data.id = d.id;
-        todas.push(data);
+        nuevasNoticias.push(data);
         
-        // Si es noticia nueva, enviar a TODAS las plataformas
         if (!noticiasAnteriores.has(d.id) && noticiasAnteriores.size > 0) {
-          // Enviar a Telegram (siempre)
+          console.log('🆕 Nueva noticia:', data.titulo);
+          
           enviarATelegram(data);
           
-          // Enviar a Facebook (si está configurado)
-          enviarAFacebook(data, 'cuenta1');
-          enviarAFacebook(data, 'cuenta2');
+          setTimeout(() => enviarAFacebook(data, 'cuenta1'), 1000);
           
-          // Enviar a WhatsApp (si está configurado)
-          enviarAWhatsApp(data);
+          setTimeout(() => enviarAFacebook(data, 'cuenta2'), 2000);
           
-          // Mostrar notificación en el sitio
           mostrarPushNotificacion(data.titulo);
         }
+      });
+      
+      todas = nuevasNoticias.sort((a, b) => {
+        const fechaA = a.fecha?.seconds || a.fecha?.toMillis?.() || 0;
+        const fechaB = b.fecha?.seconds || b.fecha?.toMillis?.() || 0;
+        return fechaB - fechaA;
       });
       
       pintar();
       cargarPopulares();
       cargarTrending();
-      
-      // Inicializar AdSense después de cargar contenido
       inicializarAdSense();
-    }, (error) => {
-      console.error("Error en tiempo real:", error);
-      // Fallback a carga normal
-      cargarManual();
     });
     
     incrementarVisita();
   } catch(e) {
-    console.error("Error cargando noticias:", e);
-    cargarManual();
+    console.error("Error cargando:", e);
   }
 }
 
@@ -2159,47 +2120,39 @@ async function cargarManual() {
       data.id = d.id;
       todas.push(data);
     });
+    
+    todas.sort((a, b) => {
+      const fechaA = a.fecha?.seconds || a.fecha?.toMillis?.() || 0;
+      const fechaB = b.fecha?.seconds || b.fecha?.toMillis?.() || 0;
+      return fechaB - fechaA;
+    });
+    
     pintar();
     cargarPopulares();
     cargarTrending();
-    
-    // Inicializar AdSense después de cargar contenido
-    inicializarAdSense();
   } catch(e) {
     console.error("Error carga manual:", e);
-    document.getElementById("lista").innerHTML = '<div style="text-align:center;padding:60px;color:#64748b;"><i class="fas fa-exclamation-circle" style="font-size:48px;margin-bottom:16px;color:#ef4444;"></i><p>Error cargando noticias. Intenta recargar.</p></div>';
   }
 }
 
-// FUNCIÓN PARA INICIALIZAR ADSENSE
 function inicializarAdSense() {
   try {
-    // Esperar a que el script de AdSense esté cargado
-    if (window.adsbygoogle && window.adsbygoogle.loaded) {
-      // Buscar todos los anuncios no inicializados
+    if (window.adsbygoogle) {
       const ads = document.querySelectorAll('ins.adsbygoogle:not([data-adsbygoogle-status="done"])');
       ads.forEach(ad => {
         (window.adsbygoogle = window.adsbygoogle || []).push({});
-        console.log('AdSense inicializado:', ad);
       });
-    } else {
-      // Si aún no está cargado, esperar un poco
-      setTimeout(inicializarAdSense, 1000);
     }
   } catch(e) {
-    console.error('Error inicializando AdSense:', e);
+    console.error('Error AdSense:', e);
   }
 }
 
 async function incrementarVistasNoticia(id) {
   try {
     const noticiaRef = doc(db, "noticias", id);
-    await updateDoc(noticiaRef, {
-      vistas: increment(1)
-    });
-  } catch(e) {
-    console.log("Error incrementando vistas:", e);
-  }
+    await updateDoc(noticiaRef, { vistas: increment(1) });
+  } catch(e) {}
 }
 
 function cargarPopulares(){
@@ -2207,47 +2160,30 @@ function cargarPopulares(){
   const container = document.getElementById("popularPosts");
   
   if(populares.length === 0){
-    container.innerHTML = '<p style="color:#94a3b8;font-size:14px;text-align:center;padding:20px;">No hay noticias disponibles</p>';
+    container.innerHTML = '<p style="color:#94a3b8;text-align:center;padding:20px;">No hay noticias</p>';
     return;
   }
   
-  container.innerHTML = populares.map((n, i) => `
-    <div style="display:flex;gap:14px;margin-bottom:20px;cursor:pointer;padding:12px;border-radius:12px;transition:all 0.3s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'" onclick="abrirPorId('${n.id}')">
-      <div style="width:70px;height:70px;border-radius:10px;overflow:hidden;flex-shrink:0;box-shadow:0 4px 12px rgba(0,0,0,0.1);">
-        <img src="${n.imagen}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'">
+  container.innerHTML = populares.map((n) => `
+    <div style="display:flex;gap:14px;margin-bottom:16px;cursor:pointer;" onclick="abrirPorId('${n.id}')">
+      <div style="width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;">
+        <img src="${n.imagen}" style="width:100%;height:100%;object-fit:cover;">
       </div>
-      <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-        <div style="font-size:14px;font-weight:700;line-height:1.4;color:#1e293b;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:6px;">
+      <div style="flex:1;">
+        <div style="font-size:13px;font-weight:700;line-height:1.4;color:#1e293b;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">
           ${n.titulo}
         </div>
-        <div style="font-size:12px;color:#64748b;font-weight:600;display:flex;align-items:center;gap:6px;">
-          <span style="background:${getColorCategoria(n.categoria)};color:#fff;padding:3px 10px;border-radius:20px;font-size:10px;text-transform:uppercase;">${n.categoria}</span>
-          <span>•</span>
-          <span>${formatearFecha(n.fecha)}</span>
+        <div style="font-size:11px;color:#64748b;margin-top:4px;">
+          ${n.categoria} • ${formatearFecha(n.fecha)}
         </div>
       </div>
     </div>
   `).join('');
 }
 
-function getColorCategoria(cat) {
-  const colores = {
-    'Sucesos': 'var(--sucesos)',
-    'Deportes': 'var(--deportes)',
-    'Internacionales': 'var(--inter)',
-    'Tecnología': 'var(--tecnologia)'
-  };
-  return colores[cat] || 'var(--azul)';
-}
-
 function cargarTrending(){
   const trending = todas.slice(0, 3);
   const container = document.getElementById("trendingContainer");
-  
-  if(trending.length === 0){
-    container.innerHTML = '<div class="trending-item"><div class="trending-number">!</div><div class="trending-title">No hay noticias aún</div><div class="trending-meta">⏱️ Esperando contenido...</div></div>';
-    return;
-  }
   
   container.innerHTML = trending.map((n, index) => `
     <div class="trending-item" onclick="abrirPorId('${n.id}')">
@@ -2269,9 +2205,8 @@ function pintar(){
   
   if(!datos.length){
     document.getElementById("lista").innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:60px;color:#64748b;">
-      <div style="font-size:64px;margin-bottom:20px;">📭</div>
-      <p style="font-size:18px;font-weight:600;">No hay noticias en esta categoría</p>
-      <p style="font-size:14px;margin-top:8px;">Intenta con otra sección</p>
+      <div style="font-size:48px;margin-bottom:16px;">📭</div>
+      <p>No hay noticias en esta categoría</p>
     </div>`;
     return;
   }
@@ -2311,7 +2246,7 @@ function pintar(){
     portada.appendChild(hero);
   }
 
-  resto.forEach((n, i) => {
+  resto.forEach((n) => {
     const card = document.createElement("div");
     card.className = "card";
     card.onclick = () => abrirPorId(n.id);
@@ -2368,8 +2303,7 @@ function abrir(n){
 }
 
 function formatearContenido(texto) {
-  if (!texto) return '<p style="color:#94a3b8;font-style:italic;">Contenido no disponible</p>';
-  // Convertir saltos de línea en párrafos
+  if (!texto) return '<p style="color:#94a3b8;">Contenido no disponible</p>';
   return texto.split('\n\n').map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`).join('');
 }
 
@@ -2385,7 +2319,7 @@ function formatearFecha(fecha){
   if(fecha.toDate){
     const d = fecha.toDate();
     const ahora = new Date();
-    const diff = (ahora - d) / 1000; // segundos
+    const diff = (ahora - d) / 1000;
     
     if (diff < 60) return 'Hace un momento';
     if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
@@ -2397,37 +2331,29 @@ function formatearFecha(fecha){
   return fecha;
 }
 
-// Funciones de compartir mejoradas
 window.shareFacebook = function(){
   if(!currentNoticia) return;
   const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`;
-  window.open(url, '_blank', 'width=600,height=400,scrollbars=yes');
+  window.open(url, '_blank');
 };
 
 window.shareTwitter = function(){
   if(!currentNoticia) return;
-  const text = encodeURIComponent(currentNoticia.titulo + ' via @NicaraguaInformate');
+  const text = encodeURIComponent(currentNoticia.titulo);
   const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`;
-  window.open(url, '_blank', 'width=600,height=400,scrollbars=yes');
+  window.open(url, '_blank');
 };
 
 window.shareWhatsApp = function(){
   if(!currentNoticia) return;
-  const text = encodeURIComponent(`*${currentNoticia.titulo}*\n\n${currentNoticia.resumen || ''}\n\nLeer más: ${window.location.href}`);
+  const text = encodeURIComponent(`*${currentNoticia.titulo}*\n\n${window.location.href}`);
   window.open(`https://wa.me/?text=${text}`, '_blank');
 };
 
 window.copyLink = function(){
   if(!currentNoticia) return;
   navigator.clipboard.writeText(window.location.href).then(() => {
-    const btn = event.target.closest('button');
-    const original = btn.innerHTML;
-    btn.innerHTML = '<i class="fas fa-check" style="font-size:24px;"></i>Copiado';
-    btn.style.background = '#10b981';
-    setTimeout(() => {
-      btn.innerHTML = original;
-      btn.style.background = '#64748b';
-    }, 2000);
+    alert('Enlace copiado al portapapeles');
   });
 };
 
@@ -2435,59 +2361,20 @@ window.sharePage = function(){
   if(navigator.share){
     navigator.share({
       title: "Nicaragua Informate",
-      text: "Noticias de Nicaragua al momento - Tu fuente confiable de información",
+      text: "Noticias de Nicaragua al momento",
       url: window.location.href
-    }).catch(() => {});
+    });
   } else {
     window.open("https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(window.location.href), "_blank");
   }
 };
 
-// Contador de visitas mejorado
-async function incrementarVisita(){
-  try {
-    const hoy = new Date().toDateString();
-    const ultimaVisita = localStorage.getItem('ultimaVisita');
-    let visitas = parseInt(localStorage.getItem('visitasTotal') || '1250');
-    
-    if(ultimaVisita !== hoy){
-      localStorage.setItem('ultimaVisita', hoy);
-      visitas++;
-      localStorage.setItem('visitasTotal', visitas);
-      
-      // Enviar estadísticas a Telegram cada 100 visitas
-      if (visitas % 100 === 0) {
-        await enviarEstadisticasTelegram(visitas);
-      }
-    }
-    
-    // Animación del contador
-    animarContador(document.getElementById('visitCount'), visitas);
-  } catch(e) {
-    document.getElementById('visitCount').innerText = '1,250+';
-  }
-}
-
-function animarContador(elemento, valorFinal) {
-  let inicio = 0;
-  const duracion = 1500;
-  const incremento = valorFinal / (duracion / 16);
-  
-  function actualizar() {
-    inicio += incremento;
-    if (inicio < valorFinal) {
-      elemento.innerText = Math.floor(inicio).toLocaleString();
-      requestAnimationFrame(actualizar);
-    } else {
-      elemento.innerText = valorFinal.toLocaleString();
-    }
-  }
-  actualizar();
-}
-
 async function enviarEstadisticasTelegram(visitas) {
   try {
-    const mensaje = `📊 *Estadísticas del Sitio*\n\n👥 Visitas totales: *${visitas.toLocaleString()}*\n📅 Fecha: ${new Date().toLocaleDateString('es-NI')}\n\n🔥 Nicaragua Informate al Instante`;
+    const mensaje = `📊 *Estadísticas*
+
+👥 Visitas: *${visitas.toLocaleString()}*
+📅 ${new Date().toLocaleDateString('es-NI')}`;
     
     await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
@@ -2498,15 +2385,11 @@ async function enviarEstadisticasTelegram(visitas) {
         parse_mode: 'Markdown'
       })
     });
-  } catch(e) {
-    console.error('Error enviando estadísticas:', e);
-  }
+  } catch(e) {}
 }
 
-// Inicializar
 cargar();
 
-// Event listeners
 document.addEventListener("keydown", e => {
   if(e.key === "Escape") window.cerrarModal();
 });
@@ -2519,15 +2402,9 @@ window.addEventListener("popstate", () => {
     if (noticia) abrir(noticia);
   }
 });
-
-// Service Worker para PWA básico
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('data:text/javascript,').catch(() => {});
-}
 </script>
 
 <script>
-// HORA Y CLIMA MEJORADO
 function actualizarHora(){
   try {
     const ahora = new Date();
@@ -2579,7 +2456,6 @@ async function cargarClima(){
 
 setTimeout(cargarClima, 1000);
 
-// Precargar imágenes
 window.addEventListener('load', () => {
   todas.slice(0, 6).forEach(n => {
     if (n.imagen) {
@@ -2592,3 +2468,5 @@ window.addEventListener('load', () => {
 
 </body>
 </html>
+
+

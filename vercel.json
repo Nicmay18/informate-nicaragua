@@ -1,9 +1,16 @@
 {
   "version": 2,
+  "public": true,
+  "github": {
+    "enabled": false
+  },
   "routes": [
     {
       "src": "/ads.txt",
-      "dest": "/public/ads.txt"
+      "dest": "/public/ads.txt",
+      "headers": {
+        "Content-Type": "text/plain"
+      }
     },
     {
       "src": "/privacidad",

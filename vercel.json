@@ -1,35 +1,9 @@
 {
   "version": 2,
-  "public": true,
-  "github": {
-    "enabled": false
-  },
   "routes": [
-    {
-      "src": "/ads.txt",
-      "dest": "/public/ads.txt",
-      "headers": {
-        "Content-Type": "text/plain"
-      }
-    },
-    {
-      "src": "/privacidad",
-      "dest": "/public/privacidad.html"
-    },
-    {
-      "src": "/terminos",
-      "dest": "/public/terminos.html"
-    },
-    {
-      "src": "/cookies",
-      "dest": "/public/cookies.html"
-    },
-    {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
+    { "src": "/ads.txt", "dest": "/public/ads.txt" },
+    { "src": "/privacidad", "dest": "/public/privacidad.html" },
+    { "src": "/terminos", "dest": "/public/terminos.html" },
+    { "src": "/cookies", "dest": "/public/cookies.html" }
   ]
 }

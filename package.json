@@ -1,15 +1,7 @@
 {
-  "name": "nicaragua-informate",
-  "version": "3.5.0",
-  "description": "Portal de noticias de Nicaragua",
-  "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel --prod"
-  },
-  "dependencies": {
-    "firebase-admin": "^12.0.0"
-  },
+  "name": "informate-nicaragua",
+  "version": "1.0.0",
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   }
 }

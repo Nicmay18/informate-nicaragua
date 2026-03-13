@@ -151,9 +151,13 @@
         .image-preview { max-width: 300px; margin-top: 10px; border-radius: 8px; border: 2px solid #e2e8f0; display: block; }
         .checkbox-group { display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .config-status { padding: 12px; border-radius: 8px; margin-bottom: 16px; font-size: 14px; }
+        .config-status.ok { background: #d1fae5; color: #065f46; border: 1px solid #10b981; }
+        .config-status.error { background: #fee2e2; color: #991b1b; border: 1px solid #ef4444; }
         @media (max-width: 1200px) { .stats-grid, .categories-grid { grid-template-columns: repeat(2, 1fr); } .content-grid { grid-template-columns: 1fr; } }
         @media (max-width: 768px) { .sidebar { transform: translateX(-100%); } .main-content { margin-left: 0; padding: 16px; } .stats-grid, .categories-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } .header { flex-direction: column; gap: 16px; align-items: flex-start; } .header-actions { width: 100%; } .header-actions input { width: 100% !important; } }
     </style>
+<base target="_blank">
 </head>
 <body>
     <div class="login-screen" id="loginScreen">
@@ -180,7 +184,7 @@
                 <img src="https://via.placeholder.com/50?text=NI" alt="Logo">
                 <div>
                     <h2>Admin Panel</h2>
-                    <small style="color: var(--gray);">v3.2</small>
+                    <small style="color: var(--gray);">v3.3</small>
                 </div>
             </div>
             <ul class="nav-menu">
@@ -499,22 +503,46 @@
                 <div class="header">
                     <h1>⚙️ Configuración</h1>
                 </div>
+                
                 <div class="card" style="margin-bottom: 24px;">
                     <div class="card-header">
-                        <h3 class="card-title">Redes Sociales</h3>
+                        <h3 class="card-title">📱 Configuración de Telegram</h3>
                     </div>
                     <div class="card-body">
-                        <div class="form-group">
-                            <label class="form-label">Token de Telegram Bot</label>
-                            <input type="text" class="form-input" id="configTokenTelegram" placeholder="Ingresa tu token de Telegram">
+                        <div id="telegramStatus" class="config-status error">
+                            <i class="fas fa-exclamation-circle"></i> Telegram no configurado
                         </div>
+                        
                         <div class="form-group">
-                            <label class="form-label">Chat ID de Telegram</label>
-                            <input type="text" class="form-input" id="configChatId" placeholder="Ingresa el Chat ID">
+                            <label class="form-label">Token del Bot de Telegram *</label>
+                            <input type="password" class="form-input" id="configTokenTelegram" placeholder="123456789:ABCdefGHIjklMNOpqrsTUVwxyz">
+                            <small style="color: var(--gray);">Obtén el token de @BotFather en Telegram</small>
                         </div>
-                        <button class="btn btn-primary btn-small" onclick="guardarConfig()">
-                            <i class="fas fa-save"></i> Guardar Cambios
-                        </button>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Chat ID *</label>
+                            <input type="text" class="form-input" id="configChatId" placeholder="Ej: 123456789 o -1001234567890">
+                            <small style="color: var(--gray);">Tu ID personal o ID del grupo/canal (puede ser negativo para grupos)</small>
+                        </div>
+                        
+                        <div class="btn-group">
+                            <button class="btn btn-primary btn-small" onclick="guardarConfigTelegram()">
+                                <i class="fas fa-save"></i> Guardar Configuración
+                            </button>
+                            <button class="btn btn-secondary btn-small" onclick="probarTelegram()">
+                                <i class="fas fa-paper-plane"></i> Enviar Mensaje de Prueba
+                            </button>
+                        </div>
+                        
+                        <div style="margin-top: 20px; padding: 16px; background: #f8fafc; border-radius: 8px;">
+                            <h4 style="margin-bottom: 8px; color: var(--dark);">🧪 ¿Cómo obtener tu Chat ID?</h4>
+                            <ol style="margin-left: 20px; color: var(--gray); font-size: 14px; line-height: 1.6;">
+                                <li>Escribe <code>/start</code> a tu bot en Telegram</li>
+                                <li>Luego escribe cualquier mensaje</li>
+                                <li>Visita: <code>https://api.telegram.org/bot[TU_TOKEN]/getUpdates</code></li>
+                                <li>Busca <code>"chat":{"id":</code> - ese número es tu Chat ID</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -533,6 +561,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, addDoc, getDocs, query, orderBy, deleteDoc, doc, updateDoc, getDoc, setDoc, where } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
@@ -546,6 +575,7 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
+        const auth = getAuth(app);
 
         window.db = db;
         window.categoriaActiva = 'todas';
@@ -561,16 +591,39 @@
             { id: 'Internacionales', emoji: '🌍', color: 'internacionales', icon: 'fa-globe-americas' }
         ];
 
-        window.login = function() {
-            const username = document.getElementById('username').value;
+        window.login = async function() {
+            const email = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            if (username === 'admin' && password === 'admin123') {
+
+            // Agregar dominio si solo escribió "admin"
+            const emailCompleto = email.includes('@') ? email : email + '@nicaragua-informate.com';
+
+            try {
+                await signInWithEmailAndPassword(auth, emailCompleto, password);
+
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('dashboard').classList.add('active');
                 cargarDatosIniciales();
+                verificarConfigTelegram();
                 showToast('Bienvenido al Panel Administrativo', 'success');
-            } else {
-                showToast('Usuario o contraseña incorrectos', 'error');
+
+            } catch (error) {
+                console.error("Error de login:", error);
+                let mensaje = 'Usuario o contraseña incorrectos';
+
+                if (error.code === 'auth/user-not-found') {
+                    mensaje = 'Usuario no encontrado';
+                } else if (error.code === 'auth/wrong-password') {
+                    mensaje = 'Contraseña incorrecta';
+                } else if (error.code === 'auth/invalid-email') {
+                    mensaje = 'Correo inválido';
+                } else if (error.code === 'auth/invalid-credential') {
+                    mensaje = 'Credenciales inválidas';
+                } else if (error.code === 'auth/too-many-requests') {
+                    mensaje = 'Demasiados intentos. Intenta más tarde';
+                }
+
+                showToast('❌ ' + mensaje, 'error');
             }
         };
 
@@ -583,6 +636,7 @@
             if (tabId === 'noticias-tab') cargarNoticias();
             if (tabId === 'dashboard-tab') cargarEstadisticas();
             if (tabId === 'categorias-tab') cargarResumenCategorias();
+            if (tabId === 'config-tab') verificarConfigTelegram();
         };
 
         async function cargarDatosIniciales() {
@@ -657,20 +711,26 @@
 
             try {
                 const noticiaId = document.getElementById('noticiaId').value;
-                const titulo = document.getElementById('titulo').value;
+                const titulo = document.getElementById('titulo').value.trim();
                 const categoria = document.getElementById('categoria').value;
-                const resumen = document.getElementById('resumen').value;
-                const contenido = document.getElementById('contenido').value;
-                const imagenUrl = document.getElementById('imagenUrl').value;
+                const resumen = document.getElementById('resumen').value.trim();
+                const contenido = document.getElementById('contenido').value.trim();
+                const imagenUrl = document.getElementById('imagenUrl').value.trim();
                 const enviarTelegram = document.getElementById('enviarTelegram').checked;
                 const destacada = document.getElementById('destacada').checked;
+
+                if (!titulo || !categoria || !contenido) {
+                    showToast("❌ Completa todos los campos obligatorios", "error");
+                    showLoading(false);
+                    return;
+                }
 
                 const noticiaData = {
                     titulo,
                     categoria,
                     resumen: resumen || contenido.substring(0, 150) + '...',
                     contenido,
-                    imagen: imagenUrl,
+                    imagen: imagenUrl || 'https://via.placeholder.com/800x400?text=Nicaragua+Informate',
                     fecha: new Date(),
                     vistas: 0,
                     publicadoPor: 'admin',
@@ -678,26 +738,32 @@
                 };
 
                 let esNueva = true;
+                let docId;
 
                 if (noticiaId) {
                     noticiaData.actualizado = new Date();
                     await updateDoc(doc(db, "noticias", noticiaId), noticiaData);
                     esNueva = false;
+                    docId = noticiaId;
                     showToast('✅ Noticia actualizada exitosamente', 'success');
                 } else {
-                    await addDoc(collection(db, "noticias"), noticiaData);
+                    const docRef = await addDoc(collection(db, "noticias"), noticiaData);
+                    docId = docRef.id;
                     showToast('✅ Noticia publicada exitosamente', 'success');
                 }
                 
                 if (enviarTelegram && esNueva) {
+                    console.log("📱 Intentando enviar a Telegram...");
+                    await new Promise(resolve => setTimeout(resolve, 500));
                     await enviarATelegram(noticiaData);
                 }
 
                 limpiarFormulario();
                 cargarUltimasNoticias();
                 cargarEstadisticas();
+                
             } catch (error) {
-                console.error("Error:", error);
+                console.error("Error guardando noticia:", error);
                 showToast('❌ Error: ' + error.message, 'error');
             } finally {
                 showLoading(false);
@@ -705,47 +771,179 @@
         };
 
         async function enviarATelegram(noticia) {
-            const TELEGRAM_BOT_TOKEN = localStorage.getItem("tg_token");
-            const TELEGRAM_CHAT_ID = localStorage.getItem("tg_chat_id");
+            const TELEGRAM_BOT_TOKEN = localStorage.getItem("tg_token")?.trim();
+            const TELEGRAM_CHAT_ID = localStorage.getItem("tg_chat_id")?.trim();
             
             if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-                console.warn("No hay configuración de Telegram");
-                return;
+                console.warn("⚠️ Telegram no configurado");
+                showToast("⚠️ Configura Telegram en el panel de configuración", "error");
+                return false;
+            }
+            
+            if (!TELEGRAM_BOT_TOKEN.includes(':')) {
+                console.error("❌ Token de Telegram inválido");
+                showToast("❌ Token de Telegram inválido", "error");
+                return false;
             }
             
             try {
                 const emoji = {
-                    'Sucesos': '🚨', 'Nacionales': '🇳🇮', 'Deportes': '⚽',
-                    'Tecnología': '💻', 'Internacionales': '🌍', 'Economía': '💰',
-                    'Cultura': '🎨', 'Espectáculos': '⭐'
+                    'Sucesos': '🚨', 
+                    'Nacionales': '🇳🇮', 
+                    'Deportes': '⚽',
+                    'Tecnología': '💻', 
+                    'Internacionales': '🌍', 
+                    'Economía': '💰',
+                    'Cultura': '🎨', 
+                    'Espectáculos': '⭐'
                 };
                 
-                const mensaje = `${emoji[noticia.categoria] || '📰'} <b>${noticia.categoria.toUpperCase()}</b>
+                const categoriaEmoji = emoji[noticia.categoria] || '📰';
+                const titulo = noticia.titulo?.substring(0, 100) || 'Sin título';
+                const resumen = noticia.resumen?.substring(0, 300) || 'Sin resumen';
+                
+                const mensaje = `${categoriaEmoji} <b>${noticia.categoria?.toUpperCase() || 'NOTICIA'}</b>
 
-📰 <b>${noticia.titulo}</b>
+📰 <b>${escapeHtml(titulo)}</b>
 
-📝 ${noticia.resumen}
+📝 ${escapeHtml(resumen)}
 
 📷 <a href="${noticia.imagen}">Ver imagen</a>
 
-📲 <b>Leer más:</b> https://informate-instant-nicaragua.vercel.app/
+📲 <b>Leer más:</b> https://informate-nicaragua.vercel.app/
 
-⏰ ${new Date().toLocaleString('es-NI')}`;
+⏰ ${new Date().toLocaleString('es-NI', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+})}`;
 
-                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                console.log("📤 Enviando a Telegram...", { chat_id: TELEGRAM_CHAT_ID });
+                
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
                     body: JSON.stringify({
                         chat_id: TELEGRAM_CHAT_ID,
                         text: mensaje,
                         parse_mode: 'HTML',
-                        disable_web_page_preview: false
+                        disable_web_page_preview: false,
+                        disable_notification: false
                     })
                 });
+
+                const data = await response.json();
+                
+                if (!response.ok || !data.ok) {
+                    throw new Error(data.description || `HTTP ${response.status}`);
+                }
+
+                console.log("✅ Enviado a Telegram:", data.result?.message_id);
+                showToast("✅ Enviado a Telegram correctamente", "success");
+                return true;
+                
             } catch (error) {
-                console.error("Error Telegram:", error);
+                console.error("❌ Error Telegram:", error);
+                
+                if (error.message.includes("Unauthorized")) {
+                    showToast("❌ Token de Telegram inválido o bot no autorizado", "error");
+                } else if (error.message.includes("chat not found")) {
+                    showToast("❌ Chat ID incorrecto o bot no está en el grupo", "error");
+                } else if (error.message.includes("Too Many Requests")) {
+                    showToast("⏱️ Demasiados mensajes. Espera un momento", "error");
+                } else {
+                    showToast("❌ Error al enviar a Telegram: " + error.message, "error");
+                }
+                
+                return false;
             }
         }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            return text
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        window.guardarConfigTelegram = function() {
+            const token = document.getElementById('configTokenTelegram').value.trim();
+            const chatId = document.getElementById('configChatId').value.trim();
+            
+            if (!token || !chatId) {
+                showToast("❌ Completa ambos campos", "error");
+                return;
+            }
+            
+            if (!token.includes(':')) {
+                showToast("❌ El token debe tener formato: números:letras", "error");
+                return;
+            }
+            
+            localStorage.setItem('tg_token', token);
+            localStorage.setItem('tg_chat_id', chatId);
+            
+            verificarConfigTelegram();
+            showToast("✅ Configuración de Telegram guardada", "success");
+        };
+
+        window.probarTelegram = async function() {
+            const token = localStorage.getItem("tg_token")?.trim();
+            const chatId = localStorage.getItem("tg_chat_id")?.trim();
+            
+            if (!token || !chatId) {
+                showToast("❌ Primero guarda la configuración", "error");
+                return;
+            }
+            
+            showLoading(true);
+            
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: '🧪 <b>Mensaje de prueba</b>\\n\\n✅ Tu bot de Nicaragua Informate está configurado correctamente!',
+                        parse_mode: 'HTML'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.ok) {
+                    showToast("✅ Mensaje de prueba enviado. Revisa Telegram!", "success");
+                } else {
+                    throw new Error(data.description);
+                }
+            } catch (error) {
+                showToast("❌ Error: " + error.message, "error");
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        window.verificarConfigTelegram = function() {
+            const token = localStorage.getItem("tg_token");
+            const chatId = localStorage.getItem("tg_chat_id");
+            const statusDiv = document.getElementById('telegramStatus');
+            
+            if (token && chatId) {
+                document.getElementById('configTokenTelegram').value = token;
+                document.getElementById('configChatId').value = chatId;
+                statusDiv.className = 'config-status ok';
+                statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Telegram configurado correctamente';
+            } else {
+                statusDiv.className = 'config-status error';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Telegram no configurado';
+            }
+        };
 
         window.cargarNoticias = async function(filtro = 'todas') {
             try {
@@ -830,7 +1028,7 @@
         };
 
         window.eliminarNoticia = async function(id) {
-            if (!confirm('¿Estás seguro de eliminar esta noticia?\n\nEsta acción no se puede deshacer.')) return;
+            if (!confirm('¿Estás seguro de eliminar esta noticia?\\n\\nEsta acción no se puede deshacer.')) return;
             
             showLoading(true);
             try {
@@ -903,18 +1101,8 @@
             }
         }
 
-        window.guardarConfig = function() {
-            const token = document.getElementById('configTokenTelegram').value;
-            const chatId = document.getElementById('configChatId').value;
-            
-            if (token) localStorage.setItem('tg_token', token);
-            if (chatId) localStorage.setItem('tg_chat_id', chatId);
-            
-            showToast('Configuración guardada', 'success');
-        };
-
         window.verSitio = function() {
-            window.open('https://informate-instant-nicaragua.vercel.app/', '_blank');
+            window.open('https://informate-nicaragua.vercel.app/', '_blank');
         };
 
         window.limpiarFormulario = function() {
@@ -960,13 +1148,6 @@
         document.getElementById('password')?.addEventListener('keypress', function(e) {
             if (e.key === 'Enter') login();
         });
-
-        if (localStorage.getItem('tg_token')) {
-            document.getElementById('configTokenTelegram').value = localStorage.getItem('tg_token');
-        }
-        if (localStorage.getItem('tg_chat_id')) {
-            document.getElementById('configChatId').value = localStorage.getItem('tg_chat_id');
-        }
     </script>
 </body>
 </html>

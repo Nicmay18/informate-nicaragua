@@ -58,8 +58,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <!-- Google Analytics -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
-     crossorigin="anonymous"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B6J61WEP"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -1799,15 +1798,14 @@ audio{
   <div class="footer-grid">
     
     <div>
-      <div class="footer-bottom">
-    <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
-    <div style="display:flex;gap:24px;">
-      <a href="/privacidad" style="color:#64748b;text-decoration:none;">Privacidad</a>
-      <a href="/terminos" style="color:#64748b;text-decoration:none;">Términos</a>
-      <a href="/cookies" style="color:#64748b;text-decoration:none;">Cookies</a>
+      <div class="footer-brand">
+        <img src="logo.png" alt="Logo" class="footer-logo" onerror="this.style.display='none'">
+        Nicaragua Informate
+      </div>
+      <div class="footer-desc">
+        Tu fuente confiable de noticias de Nicaragua. Información actualizada las 24 horas del día, los 7 días de la semana.
+      </div>
     </div>
-  </div>
-</footer>
     
     <div class="footer-section">
       <h4>📂 Secciones</h4>
@@ -1849,9 +1847,9 @@ audio{
   <div class="footer-bottom">
     <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
     <div style="display:flex;gap:24px;">
-      <span style="cursor:pointer;" onclick="alert('Política de privacidad en desarrollo')">Privacidad</span>
-      <span style="cursor:pointer;" onclick="alert('Términos de uso en desarrollo')">Términos</span>
-      <span style="cursor:pointer;" onclick="alert('Configuración de cookies en desarrollo')">Cookies</span>
+      <a href="/privacidad.html" style="color:#64748b;text-decoration:none;">Privacidad</a>
+      <a href="/terminos.html" style="color:#64748b;text-decoration:none;">Términos</a>
+      <a href="/cookies.html" style="color:#64748b;text-decoration:none;">Cookies</a>
     </div>
   </div>
 </footer>
@@ -1873,7 +1871,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// 🔒 CONFIGURACIÓN SEGURA - Tokens desde localStorage
+// 🔒 CONFIGURACIÓN SEGURA - Tokens desde localStorage (no expuestos en código)
 const TELEGRAM_BOT_TOKEN = localStorage.getItem("tg_token") || "";
 const TELEGRAM_CHAT_ID = "-1003431574597";
 
@@ -1965,10 +1963,8 @@ function getEmoji(categoria) {
 async function enviarAFacebook(noticia, cuenta) {
   const config = FACEBOOK_CONFIG[cuenta];
   
-  // Validar que existe token configurado
   if (!config || !config.accessToken || config.accessToken === "") {
     console.log(`⚠️ Facebook ${cuenta}: Token no configurado en localStorage`);
-    console.log(`💡 Usa: localStorage.setItem("fb_token_${cuenta === 'cuenta1' ? '1' : '2'}", "TU_TOKEN_AQUI")`);
     return false;
   }
   
@@ -2013,21 +2009,17 @@ ${noticia.resumen || noticia.contenido?.substring(0, 200) + '...' || ''}
       return true;
     } else {
       console.error(`Error Facebook ${cuenta}:`, result);
-      mostrarToastTelegram(`❌ Facebook ${cuenta}: ${result.error?.message || 'Error'}`);
       return false;
     }
   } catch (error) {
     console.error(`Error Facebook ${cuenta}:`, error);
-    mostrarToastTelegram(`❌ Error de conexión Facebook ${cuenta}`);
     return false;
   }
 }
 
 async function enviarATelegram(noticia) {
-  // Validar token
   if (!TELEGRAM_BOT_TOKEN || TELEGRAM_BOT_TOKEN === "") {
     console.log("⚠️ Telegram: Token no configurado en localStorage");
-    console.log('💡 Usa: localStorage.setItem("tg_token", "TU_TOKEN_AQUI")');
     return false;
   }
   
@@ -2036,7 +2028,6 @@ async function enviarATelegram(noticia) {
     return true;
   }
   
-  console.log('=== ENVIANDO A TELEGRAM ===');
   try {
     const imageUrl = obtenerUrlImagen(noticia);
     const catEmoji = getEmoji(noticia.categoria);
@@ -2052,7 +2043,7 @@ async function enviarATelegram(noticia) {
 ⏰ ${formatearFecha(noticia.fecha)}
 👁️ ${noticia.vistas || 0} vistas
 
-🔖 #Nicaragua #${noticia.categoria.replace(/\s/g, '')} #Noticias${noticia.categoria === 'Nacionales' ? ' #NicaraguaHoy' : ''}`;
+🔖 #Nicaragua #${noticia.categoria.replace(/\s/g, '')} #Noticias`;
     
     const formData = new FormData();
     formData.append('chat_id', TELEGRAM_CHAT_ID);
@@ -2073,7 +2064,6 @@ async function enviarATelegram(noticia) {
       return true;
     }
     
-    console.log('⚠️ Telegram: Fallback a texto con preview...');
     const responseMsg = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -2087,12 +2077,11 @@ async function enviarATelegram(noticia) {
     
     if (responseMsg.ok) {
       markNewsAsProcessed(noticia.id, ['telegram']);
-      mostrarToastTelegram(`✅ Telegram: Enviada (texto + preview)`);
+      mostrarToastTelegram(`✅ Telegram: Enviada`);
       return true;
     }
   } catch (error) {
     console.error('Error Telegram:', error);
-    mostrarToastTelegram(`❌ Error Telegram: ${error.message}`);
     return false;
   }
 }
@@ -2111,21 +2100,11 @@ function mostrarPushNotificacion(titulo) {
   setTimeout(() => notif.classList.remove('show'), 5000);
 }
 
-// 🔔 NOTIFICACIONES DEL NAVEGADOR
 function solicitarPermisoNotificaciones() {
-  if (!("Notification" in window)) {
-    console.log("Este navegador no soporta notificaciones");
-    return;
-  }
-  
-  if (Notification.permission === "granted") {
-    return true;
-  } else if (Notification.permission !== "denied") {
-    Notification.requestPermission().then(permission => {
-      if (permission === "granted") {
-        console.log("✅ Permiso de notificaciones concedido");
-      }
-    });
+  if (!("Notification" in window)) return;
+  if (Notification.permission === "granted") return true;
+  else if (Notification.permission !== "denied") {
+    Notification.requestPermission();
   }
 }
 
@@ -2193,7 +2172,6 @@ async function obtenerTotalVisitas() {
 
 async function cargar(){
   try {
-    // Solicitar permiso de notificaciones al cargar
     solicitarPermisoNotificaciones();
     
     const q = query(collection(db, "noticias"), orderBy("fecha", "desc"));
@@ -2207,12 +2185,10 @@ async function cargar(){
         if (!noticiasAnteriores.has(d.id) && noticiasAnteriores.size > 0) {
           console.log('🆕 Nueva noticia:', data.titulo);
           
-          // Enviar a redes (solo si hay tokens configurados)
           enviarATelegram(data);
           setTimeout(() => enviarAFacebook(data, 'cuenta1'), 1000);
           setTimeout(() => enviarAFacebook(data, 'cuenta2'), 2000);
           
-          // Mostrar notificaciones
           mostrarPushNotificacion(data.titulo);
           enviarNotificacionNavegador("🔔 Nueva noticia", data.titulo, data.imagen || "logo.png");
         }
@@ -2262,7 +2238,6 @@ async function incrementarVistasNoticia(id) {
 }
 
 function cargarPopulares(){
-  // 📈 ORDENAR POR VISTAS REALES (Trending real)
   const populares = [...todas]
     .sort((a, b) => (b.vistas || 0) - (a.vistas || 0))
     .slice(0, 5);
@@ -2290,7 +2265,6 @@ function cargarPopulares(){
 }
 
 function cargarTrending(){
-  // 🔥 TRENDING REAL - Ordenado por vistas, no por fecha
   const trending = [...todas]
     .sort((a, b) => (b.vistas || 0) - (a.vistas || 0))
     .slice(0, 3);
@@ -2389,7 +2363,6 @@ function pintar(){
     `;
     document.getElementById("lista").appendChild(card);
     
-    // 💰 Insertar anuncio cada 4 noticias
     if ((index + 1) % 4 === 0 && index < resto.length - 1) {
       const adDiv = document.createElement("div");
       adDiv.className = "ad-container ad-inline";
@@ -2435,7 +2408,6 @@ function abrir(n){
   document.body.style.overflow = "hidden";
   history.pushState({id: n.id}, n.titulo, "#" + n.id);
   
-  // Inicializar anuncio dentro del modal
   setTimeout(() => {
     if (window.adsbygoogle) {
       const modalAd = document.querySelector('#modalContent .adsbygoogle');
@@ -2533,74 +2505,101 @@ async function enviarEstadisticasTelegram(visitas) {
 
 cargar();
 
+// Event Listeners
 document.addEventListener("keydown", e => {
   if(e.key === "Escape") window.cerrarModal();
 });
 
 window.addEventListener("popstate", () => {
-  if(!location.hash) window.cerrarModal();
-  else {
-    const id = location.hash.substring(1);
-    const noticia = todas.find(n => n.id === id);
-    if (noticia) abrir(noticia);
+  if(window.location.hash === ""){
+    window.cerrarModal();
+  } else {
+    const id = window.location.hash.replace("#", "");
+    const n = todas.find(x => x.id === id);
+    if(n) abrir(n);
   }
 });
-</script>
 
-<script>
+// Reloj en tiempo real
 function actualizarHora(){
-  try {
-    const ahora = new Date();
-    const opciones = {weekday: 'long', day: 'numeric', month: 'long', hour: '2-digit', minute: '2-digit'};
-    const fechaStr = ahora.toLocaleDateString("es-NI", opciones);
-    document.getElementById("hora").innerText = fechaStr;
-    document.getElementById("tickerDate").innerText = ahora.toLocaleDateString("es-NI", {weekday: 'short', day: 'numeric', month: 'short'});
-    document.getElementById("tickerDate2").innerText = ahora.toLocaleDateString("es-NI", {weekday: 'short', day: 'numeric', month: 'short'});
-  } catch(e) {
-    console.error("Error hora:", e);
-  }
+  const ahora = new Date();
+  const opciones = { 
+    weekday: 'long', 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: true
+  };
+  document.getElementById("hora").innerText = ahora.toLocaleString("es-NI", opciones);
 }
-
-actualizarHora();
 setInterval(actualizarHora, 1000);
+actualizarHora();
 
+// Fechas en ticker
+const fechaHoy = new Date().toLocaleDateString("es-NI", {day: '2-digit', month: 'short', year: 'numeric'});
+document.getElementById("tickerDate").innerText = fechaHoy;
+document.getElementById("tickerDate2").innerText = fechaHoy;
+
+// Clima de Managua
 async function cargarClima(){
-  const climaEl = document.getElementById("clima");
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 5000);
-    const r = await fetch("https://api.open-meteo.com/v1/forecast?latitude=12.1364&longitude=-86.2514&current_weather=true", {
-      signal: controller.signal
-    });
-    clearTimeout(timeoutId);
-    if(!r.ok) throw new Error("HTTP " + r.status);
-    const d = await r.json();
-    const temp = Math.round(d.current_weather.temperature);
-    const iconos = {
-      0: "☀️", 1: "🌤️", 2: "⛅", 3: "☁️",
-      45: "🌫️", 48: "🌫️", 51: "🌦️", 53: "🌧️",
-      55: "🌧️", 61: "🌧️", 63: "🌧️", 65: "🌧️",
-      71: "❄️", 73: "❄️", 75: "❄️", 95: "⛈️", 96: "⛈️", 99: "⛈️"
-    };
-    const icono = iconos[d.current_weather.weathercode] || "🌡️";
-    climaEl.innerHTML = `${icono} <strong>Managua ${temp}°C</strong>`;
+    const response = await fetch('https://api.open-meteo.com/v1/forecast?latitude=12.13&longitude=-86.25&current_weather=true&timezone=America/Managua');
+    const data = await response.json();
+    const temp = Math.round(data.current_weather.temperature);
+    const climaDiv = document.getElementById("clima");
+    
+    let icono = '☀️';
+    const weatherCode = data.current_weather.weathercode;
+    if (weatherCode >= 1 && weatherCode <= 3) icono = '⛅';
+    else if (weatherCode >= 45 && weatherCode <= 48) icono = '🌫️';
+    else if (weatherCode >= 51 && weatherCode <= 67) icono = '🌧️';
+    else if (weatherCode >= 71 && weatherCode <= 77) icono = '❄️';
+    else if (weatherCode >= 80 && weatherCode <= 82) icono = '🌦️';
+    else if (weatherCode >= 95) icono = '⛈️';
+    
+    climaDiv.innerHTML = `${icono} Managua ${temp}°C`;
   } catch(e) {
-    climaEl.innerHTML = "🌡️ <strong>Managua --°C</strong>";
-    setTimeout(cargarClima, 30000);
+    document.getElementById("clima").innerHTML = '🌡️ Managua --°C';
   }
 }
+cargarClima();
+setInterval(cargarClima, 300000);
 
-setTimeout(cargarClima, 1000);
-
-// ⚡ Precarga de imágenes críticas
-window.addEventListener('load', () => {
-  todas.slice(0, 6).forEach(n => {
-    if (n.imagen) {
-      const img = new Image();
-      img.src = n.imagen;
-    }
+// Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(err => {
+      console.log('Service Worker registration failed:', err);
+    });
   });
+}
+
+// Manejo de errores global
+window.addEventListener('error', (e) => {
+  console.error('Error global:', e.error);
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'exception', {
+      'description': e.message,
+      'fatal': false
+    });
+  }
 });
+
+window.addEventListener('unhandledrejection', (e) => {
+  console.error('Promesa rechazada:', e.reason);
+});
+
+// Debug function
+window.debugNoticias = function() {
+  console.log('Total noticias:', todas.length);
+  console.log('Categorías:', [...new Set(todas.map(n => n.categoria))]);
+  console.log('Últimas 5:', todas.slice(0, 5));
+  return todas;
+};
+
 </script>
 
 </body>

@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "routes": [
+    { "src": "/api/(.*)", "dest": "/api/$1.js" },
+    { "src": "/sitemap.xml", "dest": "/api/sitemap.xml.js" },
+    { "src": "/admin", "dest": "/public/admin/index.html" },
+    { "src": "/noticia/(.*)", "dest": "/noticia.html?slug=$1" },
+    { "src": "/(.*)", "dest": "/$1" }
+  ]
+}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="meta-title">Nicaragua Informate - Noticias al Instante</title>
+  <meta name="description" id="meta-desc" content="Noticias de Nicaragua y el mundo">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article" id="og-type">
+  <meta property="og:title" id="og-title" content="Nicaragua Informate">
+  <meta property="og:description" id="og-desc" content="Noticias al instante">
+  <meta property="og:image" id="og-image" content="">
+  <meta property="og:url" id="og-url" content="">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" id="tw-title" content="">
+  <meta name="twitter:description" id="tw-desc" content="">
+  <meta name="twitter:image" id="tw-image" content="">
+  
+  <!-- Schema.org -->
+  <script type="application/ld+json" id="json-ld"></script>
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 800px; margin: 0 auto; padding: 20px; }
+    header { background: #0d47a1; color: white; padding: 20px 0; text-align: center; }
+    .noticia-header { margin: 30px 0; }
+    .categoria { display: inline-block; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; text-transform: uppercase; margin-bottom: 15px; }
+    .categoria-sucesos { background: #fee2e2; color: #991b1b; }
+    .categoria-nacionales { background: #ffedd5; color: #9a3412; }
+    .categoria-economia { background: #fef3c7; color: #92400e; }
+    .categoria-cultura { background: #ede9fe; color: #5b21b6; }
+    .categoria-espectaculos { background: #fce7f3; color: #9d174d; }
+    .categoria-deportes { background: #d1fae5; color: #065f46; }
+    .categoria-tecnologia { background: #dbeafe; color: #1e40af; }
+    .categoria-internacionales { background: #cffafe; color: #155e75; }
+    
+    h1 { font-size: 2.5em; margin-bottom: 15px; line-height: 1.2; }
+    .meta { color: #666; font-size: 14px; margin-bottom: 20px; }
+    .imagen-principal { width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin-bottom: 30px; }
+    .contenido { font-size: 18px; line-height: 1.8; }
+    .contenido p { margin-bottom: 20px; }
+    
+    /* AdSense */
+    .ad-container { margin: 30px 0; text-align: center; background: #f9fafb; padding: 20px; border-radius: 8px; }
+    
+    footer { background: #1e293b; color: white; text-align: center; padding: 30px 0; margin-top: 50px; }
+  </style>
+  
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-TU_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+
+<header>
+  <h2>🇳🇮 Nicaragua Informate</h2>
+  <p>Noticias al Instante</p>
+</header>
+
+<div class="container">
+  <article id="noticia">
+    <div class="noticia-header">
+      <span class="categoria" id="categoria">Cargando...</span>
+      <h1 id="titulo">Cargando noticia...</h1>
+      <div class="meta">
+        <span id="fecha"></span> | Por <span id="autor">Nicaragua Informate</span>
+        <span id="vistas" style="margin-left: 20px;"><i class="fas fa-eye"></i> 0 lecturas</span>
+      </div>
+    </div>
+    
+    <!-- AdSense Top -->
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-TU_ID"
+           data-ad-slot="TOP_SLOT"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+    
+    <img id="imagen" class="imagen-principal" src="" alt="" style="display:none;">
+    
+    <div class="contenido" id="contenido">
+      <p>Cargando contenido...</p>
+    </div>
+    
+    <!-- AdSense Middle -->
+    <div class="ad-container">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-TU_ID"
+           data-ad-slot="MIDDLE_SLOT"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </article>
+</div>
+
+<footer>
+  <p>&copy; 2024 Nicaragua Informate. Todos los derechos reservados.</p>
+  <p><a href="/admin" style="color: #60a5fa;">Panel Administrativo</a></p>
+</footer>
+
+<!-- Firebase -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getFirestore, doc, getDoc, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
+    authDomain: "informate-instant-nicaragua.firebaseapp.com",
+    projectId: "informate-instant-nicaragua",
+    storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+    messagingSenderId: "24988088146",
+    appId: "1:24988088146:web:d26a207508da055668ec8b"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Obtener slug de URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const slug = urlParams.get('slug') || window.location.pathname.split('/').pop();
+
+  async function cargarNoticia() {
+    try {
+      // Buscar por slug o ID
+      const docRef = doc(db, "noticias", slug);
+      let docSnap = await getDoc(docRef);
+      
+      // Si no existe, buscar por campo slug
+      if (!docSnap.exists()) {
+        // Aquí iría búsqueda por campo slug si usas slug separado
+        document.getElementById('titulo').textContent = 'Noticia no encontrada';
+        return;
+      }
+
+      const data = docSnap.data();
+      
+      // Actualizar contenido
+      document.getElementById('titulo').textContent = data.titulo;
+      document.getElementById('categoria').textContent = data.categoria || 'General';
+      document.getElementById('categoria').className = `categoria categoria-${data.categoria?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '') || 'nacionales'}`;
+      document.getElementById('contenido').innerHTML = data.contenido?.replace(/\n/g, '<p></p>') || '';
+      document.getElementById('fecha').textContent = data.fecha?.toDate?.().toLocaleDateString('es-NI') || '';
+      document.getElementById('vistas').innerHTML = `<i class="fas fa-eye"></i> ${data.vistas || 0} lecturas`;
+      
+      if (data.imagen) {
+        const img = document.getElementById('imagen');
+        img.src = data.imagen;
+        img.style.display = 'block';
+        img.alt = data.titulo;
+      }
+
+      // Actualizar SEO dinámico
+      const url = window.location.href;
+      document.getElementById('meta-title').textContent = `${data.titulo} | Nicaragua Informate`;
+      document.getElementById('meta-desc').content = data.resumen || data.contenido?.substring(0, 150) + '...';
+      
+      // Open Graph
+      document.getElementById('og-title').content = data.titulo;
+      document.getElementById('og-desc').content = data.resumen || '';
+      document.getElementById('og-image').content = data.imagen || '';
+      document.getElementById('og-url').content = url;
+      
+      // Twitter
+      document.getElementById('tw-title').content = data.titulo;
+      document.getElementById('tw-desc').content = data.resumen || '';
+      document.getElementById('tw-image').content = data.imagen || '';
+      
+      // Schema.org
+      const schema = {
+        "@context": "https://schema.org",
+        "@type": "NewsArticle",
+        "headline": data.titulo,
+        "image": [data.imagen],
+        "datePublished": data.fecha?.toDate?.().toISOString(),
+        "author": { "@type": "Organization", "name": "Nicaragua Informate" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Nicaragua Informate",
+          "logo": { "@type": "ImageObject", "url": "https://informate-instant-nicaragua.vercel.app/logo.png" }
+        }
+      };
+      document.getElementById('json-ld').textContent = JSON.stringify(schema);
+
+      // Incrementar vistas
+      await updateDoc(docRef, { vistas: increment(1) });
+      
+      // Track view en analytics
+      fetch('/api/track-view', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ noticiaId: slug, referrer: document.referrer })
+      }).catch(() => {});
+
+    } catch (error) {
+      console.error('Error:', error);
+      document.getElementById('titulo').textContent = 'Error cargando noticia';
+    }
+  }
+
+  cargarNoticia();
+</script>
+
+</body>
+</html>

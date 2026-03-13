@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://informate-instant-nicaragua.vercel.app/sitemap.xml

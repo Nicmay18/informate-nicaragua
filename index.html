@@ -648,7 +648,6 @@ async function cargar() {
   pintar();
   cargarPopulares();
   cargarTrending();
-  cargarCarrusel();
   incrementarVisita();
 }
 
@@ -812,36 +811,6 @@ function cargarTrending() {
       <div class="trending-title">${n.titulo}</div>
       <div class="trending-meta"><i class="fas fa-clock" aria-hidden="true"></i> ${formatearFecha(n.fecha)} • ${n.categoria}</div>
     </div>`).join('');
-}
-
-// ============================================
-// CARRUSEL
-// ============================================
-function cargarCarrusel() {
-  const inner = document.getElementById('carruselInner');
-  const indicadores = document.getElementById('carruselIndicadores');
-  const items = todas.slice(0, 3);
-  if (!items.length) { inner.parentElement.parentElement.style.display = 'none'; return; }
-
-  inner.innerHTML = items.map((n, i) => {
-    const img = sanitizarImagen(n.imagen, n.categoria, i);
-    return `
-      <div class="carousel-item${i === 0 ? ' active' : ''}" style="cursor:pointer;" onclick="abrirPorId('${n.id}')">
-        <img src="${img}" class="d-block w-100" alt="${n.titulo}"
-          style="height:420px;object-fit:cover;filter:brightness(.75);"
-          onerror="imgError(this,'${n.categoria}',${i})">
-        <div class="carousel-caption d-none d-md-block" style="background:rgba(0,0,0,.45);border-radius:12px;padding:16px 24px;bottom:32px;">
-          <span style="background:${getColorCategoria(n.categoria)};padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;">${n.categoria}</span>
-          <h5 style="font-size:22px;font-weight:800;margin:10px 0 6px;text-shadow:0 2px 4px rgba(0,0,0,.5);">${n.titulo}</h5>
-          <p style="font-size:14px;opacity:.9;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${n.resumen || ''}</p>
-        </div>
-      </div>`;
-  }).join('');
-
-  indicadores.innerHTML = items.map((_, i) => `
-    <button type="button" data-bs-target="#carruselNoticias" data-bs-slide-to="${i}"
-      ${i === 0 ? 'class="active" aria-current="true"' : ''}
-      aria-label="Noticia ${i + 1}"></button>`).join('');
 }
 
 // ============================================

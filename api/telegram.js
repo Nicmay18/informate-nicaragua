@@ -23,17 +23,13 @@ module.exports = async (req, res) => {
       'Espectáculos': '⭐', 'Deportes': '⚽', 'Tecnología': '💻', 'Internacionales': '🌍'
     };
 
+    const titulo = (noticia.titulo || '').substring(0, 150);
+    const resumen = (noticia.resumen || '').substring(0, 150);
+    const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
     const slug = noticia.slug || noticia.id || Date.now().toString(36);
-    const url = `https://informate-instant-nicaragua.vercel.app/noticia/${slug}`;
+    const url = `https://informate-nicaragua.vercel.app/`;
 
-    const text = 
-`<b>${emoji[noticia.categoria] || '📰'} ${noticia.categoria?.toUpperCase() || 'NOTICIA'}</b>
-
-<b>${noticia.titulo}</b>
-
-${noticia.resumen || ''}
-
-<a href="${url}">📰 Leer más</a>`;
+    const text = `${emoji[noticia.categoria] || '📰'} ${cat}\n\n${titulo}\n\n${resumen}\n\n📰 ${url}`.slice(0, 800);
 
     let telegramUrl, body;
     
@@ -42,8 +38,7 @@ ${noticia.resumen || ''}
       body = {
         chat_id: TG_CHAT_ID,
         photo: noticia.imagen,
-        caption: text.slice(0, 1024),
-        parse_mode: 'HTML',
+        caption: text.slice(0, 900),
         reply_markup: {
           inline_keyboard: [[{ text: "📰 Leer más", url: url }]]
         }
@@ -52,8 +47,7 @@ ${noticia.resumen || ''}
       telegramUrl = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
       body = {
         chat_id: TG_CHAT_ID,
-        text: text.slice(0, 4096),
-        parse_mode: 'HTML',
+        text: text.slice(0, 3500),
         reply_markup: {
           inline_keyboard: [[{ text: "📰 Leer más", url: url }]]
         }

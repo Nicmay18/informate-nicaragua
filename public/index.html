@@ -223,6 +223,32 @@
     <button onclick="cambiar('Cultura',this)">🎭 Cultura</button>
   </div>
 
+  <!-- RADIO EN VIVO -->
+  <div class="radio">
+    <div class="live-indicator">
+      <span class="pulse" id="radioPulse"></span>
+      🔴 Radio en Vivo
+    </div>
+    <div class="radio-player">
+      <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
+        <option value="">📻 Elige una radio</option>
+        <option value="https://stream.zenolive.com/axr92qawesmtv">📻 Radio Ya</option>
+        <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
+        <option value="https://stream.zeno.fm/primerisima921">📻 La Primerísima</option>
+        <option value="https://stream.zeno.fm/futura913">📻 Radio Futura 91.3</option>
+        <option value="https://stream.zeno.fm/viva983">📻 Viva FM 98.3</option>
+        <option value="https://stream.zeno.fm/romantica987">📻 Romántica 98.7</option>
+        <option value="https://stream.zeno.fm/clasica1019">📻 Clásica 101.9</option>
+        <option value="https://stream.zeno.fm/buenisima931">📻 La Buenísima</option>
+      </select>
+      <button class="radio-btn" id="radioPlayBtn" onclick="toggleRadio()" title="Play/Pause">
+        <i class="fas fa-play" id="radioIcon"></i>
+      </button>
+      <span class="radio-name" id="radioNombre">Selecciona y dale play</span>
+    </div>
+    <audio id="radioAudio" preload="none"></audio>
+  </div>
+
   <div class="main-wrapper">
 
     <main class="content-main">
@@ -681,6 +707,47 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") cerrarModal();
     });
+
+    // ==========================================
+    // RADIO EN VIVO
+    // ==========================================
+    const radioAudio = document.getElementById('radioAudio');
+    let radioActiva = false;
+
+    function toggleRadio() {
+      if (radioActiva) {
+        radioAudio.pause(); radioAudio.src = ''; radioActiva = false;
+        document.getElementById('radioIcon').className = 'fas fa-play';
+        document.getElementById('radioPlayBtn').classList.remove('playing');
+        document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
+      } else {
+        const sel = document.getElementById('radioSelect');
+        if (!sel.value) return;
+        const nombre = sel.options[sel.selectedIndex].text.replace('📻 ','');
+        document.getElementById('radioNombre').textContent = '⏳ Conectando...';
+        radioAudio.src = sel.value;
+        radioAudio.play().then(() => {
+          radioActiva = true;
+          document.getElementById('radioIcon').className = 'fas fa-pause';
+          document.getElementById('radioPlayBtn').classList.add('playing');
+          document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
+        }).catch(() => {
+          radioActiva = false;
+          document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+        });
+      }
+    }
+    function cambiarRadio() {
+      if (radioActiva) { radioAudio.pause(); radioActiva = false; document.getElementById('radioIcon').className = 'fas fa-play'; document.getElementById('radioPlayBtn').classList.remove('playing'); toggleRadio(); }
+    }
+    radioAudio.addEventListener('error', () => {
+      radioActiva = false;
+      document.getElementById('radioIcon').className = 'fas fa-play';
+      document.getElementById('radioPlayBtn').classList.remove('playing');
+      document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+    });
+    window.toggleRadio = toggleRadio;
+    window.cambiarRadio = cambiarRadio;
 
     // Inicializar
     window.abrirEstatica = abrirEstatica;

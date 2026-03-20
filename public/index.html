@@ -223,23 +223,6 @@
     <button onclick="cambiar('Cultura',this)">🎭 Cultura</button>
   </div>
 
-  <div class="radio">
-    <div class="live-indicator">
-      <span class="pulse" id="radioPulse"></span>
-      🔴 Radio en Vivo
-    </div>
-    <div class="radio-player">
-      <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
-        <option value="">📻 Cargando radios...</option>
-      </select>
-      <button class="radio-btn" id="radioPlayBtn" onclick="toggleRadio()" title="Play/Pause">
-        <i class="fas fa-play" id="radioIcon"></i>
-      </button>
-      <span class="radio-name" id="radioNombre">Selecciona y dale play</span>
-    </div>
-    <audio id="radioAudio" preload="none"></audio>
-  </div>
-
   <div class="main-wrapper">
 
     <main class="content-main">
@@ -694,85 +677,6 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     setTimeout(cargarClima, 1000);
     actualizarHora();
     setInterval(actualizarHora, 60000);
-
-    // ==========================================
-    // RADIO EN VIVO — Radio Browser API
-    // ==========================================
-    const radioAudio = document.getElementById('radioAudio');
-    let radioActiva = false;
-
-    // Cargar radios de Nicaragua desde Radio Browser (base de datos pública verificada)
-    async function cargarRadios() {
-      try {
-        const res = await fetch('https://de1.api.radio-browser.info/json/stations/bycountryexact/Nicaragua?limit=30&order=votes&reverse=true&hidebroken=true');
-        const radios = await res.json();
-        const select = document.getElementById('radioSelect');
-        select.innerHTML = '<option value="">📻 Elige una radio</option>';
-        radios.forEach(r => {
-          const opt = document.createElement('option');
-          opt.value = r.url_resolved || r.url;
-          opt.textContent = '📻 ' + r.name;
-          select.appendChild(opt);
-        });
-      } catch(e) {
-        // fallback con URLs conocidas si la API falla
-        const select = document.getElementById('radioSelect');
-        select.innerHTML = `
-          <option value="">📻 Elige una radio</option>
-          <option value="https://stream.zeno.fm/gwkd66k0a7duv">📻 Radio Corporación</option>
-          <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
-          <option value="https://stream.zeno.fm/vw3a0fb0vneuv">📻 Stereo Beso</option>
-        `;
-      }
-    }
-    cargarRadios();
-
-    function toggleRadio() {
-      if (radioActiva) {
-        radioAudio.pause();
-        radioAudio.src = '';
-        radioActiva = false;
-        document.getElementById('radioIcon').className = 'fas fa-play';
-        document.getElementById('radioPlayBtn').classList.remove('playing');
-        document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
-      } else {
-        const select = document.getElementById('radioSelect');
-        const url = select.value;
-        if (!url) return;
-        const nombre = select.options[select.selectedIndex].text.replace('📻 ','');
-        document.getElementById('radioNombre').textContent = '⏳ Conectando...';
-        radioAudio.src = url;
-        radioAudio.play().then(() => {
-          radioActiva = true;
-          document.getElementById('radioIcon').className = 'fas fa-pause';
-          document.getElementById('radioPlayBtn').classList.add('playing');
-          document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
-        }).catch(() => {
-          radioActiva = false;
-          document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
-        });
-      }
-    }
-
-    function cambiarRadio() {
-      if (radioActiva) {
-        radioAudio.pause();
-        radioActiva = false;
-        document.getElementById('radioIcon').className = 'fas fa-play';
-        document.getElementById('radioPlayBtn').classList.remove('playing');
-        toggleRadio();
-      }
-    }
-
-    radioAudio.addEventListener('error', () => {
-      radioActiva = false;
-      document.getElementById('radioIcon').className = 'fas fa-play';
-      document.getElementById('radioPlayBtn').classList.remove('playing');
-      document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
-    });
-
-    window.toggleRadio = toggleRadio;
-    window.cambiarRadio = cambiarRadio;
 
     document.addEventListener("keydown", e => {
       if (e.key === "Escape") cerrarModal();

@@ -230,30 +230,33 @@
     </div>
     <div class="radio-player">
       <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
-        <optgroup label="� Populares">
-          <option value="https://stream.zeno.fm/viva-fm-nicaragua">📻 Viva FM 91.3</option>
-          <option value="https://stream.zeno.fm/amor955">📻 Radio Amor 95.5</option>
-          <option value="https://stream.zeno.fm/pachanguera951">📻 La Pachanguera 95.1</option>
-          <option value="https://stream.zeno.fm/buenisima931">📻 La Buenísima 93.1</option>
-          <option value="https://stream.zeno.fm/maranatha1035">📻 Maranatha 103.5 FM</option>
+        <optgroup label="📻 Populares">
+          <option value="viva-fm-nicaragua">📻 Viva FM 91.3</option>
+          <option value="amor955">📻 Radio Amor 95.5</option>
+          <option value="pachanguera951">📻 La Pachanguera 95.1</option>
+          <option value="buenisima931">📻 La Buenísima 93.1</option>
+          <option value="maranatha1035">📻 Maranatha 103.5 FM</option>
         </optgroup>
         <optgroup label="📡 Más Radios">
-          <option value="https://stream.zeno.fm/gwkd66k0a7duv">📻 Radio Corporación</option>
-          <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
-          <option value="https://stream.zeno.fm/vw3a0fb0vneuv">📻 Stereo Beso</option>
-          <option value="https://stream-51.zeno.fm/3kruxu5a9s8uv?zs=LlphhegmTmGcgi2WZY-ApQ">📻 Radio República</option>
-          <option value="https://stream.pinedahost.com/radio/8060/radio">📻 Radio Jinotega</option>
-          <option value="https://dattavolt.com/8176/stream">📻 La Reyna</option>
-          <option value="https://polaris.hostingnica.net:7016/stream/1/">📻 Oxígeno FM</option>
-          <option value="https://stream-17.zeno.fm/dxkpx08drchvv?zs=rNpZVkqpRWCcpnhSkD5Sog">📻 Radio Segovia</option>
+          <option value="radio-corporacion-nicaragua">📻 Radio Corporación</option>
+          <option value="stereo-beso">📻 Stereo Beso</option>
+          <option value="radio-segovia-nicaragua">📻 Radio Segovia</option>
+          <option value="radio-ya">📻 Radio Ya</option>
+          <option value="radio-sandino">📻 Radio Sandino</option>
         </optgroup>
       </select>
-      <button class="radio-btn" id="radioPlayBtn" onclick="toggleRadio()" title="Play/Pause">
-        <i class="fas fa-play" id="radioIcon"></i>
-      </button>
-      <span class="radio-name" id="radioNombre">Selecciona y dale play</span>
+      <span class="radio-name" id="radioNombre">🎵 Selecciona una radio</span>
     </div>
-    <audio id="radioAudio" preload="none"></audio>
+    <!-- iframe embed de zeno.fm — sin problemas de CORS -->
+    <div id="radioIframeWrap" style="display:none;width:100%;margin-top:8px;">
+      <iframe id="radioIframe"
+        src=""
+        width="100%" height="60"
+        frameborder="0"
+        scrolling="no"
+        allow="autoplay"
+        style="border-radius:8px;"></iframe>
+    </div>
   </div>
 
   <div class="main-wrapper">
@@ -714,53 +717,19 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     // ==========================================
     // RADIO EN VIVO
     // ==========================================
-    const radioAudio = document.getElementById('radioAudio');
-    let radioActiva = false;
-
-    function toggleRadio() {
-      if (radioActiva) {
-        radioAudio.pause();
-        radioAudio.src = '';
-        radioActiva = false;
-        document.getElementById('radioIcon').className = 'fas fa-play';
-        document.getElementById('radioPlayBtn').classList.remove('playing');
-        document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
-      } else {
-        const select = document.getElementById('radioSelect');
-        const url = select.value;
-        const nombre = select.options[select.selectedIndex].text.replace('📻 ','');
-        document.getElementById('radioNombre').textContent = '⏳ Conectando...';
-        radioAudio.src = url;
-        radioAudio.play().then(() => {
-          radioActiva = true;
-          document.getElementById('radioIcon').className = 'fas fa-pause';
-          document.getElementById('radioPlayBtn').classList.add('playing');
-          document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
-        }).catch(() => {
-          radioActiva = false;
-          document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
-        });
-      }
-    }
-
     function cambiarRadio() {
-      if (radioActiva) {
-        radioAudio.pause();
-        radioActiva = false;
-        document.getElementById('radioIcon').className = 'fas fa-play';
-        document.getElementById('radioPlayBtn').classList.remove('playing');
-        toggleRadio();
-      }
+      const select = document.getElementById('radioSelect');
+      const slug = select.value;
+      const nombre = select.options[select.selectedIndex].text.replace('📻 ','');
+      if (!slug) return;
+
+      const wrap = document.getElementById('radioIframeWrap');
+      const iframe = document.getElementById('radioIframe');
+      iframe.src = `https://zeno.fm/radio/${slug}/embed/`;
+      wrap.style.display = 'block';
+      document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
     }
 
-    radioAudio.addEventListener('error', () => {
-      radioActiva = false;
-      document.getElementById('radioIcon').className = 'fas fa-play';
-      document.getElementById('radioPlayBtn').classList.remove('playing');
-      document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra emisora';
-    });
-
-    window.toggleRadio = toggleRadio;
     window.cambiarRadio = cambiarRadio;
 
     document.addEventListener("keydown", e => {

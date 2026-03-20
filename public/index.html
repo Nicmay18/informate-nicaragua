@@ -930,7 +930,10 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
       const slides = destacadas.length ? destacadas : noticiasFirestore.slice(0,3);
       if (!slides.length) return;
 
-      const slidesHTML = slides.map((n,i) => {
+      const inner = document.getElementById('carouselInner');
+      const indicators = document.getElementById('carouselIndicators');
+
+      inner.innerHTML = slides.map((n,i) => {
         const img = sanitizarImgCarrusel(n.imagen, n.id||'slide'+i);
         const color = getColor(n.categoria);
         return `<div class="carousel-item${i===0?' active':''}" data-noticia-id="${n.id}" style="cursor:pointer">
@@ -944,33 +947,31 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
         </div>`;
       }).join('');
 
-      const indicatorsHTML = slides.map((_,i)=>
+      indicators.innerHTML = slides.map((_,i)=>
         `<button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="${i}" ${i===0?'class="active" aria-current="true"':''}></button>`
       ).join('');
 
-      // Destruir instancia Bootstrap antes de tocar el DOM
-      const carouselEl = document.getElementById('carouselNoticias');
-      if (carouselEl && window.bootstrap) {
-        const old = bootstrap.Carousel.getInstance(carouselEl);
-        if (old) old.dispose();
-      }
-
-      document.getElementById('carouselInner').innerHTML = slidesHTML;
-      document.getElementById('carouselIndicators').innerHTML = indicatorsHTML;
-
-      // Click en slides via event delegation (evita problemas con base64 en onclick)
-      document.getElementById('carouselInner').addEventListener('click', function(e) {
+      // Click en slides
+      inner.addEventListener('click', function(e) {
         const item = e.target.closest('[data-noticia-id]');
-        if (item) abrirFirestore(item.dataset.noticiaId);
-      }, { once: true });
-
-      // Crear nueva instancia después de que el DOM esté actualizado
-      requestAnimationFrame(() => {
-        const el = document.getElementById('carouselNoticias');
-        if (el && window.bootstrap) {
-          new bootstrap.Carousel(el, { interval: 5000, ride: 'carousel', wrap: true });
+        if (item && !e.target.closest('.carousel-control-prev') && !e.target.closest('.carousel-control-next')) {
+          abrirFirestore(item.dataset.noticiaId);
         }
       });
+
+      // Inicializar Bootstrap carousel — esperar a que esté disponible
+      function initCarousel() {
+        const el = document.getElementById('carouselNoticias');
+        if (!el) return;
+        if (window.bootstrap && window.bootstrap.Carousel) {
+          const old = bootstrap.Carousel.getInstance(el);
+          if (old) old.dispose();
+          new bootstrap.Carousel(el, { interval: 5000, ride: 'carousel', wrap: true });
+        } else {
+          setTimeout(initCarousel, 200);
+        }
+      }
+      initCarousel();
     }
 
     function actualizarTrending() {

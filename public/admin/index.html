@@ -706,6 +706,16 @@
 
   <script>
     async function cargarNoticiasFirestore() {
+      // Esperar a que Firebase esté listo
+      let intentos = 0;
+      while (!window._firebase && intentos < 20) {
+        await new Promise(r => setTimeout(r, 200));
+        intentos++;
+      }
+      if (!window._firebase) {
+        showToast('error', 'Error', 'Firebase no se inicializó');
+        return;
+      }
       try {
         const { collection, getDocs, query, orderBy, limit } = window._firebase;
         const q = query(collection(window.db, 'noticias'), orderBy('fecha', 'desc'), limit(100));

@@ -689,6 +689,8 @@
       useFetchStreams: false
     });
 
+    const storage = getStorage(app);
+
     window.db = firestore;
     window._firebase = { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, query, orderBy, limit, serverTimestamp };
 
@@ -931,13 +933,43 @@
         showToast('error', 'Error', 'Máximo 5MB');
         return;
       }
-      
+
+      // Preview local inmediato
       const reader = new FileReader();
-      reader.onload = (e) => {
-        document.getElementById('imagenUrl').value = e.target.result;
-        actualizarPreview();
+      reader.onload = (ev) => {
+        document.getElementById('preview').src = ev.target.result;
+        document.getElementById('imagePreviewContainer').classList.add('active');
+        // Subir a GitHub via API
+        subirImagenGitHub(ev.target.result, file.name);
       };
       reader.readAsDataURL(file);
+    }
+
+    async function subirImagenGitHub(base64, nombre) {
+      const urlInput = document.getElementById('imagenUrl');
+      const uploadText = document.querySelector('#uploadZone .upload-text');
+
+      try {
+        if (uploadText) uploadText.textContent = '⏳ Subiendo imagen...';
+        urlInput.value = '';
+
+        const res = await fetch('/api/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imagen: base64, nombre })
+        });
+
+        const data = await res.json();
+        if (!res.ok || data.error) throw new Error(data.error || 'Error al subir');
+
+        urlInput.value = data.url;
+        if (uploadText) uploadText.textContent = '✅ Imagen subida';
+        showToast('success', 'Imagen lista', 'Subida correctamente');
+      } catch (err) {
+        if (uploadText) uploadText.textContent = 'Arrastra imagen o haz clic';
+        showToast('error', 'Error al subir imagen', err.message);
+        console.error('Upload error:', err);
+      }
     }
 
     function actualizarPreview() {

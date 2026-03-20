@@ -934,13 +934,28 @@
         return;
       }
 
-      // Preview local inmediato
       const reader = new FileReader();
       reader.onload = (ev) => {
-        document.getElementById('preview').src = ev.target.result;
-        document.getElementById('imagePreviewContainer').classList.add('active');
-        // Subir a GitHub via API
-        subirImagenGitHub(ev.target.result, file.name);
+        const img = new Image();
+        img.onload = () => {
+          // Redimensionar a máx 1200px manteniendo proporción
+          const MAX = 1200;
+          let w = img.width, h = img.height;
+          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+
+          // Comprimir a WebP calidad 0.80 (o JPEG si WebP no soportado)
+          const compressed = canvas.toDataURL('image/webp', 0.80) || canvas.toDataURL('image/jpeg', 0.80);
+
+          document.getElementById('preview').src = compressed;
+          document.getElementById('imagePreviewContainer').classList.add('active');
+          subirImagenGitHub(compressed, file.name.replace(/\.[^.]+$/, '.webp'));
+        };
+        img.src = ev.target.result;
       };
       reader.readAsDataURL(file);
     }

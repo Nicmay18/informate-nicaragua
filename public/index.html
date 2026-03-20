@@ -840,7 +840,7 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     let paginaActual = 1;
 
     function cargarNoticias() {
-      const q = query(collection(db,'noticias'), orderBy('fecha','desc'), limit(100));
+      const q = query(collection(db,'noticias'), orderBy('fecha','desc'), limit(20));
       return new Promise((resolve) => {
         onSnapshot(q, (snap) => {
           clearTimeout(timeoutFirestore);
@@ -1085,7 +1085,7 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
       if (!noticiasFirestore.length) {
         console.warn('[FIRESTORE] Timeout — reintentando...');
         try {
-          const q = query(collection(db,'noticias'), orderBy('fecha','desc'), limit(100));
+          const q = query(collection(db,'noticias'), orderBy('fecha','desc'), limit(20));
           const snap = await getDocs(q);
           if (!snap.empty) {
             noticiasFirestore = snap.docs.map(d => ({id:d.id,...d.data()}));

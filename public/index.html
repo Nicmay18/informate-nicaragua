@@ -230,33 +230,14 @@
     </div>
     <div class="radio-player">
       <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
-        <optgroup label="📻 Populares">
-          <option value="viva-fm-nicaragua">📻 Viva FM 91.3</option>
-          <option value="amor955">📻 Radio Amor 95.5</option>
-          <option value="pachanguera951">📻 La Pachanguera 95.1</option>
-          <option value="buenisima931">📻 La Buenísima 93.1</option>
-          <option value="maranatha1035">📻 Maranatha 103.5 FM</option>
-        </optgroup>
-        <optgroup label="📡 Más Radios">
-          <option value="radio-corporacion-nicaragua">📻 Radio Corporación</option>
-          <option value="stereo-beso">📻 Stereo Beso</option>
-          <option value="radio-segovia-nicaragua">📻 Radio Segovia</option>
-          <option value="radio-ya">📻 Radio Ya</option>
-          <option value="radio-sandino">📻 Radio Sandino</option>
-        </optgroup>
+        <option value="">📻 Cargando radios...</option>
       </select>
-      <span class="radio-name" id="radioNombre">🎵 Selecciona una radio</span>
+      <button class="radio-btn" id="radioPlayBtn" onclick="toggleRadio()" title="Play/Pause">
+        <i class="fas fa-play" id="radioIcon"></i>
+      </button>
+      <span class="radio-name" id="radioNombre">Selecciona y dale play</span>
     </div>
-    <!-- iframe embed de zeno.fm — sin problemas de CORS -->
-    <div id="radioIframeWrap" style="display:none;width:100%;margin-top:8px;">
-      <iframe id="radioIframe"
-        src=""
-        width="100%" height="60"
-        frameborder="0"
-        scrolling="no"
-        allow="autoplay"
-        style="border-radius:8px;"></iframe>
-    </div>
+    <audio id="radioAudio" preload="none"></audio>
   </div>
 
   <div class="main-wrapper">
@@ -715,21 +696,82 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     setInterval(actualizarHora, 60000);
 
     // ==========================================
-    // RADIO EN VIVO
+    // RADIO EN VIVO — Radio Browser API
     // ==========================================
-    function cambiarRadio() {
-      const select = document.getElementById('radioSelect');
-      const slug = select.value;
-      const nombre = select.options[select.selectedIndex].text.replace('📻 ','');
-      if (!slug) return;
+    const radioAudio = document.getElementById('radioAudio');
+    let radioActiva = false;
 
-      const wrap = document.getElementById('radioIframeWrap');
-      const iframe = document.getElementById('radioIframe');
-      iframe.src = `https://zeno.fm/radio/${slug}/embed/`;
-      wrap.style.display = 'block';
-      document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
+    // Cargar radios de Nicaragua desde Radio Browser (base de datos pública verificada)
+    async function cargarRadios() {
+      try {
+        const res = await fetch('https://de1.api.radio-browser.info/json/stations/bycountryexact/Nicaragua?limit=30&order=votes&reverse=true&hidebroken=true');
+        const radios = await res.json();
+        const select = document.getElementById('radioSelect');
+        select.innerHTML = '<option value="">📻 Elige una radio</option>';
+        radios.forEach(r => {
+          const opt = document.createElement('option');
+          opt.value = r.url_resolved || r.url;
+          opt.textContent = '📻 ' + r.name;
+          select.appendChild(opt);
+        });
+      } catch(e) {
+        // fallback con URLs conocidas si la API falla
+        const select = document.getElementById('radioSelect');
+        select.innerHTML = `
+          <option value="">📻 Elige una radio</option>
+          <option value="https://stream.zeno.fm/gwkd66k0a7duv">📻 Radio Corporación</option>
+          <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
+          <option value="https://stream.zeno.fm/vw3a0fb0vneuv">📻 Stereo Beso</option>
+        `;
+      }
+    }
+    cargarRadios();
+
+    function toggleRadio() {
+      if (radioActiva) {
+        radioAudio.pause();
+        radioAudio.src = '';
+        radioActiva = false;
+        document.getElementById('radioIcon').className = 'fas fa-play';
+        document.getElementById('radioPlayBtn').classList.remove('playing');
+        document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
+      } else {
+        const select = document.getElementById('radioSelect');
+        const url = select.value;
+        if (!url) return;
+        const nombre = select.options[select.selectedIndex].text.replace('📻 ','');
+        document.getElementById('radioNombre').textContent = '⏳ Conectando...';
+        radioAudio.src = url;
+        radioAudio.play().then(() => {
+          radioActiva = true;
+          document.getElementById('radioIcon').className = 'fas fa-pause';
+          document.getElementById('radioPlayBtn').classList.add('playing');
+          document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
+        }).catch(() => {
+          radioActiva = false;
+          document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+        });
+      }
     }
 
+    function cambiarRadio() {
+      if (radioActiva) {
+        radioAudio.pause();
+        radioActiva = false;
+        document.getElementById('radioIcon').className = 'fas fa-play';
+        document.getElementById('radioPlayBtn').classList.remove('playing');
+        toggleRadio();
+      }
+    }
+
+    radioAudio.addEventListener('error', () => {
+      radioActiva = false;
+      document.getElementById('radioIcon').className = 'fas fa-play';
+      document.getElementById('radioPlayBtn').classList.remove('playing');
+      document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+    });
+
+    window.toggleRadio = toggleRadio;
     window.cambiarRadio = cambiarRadio;
 
     document.addEventListener("keydown", e => {

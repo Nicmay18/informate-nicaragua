@@ -803,8 +803,17 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     function esFacebookCDN(url) {
       return /scontent|fbcdn\.net|facebook\.com\/photo|fburl\.com/i.test(url||'');
     }
+    function esBase64(url) {
+      return (url||'').startsWith('data:');
+    }
     function sanitizarImg(url, seed) {
       if (!url || esFacebookCDN(url)) return `https://picsum.photos/seed/${seed}/800/500`;
+      return url;
+    }
+    function sanitizarImgCarrusel(url, seed) {
+      // Para el carrusel: si es base64 usar picsum (base64 rompe el HTML del slide)
+      // pero la imagen real se verá en el modal
+      if (!url || esFacebookCDN(url) || esBase64(url)) return `https://picsum.photos/seed/${seed}/800/400`;
       return url;
     }
     function getColor(cat) {
@@ -921,13 +930,10 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
       const slides = destacadas.length ? destacadas : noticiasFirestore.slice(0,3);
       if (!slides.length) return;
 
-      const inner = document.getElementById('carouselInner');
-      const indicators = document.getElementById('carouselIndicators');
-
-      inner.innerHTML = slides.map((n,i) => {
-        const img = sanitizarImg(n.imagen, n.id||'slide'+i);
+      const slidesHTML = slides.map((n,i) => {
+        const img = sanitizarImgCarrusel(n.imagen, n.id||'slide'+i);
         const color = getColor(n.categoria);
-        return `<div class="carousel-item${i===0?' active':''}" onclick="abrirFirestore('${n.id}')" style="cursor:pointer">
+        return `<div class="carousel-item${i===0?' active':''}" data-noticia-id="${n.id}" style="cursor:pointer">
           <img src="${img}" class="d-block w-100" alt="${n.titulo||''}" onerror="this.src='https://picsum.photos/seed/slide${i}/800/400'">
           <div class="carousel-caption">
             <span class="carousel-badge" style="background:${color}">${n.categoria||''}</span>
@@ -938,19 +944,33 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
         </div>`;
       }).join('');
 
-      if (indicators) {
-        indicators.innerHTML = slides.map((_,i)=>
-          `<button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="${i}" ${i===0?'class="active" aria-current="true"':''}></button>`
-        ).join('');
-      }
+      const indicatorsHTML = slides.map((_,i)=>
+        `<button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="${i}" ${i===0?'class="active" aria-current="true"':''}></button>`
+      ).join('');
 
-      // Reinicializar Bootstrap carousel
+      // Destruir instancia Bootstrap antes de tocar el DOM
       const carouselEl = document.getElementById('carouselNoticias');
       if (carouselEl && window.bootstrap) {
         const old = bootstrap.Carousel.getInstance(carouselEl);
         if (old) old.dispose();
-        new bootstrap.Carousel(carouselEl, { interval: 5000, ride: 'carousel' });
       }
+
+      document.getElementById('carouselInner').innerHTML = slidesHTML;
+      document.getElementById('carouselIndicators').innerHTML = indicatorsHTML;
+
+      // Click en slides via event delegation (evita problemas con base64 en onclick)
+      document.getElementById('carouselInner').addEventListener('click', function(e) {
+        const item = e.target.closest('[data-noticia-id]');
+        if (item) abrirFirestore(item.dataset.noticiaId);
+      }, { once: true });
+
+      // Crear nueva instancia después de que el DOM esté actualizado
+      requestAnimationFrame(() => {
+        const el = document.getElementById('carouselNoticias');
+        if (el && window.bootstrap) {
+          new bootstrap.Carousel(el, { interval: 5000, ride: 'carousel', wrap: true });
+        }
+      });
     }
 
     function actualizarTrending() {

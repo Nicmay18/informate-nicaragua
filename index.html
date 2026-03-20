@@ -332,8 +332,56 @@ audio{width:300px;height:36px;border-radius:18px;position:relative;z-index:1}
     <span class="pulse-dot" aria-hidden="true"></span>
     🔴 Radio en Vivo
   </div>
-  <audio controls src="https://streaming.rcs.com.ni:8080/radioamerica" preload="none" aria-label="Radio América Nicaragua"></audio>
+  <select id="radioSelect" onchange="cambiarRadio()" aria-label="Seleccionar radio" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;max-width:220px">
+    <option value="">📻 Elige una radio</option>
+    <option value="https://stream.zenolive.com/axr92qawesmtv">📻 Radio Ya</option>
+    <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
+    <option value="https://stream.zeno.fm/primerisima921">📻 La Primerísima</option>
+    <option value="https://stream.zeno.fm/futura913">📻 Radio Futura 91.3</option>
+    <option value="https://stream.zeno.fm/viva983">📻 Viva FM 98.3</option>
+    <option value="https://stream.zeno.fm/romantica987">📻 Romántica 98.7</option>
+    <option value="https://stream.zeno.fm/clasica1019">📻 Clásica 101.9</option>
+    <option value="https://stream.zeno.fm/buenisima931">📻 La Buenísima</option>
+  </select>
+  <button onclick="toggleRadio()" id="radioBtn" style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;font-size:16px;cursor:pointer" aria-label="Play/Pause">
+    <i class="fas fa-play" id="radioIcon"></i>
+  </button>
+  <span id="radioNombre" style="font-size:13px;font-weight:600;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Selecciona y dale play</span>
+  <audio id="radioAudio" preload="none"></audio>
 </div>
+<script>
+  const _ra = document.getElementById('radioAudio');
+  let _raActiva = false;
+  function toggleRadio() {
+    if (_raActiva) {
+      _ra.pause(); _ra.src = ''; _raActiva = false;
+      document.getElementById('radioIcon').className = 'fas fa-play';
+      document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
+    } else {
+      const sel = document.getElementById('radioSelect');
+      if (!sel.value) return;
+      const nombre = sel.options[sel.selectedIndex].text.replace('📻 ','');
+      document.getElementById('radioNombre').textContent = '⏳ Conectando...';
+      _ra.src = sel.value;
+      _ra.play().then(() => {
+        _raActiva = true;
+        document.getElementById('radioIcon').className = 'fas fa-pause';
+        document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
+      }).catch(() => {
+        _raActiva = false;
+        document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+      });
+    }
+  }
+  function cambiarRadio() {
+    if (_raActiva) { _ra.pause(); _raActiva = false; document.getElementById('radioIcon').className = 'fas fa-play'; toggleRadio(); }
+  }
+  _ra.addEventListener('error', () => {
+    _raActiva = false;
+    document.getElementById('radioIcon').className = 'fas fa-play';
+    document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+  });
+</script>
 
 <!-- CARRUSEL NOTICIAS DESTACADAS -->
 <div style="background:var(--surface);padding:16px 0;border-bottom:2px solid var(--border);">

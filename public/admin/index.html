@@ -689,30 +689,20 @@
       useFetchStreams: false
     });
 
-    const storage = getStorage(app);
-
     window.db = firestore;
     window._firebase = { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, getDoc, query, orderBy, limit, serverTimestamp };
-
-    // Cargar noticias al iniciar (cuando el DOM esté listo)
-    document.addEventListener('DOMContentLoaded', () => {
-      if (typeof cargarNoticiasFirestore === 'function') cargarNoticiasFirestore();
-    });
-    // Si DOMContentLoaded ya pasó
-    if (document.readyState !== 'loading') {
-      if (typeof cargarNoticiasFirestore === 'function') cargarNoticiasFirestore();
-    }
+    window._firebaseReady = true;
   </script>
 
   <script>
     async function cargarNoticiasFirestore() {
-      // Esperar a que Firebase esté listo
+      // Esperar a que Firebase esté listo (máx 4 segundos)
       let intentos = 0;
-      while (!window._firebase && intentos < 20) {
+      while (!window._firebaseReady && intentos < 20) {
         await new Promise(r => setTimeout(r, 200));
         intentos++;
       }
-      if (!window._firebase) {
+      if (!window._firebaseReady) {
         showToast('error', 'Error', 'Firebase no se inicializó');
         return;
       }
@@ -750,7 +740,7 @@
         document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
         
         cargarConfiguracion();
-        actualizarDashboard();
+        cargarNoticiasFirestore();
         showToast('success', 'Bienvenido', 'Sesión iniciada');
       }
     }

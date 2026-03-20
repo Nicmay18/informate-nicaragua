@@ -926,8 +926,7 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
     }
 
     function actualizarCarrusel() {
-      const destacadas = noticiasFirestore.filter(n=>n.destacada).slice(0,3);
-      const slides = destacadas.length ? destacadas : noticiasFirestore.slice(0,3);
+      const slides = noticiasFirestore.slice(0,5);
       if (!slides.length) return;
 
       const inner = document.getElementById('carouselInner');
@@ -966,7 +965,7 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
         if (window.bootstrap && window.bootstrap.Carousel) {
           const old = bootstrap.Carousel.getInstance(el);
           if (old) old.dispose();
-          new bootstrap.Carousel(el, { interval: 5000, ride: 'carousel', wrap: true });
+          new bootstrap.Carousel(el, { interval: 15000, ride: 'carousel', wrap: true });
         } else {
           setTimeout(initCarousel, 200);
         }

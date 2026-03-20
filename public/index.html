@@ -260,38 +260,16 @@
 
     <main class="content-main">
 
-      <div id="carouselNoticias" class="carousel slide mb-4" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="0" class="active" aria-current="true"></button>
-          <button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="1"></button>
-          <button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="2"></button>
-        </div>
+      <div id="carouselNoticias" class="carousel slide mb-4">
+        <div class="carousel-indicators" id="carouselIndicators"></div>
         <div class="carousel-inner" id="carouselInner">
-          <div class="carousel-item active" onclick="abrirEstatica(0)" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&h=400&fit=crop" class="d-block w-100" alt="Noticia">
-            <div class="carousel-caption">
-              <span class="carousel-badge" style="background:var(--nacionales)">Nacionales</span>
-              <h3>Gobierno de Nicaragua anuncia nuevas inversiones en infraestructura</h3>
-              <p>Plan ambicioso de mejoramiento vial para beneficiar a 100 comunidades...</p>
-              <small><i class="far fa-clock"></i> 19 mar 2026</small>
-            </div>
-          </div>
-          <div class="carousel-item" onclick="abrirEstatica(1)" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=400&fit=crop" class="d-block w-100" alt="Deportes">
-            <div class="carousel-caption">
-              <span class="carousel-badge" style="background:var(--deportes)">Deportes</span>
-              <h3>Selección Nicaragüense intensifica preparación</h3>
-              <p>Entrenamientos de cara a las eliminatorias mundialistas...</p>
-              <small><i class="far fa-clock"></i> 18 mar 2026</small>
-            </div>
-          </div>
-          <div class="carousel-item" onclick="abrirEstatica(2)" style="cursor:pointer;">
-            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=400&fit=crop" class="d-block w-100" alt="Tecnología">
-            <div class="carousel-caption">
-              <span class="carousel-badge" style="background:var(--tecnologia)">Tecnología</span>
-              <h3>Nicaragua avanza en conectividad digital</h3>
-              <p>50 nuevos puntos de wifi gratuito en zonas rurales...</p>
-              <small><i class="far fa-clock"></i> 17 mar 2026</small>
+          <!-- skeleton mientras carga Firestore -->
+          <div class="carousel-item active">
+            <div style="height:400px;background:linear-gradient(135deg,#1e293b,#0f172a);display:flex;align-items:center;justify-content:center;">
+              <div style="text-align:center;color:#475569;">
+                <div style="font-size:40px;margin-bottom:12px;">📰</div>
+                <div style="font-size:14px;">Cargando noticias...</div>
+              </div>
             </div>
           </div>
         </div>
@@ -944,7 +922,8 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
       if (!slides.length) return;
 
       const inner = document.getElementById('carouselInner');
-      const indicators = document.querySelector('#carouselNoticias .carousel-indicators');
+      const indicators = document.getElementById('carouselIndicators');
+
       inner.innerHTML = slides.map((n,i) => {
         const img = sanitizarImg(n.imagen, n.id||'slide'+i);
         const color = getColor(n.categoria);
@@ -953,18 +932,19 @@ En el sector salud, se acordó el envío de brigadas médicas especializadas y l
           <div class="carousel-caption">
             <span class="carousel-badge" style="background:${color}">${n.categoria||''}</span>
             <h3>${n.titulo||''}</h3>
-            <p>${(n.resumen||'').substring(0,100)}...</p>
+            <p>${(n.resumen||n.contenido||'').substring(0,100)}...</p>
             <small><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</small>
           </div>
         </div>`;
       }).join('');
+
       if (indicators) {
         indicators.innerHTML = slides.map((_,i)=>
           `<button type="button" data-bs-target="#carouselNoticias" data-bs-slide-to="${i}" ${i===0?'class="active" aria-current="true"':''}></button>`
         ).join('');
       }
 
-      // Reinicializar Bootstrap carousel con los nuevos slides
+      // Reinicializar Bootstrap carousel
       const carouselEl = document.getElementById('carouselNoticias');
       if (carouselEl && window.bootstrap) {
         const old = bootstrap.Carousel.getInstance(carouselEl);

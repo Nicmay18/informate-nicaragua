@@ -9,7 +9,7 @@ module.exports = async (req, res) => {
     if (!imagen) return res.status(400).json({ error: 'Falta imagen' });
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-    const REPO = 'Maycol18/informate-nicaragua';
+    const REPO = 'Nicmay18/informate-nicaragua';
     const BRANCH = 'main';
 
     // imagen viene como base64 puro (sin el prefijo data:image/...;base64,)

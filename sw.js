@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ni-news-v2';
+const CACHE_NAME = 'ni-news-v3';
 const STATIC_ASSETS = [
   '/logo.png',
   '/manifest.json'

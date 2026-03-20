@@ -8,11 +8,19 @@
     "dev": "npx live-server --port=3000",
     "build": "echo 'Build manual por ahora'"
   },
-  "keywords": ["noticias", "nicaragua", "pwa", "news"],
+  "keywords": [
+    "noticias",
+    "nicaragua",
+    "pwa",
+    "news"
+  ],
   "author": "Nicaragua Informate",
   "license": "MIT",
   "devDependencies": {
     "live-server": "^1.2.2",
     "serve": "^14.2.1"
+  },
+  "dependencies": {
+    "feed": "^5.2.0"
   }
 }

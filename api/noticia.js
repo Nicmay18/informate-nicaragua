@@ -1,6 +1,6 @@
 module.exports = async (req, res) => {
   const id = req.query.id || '';
-  const BASE = 'https://informate-nicaragua.vercel.app';
+  const BASE = 'https://nicaraguainformate.com';
   const PROJECT = 'informate-instant-nicaragua';
 
   if (!id) return res.redirect(302, '/');

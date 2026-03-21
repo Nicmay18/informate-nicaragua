@@ -15,7 +15,7 @@ module.exports = async (req, res) => {
     }
     const data = await r.json();
 
-    const BASE = 'https://informate-nicaragua.vercel.app';
+    const BASE = 'https://nicaraguainformate.com';
     const docs = data.documents || [];
 
     // Sort by fecha descending in memory

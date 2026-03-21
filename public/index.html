@@ -517,65 +517,8 @@
   </script>
 
   <script>
-    // NOTICIAS ESTÁTICAS PARA MODAL Y FALLBACK
-    const NOTICIAS_ESTATICAS = window.NOTICIAS_ESTATICAS = [
-      {
-        id: 'static-0',
-        titulo: 'Gobierno de Nicaragua anuncia nuevas inversiones en infraestructura vial para 2025',
-        categoria: 'Nacionales',
-        imagen: 'https://images.unsplash.com/photo-1585829365295-ab7cd400c167?w=800&h=500&fit=crop',
-        fecha: new Date(),
-        contenido: `El Gobierno de Nicaragua, a través del Ministerio de Transporte e Infraestructura (MTI), anunció un ambicioso plan de inversión para el año 2025 destinado al mejoramiento y ampliación de la red vial nacional.
-
-El plan incluye la construcción de nuevas carreteras, el mantenimiento de rutas existentes y la construcción de puentes en zonas estratégicas del país. Estas obras beneficiarán directamente a más de 100 comunidades rurales y urbanas, facilitando el transporte de personas y mercancías.
-
-El ministro de Transporte destacó que esta inversión forma parte del compromiso del gobierno sandinista con el desarrollo económico y social del país, mejorando la conectividad entre departamentos y potenciando el comercio interno.
-
-Las obras comenzarán en el segundo trimestre del año y se espera que la primera fase esté concluida para finales de 2025.`
-      },
-      {
-        id: 'static-1',
-        titulo: 'Selección Nicaragüense de Fútbol se prepara para eliminatorias mundialistas',
-        categoria: 'Deportes',
-        imagen: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=800&h=500&fit=crop',
-        fecha: new Date(Date.now() - 86400000),
-        contenido: `La selección nacional de fútbol de Nicaragua intensificó su preparación de cara a los próximos compromisos de las eliminatorias para la Copa Mundial de la FIFA 2026.
-
-Bajo la dirección técnica del entrenador nacional, el equipo pinolero ha mantenido sesiones de entrenamiento diarias en el Estadio Nacional de Fútbol, enfocándose en la mejora de la condición física y el trabajo táctico.
-
-"Estamos muy motivados y conscientes de la responsabilidad que representa defender los colores de Nicaragua", declaró el capitán del equipo.
-
-La Federación Nicaragüense de Fútbol (FENIFUT) confirmó que se están gestionando partidos amistosos contra selecciones centroamericanas.`
-      },
-      {
-        id: 'static-2',
-        titulo: 'Nicaragua avanza en conectividad digital con nuevos centros de internet gratuito',
-        categoria: 'Tecnología',
-        imagen: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&h=500&fit=crop',
-        fecha: new Date(Date.now() - 172800000),
-        contenido: `El Ministerio de Transporte e Infraestructura (MTI) y la Empresa Nicaragüense de Telecomunicaciones (ENATREL) anunciaron la instalación de 50 nuevos puntos de acceso wifi gratuito en zonas rurales y urbanas del país.
-
-Esta iniciativa forma parte del programa "Internet para Todos", que busca reducir la brecha digital y garantizar el acceso a la información para todos los nicaragüenses.
-
-Los nuevos puntos se instalarán en plazas públicas, parques, centros educativos y mercados de Managua, León, Granada, Masaya y Matagalpa, beneficiando a 200,000 habitantes.
-
-"La conectividad es un derecho fundamental en la era digital", expresó la viceministra de Transporte.`
-      },
-      {
-        id: 'static-3',
-        titulo: 'Relaciones diplomáticas entre Nicaragua y países hermanos se fortalecen',
-        categoria: 'Internacionales',
-        imagen: 'https://images.unsplash.com/photo-1523995462485-3d171b5c8fa9?w=800&h=500&fit=crop',
-        fecha: new Date(Date.now() - 259200000),
-        contenido: `Nicaragua fortaleció sus vínculos diplomáticos y de cooperación con países hermanos de América Latina y el Caribe mediante reuniones bilaterales celebradas en Managua.
-
-Delegaciones oficiales de Venezuela, Cuba, Bolivia y Honduras sostuvieron encuentros con autoridades nicaragüenses para revisar y ampliar acuerdos de colaboración en áreas de salud, educación, agricultura y comercio.
-
-En el sector salud, se acordó el envío de brigadas médicas especializadas y la donación de equipos hospitalarios. En educación, se establecieron programas de intercambio estudiantil.
-
-"Estos encuentros demuestran la solidaridad de nuestros pueblos", señaló el canciller nicaragüense.`
-      }
-    ];
+    // Fallback mínimo si Firestore falla
+    const NOTICIAS_ESTATICAS = window.NOTICIAS_ESTATICAS = [];
 
     function getColorCategoria(cat) {
       const colores = {

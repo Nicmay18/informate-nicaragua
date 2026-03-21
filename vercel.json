@@ -1,16 +1,10 @@
 {
   "rewrites": [
-    { "source": "/sw.js", "destination": "/public/sw.js" },
-    { "source": "/manifest.json", "destination": "/public/manifest.json" },
+    { "source": "/sw.js", "destination": "/sw.js" },
+    { "source": "/manifest.json", "destination": "/manifest.json" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/noticia", "destination": "/api/noticia" },
-    { "source": "/(.+\\.html)", "destination": "/public/$1" },
-    { "source": "/icons/(.*)", "destination": "/public/icons/$1" },
-    { "source": "/images/(.*)", "destination": "/public/images/$1" },
-    { "source": "/logo.png", "destination": "/public/logo.png" },
-    { "source": "/ads.txt", "destination": "/public/ads.txt" },
-    { "source": "/robots.txt", "destination": "/public/robots.txt" },
-    { "source": "/", "destination": "/public/index.html" }
+    { "source": "/(.*)", "destination": "/" }
   ],
   "headers": [
     {
@@ -29,6 +23,12 @@
     },
     {
       "source": "/(.*).html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]

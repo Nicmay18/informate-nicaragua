@@ -37,7 +37,9 @@ async function getRelacionadas(id, categoria) {
 
 module.exports = async (req, res) => {
   const id = req.query.id || '';
-  const lite = req.query.lite === '1';
+  const ua = req.headers['user-agent'] || '';
+  const isFBBrowser = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua);
+  const lite = req.query.lite === '1' || isFBBrowser;
   const BASE = 'https://nicaraguainformate.com';
   const PROJECT = 'informate-instant-nicaragua';
 
@@ -136,17 +138,6 @@ module.exports = async (req, res) => {
   </style>
 </head>
 <body>
-<script>
-(function(){
-  var ua=navigator.userAgent||'';
-  if(!/FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua))return;
-  // Redirigir a versión lite si no estamos ya en ella
-  if(window.location.search.indexOf('lite=1')===-1){
-    var sep=window.location.search?'&':'?';
-    window.location.replace(window.location.href+sep+'lite=1');
-  }
-})();
-</script>
 <header><a href="/">🇳🇮 Nicaragua Informate</a></header>
 <div class="container">
   <a href="/" class="back">← Volver al inicio</a>

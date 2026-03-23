@@ -1,45 +1,49 @@
-const { db } = require('../lib/firebase-admin');
-
 module.exports = async (req, res) => {
+  const BASE = 'https://nicaraguainformate.com';
+  const PROJECT = 'informate-instant-nicaragua';
+  const today = new Date().toISOString().split('T')[0];
+
   try {
-    const snapshot = await db.collection('noticias')
-      .orderBy('fecha', 'desc')
-      .limit(100)
-      .get();
+    const r = await fetch(
+      `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/noticias?pageSize=100&orderBy=fecha+desc`
+    );
+    const data = await r.json();
+    const docs = data.documents || [];
 
-    const noticias = snapshot.docs.map(doc => {
-      const data = doc.data();
-      return {
-        slug: data.slug || doc.id,
-        fecha: data.fecha?.toDate?.() || new Date()
-      };
-    });
-
-    const baseUrl = 'https://informate-instant-nicaragua.vercel.app';
-    const today = new Date().toISOString().split('T')[0];
+    const urls = docs.map(d => {
+      const id = d.name.split('/').pop();
+      const ts = d.fields?.fecha?.timestampValue;
+      const fecha = ts ? new Date(ts).toISOString().split('T')[0] : today;
+      return `  <url>
+    <loc>${BASE}/noticia?id=${id}</loc>
+    <lastmod>${fecha}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>`;
+    }).join('\n');
 
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>${baseUrl}</loc>
+    <loc>${BASE}/</loc>
     <lastmod>${today}</lastmod>
     <changefreq>hourly</changefreq>
     <priority>1.0</priority>
   </url>
-  ${noticias.map(n => `
   <url>
-    <loc>${baseUrl}/noticia/${n.slug}</loc>
-    <lastmod>${n.fecha.toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>`).join('')}
+    <loc>${BASE}/nosotros.html</loc>
+    <lastmod>${today}</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+${urls}
 </urlset>`;
 
-    res.setHeader('Content-Type', 'application/xml');
-    res.setHeader('Cache-Control', 'public, max-age=3600');
+    res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+    res.setHeader('Cache-Control', 'public, s-maxage=3600');
     res.status(200).send(sitemap);
 
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (e) {
+    res.status(500).send('Error generando sitemap: ' + e.message);
   }
 };

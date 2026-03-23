@@ -90,6 +90,21 @@ module.exports = async (req, res) => {
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
     res.status(200).send(html);
 
+    // Incrementar vistas en background (fire and forget)
+    const PROJECT2 = 'informate-instant-nicaragua';
+    const BASE2 = `https://firestore.googleapis.com/v1/projects/${PROJECT2}/databases/(default)/documents`;
+    fetch(`${BASE2}/noticias/${id}`)
+      .then(r => r.json())
+      .then(doc => {
+        const v = doc.fields?.vistas?.integerValue ? parseInt(doc.fields.vistas.integerValue) : 0;
+        return fetch(`${BASE2}/noticias/${id}?updateMask.fieldPaths=vistas`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fields: { vistas: { integerValue: v + 1 } } })
+        });
+      })
+      .catch(() => {});
+
   } catch (e) {
     res.redirect(302, '/');
   }

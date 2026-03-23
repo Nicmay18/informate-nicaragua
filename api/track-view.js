@@ -1,28 +1,46 @@
-const { db } = require('../lib/firebase-admin');
-
 module.exports = async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
+  const { noticiaId } = req.body || {};
+  if (!noticiaId) return res.status(400).json({ error: 'Falta noticiaId' });
+
+  const PROJECT = 'informate-instant-nicaragua';
+  const BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents`;
+
   try {
-    const { noticiaId, referrer = 'direct' } = req.body || {};
-    
-    if (!noticiaId) return res.status(400).json({ error: 'Falta noticiaId' });
+    // Leer vistas actuales
+    const r = await fetch(`${BASE}/noticias/${noticiaId}`);
+    if (!r.ok) return res.status(404).json({ error: 'Noticia no encontrada' });
+    const doc = await r.json();
+    const vistasActuales = doc.fields?.vistas?.integerValue
+      ? parseInt(doc.fields.vistas.integerValue)
+      : 0;
 
-    await db.collection('analytics').add({
-      noticiaId,
-      referrer,
-      userAgent: req.headers['user-agent']?.substring(0, 200) || 'unknown',
-      country: req.headers['x-vercel-ip-country'] || 'unknown',
-      timestamp: new Date()
-    });
+    // Actualizar solo el campo vistas con PATCH
+    const patch = await fetch(
+      `${BASE}/noticias/${noticiaId}?updateMask.fieldPaths=vistas`,
+      {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          fields: {
+            vistas: { integerValue: vistasActuales + 1 }
+          }
+        })
+      }
+    );
 
-    await db.collection('noticias').doc(noticiaId).update({
-      vistas: require('firebase-admin').firestore.FieldValue.increment(1)
-    });
+    if (!patch.ok) {
+      const err = await patch.text();
+      return res.status(500).json({ error: err });
+    }
 
-    res.status(200).json({ success: true });
+    res.status(200).json({ success: true, vistas: vistasActuales + 1 });
 
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
   }
 };

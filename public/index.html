@@ -1023,8 +1023,6 @@
           <div class="carousel-caption">
             <span class="carousel-badge" style="background:${color}">${n.categoria||''}</span>
             <h3>${n.titulo||''}</h3>
-            <p>${(n.resumen||n.contenido||'').substring(0,100)}...</p>
-            <small><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</small>
           </div>
         </div>`;
       }).join('');

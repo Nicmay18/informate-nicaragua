@@ -177,11 +177,19 @@ module.exports = async (req, res) => {
 </footer>
 <script>
 function copiarLink(){
-  navigator.clipboard.writeText('${BASE}/noticia?id=${id}').then(()=>{
-    const el=document.getElementById('copyTxt');
-    el.textContent='¡Copiado!';
-    setTimeout(()=>el.textContent='Copiar link',2000);
-  }).catch(()=>alert('${BASE}/noticia?id=${id}'));
+  const url='${BASE}/noticia?id=${id}';
+  const el=document.getElementById('copyTxt');
+  function ok(){ el.textContent='¡Copiado!'; setTimeout(()=>el.textContent='Copiar link',2000); }
+  if(navigator.clipboard && window.isSecureContext){
+    navigator.clipboard.writeText(url).then(ok).catch(()=>fallback(url,ok));
+  } else { fallback(url,ok); }
+}
+function fallback(url,cb){
+  const ta=document.createElement('textarea');
+  ta.value=url; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.focus(); ta.select();
+  try{ document.execCommand('copy'); cb(); } catch(e){ prompt('Copia este link:',url); }
+  document.body.removeChild(ta);
 }
 </script>
 </body>

@@ -619,8 +619,64 @@
 
       <!-- ANALYTICS -->
       <div id="analytics-tab" class="tab-content">
-        <div class="page-header"><div class="page-title"><h1>Analytics</h1><p>Estadísticas</p></div></div>
-        <div class="card"><div class="card-body"><div class="empty-state"><div class="empty-state-icon"><i class="fas fa-chart-bar"></i></div><h3>En desarrollo</h3></div></div></div>
+        <div class="page-header">
+          <div class="page-title"><h1>📊 Estadísticas</h1><p>Datos en tiempo real de tu sitio</p></div>
+          <button class="btn btn-secondary btn-sm" onclick="cargarAnalytics()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+        </div>
+
+        <!-- TARJETAS RESUMEN -->
+        <div class="stats-grid" style="margin-bottom:24px;">
+          <div class="stat-card">
+            <div class="stat-header">
+              <div><div class="stat-value" id="anTotalVisitas">—</div><div class="stat-label">Visitas totales al sitio</div></div>
+              <div class="stat-icon blue"><i class="fas fa-eye"></i></div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div><div class="stat-value" id="anTotalNoticias">—</div><div class="stat-label">Noticias publicadas</div></div>
+              <div class="stat-icon green"><i class="fas fa-newspaper"></i></div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div><div class="stat-value" id="anVistasNoticias">—</div><div class="stat-label">Vistas en noticias</div></div>
+              <div class="stat-icon orange"><i class="fas fa-chart-line"></i></div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-header">
+              <div><div class="stat-value" id="anPromedio">—</div><div class="stat-label">Promedio vistas/noticia</div></div>
+              <div class="stat-icon red"><i class="fas fa-star"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <!-- NOTICIAS MÁS VISTAS -->
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fas fa-fire" style="color:#ef4444"></i> Noticias más vistas</h3></div>
+            <div class="card-body" id="anMasVistas">
+              <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-chart-bar"></i></div><h3>Cargando...</h3></div>
+            </div>
+          </div>
+
+          <!-- VISTAS POR CATEGORÍA -->
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fas fa-tags" style="color:#3b82f6"></i> Vistas por categoría</h3></div>
+            <div class="card-body" id="anPorCategoria">
+              <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-tags"></i></div><h3>Cargando...</h3></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NOTICIAS SIN VISTAS -->
+        <div class="card" style="margin-top:24px;">
+          <div class="card-header"><h3 class="card-title"><i class="fas fa-eye-slash" style="color:#64748b"></i> Noticias sin visitas</h3></div>
+          <div class="card-body" id="anSinVistas">
+            <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-eye-slash"></i></div><h3>Cargando...</h3></div>
+          </div>
+        </div>
       </div>
 
       <!-- CONFIGURACIÓN -->
@@ -774,10 +830,97 @@
           if (b.textContent === 'Todas') b.classList.add('active');
         });
       }
+
+      if (tabId === 'analytics-tab') cargarAnalytics();
     }
 
     function verSitio() {
       window.open(CONFIG.SITE_URL + '/?nocache=' + Date.now(), '_blank');
+    }
+
+    // ==========================================
+    // ANALYTICS
+    // ==========================================
+    async function cargarAnalytics() {
+      // Esperar noticias cargadas
+      let intentos = 0;
+      while (!noticias.length && intentos < 20) {
+        await new Promise(r => setTimeout(r, 300));
+        intentos++;
+      }
+
+      // Visitas totales al sitio desde Firestore statistics/visits
+      try {
+        const { doc, getDoc } = window._firebase;
+        const snap = await getDoc(doc(window.db, 'statistics', 'visits'));
+        const total = snap.exists() ? (snap.data().total || 0) : 0;
+        document.getElementById('anTotalVisitas').textContent = total.toLocaleString('es-NI');
+      } catch(e) {
+        document.getElementById('anTotalVisitas').textContent = '—';
+      }
+
+      // Totales desde noticias
+      const totalNoticias = noticias.length;
+      const totalVistas = noticias.reduce((s, n) => s + (n.vistas || 0), 0);
+      const promedio = totalNoticias ? Math.round(totalVistas / totalNoticias) : 0;
+
+      document.getElementById('anTotalNoticias').textContent = totalNoticias;
+      document.getElementById('anVistasNoticias').textContent = totalVistas.toLocaleString('es-NI');
+      document.getElementById('anPromedio').textContent = promedio;
+
+      // Noticias más vistas (top 8)
+      const masVistas = [...noticias].sort((a, b) => (b.vistas || 0) - (a.vistas || 0)).slice(0, 8);
+      const maxVistas = masVistas[0]?.vistas || 1;
+      document.getElementById('anMasVistas').innerHTML = masVistas.length ? masVistas.map((n, i) => {
+        const pct = Math.round(((n.vistas || 0) / maxVistas) * 100);
+        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return `<div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
+              <span style="font-size:18px;font-weight:900;color:#475569;min-width:24px;">${i+1}</span>
+              <span class="news-badge badge-${catClass}" style="flex-shrink:0;">${n.categoria||''}</span>
+              <span style="font-size:13px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.titulo||'Sin título'}</span>
+            </div>
+            <span style="font-size:13px;font-weight:700;color:#60a5fa;margin-left:8px;flex-shrink:0;"><i class="fas fa-eye"></i> ${(n.vistas||0).toLocaleString('es-NI')}</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>`;
+      }).join('') : '<p style="color:#64748b;text-align:center;">Ninguna noticia tiene vistas aún</p>';
+
+      // Vistas por categoría
+      const porCat = {};
+      noticias.forEach(n => {
+        const c = n.categoria || 'Sin categoría';
+        if (!porCat[c]) porCat[c] = { vistas: 0, count: 0 };
+        porCat[c].vistas += (n.vistas || 0);
+        porCat[c].count++;
+      });
+      const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1].vistas - a[1].vistas);
+      const maxCat = catOrdenadas[0]?.[1].vistas || 1;
+      const emojis = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Economía':'💰','Espectáculos':'⭐'};
+      document.getElementById('anPorCategoria').innerHTML = catOrdenadas.length ? catOrdenadas.map(([cat, d]) => {
+        const pct = Math.round((d.vistas / maxCat) * 100);
+        return `<div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:14px;font-weight:600;color:#e2e8f0;">${emojis[cat]||'📰'} ${cat} <span style="color:#64748b;font-weight:400;">(${d.count} noticias)</span></span>
+            <span style="font-size:13px;font-weight:700;color:#60a5fa;"><i class="fas fa-eye"></i> ${d.vistas.toLocaleString('es-NI')}</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>`;
+      }).join('') : '<p style="color:#64748b;text-align:center;">Sin datos</p>';
+
+      // Noticias sin visitas
+      const sinVistas = noticias.filter(n => !n.vistas || n.vistas === 0).slice(0, 10);
+      document.getElementById('anSinVistas').innerHTML = sinVistas.length ? sinVistas.map(n => {
+        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return `<div class="news-item" style="cursor:pointer;" onclick="editarNoticia('${n.id}')">
+          <img src="${n.imagen||'https://picsum.photos/seed/'+n.id+'/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
+          <div class="news-content">
+            <div class="news-title">${n.titulo||'Sin título'}</div>
+            <div class="news-meta"><span class="news-badge badge-${catClass}">${n.categoria||''}</span><span style="color:#ef4444;"><i class="fas fa-eye-slash"></i> 0 vistas</span></div>
+          </div>
+        </div>`;
+      }).join('') : '<div style="text-align:center;padding:20px;color:#34d399;"><i class="fas fa-check-circle" style="font-size:32px;margin-bottom:8px;display:block;"></i>¡Todas las noticias tienen visitas!</div>';
     }
 
     function verSitioForzado() {

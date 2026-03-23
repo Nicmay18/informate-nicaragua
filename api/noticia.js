@@ -1,3 +1,26 @@
+const FSBASE = 'https://firestore.googleapis.com/v1/projects/informate-instant-nicaragua/databases/(default)/documents';
+
+async function getRelacionadas(id, categoria) {
+  try {
+    const r = await fetch(`${FSBASE}/noticias?pageSize=20&orderBy=fecha+desc`);
+    if (!r.ok) return [];
+    const data = await r.json();
+    const docs = data.documents || [];
+    return docs
+      .filter(d => {
+        const docId = d.name.split('/').pop();
+        return docId !== id && d.fields?.categoria?.stringValue === categoria;
+      })
+      .slice(0, 3)
+      .map(d => ({
+        id: d.name.split('/').pop(),
+        titulo: d.fields?.titulo?.stringValue || '',
+        imagen: d.fields?.imagen?.stringValue || '',
+        categoria: d.fields?.categoria?.stringValue || ''
+      }));
+  } catch(e) { return []; }
+}
+
 module.exports = async (req, res) => {
   const id = req.query.id || '';
   const BASE = 'https://nicaraguainformate.com';
@@ -28,6 +51,23 @@ module.exports = async (req, res) => {
       'Cultura': '#ede9fe', 'Espectáculos': '#fce7f3'
     };
     const catBg = catColor[categoria] || '#f1f5f9';
+
+    // Noticias relacionadas de la misma categoría
+    const relacionadas = await getRelacionadas(id, categoria);
+    const relacionadasHtml = relacionadas.length ? `
+    <div style="margin-top:40px;padding-top:32px;border-top:3px solid #e2e8f0;">
+      <h3 style="font-size:1.3em;font-weight:800;color:#1e293b;margin-bottom:20px;">📰 Noticias relacionadas</h3>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+        ${relacionadas.map(n => `
+        <a href="/noticia?id=${n.id}" style="text-decoration:none;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.08);border:1px solid #e2e8f0;display:block;transition:transform .2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
+          <img src="${esc(n.imagen)||`https://picsum.photos/seed/${n.id}/400/200`}" alt="${esc(n.titulo)}" style="width:100%;height:140px;object-fit:cover;" onerror="this.src='https://picsum.photos/seed/${n.id}/400/200'">
+          <div style="padding:12px;">
+            <span style="background:${catBg};font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 8px;border-radius:20px;color:#333;">${esc(n.categoria)}</span>
+            <p style="margin-top:8px;font-size:14px;font-weight:700;color:#1e293b;line-height:1.4;">${esc(n.titulo)}</p>
+          </div>
+        </a>`).join('')}
+      </div>
+    </div>` : '';
 
     const html = `<!DOCTYPE html>
 <html lang="es">
@@ -75,6 +115,7 @@ module.exports = async (req, res) => {
     <div class="meta">${fecha} | Nicaragua Informate</div>
     ${imgTag}
     <div class="contenido"><p>${contenido}</p></div>
+    ${relacionadasHtml}
   </article>
 </div>
 <footer>

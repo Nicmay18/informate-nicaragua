@@ -135,6 +135,23 @@ module.exports = async (req, res) => {
   </style>
 </head>
 <body>
+<script>
+(function(){
+  var ua=navigator.userAgent||'';
+  if(!/FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua))return;
+  var url=window.location.href;
+  if(/Android/.test(ua)){
+    window.location.href='intent://'+url.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end';
+  } else if(/iPhone|iPad|iPod/.test(ua)){
+    document.addEventListener('DOMContentLoaded',function(){
+      var b=document.createElement('div');
+      b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#0d47a1;color:#fff;padding:14px 16px;text-align:center;font-family:sans-serif;font-size:14px;font-weight:600;';
+      b.innerHTML='Para leer esta noticia, ábrela en Safari <button onclick="window.open(\''+url+'\',\'_system\')" style="margin-left:10px;background:#fff;color:#0d47a1;border:none;padding:6px 16px;border-radius:20px;font-weight:700;cursor:pointer;">Abrir en Safari</button>';
+      document.body.insertBefore(b,document.body.firstChild);
+    });
+  }
+})();
+</script>
 <header><a href="/">🇳🇮 Nicaragua Informate</a></header>
 <div class="container">
   <a href="/" class="back">← Volver al inicio</a>

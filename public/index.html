@@ -221,6 +221,30 @@
   </style>
 </head>
 <body>
+<script>
+// Detectar Facebook In-App Browser y redirigir al navegador nativo
+(function(){
+  var ua = navigator.userAgent || '';
+  var isFBBrowser = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua);
+  if (isFBBrowser) {
+    var url = window.location.href;
+    // Intentar abrir en Chrome/Safari nativo
+    var isAndroid = /Android/.test(ua);
+    var isIOS = /iPhone|iPad|iPod/.test(ua);
+    if (isAndroid) {
+      window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
+    } else if (isIOS) {
+      // En iOS mostrar mensaje para abrir en Safari
+      document.addEventListener('DOMContentLoaded', function(){
+        var banner = document.createElement('div');
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a56db;color:#fff;padding:16px 20px;text-align:center;font-family:sans-serif;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.3);';
+        banner.innerHTML = '⚠️ Para ver esta página correctamente, ábrela en Safari.<br><button onclick="window.open(\''+url+'\',\'_system\')" style="margin-top:8px;background:#fff;color:#1a56db;border:none;padding:8px 20px;border-radius:20px;font-weight:700;cursor:pointer;font-size:14px;">Abrir en Safari</button>';
+        document.body.insertBefore(banner, document.body.firstChild);
+      });
+    }
+  }
+})();
+</script>
 
   <div class="topbar">
     <a href="/" class="logo">

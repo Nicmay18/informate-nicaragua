@@ -37,6 +37,7 @@ async function getRelacionadas(id, categoria) {
 
 module.exports = async (req, res) => {
   const id = req.query.id || '';
+  const lite = req.query.lite === '1';
   const BASE = 'https://nicaraguainformate.com';
   const PROJECT = 'informate-instant-nicaragua';
 
@@ -100,7 +101,6 @@ module.exports = async (req, res) => {
   <meta property="og:description" content="${esc(resumen)}">
   <meta property="og:url" content="${url}">
   <meta property="og:site_name" content="Nicaragua Informate">
-  <meta property="fb:app_id" content="1039858818292075">
   ${imgMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${esc(titulo)}">
@@ -140,19 +140,11 @@ module.exports = async (req, res) => {
 (function(){
   var ua=navigator.userAgent||'';
   if(!/FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua))return;
-  var url=window.location.href;
-  var isAndroid=/Android/.test(ua);
-  var instruccion=isAndroid
-    ?'📱 Toca los <b>⋮ tres puntos</b> arriba a la derecha → <b>"Abrir en Chrome"</b>'
-    :'📱 Toca los <b>⋯ tres puntos</b> abajo → <b>"Abrir en Safari"</b>';
-  function mostrarBanner(){
-    var b=document.createElement('div');
-    b.style.cssText='position:fixed;inset:0;z-index:999999;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;font-family:sans-serif;text-align:center;';
-    b.innerHTML='<div style="font-size:56px;margin-bottom:20px;">🌐</div><h2 style="color:#fff;font-size:22px;font-weight:800;margin-bottom:12px;">Abre en tu navegador</h2><p style="color:#94a3b8;font-size:15px;line-height:1.6;margin-bottom:24px;">'+instruccion+'</p><div style="background:#1e293b;border-radius:12px;padding:16px 20px;color:#60a5fa;font-size:13px;word-break:break-all;margin-bottom:24px;">'+url+'</div><button onclick="navigator.clipboard&&navigator.clipboard.writeText(\''+url+'\').then(function(){this.textContent=\'✅ Copiado\'}.bind(this))" style="background:#0d47a1;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;width:100%;max-width:280px;">📋 Copiar link</button><p style="color:#475569;font-size:12px;margin-top:16px;">Pega el link en Chrome o Safari</p>';
-    if(document.body)document.body.appendChild(b);
-    else document.addEventListener('DOMContentLoaded',function(){document.body.appendChild(b);});
+  // Redirigir a versión lite si no estamos ya en ella
+  if(window.location.search.indexOf('lite=1')===-1){
+    var sep=window.location.search?'&':'?';
+    window.location.replace(window.location.href+sep+'lite=1');
   }
-  mostrarBanner();
 })();
 </script>
 <header><a href="/">🇳🇮 Nicaragua Informate</a></header>
@@ -222,6 +214,56 @@ function fallback(url,cb){
 
     res.setHeader('Content-Type', 'text/html; charset=utf-8');
     res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate');
+
+    // Versión LITE para Facebook browser en Android (sin AdSense, sin scripts pesados)
+    if (lite) {
+      const liteHtml = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${esc(titulo)} | Nicaragua Informate</title>
+  <meta name="description" content="${esc(resumen)}">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:Arial,sans-serif;line-height:1.7;color:#222;background:#fff;font-size:16px}
+    header{background:#0d47a1;color:#fff;padding:14px 16px}
+    header a{color:#fff;text-decoration:none;font-size:1.1em;font-weight:bold}
+    .container{max-width:720px;margin:0 auto;padding:16px}
+    .cat{display:inline-block;padding:3px 12px;border-radius:20px;font-size:11px;font-weight:bold;text-transform:uppercase;margin-bottom:10px;background:${catBg}}
+    h1{font-size:1.5em;margin-bottom:10px;line-height:1.3;color:#111}
+    .meta{color:#666;font-size:13px;margin-bottom:16px}
+    .img-wrap{position:relative;overflow:hidden;border-radius:8px;margin-bottom:20px;background:#1e293b;max-height:380px;display:flex;align-items:center;justify-content:center;}
+    .img-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(14px) brightness(.5);transform:scale(1.1);}
+    .img-main{position:relative;z-index:1;max-height:380px;width:100%;object-fit:contain;}
+    .contenido{font-size:16px;line-height:1.8}
+    .contenido p{margin-bottom:14px}
+    .back{display:inline-block;margin:16px 0;color:#0d47a1;text-decoration:none;font-weight:500}
+    .open-btn{display:block;margin:20px 0;background:#0d47a1;color:#fff;text-align:center;padding:14px;border-radius:10px;font-size:15px;font-weight:700;text-decoration:none;}
+    footer{background:#1e293b;color:#aaa;text-align:center;padding:20px;margin-top:32px;font-size:13px}
+    footer a{color:#93c5fd;text-decoration:none;margin:0 6px}
+  </style>
+</head>
+<body>
+<header><a href="/">🇳🇮 Nicaragua Informate</a></header>
+<div class="container">
+  <a href="/" class="back">← Inicio</a>
+  <span class="cat">${esc(categoria)}</span>
+  <h1>${esc(titulo)}</h1>
+  <div class="meta">${fecha}</div>
+  ${imagen ? `<div class="img-wrap"><img class="img-bg" src="${esc(imagen)}" aria-hidden="true"><img class="img-main" src="${esc(imagen)}" alt="${esc(titulo)}"></div>` : ''}
+  <div class="contenido"><p>${contenido}</p></div>
+  <a class="open-btn" href="${BASE}/noticia?id=${id}">🌐 Ver en navegador completo</a>
+</div>
+<footer>
+  <p>&copy; 2026 Nicaragua Informate</p>
+  <a href="/">Inicio</a> <a href="/privacidad.html">Privacidad</a>
+</footer>
+</body>
+</html>`;
+      return res.status(200).send(liteHtml);
+    }
+
     res.status(200).send(html);
 
     // Incrementar vistas en background (fire and forget)

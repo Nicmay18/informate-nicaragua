@@ -140,16 +140,18 @@ module.exports = async (req, res) => {
   var ua=navigator.userAgent||'';
   if(!/FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua))return;
   var url=window.location.href;
-  if(/Android/.test(ua)){
-    window.location.href='intent://'+url.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end';
-  } else if(/iPhone|iPad|iPod/.test(ua)){
-    document.addEventListener('DOMContentLoaded',function(){
-      var b=document.createElement('div');
-      b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:99999;background:#0d47a1;color:#fff;padding:14px 16px;text-align:center;font-family:sans-serif;font-size:14px;font-weight:600;';
-      b.innerHTML='Para leer esta noticia, ábrela en Safari <button onclick="window.open(\''+url+'\',\'_system\')" style="margin-left:10px;background:#fff;color:#0d47a1;border:none;padding:6px 16px;border-radius:20px;font-weight:700;cursor:pointer;">Abrir en Safari</button>';
-      document.body.insertBefore(b,document.body.firstChild);
-    });
+  var isAndroid=/Android/.test(ua);
+  var instruccion=isAndroid
+    ?'📱 Toca los <b>⋮ tres puntos</b> arriba a la derecha → <b>"Abrir en Chrome"</b>'
+    :'📱 Toca los <b>⋯ tres puntos</b> abajo → <b>"Abrir en Safari"</b>';
+  function mostrarBanner(){
+    var b=document.createElement('div');
+    b.style.cssText='position:fixed;inset:0;z-index:999999;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;font-family:sans-serif;text-align:center;';
+    b.innerHTML='<div style="font-size:56px;margin-bottom:20px;">🌐</div><h2 style="color:#fff;font-size:22px;font-weight:800;margin-bottom:12px;">Abre en tu navegador</h2><p style="color:#94a3b8;font-size:15px;line-height:1.6;margin-bottom:24px;">'+instruccion+'</p><div style="background:#1e293b;border-radius:12px;padding:16px 20px;color:#60a5fa;font-size:13px;word-break:break-all;margin-bottom:24px;">'+url+'</div><button onclick="navigator.clipboard&&navigator.clipboard.writeText(\''+url+'\').then(function(){this.textContent=\'✅ Copiado\'}.bind(this))" style="background:#0d47a1;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;width:100%;max-width:280px;">📋 Copiar link</button><p style="color:#475569;font-size:12px;margin-top:16px;">Pega el link en Chrome o Safari</p>';
+    if(document.body)document.body.appendChild(b);
+    else document.addEventListener('DOMContentLoaded',function(){document.body.appendChild(b);});
   }
+  mostrarBanner();
 })();
 </script>
 <header><a href="/">🇳🇮 Nicaragua Informate</a></header>

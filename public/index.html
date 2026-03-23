@@ -222,27 +222,35 @@
 </head>
 <body>
 <script>
-// Detectar Facebook In-App Browser y redirigir al navegador nativo
 (function(){
   var ua = navigator.userAgent || '';
-  var isFBBrowser = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua);
-  if (isFBBrowser) {
-    var url = window.location.href;
-    // Intentar abrir en Chrome/Safari nativo
-    var isAndroid = /Android/.test(ua);
-    var isIOS = /iPhone|iPad|iPod/.test(ua);
-    if (isAndroid) {
-      window.location.href = 'intent://' + url.replace(/^https?:\/\//, '') + '#Intent;scheme=https;package=com.android.chrome;end';
-    } else if (isIOS) {
-      // En iOS mostrar mensaje para abrir en Safari
-      document.addEventListener('DOMContentLoaded', function(){
-        var banner = document.createElement('div');
-        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#1a56db;color:#fff;padding:16px 20px;text-align:center;font-family:sans-serif;font-size:15px;font-weight:600;box-shadow:0 4px 12px rgba(0,0,0,.3);';
-        banner.innerHTML = '⚠️ Para ver esta página correctamente, ábrela en Safari.<br><button onclick="window.open(\''+url+'\',\'_system\')" style="margin-top:8px;background:#fff;color:#1a56db;border:none;padding:8px 20px;border-radius:20px;font-weight:700;cursor:pointer;font-size:14px;">Abrir en Safari</button>';
-        document.body.insertBefore(banner, document.body.firstChild);
-      });
+  var isFB = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua);
+  if (!isFB) return;
+  var url = window.location.href;
+  var isAndroid = /Android/.test(ua);
+  var isIOS = /iPhone|iPad|iPod/.test(ua);
+
+  // Crear banner inmediatamente (antes del DOMContentLoaded)
+  function mostrarBanner() {
+    var instruccion = isAndroid
+      ? '📱 Toca los <b>⋮ tres puntos</b> arriba a la derecha → <b>"Abrir en Chrome"</b>'
+      : '📱 Toca los <b>⋯ tres puntos</b> abajo → <b>"Abrir en Safari"</b>';
+    var banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;inset:0;z-index:999999;background:#0f172a;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;font-family:sans-serif;text-align:center;';
+    banner.innerHTML =
+      '<div style="font-size:56px;margin-bottom:20px;">🌐</div>' +
+      '<h2 style="color:#fff;font-size:22px;font-weight:800;margin-bottom:12px;">Abre en tu navegador</h2>' +
+      '<p style="color:#94a3b8;font-size:15px;line-height:1.6;margin-bottom:24px;">' + instruccion + '</p>' +
+      '<div style="background:#1e293b;border-radius:12px;padding:16px 20px;color:#60a5fa;font-size:13px;word-break:break-all;margin-bottom:24px;">' + url + '</div>' +
+      '<button onclick="navigator.clipboard&&navigator.clipboard.writeText(\''+url+'\').then(function(){this.textContent=\'✅ Copiado\'}.bind(this))" style="background:#1a56db;color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;width:100%;max-width:280px;">📋 Copiar link</button>' +
+      '<p style="color:#475569;font-size:12px;margin-top:16px;">Pega el link en Chrome o Safari</p>';
+    if (document.body) {
+      document.body.appendChild(banner);
+    } else {
+      document.addEventListener('DOMContentLoaded', function(){ document.body.appendChild(banner); });
     }
   }
+  mostrarBanner();
 })();
 </script>
 
@@ -904,7 +912,7 @@
 
     // Cache local para carga instantánea en visitas repetidas
     const CACHE_KEY = 'ni_noticias_cache';
-    const CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+    const CACHE_TTL = 30 * 60 * 1000; // 30 minutos
 
     function guardarCache(noticias) {
       try {
@@ -1238,7 +1246,7 @@
 
     window.cargarMas = cargarMas;
 
-    // Timeout: si Firestore no responde en 8s, reintentar una vez y luego usar estáticas
+    // Timeout: si Firestore no responde en 4s, reintentar una vez y luego usar estáticas
     const timeoutFirestore = setTimeout(async () => {
       if (!noticiasFirestore.length) {
         console.warn('[FIRESTORE] Timeout — reintentando...');
@@ -1262,7 +1270,7 @@
           actualizarTrending();
         }
       }
-    }, 8000);
+    }, 4000);
 
     cargarNoticias().then(() => clearTimeout(timeoutFirestore));
 

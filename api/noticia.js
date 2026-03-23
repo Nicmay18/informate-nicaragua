@@ -56,7 +56,12 @@ module.exports = async (req, res) => {
     const ts = f.fecha?.timestampValue || f.fecha?.stringValue;
     const fecha = ts ? new Date(ts).toLocaleDateString('es-NI', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
     const url = `${BASE}/noticia.html?id=${id}`;
-    const imgTag = imagen ? `<img src="${esc(imagen)}" alt="${esc(titulo)}" class="imagen-principal" onerror="this.src='${fallbackImg(categoria)}'">` : `<img src="${fallbackImg(categoria)}" alt="${esc(titulo)}" class="imagen-principal">`;
+    const imgTag = imagen
+      ? `<div style="position:relative;overflow:hidden;border-radius:10px;margin-bottom:24px;background:#1e293b;max-height:450px;display:flex;align-items:center;justify-content:center;">
+           <img src="${esc(imagen)}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(16px) brightness(.5);transform:scale(1.1);" aria-hidden="true">
+           <img src="${esc(imagen)}" alt="${esc(titulo)}" class="imagen-principal" style="position:relative;z-index:1;max-height:450px;width:100%;object-fit:contain;" onerror="this.parentElement.style.background='${fallbackImg(categoria)}'">
+         </div>`
+      : `<img src="${fallbackImg(categoria)}" alt="${esc(titulo)}" class="imagen-principal">`;
     const imgMeta = imagen ? `<meta property="og:image" content="${esc(imagen)}"><meta name="twitter:image" content="${esc(imagen)}">` : '';
 
     const catColor = {

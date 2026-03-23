@@ -100,6 +100,7 @@ module.exports = async (req, res) => {
   <meta property="og:description" content="${esc(resumen)}">
   <meta property="og:url" content="${url}">
   <meta property="og:site_name" content="Nicaragua Informate">
+  <meta property="fb:app_id" content="1039858818292075">
   ${imgMeta}
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${esc(titulo)}">

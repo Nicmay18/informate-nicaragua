@@ -362,6 +362,7 @@
           <ul class="nav-menu">
             <li class="nav-item"><a class="nav-link" onclick="showTab('categorias-tab', this)"><i class="fas fa-tags"></i><span>Categorías</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('analytics-tab', this)"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('log-tab', this)"><i class="fas fa-history"></i><span>Actividad</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('config-tab', this)"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
           </ul>
         </div>
@@ -504,7 +505,11 @@
               </div>
               <div class="form-group">
                 <label class="form-label">Contenido <span class="required">*</span></label>
-                <textarea class="form-textarea" id="contenido" placeholder="Escribe el contenido completo..." required></textarea>
+                <textarea class="form-textarea" id="contenido" placeholder="Escribe el contenido completo..." required oninput="contarPalabras()"></textarea>
+                <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                  <span class="form-hint" id="wordCount">0 palabras · ~0 min lectura</span>
+                  <span class="form-hint" id="charCount">0 caracteres</span>
+                </div>
               </div>
               <div class="form-group">
                 <label class="form-label">Imagen <span class="required">*</span></label>
@@ -563,10 +568,24 @@
                 </label>
               </div>
 
-              <div style="display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);">
+              <div style="display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;">
                 <button type="submit" class="btn btn-primary btn-lg" id="btnGuardar"><i class="fas fa-paper-plane"></i><span>Publicar</span></button>
-                <button type="button" class="btn btn-secondary btn-lg" onclick="limpiarFormulario()"><i class="fas fa-eraser"></i><span>Limpiar</span></button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="guardarBorrador()"><i class="fas fa-save"></i><span>Borrador</span></button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="mostrarVistaPrevia()"><i class="fas fa-eye"></i><span>Vista previa</span></button>
+                <button type="button" class="btn btn-ghost btn-lg" onclick="limpiarFormulario()"><i class="fas fa-eraser"></i><span>Limpiar</span></button>
                 <button type="button" class="btn btn-ghost btn-lg" id="btnCancelarEdicion" onclick="cancelarEdicion()" style="display:none;margin-left:auto;"><i class="fas fa-times"></i><span>Cancelar</span></button>
+              </div>
+
+              <!-- PROGRAMAR PUBLICACIÓN -->
+              <div style="margin-top:16px;padding:16px;background:#0f172a;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
+                <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#94a3b8;cursor:pointer;">
+                  <input type="checkbox" id="programarCheck" onchange="toggleProgramar()" style="accent-color:var(--primary-500);">
+                  <i class="fas fa-clock" style="color:var(--primary-400)"></i> Programar publicación
+                </label>
+                <div id="programarBox" style="display:none;margin-top:12px;">
+                  <input type="datetime-local" class="form-input" id="fechaProgramada" style="max-width:280px;">
+                  <div class="form-hint">La noticia se publicará automáticamente en la fecha indicada.</div>
+                </div>
               </div>
 
               <div id="statusRedes" style="display:none;margin-top:24px;padding:20px;background:#1e293b;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
@@ -590,6 +609,7 @@
         <div class="page-header">
           <div class="page-title"><h1>Gestión de Noticias</h1><p>Administra tu contenido</p></div>
           <div class="header-actions">
+            <input type="date" class="form-input" id="filtroFecha" onchange="filtrarPorFecha()" style="width:160px;" title="Filtrar por fecha">
             <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" class="form-input" placeholder="Buscar..." onkeyup="buscarNoticias(this.value)" style="width:250px;"></div>
             <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-plus"></i><span>Nueva</span></button>
           </div>
@@ -675,6 +695,19 @@
           <div class="card-header"><h3 class="card-title"><i class="fas fa-eye-slash" style="color:#64748b"></i> Noticias sin visitas</h3></div>
           <div class="card-body" id="anSinVistas">
             <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-eye-slash"></i></div><h3>Cargando...</h3></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LOG DE ACTIVIDAD -->
+      <div id="log-tab" class="tab-content">
+        <div class="page-header">
+          <div class="page-title"><h1>📋 Log de Actividad</h1><p>Historial de acciones recientes</p></div>
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('activityLog').innerHTML='';registrarActividad('Log limpiado','info');"><i class="fas fa-trash"></i> Limpiar</button>
+        </div>
+        <div class="card">
+          <div class="card-body" id="activityLog" style="max-height:600px;overflow-y:auto;font-family:monospace;font-size:13px;">
+            <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-history"></i></div><h3>Sin actividad aún</h3><p>Las acciones aparecerán aquí</p></div>
           </div>
         </div>
       </div>
@@ -823,6 +856,10 @@
       
       if (tabId === 'dashboard-tab') actualizarDashboard();
       
+      if (tabId === 'nueva-tab') {
+        if (!noticiaEditando) cargarBorradorSiExiste();
+      }
+
       if (tabId === 'noticias-tab') {
         renderizarNoticias('todas');
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -970,11 +1007,14 @@
         if (noticiaEditando) {
           await updateDoc(doc(window.db, 'noticias', noticiaEditando), { ...noticiaData });
           agregarLogRedes('✅ Firestore: Noticia actualizada');
+          registrarActividad(`Noticia actualizada: "${noticiaData.titulo}"`, 'success');
         } else {
           noticiaData.fecha = serverTimestamp();
           const ref = await addDoc(collection(window.db, 'noticias'), noticiaData);
           noticiaData.id = ref.id;
           agregarLogRedes('✅ Firestore: Noticia guardada con ID ' + ref.id);
+          registrarActividad(`Noticia publicada: "${noticiaData.titulo}" (${noticiaData.categoria})`, 'success');
+          localStorage.removeItem('borrador_noticia');
         }
       } catch (err) {
         mostrarLoading(false);
@@ -1331,6 +1371,9 @@
               <button class="btn-icon edit" onclick="event.stopPropagation();editarNoticia('${n.id}')" title="Editar">
                 <i class="fas fa-edit"></i>
               </button>
+              <button class="btn-icon" onclick="event.stopPropagation();duplicarNoticia('${n.id}')" title="Duplicar" style="background:rgba(245,158,11,0.2);color:#fbbf24;">
+                <i class="fas fa-copy"></i>
+              </button>
               <button class="btn-icon delete" onclick="event.stopPropagation();eliminarNoticia('${n.id}')" title="Eliminar">
                 <i class="fas fa-trash"></i>
               </button>
@@ -1443,6 +1486,7 @@
         await deleteDoc(doc(window.db, 'noticias', id));
         await cargarNoticiasFirestore();
         showToast('success', 'Eliminado', 'Noticia eliminada');
+        registrarActividad(`Noticia eliminada: "${n?.titulo||id}"`, 'error');
       } catch (e) {
         showToast('error', 'Error', e.message);
       }
@@ -1460,6 +1504,155 @@
       document.getElementById('btnGuardar').innerHTML = '<i class="fas fa-paper-plane"></i><span>Publicar Noticia</span>';
       document.getElementById('btnCancelarEdicion').style.display = 'none';
       mostrarStatusRedes(false);
+      document.getElementById('wordCount').textContent = '0 palabras · ~0 min lectura';
+      document.getElementById('charCount').textContent = '0 caracteres';
+      document.getElementById('programarCheck').checked = false;
+      document.getElementById('programarBox').style.display = 'none';
+    }
+
+    // Contador de palabras
+    function contarPalabras() {
+      const txt = document.getElementById('contenido').value;
+      const palabras = txt.trim() ? txt.trim().split(/\s+/).length : 0;
+      const chars = txt.length;
+      const minutos = Math.max(1, Math.ceil(palabras / 200));
+      document.getElementById('wordCount').textContent = `${palabras} palabras · ~${minutos} min lectura`;
+      document.getElementById('charCount').textContent = `${chars} caracteres`;
+    }
+
+    // Programar publicación
+    function toggleProgramar() {
+      const checked = document.getElementById('programarCheck').checked;
+      document.getElementById('programarBox').style.display = checked ? 'block' : 'none';
+      if (checked) {
+        // Poner fecha/hora actual + 1 hora como default
+        const d = new Date(Date.now() + 3600000);
+        const local = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16);
+        document.getElementById('fechaProgramada').value = local;
+      }
+    }
+
+    // Vista previa
+    function mostrarVistaPrevia() {
+      const titulo = document.getElementById('titulo').value || 'Sin título';
+      const contenido = document.getElementById('contenido').value || '';
+      const categoria = document.getElementById('categoria').value || 'General';
+      const imagen = document.getElementById('imagenUrl').value || document.getElementById('preview').src || '';
+      const resumen = document.getElementById('resumen').value || contenido.substring(0,150);
+
+      const win = window.open('', '_blank', 'width=900,height=700');
+      win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Vista Previa: ${titulo}</title>
+        <style>
+          body{font-family:'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b;margin:0;padding:0}
+          .bar{background:#dc2626;color:#fff;padding:10px 20px;font-size:13px;font-weight:700;text-align:center;}
+          .container{max-width:800px;margin:0 auto;padding:24px}
+          h1{font-size:2em;font-weight:800;line-height:1.3;margin-bottom:12px}
+          .cat{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;background:#dbeafe;color:#1e40af;margin-bottom:12px}
+          img{width:100%;max-height:450px;object-fit:cover;border-radius:10px;margin-bottom:24px}
+          .content{font-size:17px;line-height:1.8;color:#334155}
+          .content p{margin-bottom:16px}
+        </style></head><body>
+        <div class="bar">👁️ VISTA PREVIA — No publicado aún</div>
+        <div class="container">
+          <span class="cat">${categoria}</span>
+          <h1>${titulo}</h1>
+          ${imagen ? `<img src="${imagen}" alt="${titulo}">` : ''}
+          <div class="content">${contenido.replace(/\n/g,'</p><p>')}</div>
+        </div></body></html>`);
+      win.document.close();
+    }
+
+    // Guardar borrador
+    async function guardarBorrador() {
+      const titulo = document.getElementById('titulo').value;
+      if (!titulo) { showToast('warning', 'Falta título', 'Escribe un título para el borrador'); return; }
+      const borrador = {
+        titulo, contenido: document.getElementById('contenido').value,
+        categoria: document.getElementById('categoria').value,
+        resumen: document.getElementById('resumen').value,
+        imagen: document.getElementById('imagenUrl').value,
+        guardadoEn: new Date().toISOString()
+      };
+      localStorage.setItem('borrador_noticia', JSON.stringify(borrador));
+      showToast('success', 'Borrador guardado', 'Puedes continuar más tarde');
+      registrarActividad(`Borrador guardado: "${titulo}"`, 'info');
+    }
+
+    // Cargar borrador al abrir el formulario
+    function cargarBorradorSiExiste() {
+      const b = localStorage.getItem('borrador_noticia');
+      if (!b) return;
+      try {
+        const d = JSON.parse(b);
+        if (confirm(`¿Recuperar borrador "${d.titulo}" guardado el ${new Date(d.guardadoEn).toLocaleString('es-NI')}?`)) {
+          document.getElementById('titulo').value = d.titulo || '';
+          document.getElementById('contenido').value = d.contenido || '';
+          document.getElementById('categoria').value = d.categoria || '';
+          document.getElementById('resumen').value = d.resumen || '';
+          document.getElementById('imagenUrl').value = d.imagen || '';
+          if (d.imagen) actualizarPreview();
+          contarPalabras();
+          localStorage.removeItem('borrador_noticia');
+          showToast('info', 'Borrador recuperado', 'Continúa editando');
+        }
+      } catch(e) {}
+    }
+
+    // Duplicar noticia
+    async function duplicarNoticia(id) {
+      const n = noticias.find(x => x.id === id);
+      if (!n) return;
+      if (!confirm(`¿Duplicar "${n.titulo}"?`)) return;
+      try {
+        const { collection, addDoc, serverTimestamp } = window._firebase;
+        const copia = {
+          titulo: 'COPIA - ' + n.titulo,
+          contenido: n.contenido || '',
+          resumen: n.resumen || '',
+          categoria: n.categoria || '',
+          imagen: n.imagen || '',
+          fecha: serverTimestamp(),
+          vistas: 0,
+          destacada: false
+        };
+        await addDoc(collection(window.db, 'noticias'), copia);
+        showToast('success', 'Duplicada', `"${n.titulo}" duplicada como borrador`);
+        registrarActividad(`Noticia duplicada: "${n.titulo}"`, 'info');
+        await cargarNoticiasFirestore();
+      } catch(e) {
+        showToast('error', 'Error', e.message);
+      }
+    }
+
+    // Filtrar por fecha
+    function filtrarPorFecha() {
+      const fecha = document.getElementById('filtroFecha').value;
+      if (!fecha) { renderizarNoticias('todas'); return; }
+      const filtradas = noticias.filter(n => {
+        const f = n.fecha?.toDate ? n.fecha.toDate() : (n.fecha?.seconds ? new Date(n.fecha.seconds*1000) : new Date(n.fecha));
+        return f && f.toISOString().startsWith(fecha);
+      });
+      renderizarListaNoticias(filtradas);
+      showToast('info', 'Filtrado', `${filtradas.length} noticias del ${fecha}`);
+    }
+
+    // Log de actividad
+    function registrarActividad(mensaje, tipo = 'success') {
+      const log = document.getElementById('activityLog');
+      if (!log) return;
+      const colores = { success: '#34d399', error: '#f87171', info: '#60a5fa', warning: '#fbbf24' };
+      const iconos = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
+      const hora = new Date().toLocaleTimeString('es-NI');
+      const fecha = new Date().toLocaleDateString('es-NI');
+      const entrada = document.createElement('div');
+      entrada.style.cssText = 'padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:12px;align-items:flex-start;';
+      entrada.innerHTML = `<span style="color:#475569;flex-shrink:0;">${fecha} ${hora}</span><span style="color:${colores[tipo]};flex-shrink:0;">${iconos[tipo]}</span><span style="color:#e2e8f0;">${mensaje}</span>`;
+      // Quitar empty state si existe
+      const empty = log.querySelector('.empty-state');
+      if (empty) empty.remove();
+      log.insertBefore(entrada, log.firstChild);
     }
 
     // ==========================================

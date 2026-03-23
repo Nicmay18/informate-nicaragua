@@ -250,12 +250,12 @@
     </div>
   </div>
 
-  <div class="ticker">
-    <div class="ticker-content">
-      <div class="ticker-item">💵 Dólar BCN: <span id="tickerDolar">C$ 36.6243</span></div>
-      <div class="ticker-item">⛽ Regular: <span id="tickerRegular">C$ 47.84/ltr</span></div>
-      <div class="ticker-item">⛽ Súper: <span id="tickerSuper">C$ 49.03/ltr</span></div>
-      <div class="ticker-item">🛢 Diésel: <span id="tickerDiesel">C$ 43.21/ltr</span></div>
+  <div class="ticker" id="tickerBar">
+    <div class="ticker-content" id="tickerContent">
+      <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
+      <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
+      <div class="ticker-item">⛽ Súper: <span>C$ 49.03/ltr</span></div>
+      <div class="ticker-item">🛢 Diésel: <span>C$ 43.21/ltr</span></div>
       <div class="ticker-item">📅 <span id="tickerDate"></span></div>
       <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
       <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
@@ -460,6 +460,9 @@
   </div>
 
   <button class="floating-share" onclick="sharePage()" title="Compartir"><i class="fas fa-share-alt"></i></button>
+  <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba" style="display:none;position:fixed;bottom:90px;right:24px;width:44px;height:44px;background:#1e293b;color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:100;transition:all .3s;align-items:center;justify-content:center;">
+    <i class="fas fa-arrow-up"></i>
+  </button>
 
   <footer class="footer">
     <div class="footer-grid">
@@ -899,6 +902,7 @@
       renderNoticias('Todas');
       actualizarCarrusel();
       actualizarTrending();
+      actualizarTicker();
     }
 
     function cargarNoticias() {
@@ -917,6 +921,7 @@
           actualizarCarrusel();
           actualizarTrending();
           actualizarContadoresMenu();
+          actualizarTicker();
           resolve();
         }, (e) => {
           console.error('[NOTICIAS] Firestore error:', e.code, e.message);
@@ -934,6 +939,37 @@
     function actualizarContadoresMenu() {
       // Contadores desactivados
     }
+
+    // Ticker dinámico con titulares reales
+    function actualizarTicker() {
+      if (!noticiasFirestore.length) return;
+      const titulares = noticiasFirestore.slice(0, 8);
+      const iconos = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Economía':'💰','Espectáculos':'⭐'};
+      const items = titulares.map(n => `<div class="ticker-item">${iconos[n.categoria]||'📰'} <span>${n.titulo||''}</span></div>`).join('');
+      const tc = document.getElementById('tickerContent');
+      if (tc) tc.innerHTML = items + items; // duplicar para loop continuo
+    }
+
+    // Botón volver arriba
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backToTop');
+      if (btn) btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
+    });
+
+    // Carrusel pausa al hover
+    document.addEventListener('DOMContentLoaded', () => {
+      const car = document.getElementById('carouselNoticias');
+      if (car) {
+        car.addEventListener('mouseenter', () => {
+          const c = bootstrap.Carousel.getInstance(car);
+          if (c) c.pause();
+        });
+        car.addEventListener('mouseleave', () => {
+          const c = bootstrap.Carousel.getInstance(car);
+          if (c) c.cycle();
+        });
+      }
+    });
 
     function renderNoticias(cat) {
       categoriaActual = cat;

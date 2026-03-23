@@ -42,9 +42,9 @@
     body{font-family:'Segoe UI',system-ui,sans-serif;background:#eef2f7;color:#1e293b;line-height:1.6}
 
     .carousel-item{height:340px;background:#1e293b;position:relative;overflow:hidden}
-    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.5) scale(1.1);transform:scale(1.15)}
-    .carousel-item .carousel-fg{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center}
-    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 50%,transparent 100%);left:0;right:0;bottom:0;padding:30px 20px 20px;text-align:left}
+    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.5);transform:scale(1.15)}
+    .carousel-item .carousel-fg{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center}
+    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 50%,transparent 100%);left:0!important;right:0!important;bottom:0;padding:30px 20px 20px;text-align:left;z-index:2;position:absolute}
     .carousel-caption h3{font-size:28px;font-weight:800;margin-bottom:8px;text-shadow:0 2px 6px rgba(0,0,0,.9);line-height:1.2}
     .carousel-caption p{font-size:13px;opacity:.9;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
     .carousel-indicators button{width:12px;height:12px;border-radius:50%;margin:0 6px}

@@ -1318,6 +1318,49 @@
       document.getElementById('visitCount').textContent = fmt;
     }
     gestionarVisitas();
+
+    // Reloj en tiempo real
+    function actualizarReloj() {
+      const ahora = new Date();
+      const hora = ahora.toLocaleTimeString('es-NI', {hour:'2-digit', minute:'2-digit'});
+      const fecha = ahora.toLocaleDateString('es-NI', {weekday:'short', day:'numeric', month:'short'});
+      const el = document.getElementById('hora');
+      if (el) el.textContent = `🕐 ${hora} | ${fecha}`;
+    }
+    actualizarReloj();
+    setInterval(actualizarReloj, 1000);
+
+    // Clima ciudades de Nicaragua
+    const CIUDADES = [
+      {nombre:'Managua', q:'Managua,Nicaragua'},
+      {nombre:'León', q:'Leon,Nicaragua'},
+      {nombre:'Granada', q:'Granada,Nicaragua'},
+      {nombre:'Masaya', q:'Masaya,Nicaragua'},
+      {nombre:'Chinandega', q:'Chinandega,Nicaragua'},
+      {nombre:'Jinotega', q:'Jinotega,Nicaragua'},
+      {nombre:'Bluefields', q:'Bluefields,Nicaragua'}
+    ];
+    let ciudadIdx = 0;
+
+    async function cargarClima(ciudad) {
+      try {
+        const r = await fetch(`https://wttr.in/${encodeURIComponent(ciudad.q)}?format=%C+%t`, {signal: AbortSignal.timeout(4000)});
+        if (!r.ok) throw new Error();
+        const txt = await r.text();
+        const el = document.getElementById('clima');
+        if (el) el.textContent = `📍 ${ciudad.nombre}: ${txt.trim()}`;
+      } catch(e) {
+        const el = document.getElementById('clima');
+        if (el) el.textContent = `📍 ${ciudad.nombre}: --°C`;
+      }
+    }
+
+    function rotarClima() {
+      cargarClima(CIUDADES[ciudadIdx]);
+      ciudadIdx = (ciudadIdx + 1) % CIUDADES.length;
+    }
+    rotarClima();
+    setInterval(rotarClima, 8000);
   </script>
 
 </body>

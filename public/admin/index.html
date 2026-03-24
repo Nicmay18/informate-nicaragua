@@ -396,10 +396,6 @@
             <div class="category-icon"><i class="fas fa-flag"></i></div>
             <div class="category-info"><h4>Nacionales</h4><span id="countNacionales">0 noticias</span></div>
           </div>
-          <div class="category-card economia" onclick="filtrarPorCategoria('Economía')">
-            <div class="category-icon"><i class="fas fa-chart-line"></i></div>
-            <div class="category-info"><h4>Economía</h4><span id="countEconomia">0 noticias</span></div>
-          </div>
           <div class="category-card cultura" onclick="filtrarPorCategoria('Cultura')">
             <div class="category-icon"><i class="fas fa-palette"></i></div>
             <div class="category-info"><h4>Cultura</h4><span id="countCultura">0 noticias</span></div>
@@ -490,7 +486,6 @@
                     <option value="">Seleccionar...</option>
                     <option value="Sucesos">🚨 Sucesos</option>
                     <option value="Nacionales">🇳🇮 Nacionales</option>
-                    <option value="Economía">💰 Economía</option>
                     <option value="Cultura">🎨 Cultura</option>
                     <option value="Espectáculos">⭐ Espectáculos</option>
                     <option value="Deportes">⚽ Deportes</option>
@@ -576,17 +571,7 @@
                 <button type="button" class="btn btn-ghost btn-lg" id="btnCancelarEdicion" onclick="cancelarEdicion()" style="display:none;margin-left:auto;"><i class="fas fa-times"></i><span>Cancelar</span></button>
               </div>
 
-              <!-- PROGRAMAR PUBLICACIÓN -->
-              <div style="margin-top:16px;padding:16px;background:#0f172a;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
-                <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:#94a3b8;cursor:pointer;">
-                  <input type="checkbox" id="programarCheck" onchange="toggleProgramar()" style="accent-color:var(--primary-500);">
-                  <i class="fas fa-clock" style="color:var(--primary-400)"></i> Programar publicación
-                </label>
-                <div id="programarBox" style="display:none;margin-top:12px;">
-                  <input type="datetime-local" class="form-input" id="fechaProgramada" style="max-width:280px;">
-                  <div class="form-hint">La noticia se publicará automáticamente en la fecha indicada.</div>
-                </div>
-              </div>
+              <!-- PROGRAMAR PUBLICACIÓN ELIMINADO -->
 
               <div id="statusRedes" style="display:none;margin-top:24px;padding:20px;background:#1e293b;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
                 <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
@@ -619,7 +604,6 @@
           <button class="filter-btn" onclick="filtrarNoticias('destacadas', this)">Destacadas</button>
           <button class="filter-btn" onclick="filtrarNoticias('Sucesos', this)">Sucesos</button>
           <button class="filter-btn" onclick="filtrarNoticias('Nacionales', this)">Nacionales</button>
-          <button class="filter-btn" onclick="filtrarNoticias('Economía', this)">Economía</button>
           <button class="filter-btn" onclick="filtrarNoticias('Deportes', this)">Deportes</button>
         </div>
         <div class="card">
@@ -634,7 +618,7 @@
       <!-- CATEGORIAS -->
       <div id="categorias-tab" class="tab-content">
         <div class="page-header"><div class="page-title"><h1>Categorías</h1><p>Gestión de categorías</p></div></div>
-        <div class="card"><div class="card-body"><p>Categorías fijas: Sucesos, Nacionales, Economía, Cultura, Espectáculos, Deportes, Tecnología, Internacionales.</p></div></div>
+        <div class="card"><div class="card-body"><p>Categorías fijas: Sucesos, Nacionales, Cultura, Espectáculos, Deportes, Tecnología, Internacionales.</p></div></div>
       </div>
 
       <!-- ANALYTICS -->
@@ -719,12 +703,12 @@
           <div class="card-body">
             <div class="form-group">
               <label class="form-label">Telegram Bot Token</label>
-              <input type="password" class="form-input" id="configTelegramToken" value="8750159697:AAGwok3dOuAAiQpdliQNuzG1gpRa-3XOPDs">
-              <div class="form-hint">✅ Token configurado: @nicaragua_informate_bot</div>
+              <input type="password" class="form-input" id="configTelegramToken" placeholder="Configurado en servidor">
+              <div class="form-hint">✅ Token configurado en variables de entorno del servidor</div>
             </div>
             <div class="form-group">
               <label class="form-label">Telegram Chat ID</label>
-              <input type="text" class="form-input" id="configTelegramChat" value="-1003431574597">
+              <input type="text" class="form-input" id="configTelegramChat" placeholder="Configurado en servidor">
             </div>
             <div class="form-group">
               <label class="form-label">Facebook Page Access Token</label>
@@ -750,11 +734,11 @@
     // CONFIGURACIÓN
     // ==========================================
     const CONFIG = {
-      TELEGRAM_BOT_TOKEN: '8750159697:AAGwok3dOuAAiQpdliQNuzG1gpRa-3XOPDs',
-      TELEGRAM_CHAT_ID: '-1003431574597',
+      TELEGRAM_BOT_TOKEN: '',
+      TELEGRAM_CHAT_ID: '',
       FACEBOOK_PAGE_ID: '61578261125687',
       FACEBOOK_ACCESS_TOKEN: '',
-      SITE_URL: 'https://informate-nicaragua.vercel.app'
+      SITE_URL: 'https://nicaraguainformate.com'
     };
 
     let noticias = [];
@@ -830,15 +814,23 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       
-      if (username && password) {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('dashboard').classList.add('active');
-        document.getElementById('userName').textContent = username.split('@')[0];
-        document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
-        
-        cargarConfiguracion();
-        cargarNoticiasFirestore();
-        showToast('success', 'Bienvenido', 'Sesión iniciada');
+      // Credenciales de acceso
+      const ADMIN_USER = 'admin@nicaraguainformate.com';
+      const ADMIN_PASS = 'NicaInfo2026#';
+
+      if (username !== ADMIN_USER || password !== ADMIN_PASS) {
+        showToast('error', 'Acceso denegado', 'Credenciales incorrectas');
+        return;
+      }
+
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      document.getElementById('userName').textContent = username.split('@')[0];
+      document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+      
+      cargarConfiguracion();
+      cargarNoticiasFirestore();
+      showToast('success', 'Bienvenido', 'Sesión iniciada');
       }
     }
 
@@ -934,7 +926,7 @@
       });
       const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1].vistas - a[1].vistas);
       const maxCat = catOrdenadas[0]?.[1].vistas || 1;
-      const emojis = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Economía':'💰','Espectáculos':'⭐'};
+      const emojis = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Espectáculos':'⭐'};
       document.getElementById('anPorCategoria').innerHTML = catOrdenadas.length ? catOrdenadas.map(([cat, d]) => {
         const pct = Math.round((d.vistas / maxCat) * 100);
         return `<div style="margin-bottom:16px;">
@@ -1204,7 +1196,6 @@
       const keywords = {
         'Sucesos': 'accident,emergency,crime',
         'Nacionales': 'nicaragua,government,politics',
-        'Economía': 'money,business,economy',
         'Cultura': 'art,culture,festival',
         'Espectáculos': 'concert,celebrity,entertainment',
         'Deportes': 'sports,soccer,football',
@@ -1255,7 +1246,7 @@
       document.getElementById('statHoy').textContent = noticiasHoy.length;
       document.getElementById('statHoyVar').textContent = `+${noticiasHoy.length} hoy`;
       
-      ['Sucesos', 'Nacionales', 'Economía', 'Cultura', 'Espectáculos', 'Deportes', 'Tecnología', 'Internacionales'].forEach(cat => {
+      ['Sucesos', 'Nacionales', 'Cultura', 'Espectáculos', 'Deportes', 'Tecnología', 'Internacionales'].forEach(cat => {
         const count = noticias.filter(n => n && n.categoria === cat).length;
         const el = document.getElementById('count' + cat);
         if (el) el.textContent = `${count} noticias`;
@@ -1506,8 +1497,6 @@
       mostrarStatusRedes(false);
       document.getElementById('wordCount').textContent = '0 palabras · ~0 min lectura';
       document.getElementById('charCount').textContent = '0 caracteres';
-      document.getElementById('programarCheck').checked = false;
-      document.getElementById('programarBox').style.display = 'none';
     }
 
     // Contador de palabras
@@ -1520,17 +1509,7 @@
       document.getElementById('charCount').textContent = `${chars} caracteres`;
     }
 
-    // Programar publicación
-    function toggleProgramar() {
-      const checked = document.getElementById('programarCheck').checked;
-      document.getElementById('programarBox').style.display = checked ? 'block' : 'none';
-      if (checked) {
-        // Poner fecha/hora actual + 1 hora como default
-        const d = new Date(Date.now() + 3600000);
-        const local = new Date(d.getTime() - d.getTimezoneOffset()*60000).toISOString().slice(0,16);
-        document.getElementById('fechaProgramada').value = local;
-      }
-    }
+    // Programar publicación eliminado
 
     // Vista previa
     function mostrarVistaPrevia() {

@@ -39,8 +39,10 @@ module.exports = async (req, res) => {
   const id = req.query.id || '';
   const ua = req.headers['user-agent'] || '';
   const isFBBrowser = /FBAN|FBAV|FB_IAB|FBIOS|Instagram/.test(ua);
-  const lite = req.query.lite === '1' || isFBBrowser;
-  console.log('[noticia] UA:', ua, '| isFB:', isFBBrowser, '| lite:', lite, '| id:', id);
+  // FB en Android usa WebView pero oculta FBAN — detectar por wv + Android
+  const isFBAndroid = /Android/.test(ua) && /wv\)/.test(ua);
+  const lite = req.query.lite === '1' || isFBBrowser || isFBAndroid;
+  console.log('[noticia] UA:', ua, '| isFB:', isFBBrowser, '| isFBAndroid:', isFBAndroid, '| lite:', lite, '| id:', id);
   const BASE = 'https://nicaraguainformate.com';
   const PROJECT = 'informate-instant-nicaragua';
 

@@ -195,6 +195,14 @@
       #searchInput{width:140px}
     }
 
+    @media(max-width:768px){
+      .menu-hamburger{display:flex!important}
+      .menu button:not(.menu-hamburger):not(.active-cat){display:none}
+      .menu.open button{display:flex!important}
+      .menu.open{flex-direction:column;align-items:stretch}
+      .menu.open .menu-hamburger{order:-1}
+    }
+
     @media(max-width:900px){
       .main-wrapper{grid-template-columns:1fr;padding:16px}
       .sidebar-right{display:none}
@@ -299,7 +307,7 @@
     </div>
   </div>
 
-  <div class="menu">
+  <div class="menu" id="menuNav">
     <button class="active" onclick="cambiar('Todas',this)">🔥 Última hora</button>
     <button onclick="cambiar('Sucesos',this)">🚨 Sucesos</button>
     <button onclick="cambiar('Nacionales',this)">🇳🇮 Nacionales</button>
@@ -308,6 +316,8 @@
     <button onclick="cambiar('Tecnología',this)">💻 Tecnología</button>
     <button onclick="cambiar('Cultura',this)">🎭 Cultura</button>
     <button onclick="cambiar('Espectáculos',this)">⭐ Espectáculos</button>
+    <button class="menu-hamburger" id="menuToggle" onclick="toggleMenu()" style="display:none;">☰ Categorías</button>
+  </div>
 
   <!-- RADIO EN VIVO -->
   <div class="radio">
@@ -989,6 +999,19 @@
       const btn = document.getElementById('backToTop');
       if (btn) btn.style.display = window.scrollY > 400 ? 'flex' : 'none';
     });
+
+    function toggleMenu() {
+      const menu = document.getElementById('menuNav');
+      menu.classList.toggle('open');
+    }
+
+    // Cerrar menú al seleccionar categoría en móvil
+    const _cambiarOrig = window.cambiar;
+    function cambiar(cat, el) {
+      if (typeof _cambiarOrig === 'function') _cambiarOrig(cat, el);
+      const menu = document.getElementById('menuNav');
+      if (menu) menu.classList.remove('open');
+    }
 
     // Carrusel pausa al hover
     document.addEventListener('DOMContentLoaded', () => {

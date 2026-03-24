@@ -955,6 +955,7 @@
           actualizarTrending();
           actualizarContadoresMenu();
           actualizarTicker();
+          gestionarVisitas();
           resolve();
         }, (e) => {
           console.error('[NOTICIAS] Firestore error:', e.code, e.message);
@@ -1279,22 +1280,19 @@
       configurable: true
     });
 
-    // Visitas reales — fire and forget, no bloquea
+    // Visitas reales — suma vistas de todas las noticias
     function gestionarVisitas() {
-      const ref = doc(db, 'statistics', 'visits');
-      setDoc(ref, { total: increment(1), ultimaVisita: new Date() }, { merge: true })
-        .catch(e => console.warn('[VISITAS] No se pudo incrementar:', e.code));
-      getDoc(ref).then(snap => {
-        const total = snap.exists() ? (snap.data().total || 1) : 1;
-        const fmt = total >= 1000000
-          ? (total/1000000).toFixed(1).replace('.0','') + 'M+'
-          : total >= 1000
-          ? (total/1000).toFixed(1).replace('.0','') + 'K+'
-          : total.toLocaleString() + '+';
-        document.getElementById('visitCount').textContent = fmt;
-      }).catch(() => {
-        document.getElementById('visitCount').textContent = '1K+';
-      });
+      if (!noticiasFirestore.length) {
+        setTimeout(gestionarVisitas, 1500);
+        return;
+      }
+      const total = noticiasFirestore.reduce((sum, n) => sum + (parseInt(n.vistas) || 0), 0);
+      const fmt = total >= 1000000
+        ? (total/1000000).toFixed(1).replace('.0','') + 'M+'
+        : total >= 1000
+        ? (total/1000).toFixed(1).replace('.0','') + 'K+'
+        : total.toLocaleString() + '+';
+      document.getElementById('visitCount').textContent = fmt;
     }
     gestionarVisitas();
   </script>

@@ -27,7 +27,7 @@ module.exports = async (req, res) => {
     const resumen = (noticia.resumen || '').substring(0, 150);
     const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
     const slug = noticia.slug || noticia.id || Date.now().toString(36);
-    const url = `https://nicaraguainformate.com/`;
+    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || slug}`;
 
     const text = `${emoji[noticia.categoria] || '📰'} ${cat}\n\n${titulo}\n\n${resumen}\n\n📰 ${url}`.slice(0, 800);
 

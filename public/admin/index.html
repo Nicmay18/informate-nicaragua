@@ -1225,16 +1225,9 @@
       
       document.getElementById('statNoticias').textContent = noticias.length;
       
-      // Leer visitas reales de Firestore
-      if (window.db && window._firebase) {
-        const { doc, getDoc } = window._firebase;
-        getDoc(doc(window.db, 'statistics', 'visits')).then(snap => {
-          if (snap.exists()) {
-            const total = snap.data().total || 0;
-            document.getElementById('statVisitas').textContent = total.toLocaleString();
-          }
-        }).catch(() => {});
-      }
+      // Sumar vistas de todas las noticias
+      const totalVistas = noticias.reduce((sum, n) => sum + (parseInt(n?.vistas) || 0), 0);
+      document.getElementById('statVisitas').textContent = totalVistas.toLocaleString();
       
       const hoy = new Date();
       hoy.setHours(0,0,0,0);

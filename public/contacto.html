@@ -1,78 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto | Nicaragua Informate</title>
-    <meta name="description" content="Contáctanos en Nicaragua Informate. Envíanos tus noticias, sugerencias o consultas.">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <style>
-        *{margin:0;padding:0;box-sizing:border-box}
-        body{font-family:'Inter',sans-serif;line-height:1.6;color:#334155;background:#f8fafc}
-        .header{background:linear-gradient(135deg,#0d47a1,#1565c0);color:white;padding:40px 0;text-align:center}
-        .header h1{color:white;margin:0;font-size:32px}
-        .header p{color:rgba(255,255,255,.85);margin-top:8px}
-        .container{max-width:700px;margin:0 auto;padding:40px 20px}
-        .card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:24px}
-        h2{color:#1565c0;font-size:20px;margin-bottom:20px;display:flex;align-items:center;gap:8px}
-        .contact-item{display:flex;align-items:center;gap:16px;padding:16px 0;border-bottom:1px solid #f1f5f9}
-        .contact-item:last-child{border-bottom:none}
-        .contact-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-        .contact-icon.email{background:#dbeafe}
-        .contact-icon.whatsapp{background:#dcfce7}
-        .contact-icon.telegram{background:#e0f2fe}
-        .contact-label{font-size:13px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
-        .contact-value{font-size:15px;color:#1e293b;font-weight:600;margin-top:2px}
-        .contact-value a{color:#1565c0;text-decoration:none}
-        .contact-value a:hover{text-decoration:underline}
-        .back{display:inline-block;margin-top:8px;color:#0d47a1;text-decoration:none;font-weight:600}
-        .back:hover{text-decoration:underline}
-        p{margin-bottom:12px;color:#64748b}
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto | Nicaragua Informate</title>
+  <meta name="description" content="Contáctanos en Nicaragua Informate. Envíanos tus noticias, sugerencias o consultas.">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;color:#334155;background:#f8fafc}
+    .header{background:linear-gradient(135deg,#1a56db,#1e3a8a);color:#fff;padding:48px 20px;text-align:center}
+    .header h1{font-size:32px;font-weight:800;margin-bottom:8px}
+    .header p{color:rgba(255,255,255,.85);font-size:16px}
+    .container{max-width:700px;margin:0 auto;padding:40px 20px}
+    .card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:24px}
+    h2{color:#1a56db;font-size:20px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px}
+    .contact-item{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid #f1f5f9}
+    .contact-item:last-child{border-bottom:none}
+    .contact-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+    .ci-email{background:#dbeafe}
+    .ci-wa{background:#dcfce7}
+    .ci-tg{background:#e0f2fe}
+    .contact-label{font-size:12px;color:#94a3b8;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+    .contact-value{font-size:15px;color:#1e293b;font-weight:600;margin-top:2px}
+    .contact-value a{color:#1a56db;text-decoration:none}
+    .contact-value a:hover{text-decoration:underline}
+    .form-group{margin-bottom:20px}
+    label{display:block;font-size:14px;font-weight:600;color:#374151;margin-bottom:6px}
+    input,textarea,select{width:100%;padding:12px 16px;border:1.5px solid #e2e8f0;border-radius:10px;font-size:15px;font-family:inherit;transition:border .2s;background:#fff;color:#1e293b}
+    input:focus,textarea:focus,select:focus{outline:none;border-color:#1a56db;box-shadow:0 0 0 3px rgba(26,86,219,.1)}
+    textarea{resize:vertical;min-height:140px}
+    .btn{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#1a56db,#1e3a8a);color:#fff;padding:14px 32px;border-radius:9999px;font-weight:700;font-size:15px;border:none;cursor:pointer;transition:all .2s;width:100%;justify-content:center}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,86,219,.3)}
+    .btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    .alert{padding:16px 20px;border-radius:10px;font-size:14px;font-weight:600;margin-top:16px;display:none}
+    .alert.success{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+    .alert.error{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5}
+    .back{display:inline-block;margin-top:8px;color:#1a56db;text-decoration:none;font-weight:600}
+    .back:hover{text-decoration:underline}
+  </style>
 </head>
 <body>
-    <div class="header">
-        <h1>📬 Contáctanos</h1>
-        <p>Estamos aquí para escucharte</p>
+<div class="header">
+  <h1>📬 Contáctanos</h1>
+  <p>Estamos aquí para escucharte</p>
+</div>
+<div class="container">
+
+  <div class="card">
+    <h2>📞 Canales de contacto</h2>
+    <div class="contact-item">
+      <div class="contact-icon ci-email">✉️</div>
+      <div>
+        <div class="contact-label">Correo electrónico</div>
+        <div class="contact-value"><a href="mailto:kelinrivera20@gmail.com">kelinrivera20@gmail.com</a></div>
+      </div>
     </div>
-
-    <div class="container">
-        <div class="card">
-            <h2>📞 Información de Contacto</h2>
-            <p>¿Tienes una noticia, sugerencia o consulta? Escríbenos por cualquiera de estos medios:</p>
-
-            <div class="contact-item">
-                <div class="contact-icon email">✉️</div>
-                <div>
-                    <div class="contact-label">Correo electrónico</div>
-                    <div class="contact-value"><a href="mailto:kelinrivera20@gmail.com">kelinrivera20@gmail.com</a></div>
-                </div>
-            </div>
-
-            <div class="contact-item">
-                <div class="contact-icon whatsapp">💬</div>
-                <div>
-                    <div class="contact-label">WhatsApp — Enviar noticias</div>
-                    <div class="contact-value"><a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank">Unirse al grupo</a></div>
-                </div>
-            </div>
-
-            <div class="contact-item">
-                <div class="contact-icon telegram">📱</div>
-                <div>
-                    <div class="contact-label">Telegram</div>
-                    <div class="contact-value"><a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank">Canal de Telegram</a></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>📰 ¿Tienes una noticia?</h2>
-            <p>Si eres testigo de un suceso o tienes información de interés público, envíanosla. Revisamos cada mensaje y publicamos las noticias verificadas.</p>
-            <p>Puedes enviarnos fotos, videos o texto por WhatsApp o correo electrónico.</p>
-        </div>
-
-        <a href="/" class="back">← Volver al inicio</a>
+    <div class="contact-item">
+      <div class="contact-icon ci-wa">💬</div>
+      <div>
+        <div class="contact-label">WhatsApp — Enviar noticias</div>
+        <div class="contact-value"><a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank">Unirse al grupo</a></div>
+      </div>
     </div>
+    <div class="contact-item">
+      <div class="contact-icon ci-tg">📱</div>
+      <div>
+        <div class="contact-label">Telegram</div>
+        <div class="contact-value"><a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank">Canal de Telegram</a></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>✍️ Envíanos un mensaje</h2>
+    <form id="contactForm" onsubmit="enviarMensaje(event)">
+      <div class="form-group">
+        <label>Tu nombre</label>
+        <input type="text" id="nombre" placeholder="Ej: Juan Pérez" required>
+      </div>
+      <div class="form-group">
+        <label>Correo electrónico</label>
+        <input type="email" id="email" placeholder="tu@correo.com" required>
+      </div>
+      <div class="form-group">
+        <label>Asunto</label>
+        <select id="asunto">
+          <option value="Noticia">📰 Tengo una noticia</option>
+          <option value="Sugerencia">💡 Sugerencia</option>
+          <option value="Error">⚠️ Reportar un error</option>
+          <option value="Publicidad">📢 Publicidad</option>
+          <option value="Otro">💬 Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Mensaje</label>
+        <textarea id="mensaje" placeholder="Escribe tu mensaje aquí..." required></textarea>
+      </div>
+      <button type="submit" class="btn" id="btnEnviar">📤 Enviar mensaje</button>
+      <div class="alert success" id="alertOk">✅ Mensaje enviado. Te responderemos pronto.</div>
+      <div class="alert error" id="alertErr">❌ Error al enviar. Escríbenos directamente a kelinrivera20@gmail.com</div>
+    </form>
+  </div>
+
+  <a href="/" class="back">← Volver al inicio</a>
+</div>
+<script>
+async function enviarMensaje(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btnEnviar');
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  const data = {
+    nombre: document.getElementById('nombre').value,
+    email: document.getElementById('email').value,
+    asunto: document.getElementById('asunto').value,
+    mensaje: document.getElementById('mensaje').value
+  };
+  try {
+    const r = await fetch('https://formspree.io/f/xpwzgvqk', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json','Accept':'application/json'},
+      body: JSON.stringify({name: data.nombre, email: data.email, subject: data.asunto, message: data.mensaje})
+    });
+    if (r.ok) {
+      document.getElementById('alertOk').style.display = 'block';
+      document.getElementById('contactForm').reset();
+    } else { throw new Error(); }
+  } catch(err) {
+    document.getElementById('alertErr').style.display = 'block';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '📤 Enviar mensaje';
+}
+</script>
 </body>
 </html>

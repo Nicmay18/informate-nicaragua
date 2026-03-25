@@ -319,9 +319,15 @@
     <button class="menu-hamburger" id="menuToggle" onclick="toggleMenu()" style="display:none;">☰ Categorías</button>
   </div>
 
+  <!-- NOTIFICACIONES PUSH -->
+  <div id="notifBanner" style="display:none;background:linear-gradient(90deg,#1e3a8a,#1a56db);color:#fff;padding:10px 20px;text-align:center;font-size:14px;font-weight:600;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+    <span>🔔 Recibe alertas de noticias en tu celular</span>
+    <button onclick="suscribirNotificaciones()" style="background:#fff;color:#1a56db;border:none;padding:7px 18px;border-radius:20px;font-weight:700;cursor:pointer;font-size:13px;">Activar notificaciones</button>
+    <button onclick="document.getElementById('notifBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,.7);border:none;cursor:pointer;font-size:18px;padding:0 4px;">✕</button>
+  </div>
+
   <!-- RADIO EN VIVO -->
-  <div class="radio">
-    <div class="live-indicator">
+  <div class="radio">    <div class="live-indicator">
       <span class="pulse" id="radioPulse"></span>
       🔴 Radio en Vivo
     </div>
@@ -682,6 +688,14 @@
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
     }
 
+    function compartirFB(url) {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://nicaraguainformate.com'+url)}`, '_blank', 'width=600,height=400');
+    }
+
+    function compartirWA(url, titulo) {
+      window.open(`https://wa.me/?text=${encodeURIComponent('📰 '+titulo+'\n\nhttps://nicaraguainformate.com'+url)}`, '_blank');
+    }
+
     function shareTwitter() {
       const text = encodeURIComponent((currentNoticia ? currentNoticia.titulo : 'Nicaragua Informate') + ' - Nicaragua Informate');
       window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
@@ -876,6 +890,31 @@
 
     window.toggleRadio = toggleRadio;
     window.cambiarRadio = cambiarRadio;
+
+    // Notificaciones push
+    async function suscribirNotificaciones() {
+      if (!('Notification' in window) || !('serviceWorker' in navigator)) {
+        alert('Tu navegador no soporta notificaciones');
+        return;
+      }
+      const perm = await Notification.requestPermission();
+      if (perm === 'granted') {
+        document.getElementById('notifBanner').style.display = 'none';
+        localStorage.setItem('notif_ok', '1');
+        new Notification('🇳🇮 Nicaragua Informate', {
+          body: '¡Notificaciones activadas! Te avisaremos cuando haya noticias importantes.',
+          icon: '/logo.png'
+        });
+      }
+    }
+    window.suscribirNotificaciones = suscribirNotificaciones;
+
+    // Mostrar banner si no ha aceptado ni rechazado
+    if ('Notification' in window && Notification.permission === 'default' && !localStorage.getItem('notif_ok')) {
+      setTimeout(() => {
+        document.getElementById('notifBanner').style.display = 'flex';
+      }, 5000);
+    }
 
     // Inicializar
     window.abrirEstatica = abrirEstatica;
@@ -1123,7 +1162,11 @@
             <p>${(n.resumen||n.contenido||'').substring(0,150)}...</p>
             <div class="card-footer">
               <span>📅 ${fmtFecha(n.fecha)}</span>
-              <span class="read-more">Leer más →</span>
+              <div style="display:flex;gap:8px;align-items:center;">
+                <button onclick="event.stopPropagation();compartirWA('${url}','${(n.titulo||'').replace(/'/g,'')}')" style="background:#25d366;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;">💬 WA</button>
+                <button onclick="event.stopPropagation();compartirFB('${url}')" style="background:#1877f2;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;">👍 FB</button>
+                <span class="read-more">Leer →</span>
+              </div>
             </div>
           </div>
         </article>`;

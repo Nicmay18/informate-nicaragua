@@ -788,8 +788,8 @@
         return;
       }
       try {
-        const { collection, getDocs, query, orderBy, limit } = window._firebase;
-        const q = query(collection(window.db, 'noticias'), orderBy('fecha', 'desc'), limit(100));
+        const { collection, getDocs, query, orderBy } = window._firebase;
+        const q = query(collection(window.db, 'noticias'), orderBy('fecha', 'desc'));
         const snap = await getDocs(q);
         noticias = snap.docs.map(d => ({ id: d.id, ...d.data() }));
         console.log('Noticias cargadas desde Firestore:', noticias.length);

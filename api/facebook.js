@@ -58,7 +58,8 @@ ${noticia.resumen || noticia.contenido?.substring(0, 500) || ''}
     if (data.id) {
       res.json({ success: true, postId: data.id });
     } else {
-      res.status(400).json({ error: data.error?.message || 'Error desconocido' });
+      console.log('[FB ERROR]', JSON.stringify(data));
+      res.status(400).json({ error: data.error?.message || 'Error desconocido', details: data });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });

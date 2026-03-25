@@ -23,13 +23,17 @@ module.exports = async (req, res) => {
       'Espectáculos': '⭐', 'Deportes': '⚽', 'Tecnología': '💻', 'Internacionales': '🌍'
     };
 
-    const titulo = (noticia.titulo || '').substring(0, 150);
-    const resumen = (noticia.resumen || '').substring(0, 150);
+    const titulo = (noticia.titulo || '').substring(0, 200);
+    const resumenCompleto = noticia.resumen || noticia.contenido || '';
+    // Cortar en punto o coma para no dejar frase incompleta
+    let resumen = resumenCompleto.substring(0, 300);
+    const ultimoPunto = resumen.lastIndexOf('.');
+    if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
     const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
     const slug = noticia.slug || noticia.id || Date.now().toString(36);
     const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || slug}`;
 
-    const text = `${emoji[noticia.categoria] || '📰'} ${cat}\n\n${titulo}\n\n${resumen}\n\n📰 ${url}`.slice(0, 800);
+    const text = `${emoji[noticia.categoria] || '📰'} *${cat}*\n\n*${titulo}*\n\n${resumen}\n\n🔗 [Leer noticia completa](${url})`;
 
     let telegramUrl, body;
     
@@ -38,18 +42,20 @@ module.exports = async (req, res) => {
       body = {
         chat_id: TG_CHAT_ID,
         photo: noticia.imagen,
-        caption: text.slice(0, 900),
+        caption: text.slice(0, 1024),
+        parse_mode: 'Markdown',
         reply_markup: {
-          inline_keyboard: [[{ text: "📰 Leer más", url: url }]]
+          inline_keyboard: [[{ text: "📰 Leer noticia completa", url: url }]]
         }
       };
     } else {
       telegramUrl = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
       body = {
         chat_id: TG_CHAT_ID,
-        text: text.slice(0, 3500),
+        text: text.slice(0, 4096),
+        parse_mode: 'Markdown',
         reply_markup: {
-          inline_keyboard: [[{ text: "📰 Leer más", url: url }]]
+          inline_keyboard: [[{ text: "📰 Leer noticia completa", url: url }]]
         }
       };
     }

@@ -1068,7 +1068,7 @@
     function actualizarTicker() {
       if (!noticiasFirestore.length) return;
       const titulares = noticiasFirestore.slice(0, 8);
-      const iconos = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Economía':'💰','Espectáculos':'⭐'};
+      const iconos = {'Sucesos':'🚨','Nacionales':'📰','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Economía':'💰','Espectáculos':'⭐'};
       const items = titulares.map(n => `<div class="ticker-item">${iconos[n.categoria]||'📰'} <span>${n.titulo||''}</span></div>`).join('');
       const tc = document.getElementById('tickerContent');
       if (tc) tc.innerHTML = items + items; // duplicar para loop continuo
@@ -1114,7 +1114,7 @@
       if (cat !== 'Todas') items = items.filter(n => n.categoria === cat);
 
       // Título dinámico
-      const iconos = {'Todas':'📰','Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭'};
+      const iconos = {'Todas':'📰','Sucesos':'🚨','Nacionales':'📰','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭'};
       const titulo = cat === 'Todas' ? 'Últimas Noticias' : `${iconos[cat]||'📰'} ${cat}`;
       const sectionTitle = document.getElementById('sectionTitle');
       if (sectionTitle) sectionTitle.innerHTML = `${titulo} <span style="font-size:14px;color:#64748b;font-weight:500;margin-left:8px;">(${items.length})</span>`;
@@ -1300,7 +1300,7 @@
         porCategoria[cat].push(n);
       });
 
-      const emoji = {'Sucesos':'🚨','Nacionales':'🇳🇮','Economía':'💰','Cultura':'🎨','Deportes':'⚽','Tecnología':'💻','Internacionales':'🌍'};
+      const emoji = {'Sucesos':'🚨','Nacionales':'📰','Economía':'💰','Cultura':'🎨','Deportes':'⚽','Tecnología':'💻','Internacionales':'🌍'};
 
       container.innerHTML = Object.entries(porCategoria).map(([cat, items]) =>
         `<div class="resumen-item">

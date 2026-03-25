@@ -1030,6 +1030,8 @@
 
     function cargarNoticias() {
       const q = query(collection(db,'noticias'), orderBy('fecha','desc'), limit(100));
+      return new Promise((resolve) => {
+        onSnapshot(q, (snap) => {
           clearTimeout(timeoutFirestore);
           if (snap.empty) {
             document.getElementById('lista').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;"><div style="font-size:48px;margin-bottom:16px;">📭</div><p>No hay noticias publicadas aún</p></div>';

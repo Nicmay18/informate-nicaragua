@@ -801,38 +801,79 @@
     const radioAudio = document.getElementById('radioAudio');
     let radioActiva = false;
 
+    const RADIOS = {
+      'https://stream.zenolive.com/axr92qawesmtv': 'Radio Ya 99.1 FM',
+      'https://online.radionicaragua.com.ni/stream.mp3': 'Radio Nicaragua',
+      'https://stream2.305stream.com/proxy/client032?mp=/stream': 'Radio Maranatha 103.5',
+      'https://stream.zeno.fm/primerisima921': 'La Primerísima 91.7',
+      'https://stream.zeno.fm/gwkd66k0a7duv': 'Radio Corporación 97.5'
+    };
+
+    function setupMediaSession(nombre) {
+      if (!('mediaSession' in navigator)) return;
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: nombre,
+        artist: 'Nicaragua Informate',
+        album: 'Radio en Vivo 🇳🇮',
+        artwork: [{ src: '/logo.png', sizes: '192x192', type: 'image/png' }]
+      });
+      navigator.mediaSession.setActionHandler('play', () => { radioAudio.play(); });
+      navigator.mediaSession.setActionHandler('pause', () => { radioAudio.pause(); });
+      navigator.mediaSession.setActionHandler('stop', () => { radioAudio.pause(); radioAudio.src = ''; });
+    }
+
     function toggleRadio() {
       if (radioActiva) {
         radioAudio.pause(); radioAudio.src = ''; radioActiva = false;
         document.getElementById('radioIcon').className = 'fas fa-play';
         document.getElementById('radioPlayBtn').classList.remove('playing');
         document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
       } else {
         const sel = document.getElementById('radioSelect');
         if (!sel.value) return;
         const nombre = sel.options[sel.selectedIndex].text.replace('📻 ','');
         document.getElementById('radioNombre').textContent = '⏳ Conectando...';
         radioAudio.src = sel.value;
+        radioAudio.load();
         radioAudio.play().then(() => {
           radioActiva = true;
           document.getElementById('radioIcon').className = 'fas fa-pause';
           document.getElementById('radioPlayBtn').classList.add('playing');
           document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
+          setupMediaSession(nombre);
+          if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
         }).catch(() => {
           radioActiva = false;
           document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
         });
       }
     }
+
     function cambiarRadio() {
-      if (radioActiva) { radioAudio.pause(); radioActiva = false; document.getElementById('radioIcon').className = 'fas fa-play'; document.getElementById('radioPlayBtn').classList.remove('playing'); toggleRadio(); }
+      if (radioActiva) {
+        radioAudio.pause(); radioAudio.src = '';
+        radioActiva = false;
+        document.getElementById('radioIcon').className = 'fas fa-play';
+        document.getElementById('radioPlayBtn').classList.remove('playing');
+      }
+      toggleRadio();
     }
+
     radioAudio.addEventListener('error', () => {
       radioActiva = false;
       document.getElementById('radioIcon').className = 'fas fa-play';
       document.getElementById('radioPlayBtn').classList.remove('playing');
       document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
     });
+
+    // Reconectar si se corta el stream
+    radioAudio.addEventListener('ended', () => {
+      if (radioActiva) {
+        setTimeout(() => { radioAudio.load(); radioAudio.play().catch(()=>{}); }, 2000);
+      }
+    });
+
     window.toggleRadio = toggleRadio;
     window.cambiarRadio = cambiarRadio;
 

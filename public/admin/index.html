@@ -1113,24 +1113,23 @@
     function agregarMarcaDeAgua(ctx, width, height) {
       console.log('Aplicando marca de agua...', width, height);
       
-      // Configuración de la marca de agua
-      const padding = 20;
-      const baseSize = Math.min(width, height) * 0.08; // 8% del lado más pequeño
-      const logoWidth = baseSize * 5; // Proporción más ancha
+      // Configuración de la marca de agua - CENTRADA
+      const baseSize = Math.min(width, height) * 0.12; // 12% del lado más pequeño
+      const logoWidth = baseSize * 5;
       const logoHeight = baseSize * 1.8;
       
-      // Posición: esquina inferior derecha
-      const x = width - logoWidth - padding;
-      const y = height - logoHeight - padding;
+      // Posición: CENTRO de la imagen
+      const x = (width - logoWidth) / 2;
+      const y = (height - logoHeight) / 2;
       
       // Fondo semi-transparente con borde redondeado
       ctx.save();
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
-      ctx.lineWidth = 3;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
+      ctx.lineWidth = 4;
       
       // Rectángulo con bordes redondeados
-      const radius = 8;
+      const radius = 10;
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
       ctx.lineTo(x + logoWidth - radius, y);
@@ -1155,14 +1154,14 @@
         ctx.font = `900 ${fontSize}px Arial Black, Arial, sans-serif`;
         
         // Sombra
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
-        ctx.shadowBlur = 4;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
+        ctx.shadowBlur = 6;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
         
         // Borde blanco grueso
         ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = fontSize * 0.15;
+        ctx.lineWidth = fontSize * 0.18;
         ctx.lineJoin = 'round';
         ctx.strokeText(text, x, y);
         
@@ -1185,7 +1184,7 @@
       drawTextWithOutline('NICARAGUA', centerX, y + logoHeight * 0.92, fontSize3);
       
       ctx.restore();
-      console.log('Marca de agua aplicada correctamente');
+      console.log('Marca de agua aplicada correctamente en el CENTRO');
     }
 
     function handleFileSelect(e) {

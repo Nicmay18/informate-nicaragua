@@ -1113,23 +1113,24 @@
     function agregarMarcaDeAgua(ctx, width, height) {
       console.log('Aplicando marca de agua...', width, height);
       
-      // Configuración de la marca de agua - CENTRADA
-      const baseSize = Math.min(width, height) * 0.12; // 12% del lado más pequeño
-      const logoWidth = baseSize * 5;
-      const logoHeight = baseSize * 1.8;
+      // Configuración de la marca de agua - ESQUINA SUPERIOR IZQUIERDA (estilo TN8)
+      const padding = 15;
+      const baseSize = Math.min(width, height) * 0.06; // 6% más pequeña
+      const logoWidth = baseSize * 4.5;
+      const logoHeight = baseSize * 1.6;
       
-      // Posición: CENTRO de la imagen
-      const x = (width - logoWidth) / 2;
-      const y = (height - logoHeight) / 2;
+      // Posición: ESQUINA SUPERIOR IZQUIERDA
+      const x = padding;
+      const y = padding;
       
       // Fondo semi-transparente con borde redondeado
       ctx.save();
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.3)';
-      ctx.lineWidth = 4;
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)'; // Fondo oscuro semi-transparente
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+      ctx.lineWidth = 2;
       
       // Rectángulo con bordes redondeados
-      const radius = 10;
+      const radius = 6;
       ctx.beginPath();
       ctx.moveTo(x + radius, y);
       ctx.lineTo(x + logoWidth - radius, y);
@@ -1144,47 +1145,42 @@
       ctx.fill();
       ctx.stroke();
       
-      // Configurar texto con sombra para efecto 3D
+      // Configurar texto
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       const centerX = x + logoWidth / 2;
       
-      // Función para dibujar texto con borde blanco y sombra
-      function drawTextWithOutline(text, x, y, fontSize) {
-        ctx.font = `900 ${fontSize}px Arial Black, Arial, sans-serif`;
+      // Función para dibujar texto con sombra
+      function drawText(text, x, y, fontSize, bold = false) {
+        ctx.font = `${bold ? '900' : '700'} ${fontSize}px Arial, sans-serif`;
         
         // Sombra
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.4)';
-        ctx.shadowBlur = 6;
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+        ctx.shadowBlur = 3;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
         
-        // Borde blanco grueso
-        ctx.strokeStyle = '#ffffff';
-        ctx.lineWidth = fontSize * 0.18;
-        ctx.lineJoin = 'round';
-        ctx.strokeText(text, x, y);
-        
-        // Texto negro
-        ctx.shadowColor = 'transparent';
-        ctx.fillStyle = '#000000';
+        // Texto blanco
+        ctx.fillStyle = '#ffffff';
         ctx.fillText(text, x, y);
+        
+        ctx.shadowColor = 'transparent';
       }
       
       // Línea 1: "INFORMATE AL"
-      const fontSize1 = logoHeight * 0.28;
-      drawTextWithOutline('INFORMATE AL', centerX, y + logoHeight * 0.3, fontSize1);
+      const fontSize1 = logoHeight * 0.25;
+      drawText('INFORMATE AL', centerX, y + logoHeight * 0.32, fontSize1);
       
-      // Línea 2: "INSTANTE"
-      const fontSize2 = logoHeight * 0.42;
-      drawTextWithOutline('INSTANTE', centerX, y + logoHeight * 0.65, fontSize2);
+      // Línea 2: "INSTANTE" (más grande y bold)
+      const fontSize2 = logoHeight * 0.38;
+      drawText('INSTANTE', centerX, y + logoHeight * 0.62, fontSize2, true);
       
-      // Línea 3: "NICARAGUA" más pequeño
-      const fontSize3 = logoHeight * 0.28;
-      drawTextWithOutline('NICARAGUA', centerX, y + logoHeight * 0.92, fontSize3);
+      // Línea 3: "NICARAGUA" (pequeño)
+      const fontSize3 = logoHeight * 0.22;
+      drawText('NICARAGUA', centerX, y + logoHeight * 0.88, fontSize3);
       
       ctx.restore();
-      console.log('Marca de agua aplicada correctamente en el CENTRO');
+      console.log('Marca de agua aplicada en ESQUINA SUPERIOR IZQUIERDA');
     }
 
     function handleFileSelect(e) {

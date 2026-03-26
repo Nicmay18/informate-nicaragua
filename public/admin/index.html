@@ -1109,8 +1109,89 @@
       if (el) el.classList.toggle('show', mostrar);
     }
 
+    // Función para agregar marca de agua
+    function agregarMarcaDeAgua(ctx, width, height) {
+      console.log('Aplicando marca de agua...', width, height);
+      
+      // Configuración de la marca de agua
+      const padding = 20;
+      const baseSize = Math.min(width, height) * 0.08; // 8% del lado más pequeño
+      const logoWidth = baseSize * 5; // Proporción más ancha
+      const logoHeight = baseSize * 1.8;
+      
+      // Posición: esquina inferior derecha
+      const x = width - logoWidth - padding;
+      const y = height - logoHeight - padding;
+      
+      // Fondo semi-transparente con borde redondeado
+      ctx.save();
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.lineWidth = 3;
+      
+      // Rectángulo con bordes redondeados
+      const radius = 8;
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + logoWidth - radius, y);
+      ctx.quadraticCurveTo(x + logoWidth, y, x + logoWidth, y + radius);
+      ctx.lineTo(x + logoWidth, y + logoHeight - radius);
+      ctx.quadraticCurveTo(x + logoWidth, y + logoHeight, x + logoWidth - radius, y + logoHeight);
+      ctx.lineTo(x + radius, y + logoHeight);
+      ctx.quadraticCurveTo(x, y + logoHeight, x, y + logoHeight - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      
+      // Configurar texto con sombra para efecto 3D
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const centerX = x + logoWidth / 2;
+      
+      // Función para dibujar texto con borde blanco y sombra
+      function drawTextWithOutline(text, x, y, fontSize) {
+        ctx.font = `900 ${fontSize}px Arial Black, Arial, sans-serif`;
+        
+        // Sombra
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        
+        // Borde blanco grueso
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = fontSize * 0.15;
+        ctx.lineJoin = 'round';
+        ctx.strokeText(text, x, y);
+        
+        // Texto negro
+        ctx.shadowColor = 'transparent';
+        ctx.fillStyle = '#000000';
+        ctx.fillText(text, x, y);
+      }
+      
+      // Línea 1: "INFORMATE AL"
+      const fontSize1 = logoHeight * 0.28;
+      drawTextWithOutline('INFORMATE AL', centerX, y + logoHeight * 0.3, fontSize1);
+      
+      // Línea 2: "INSTANTE"
+      const fontSize2 = logoHeight * 0.42;
+      drawTextWithOutline('INSTANTE', centerX, y + logoHeight * 0.65, fontSize2);
+      
+      // Línea 3: "NICARAGUA" más pequeño
+      const fontSize3 = logoHeight * 0.28;
+      drawTextWithOutline('NICARAGUA', centerX, y + logoHeight * 0.92, fontSize3);
+      
+      ctx.restore();
+      console.log('Marca de agua aplicada correctamente');
+    }
+
     function handleFileSelect(e) {
+      console.log('handleFileSelect llamado', e);
       const file = e.target.files[0];
+      console.log('Archivo seleccionado:', file);
       if (!file) return;
       if (file.size > 5 * 1024 * 1024) {
         showToast('error', 'Error', 'Máximo 5MB');
@@ -1119,8 +1200,10 @@
 
       const reader = new FileReader();
       reader.onload = (ev) => {
+        console.log('FileReader onload');
         const img = new Image();
         img.onload = () => {
+          console.log('Image onload', img.width, img.height);
           // Redimensionar a máx 1200px manteniendo proporción
           const MAX = 1200;
           let w = img.width, h = img.height;
@@ -1129,7 +1212,11 @@
           const canvas = document.createElement('canvas');
           canvas.width = w;
           canvas.height = h;
-          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, w, h);
+
+          // Agregar marca de agua
+          agregarMarcaDeAgua(ctx, w, h);
 
           // Comprimir a WebP calidad 0.80 (o JPEG si WebP no soportado)
           const compressed = canvas.toDataURL('image/webp', 0.80) || canvas.toDataURL('image/jpeg', 0.80);

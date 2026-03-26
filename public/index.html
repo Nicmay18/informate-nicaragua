@@ -1447,5 +1447,82 @@
     setInterval(rotarClima, 8000);
   </script>
 
+  <!-- Protección contra copia de contenido -->
+  <script>
+    // Deshabilitar clic derecho
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      mostrarMensajeProteccion();
+      return false;
+    });
+
+    // Deshabilitar selección de texto
+    document.addEventListener('selectstart', function(e) {
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // Deshabilitar copiar (Ctrl+C, Cmd+C)
+    document.addEventListener('copy', function(e) {
+      e.preventDefault();
+      mostrarMensajeProteccion();
+      return false;
+    });
+
+    // Deshabilitar atajos de teclado
+    document.addEventListener('keydown', function(e) {
+      // Ctrl+C, Ctrl+X, Ctrl+U, Ctrl+S, F12, Ctrl+Shift+I
+      if ((e.ctrlKey && (e.key === 'c' || e.key === 'x' || e.key === 'u' || e.key === 's')) ||
+          (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+          e.key === 'F12') {
+        e.preventDefault();
+        mostrarMensajeProteccion();
+        return false;
+      }
+    });
+
+    // Mensaje personalizado
+    function mostrarMensajeProteccion() {
+      const mensaje = document.createElement('div');
+      mensaje.innerHTML = `
+        <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+                    background:rgba(0,0,0,0.95);color:#fff;padding:30px 40px;
+                    border-radius:16px;z-index:99999;text-align:center;
+                    box-shadow:0 20px 60px rgba(0,0,0,0.5);max-width:500px;">
+          <i class="fas fa-shield-alt" style="font-size:48px;color:#dc2626;margin-bottom:16px;"></i>
+          <h3 style="margin:0 0 12px 0;font-size:24px;font-weight:700;">Contenido Protegido</h3>
+          <p style="margin:0 0 20px 0;font-size:15px;line-height:1.6;opacity:0.9;">
+            El contenido de <strong>Nicaragua Informate</strong> es resultado de mucho esfuerzo. 
+            Te invitamos a compartirlo usando los botones de redes sociales y así contribuís a mantener 
+            vivo el periodismo independiente en Nicaragua.
+          </p>
+          <button onclick="this.parentElement.parentElement.remove()" 
+                  style="background:#dc2626;color:#fff;border:none;padding:12px 32px;
+                         border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;
+                         transition:all 0.2s;">
+            Entendido
+          </button>
+        </div>
+      `;
+      document.body.appendChild(mensaje);
+      setTimeout(() => mensaje.remove(), 5000);
+    }
+
+    // Protección adicional contra inspección
+    (function() {
+      const devtools = /./;
+      devtools.toString = function() {
+        this.opened = true;
+      }
+      const checkDevTools = setInterval(function() {
+        if (devtools.opened) {
+          clearInterval(checkDevTools);
+        }
+      }, 1000);
+    })();
+  </script>
+
 </body>
 </html>

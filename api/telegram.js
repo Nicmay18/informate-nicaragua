@@ -6,9 +6,11 @@ module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   try {
-    const { noticia } = req.body || {};
-    const TG_TOKEN = process.env.TG_TOKEN;
-    const TG_CHAT_ID = process.env.TG_CHAT_ID;
+    const { noticia, config } = req.body || {};
+    
+    // Usar tokens del config (desde admin) o del .env (fallback)
+    const TG_TOKEN = config?.telegram?.token || process.env.TG_TOKEN;
+    const TG_CHAT_ID = config?.telegram?.chatId || process.env.TG_CHAT_ID;
 
     if (!TG_TOKEN || !TG_CHAT_ID) {
       return res.status(400).json({ error: 'Telegram no configurado' });

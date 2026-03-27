@@ -5,53 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información.">
-<meta name="keywords" content="Nicaragua, noticias, sucesos, deportes, tecnología, nacionales, internacionales">
-<meta name="author" content="Nicaragua Informate">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="Nicaragua Informate - Noticias al Instante">
-<meta property="og:description" content="Tu fuente confiable de noticias de Nicaragua">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nicaraguainformate.com">
-<meta property="og:image" content="https://nicaraguainformate.com/logo.png">
-
-<!-- Google Analytics 4 -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B5J61WEP"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
-gtag('config', 'G-W1B5J61WEP', {
-  'anonymize_ip': true,
-  'allow_google_signals': true,
-  'enhanced_measurement': {
-    'scrolls': true,
-    'outbound_clicks': true,
-    'site_search': true,
-    'video_engagement': true,
-    'file_downloads': true
-  }
-});
+gtag('config', 'G-W1B5J61WEP');
 </script>
-
 <!-- Google AdSense -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
-
-<!-- Microsoft Clarity desactivado temporalmente - Agregar ID cuando esté disponible -->
-<!-- <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "YOUR_CLARITY_ID");
-</script> -->
-
 <!-- Bootstrap CSS -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
 :root {
 --brand-primary: #0F172A;
@@ -66,17 +35,11 @@ gtag('config', 'G-W1B5J61WEP', {
 --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
 --font-serif: 'Merriweather', Georgia, serif;
 --font-sans: 'Inter', sans-serif;
---premium-gold: #F59E0B;
 }
-
-* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--font-sans); background: var(--surface-light); color: var(--text-primary); line-height: 1.6; }
-
-/* Protección de contenido - permitir selección solo en inputs */
-input, textarea { user-select: text; -webkit-user-select: text; }
-
 /* Header */
-.topbar { background: #fff; border-bottom: 1px solid var(--border-color); padding: 16px 24px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+.topbar { background: #fff; border-bottom: 1px solid var(--border-color); padding: 16px 24px; position: sticky; top: 0; z-index: 100; }
 .topbar-content { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
 .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: var(--text-primary); }
 .logo img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; }
@@ -84,18 +47,13 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .logo-subtitle { font-size: 12px; color: var(--text-secondary); }
 .topbar-actions { display: flex; align-items: center; gap: 16px; }
 .search-wrapper { position: relative; }
-#searchInput { background: var(--surface-light); border: 1px solid var(--border-color); padding: 10px 40px 10px 16px; border-radius: 9999px; font-size: 14px; width: 240px; outline: none; user-select: text; }
+#searchInput { background: var(--surface-light); border: 1px solid var(--border-color); padding: 10px 40px 10px 16px; border-radius: 9999px; font-size: 14px; width: 240px; outline: none; }
 #searchInput:focus { background: #fff; border-color: var(--brand-secondary); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
 .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); pointer-events: none; }
 #searchResults { display: none; position: absolute; top: calc(100% + 8px); right: 0; width: 360px; max-height: 400px; overflow-y: auto; background: #fff; border-radius: 12px; box-shadow: var(--shadow-lg); z-index: 1000; }
 .visit-counter { display: flex; align-items: center; gap: 6px; background: var(--surface-light); padding: 8px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--text-secondary); border: 1px solid var(--border-color); }
 .info-top { text-align: right; font-size: 13px; color: #6b7280; font-weight: 500; }
 .info-top div { margin-bottom: 2px; }
-
-/* Premium Badge */
-.premium-badge { background: linear-gradient(135deg, var(--premium-gold), #D97706); color: white; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; text-transform: uppercase; display: inline-flex; align-items: center; gap: 4px; animation: shimmer 2s infinite; }
-@keyframes shimmer { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
-
 /* Navigation */
 .menu-nav { background: #fff; border-bottom: 1px solid var(--border-color); padding: 0 24px; overflow-x: auto; }
 .menu-nav::-webkit-scrollbar { display: none; }
@@ -103,42 +61,32 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .menu-btn { border: none; background: transparent; color: var(--text-secondary); font-size: 14px; font-weight: 500; padding: 8px 16px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
 .menu-btn:hover { color: var(--text-primary); background: var(--surface-light); }
 .menu-btn.active { color: var(--brand-accent); font-weight: 600; border-bottom-color: var(--brand-accent); }
-
-/* Ad Slots Mejorados */
-.ad-slot { margin: 24px 0; min-height: 90px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 12px; border: 1px solid var(--border-color); position: relative; overflow: hidden; }
-.ad-slot::before { content: "Publicidad"; position: absolute; top: 4px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #94A3B8; text-transform: uppercase; letter-spacing: 0.5px; }
-.ad-slot-sticky { position: sticky; top: 100px; }
-.ad-label { font-size: 10px; color: #94A3B8; text-align: center; margin-bottom: 4px; text-transform: uppercase; }
-
 /* Main Layout */
 .main-wrapper { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr; gap: 32px; }
 @media (min-width: 1024px) { .main-wrapper { grid-template-columns: 1fr 320px; gap: 48px; } }
-
 /* Carousel */
 .carousel-item { height: 450px; background: var(--brand-primary); position: relative; overflow: hidden; border-radius: 12px; }
-.carousel-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.carousel-item img { width: 100%; height: 100%; object-fit: cover; }
 .carousel-caption-custom { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); padding: 48px 32px 32px; color: #fff; }
 .carousel-badge { display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
 .carousel-caption-custom h3 { font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
 .carousel-caption-custom p { font-size: 15px; opacity: 0.9; line-height: 1.5; }
 .carousel-meta { display: flex; gap: 20px; font-size: 13px; color: #CBD5E1; margin-top: 10px; }
-
-/* Cards con Protección */
+/* Cards */
 .breaking-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: 32px; cursor: pointer; transition: all 0.3s; border: 1px solid var(--border-color); position: relative; }
 .breaking-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(0,0,0,0.12); }
 .breaking-card .card-image { height: 320px; overflow: hidden; position: relative; }
-.breaking-card .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; pointer-events: none; }
+.breaking-card .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
 .breaking-card:hover .card-image img { transform: scale(1.08); }
 .breaking-body { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
 .breaking-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--brand-secondary); color: #fff; font-size: 10px; font-weight: 700; padding: 5px 12px; border-radius: 6px; text-transform: uppercase; margin-bottom: 12px; width: fit-content; }
 .breaking-body h2 { font-family: var(--font-serif); font-size: 28px; font-weight: 700; line-height: 1.3; margin-bottom: 14px; }
 .breaking-body p { color: var(--text-secondary); font-size: 15px; line-height: 1.6; }
-
 .news-card { display: flex; flex-direction: column; gap: 16px; padding-bottom: 32px; margin-bottom: 32px; border-bottom: 1px solid var(--border-color); cursor: pointer; transition: all 0.3s ease; position: relative; }
 .news-card:hover { border-bottom-color: var(--brand-accent); transform: translateY(-2px); }
 @media (min-width: 768px) { .news-card { flex-direction: row; gap: 24px; } .news-card .card-image-wrapper { width: 300px; flex-shrink: 0; } }
 .card-image-wrapper { aspect-ratio: 16/9; overflow: hidden; background: var(--surface-light); border-radius: 8px; position: relative; }
-.card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform 0.5s ease; pointer-events: none; }
+.card-image-wrapper img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; transition: transform 0.5s ease; }
 .news-card:hover .card-image-wrapper img { transform: scale(1.08); }
 .card-body { flex: 1; display: flex; flex-direction: column; gap: 8px; }
 .tag { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--brand-accent); }
@@ -154,16 +102,12 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .share-mini { display: flex; gap: 8px; margin-top: 8px; }
 .share-mini button { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-color); background: #fff; color: var(--text-secondary); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.2s; font-size: 14px; }
 .share-mini button:hover { background: var(--brand-accent); color: #fff; border-color: var(--brand-accent); transform: translateY(-2px); }
-
-/* Sidebar Mejorada */
+/* Sidebar */
 .sidebar-right { display: flex; flex-direction: column; gap: 24px; }
 .sidebar-box { background: #fff; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); }
 .sidebar-box h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
 .sidebar-box.trending h4 { color: #dc2626; }
 .sidebar-box.popular h4 { color: #3B82F6; }
-.sidebar-box.premium { background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%); border: 2px solid var(--premium-gold); }
-.sidebar-box.premium h4 { color: var(--premium-gold); }
-
 .trending-item { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; cursor: pointer; padding: 10px; border-radius: 8px; transition: all 0.2s; }
 .trending-item:hover { background: var(--surface-light); transform: translateX(4px); }
 .trending-number { font-size: 24px; font-weight: 900; color: var(--border-color); min-width: 32px; font-family: Georgia, serif; }
@@ -172,214 +116,54 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .trending-item:nth-child(3) .trending-number { color: #fbbf24; font-size: 24px; }
 .trending-title { font-size: 14px; font-weight: 600; color: var(--text-primary); line-height: 1.5; }
 .trending-meta { font-size: 12px; color: #6b7280; margin-top: 4px; font-weight: 500; }
-
-/* Newsletter Box */
-.newsletter-box { background: linear-gradient(135deg, var(--brand-primary) 0%, #1E293B 100%); color: white; padding: 24px; border-radius: 12px; text-align: center; }
-.newsletter-box h4 { color: white; margin-bottom: 12px; }
-.newsletter-box p { font-size: 13px; opacity: 0.9; margin-bottom: 16px; }
-.newsletter-input { width: 100%; padding: 12px; border-radius: 8px; border: none; margin-bottom: 12px; font-size: 14px; }
-.newsletter-btn { width: 100%; padding: 12px; background: var(--brand-accent); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.newsletter-btn:hover { background: #B91C1C; transform: translateY(-2px); }
-
-/* Social Links */
-.social-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-.social-btn { padding: 10px; border-radius: 8px; color: white; text-decoration: none; font-size: 12px; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s; }
-.social-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-.social-facebook { background: #1877F2; }
-.social-whatsapp { background: #25D366; }
-.social-telegram { background: #0088cc; }
-.social-whatsapp-group { background: #128C7E; }
-
-/* Donation Box */
-.donation-box { background: #F0FDF4; border: 2px solid #10B981; padding: 20px; border-radius: 12px; text-align: center; }
-.donation-box h4 { color: #059669; margin-bottom: 12px; }
-.donation-box p { font-size: 13px; color: #6b7280; margin-bottom: 16px; }
-.donation-btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; background: #10B981; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; transition: all 0.2s; }
-.donation-btn:hover { background: #059669; transform: translateY(-2px); }
-
 /* Radio Player */
 .radio-player { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(30, 41, 59, 0.98); backdrop-filter: blur(10px); color: #fff; padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; z-index: 999; transform: translateY(100%); transition: transform 0.3s; }
 .radio-player.active { transform: translateY(0); }
 .radio-controls { display: flex; align-items: center; gap: 12px; flex: 1; max-width: 500px; }
 .radio-btn { width: 40px; height: 40px; border-radius: 50%; border: none; background: var(--brand-secondary); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 .radio-select { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); color: #E2E8F0; padding: 8px 12px; border-radius: 8px; font-size: 13px; flex: 1; }
-.radio-float-btn { position: fixed; bottom: 88px; right: 24px; width: 52px; height: 52px; background: var(--brand-primary); color: #fff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 998; animation: pulseRadio 2s infinite; }
+.radio-float-btn { position: fixed; bottom: 88px; right: 24px; width: 52px; height: 52px; background: var(--brand-primary); color: #fff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.3); z-index: 998; }
 .radio-float-btn.hidden { display: none; }
-@keyframes pulseRadio { 0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.3); } 50% { box-shadow: 0 4px 24px rgba(59, 130, 246, 0.5); } }
-
-/* Modal Mejorado con Protección */
-.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.95); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 20px; backdrop-filter: blur(8px); }
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.9); display: none; justify-content: center; align-items: center; z-index: 9999; padding: 20px; backdrop-filter: blur(8px); }
 .modal-overlay.active { display: flex; }
 .modal-content { background: #fff; width: 100%; max-width: 780px; max-height: 90vh; overflow-y: auto; border-radius: 16px; position: relative; }
 .modal-header { position: relative; height: 300px; overflow: hidden; background: var(--brand-primary); }
-.modal-header img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.modal-header img { width: 100%; height: 100%; object-fit: cover; }
 .modal-header::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%); }
 .modal-title-wrap { position: absolute; bottom: 0; left: 0; right: 0; padding: 32px; color: #fff; z-index: 2; }
-.modal-body { padding: 32px; position: relative; }
-.modal-body::after { content: "© Nicaragua Informate - Contenido protegido"; position: absolute; bottom: 10px; right: 20px; font-size: 11px; color: #CBD5E1; opacity: 0.7; }
+.modal-body { padding: 32px; }
 .modal-close { position: absolute; top: 16px; right: 16px; width: 44px; height: 44px; background: rgba(0,0,0,0.4); border: 2px solid rgba(255,255,255,0.3); border-radius: 50%; color: #fff; font-size: 24px; cursor: pointer; z-index: 10; }
-
-/* Paywall para contenido premium */
-.paywall-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(to top, white 0%, transparent 100%); display: flex; align-items: flex-end; justify-content: center; padding-bottom: 40px; }
-.paywall-content { text-align: center; background: white; padding: 24px; border-radius: 12px; box-shadow: var(--shadow-lg); border: 2px solid var(--premium-gold); }
-.paywall-content h4 { color: var(--text-primary); margin-bottom: 8px; }
-.paywall-content p { font-size: 14px; color: var(--text-secondary); margin-bottom: 16px; }
-
-/* Footer Mejorado */
+/* Footer */
 .footer { margin-top: 60px; background: linear-gradient(135deg, var(--brand-primary) 0%, #1E293B 100%); color: #fff; padding: 60px 24px 24px; }
 .footer-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
 .footer-brand { font-size: 24px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 12px; }
 .footer-desc { color: #94A3B8; line-height: 1.6; font-size: 14px; }
-.footer-section h4 { color: #fff; font-size: 14px; margin-bottom: 20px; }
+.footer-section h4 { color: #fff; font-size: 14px; margin-bottom: 20px; font-weight: 700; }
 .footer-links { list-style: none; }
-.footer-links li { margin: 12px 0; color: #94A3B8; cursor: pointer; transition: all 0.2s; font-size: 14px; }
+.footer-links li { margin: 12px 0; color: #94A3B8; cursor: pointer; transition: all 0.2s; font-size: 14px; display: flex; align-items: center; gap: 8px; }
 .footer-links li:hover { color: #fff; transform: translateX(4px); }
-.footer-social { display: flex; gap: 12px; margin-top: 20px; }
-.footer-social a { width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: white; text-decoration: none; transition: all 0.2s; }
-.footer-social a:hover { background: var(--brand-accent); transform: translateY(-3px); }
+.footer-links li i { width: 20px; }
 .footer-bottom { max-width: 1200px; margin: 0 auto; padding-top: 24px; border-top: 1px solid #334155; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; color: #64748B; font-size: 13px; }
-
-/* Affiliate Banner */
-.affiliate-banner { background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%); border: 2px solid #F59E0B; border-radius: 12px; padding: 20px; margin: 24px 0; display: flex; align-items: center; gap: 20px; }
-.affiliate-banner img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; }
-.affiliate-content { flex: 1; }
-.affiliate-content h4 { color: #92400E; font-size: 16px; margin-bottom: 8px; }
-.affiliate-content p { color: #A16207; font-size: 14px; margin-bottom: 12px; }
-.affiliate-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: #F59E0B; color: white; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; }
-.affiliate-btn:hover { background: #D97706; transform: translateY(-2px); }
-.affiliate-disclaimer { font-size: 11px; color: #A16207; margin-top: 8px; }
-
-/* Sticky CTA */
-.sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-top: 2px solid var(--brand-accent); padding: 16px 24px; display: none; align-items: center; justify-content: space-between; gap: 16px; z-index: 997; box-shadow: 0 -4px 20px rgba(0,0,0,0.1); }
-.sticky-cta.visible { display: flex; }
-.sticky-cta-text { font-weight: 600; color: var(--text-primary); }
-.sticky-cta-btn { padding: 10px 20px; background: var(--brand-accent); color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-.sticky-cta-btn:hover { background: #B91C1C; }
-
+.footer-bottom a { color: #94A3B8; text-decoration: none; transition: color 0.2s; }
+.footer-bottom a:hover { color: #fff; text-decoration: underline; }
 /* Utilities */
 .hidden { display: none !important; }
 .section-title { font-family: var(--font-serif); font-size: 28px; font-weight: 700; margin: 48px 0 32px; padding-bottom: 16px; border-bottom: 2px solid var(--border-color); }
-.float-share { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--brand-secondary); color: #fff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35); z-index: 100; transition: all 0.3s; }
-.float-share:hover { transform: scale(1.1); }
+.ad-slot { margin: 24px 0; min-height: 90px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 12px; border: 1px solid var(--border-color); }
+.float-share { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; background: var(--brand-secondary); color: #fff; border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; box-shadow: 0 4px 16px rgba(59, 130, 246, 0.35); z-index: 100; }
 .back-to-top { position: fixed; bottom: 90px; right: 24px; width: 48px; height: 48px; background: var(--brand-primary); color: #fff; border: none; border-radius: 50%; display: none; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; z-index: 100; }
 .back-to-top.visible { display: flex; }
-
-/* Watermark en imágenes */
-.watermark { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.6); color: white; padding: 4px 8px; font-size: 10px; border-radius: 4px; opacity: 0.7; pointer-events: none; }
-
-/* Anti-copy notification */
-.anti-copy-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--brand-accent); color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; z-index: 10000; transition: all 0.3s; box-shadow: var(--shadow-lg); }
-.anti-copy-toast.show { transform: translateX(-50%) translateY(0); }
-
-/* Responsive */
 @media (max-width: 768px) {
 .breaking-card { grid-template-columns: 1fr; }
 .breaking-card .card-image { height: 200px; }
 .footer-grid { grid-template-columns: 1fr; }
 .carousel-item { height: 300px; }
 .carousel-caption-custom h3 { font-size: 22px; }
-.sticky-cta { flex-direction: column; text-align: center; }
-.topbar-actions { display: none; }
 }
 </style>
-
-<!-- Protección Anti-Copia y Anti-DevTools -->
-<script>
-// Desactivar clic derecho en contenido
-document.addEventListener('contextmenu', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body, .carousel-item')) {
-        e.preventDefault();
-        showAntiCopyToast('🔒 Contenido protegido por Nicaragua Informate');
-        gtag('event', 'right_click_blocked', {
-            'event_category': 'content_protection',
-            'event_label': 'right_click_attempt'
-        });
-    }
-});
-
-// Bloquear selección de texto en noticias
-document.addEventListener('selectstart', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body') && !e.target.closest('input, textarea')) {
-        e.preventDefault();
-    }
-});
-
-// Bloquear copia
-document.addEventListener('copy', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body')) {
-        e.preventDefault();
-        showAntiCopyToast('📰 Para compartir, usa los botones de redes sociales');
-        gtag('event', 'copy_blocked', {
-            'event_category': 'content_protection',
-            'event_label': 'copy_attempt'
-        });
-    }
-});
-
-// Bloquear cortar
-document.addEventListener('cut', function(e) {
-    e.preventDefault();
-});
-
-// Detectar DevTools
-let devtoolsOpen = false;
-const element = new Image();
-Object.defineProperty(element, 'id', {
-    get: function() {
-        devtoolsOpen = true;
-        window.location.href = 'about:blank';
-    }
-});
-console.log('%c', element);
-
-// Anti-scraping: Detectar bots
-(function() {
-    const botPatterns = /bot|crawler|spider|crawling/i;
-    if (botPatterns.test(navigator.userAgent)) {
-        document.body.innerHTML = '<h1>Access Denied</h1>';
-        gtag('event', 'bot_detected', {
-            'event_category': 'security',
-            'event_label': navigator.userAgent
-        });
-    }
-    
-    // Rate limiting para scraping
-    let pageViews = parseInt(localStorage.getItem('pageViews') || '0');
-    pageViews++;
-    localStorage.setItem('pageViews', pageViews);
-    
-    if (pageViews > 100) {
-        document.body.innerHTML = '<h1>Rate Limit Exceeded</h1><p>Please try again later.</p>';
-    }
-})();
-
-// Función para mostrar toast
-function showAntiCopyToast(message) {
-    let toast = document.getElementById('antiCopyToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'antiCopyToast';
-        toast.className = 'anti-copy-toast';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-// Ofuscación de contenido para prevenir scraping automático
-function obfuscateContent(text) {
-    return text.split('').map(char => {
-        if (char === ' ') return ' ';
-        return '&#' + char.charCodeAt(0) + ';';
-    }).join('');
-}
-</script>
 </head>
 <body>
-
-<!-- Toast de protección -->
-<div id="antiCopyToast" class="anti-copy-toast"></div>
 
 <!-- Header -->
 <header class="topbar">
@@ -388,7 +172,7 @@ function obfuscateContent(text) {
 <img src="/logo.png" alt="Logo" onerror="this.style.display='none'">
 <div class="logo-text">
 <div class="logo-title">Nicaragua Informate</div>
-<div class="logo-subtitle">Tu fuente de noticias confiable</div>
+<div class="logo-subtitle">Tu fuente de noticias</div>
 </div>
 </a>
 <div class="topbar-actions">
@@ -409,12 +193,6 @@ function obfuscateContent(text) {
 </div>
 </header>
 
-<!-- Ad Superior (Above the Fold) -->
-<div class="ad-label">Publicidad</div>
-<div class="ad-slot" style="margin-top: 0; min-height: 100px;">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="1234567890" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
-</div>
-
 <!-- Navigation -->
 <nav class="menu-nav">
 <div class="menu-content">
@@ -425,7 +203,6 @@ function obfuscateContent(text) {
 <button class="menu-btn" data-cat="Internacionales">🌍 Internacionales</button>
 <button class="menu-btn" data-cat="Tecnología">💻 Tecnología</button>
 <button class="menu-btn" data-cat="Cultura">🎭 Cultura</button>
-<button class="menu-btn premium" data-cat="Premium" style="color: var(--premium-gold);">⭐ Premium</button>
 </div>
 </nav>
 
@@ -479,20 +256,7 @@ function obfuscateContent(text) {
 </div>
 </section>
 
-<!-- Affiliate Banner Ejemplo -->
-<div class="affiliate-banner" id="affiliateBanner" style="display: none;">
-<img src="https://m.media-amazon.com/images/I/71sKzRzrXrL._AC_SX679_.jpg" alt="Producto recomendado">
-<div class="affiliate-content">
-<h4>📱 Recomendación del Editor</h4>
-<p>Los mejores accesorios tecnológicos disponibles en Amazon con envío a Nicaragua</p>
-<a href="https://www.amazon.com/s?k=electronics&tag=TU_AMAZON_TAG_AQUI" target="_blank" class="affiliate-btn" onclick="gtag('event', 'affiliate_click', {'event_category': 'affiliate', 'event_label': 'amazon_banner'});">
-Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
-</a>
-<div class="affiliate-disclaimer">🔗 Enlace de afiliado - Ganamos una pequeña comisión por compras calificadas</div>
-</div>
-</div>
-
-<!-- Ad In-Content -->
+<!-- Ad -->
 <div class="ad-slot">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
@@ -509,49 +273,10 @@ Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
 <i class="fas fa-circle-notch fa-spin" style="color:#3B82F6;font-size:24px;"></i>
 </div>
 </div>
-
-<!-- Newsletter Inline -->
-<div class="newsletter-box" style="margin: 48px 0;">
-<h4>📧 Suscríbete a nuestro Newsletter</h4>
-<p>Recibe las noticias más importantes de Nicaragua directamente en tu correo cada mañana. ¡Es gratis!</p>
-<form onsubmit="suscribirNewsletter(event)">
-<input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
-<button type="submit" class="newsletter-btn">Suscribirme ahora</button>
-</form>
-<p style="font-size: 11px; margin-top: 12px; opacity: 0.8;">Al suscribirte, aceptas nuestra política de privacidad. Puedes darte de baja en cualquier momento.</p>
-</div>
-
-<!-- Ad Footer -->
-<div class="ad-slot">
-<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="0987654321" data-ad-format="horizontal" data-full-width-responsive="true"></ins>
-</div>
 </main>
 
 <!-- Sidebar -->
 <aside class="sidebar-right">
-<!-- Social Links -->
-<div class="sidebar-box">
-<h4>📱 Síguenos</h4>
-<div class="social-links">
-<a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" class="social-btn social-facebook" onclick="gtag('event', 'social_click', {'event_category': 'social', 'event_label': 'facebook_1'});">
-<i class="fab fa-facebook-f"></i> Página 1
-</a>
-<a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" class="social-btn social-facebook" onclick="gtag('event', 'social_click', {'event_category': 'social', 'event_label': 'facebook_2'});">
-<i class="fab fa-facebook-f"></i> Página 2
-</a>
-<a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" class="social-btn social-whatsapp" onclick="gtag('event', 'social_click', {'event_category': 'social', 'event_label': 'whatsapp_channel'});">
-<i class="fab fa-whatsapp"></i> Canal
-</a>
-<a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" class="social-btn social-telegram" onclick="gtag('event', 'social_click', {'event_category': 'social', 'event_label': 'telegram'});">
-<i class="fab fa-telegram-plane"></i> Telegram
-</a>
-<a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" class="social-btn social-whatsapp-group" onclick="gtag('event', 'social_click', {'event_category': 'social', 'event_label': 'whatsapp_group'});">
-<i class="fab fa-whatsapp"></i> Grupo WA
-</a>
-</div>
-</div>
-
-<!-- Trending -->
 <div class="sidebar-box trending">
 <h4>🔥 Trending</h4>
 <div id="trendingContainer">
@@ -559,17 +284,6 @@ Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
 </div>
 </div>
 
-<!-- Donation Box -->
-<div class="donation-box">
-<h4>💰 Apoya el periodismo independiente</h4>
-<p>Tu contribución nos ayuda a mantener la información libre y accesible para todos los nicaragüenses.</p>
-<a href="https://www.paypal.me/NicaraguaInformate" target="_blank" class="donation-btn" onclick="gtag('event', 'donation_click', {'event_category': 'monetization', 'event_label': 'paypal_donation'});">
-<i class="fab fa-paypal"></i> Donar con PayPal
-</a>
-<p style="font-size: 11px; margin-top: 12px; opacity: 0.8;">Pago seguro procesado por PayPal</p>
-</div>
-
-<!-- Popular -->
 <div class="sidebar-box popular">
 <h4>📊 Populares</h4>
 <div id="popularContainer">
@@ -577,17 +291,7 @@ Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
 </div>
 </div>
 
-<!-- Premium Box -->
-<div class="sidebar-box premium">
-<h4><i class="fas fa-crown"></i> Contenido Premium</h4>
-<p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Accede a análisis exclusivos, reportajes especiales y contenido sin publicidad.</p>
-<button onclick="mostrarPremium()" style="width: 100%; padding: 12px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s;">
-Ver planes <i class="fas fa-arrow-right"></i>
-</button>
-</div>
-
-<!-- Sticky Ad -->
-<div class="ad-slot ad-slot-sticky" style="min-height: 600px;">
+<div class="ad-slot" style="position:sticky;top:100px;min-height:600px;">
 <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins>
 </div>
 </aside>
@@ -599,7 +303,6 @@ Ver planes <i class="fas fa-arrow-right"></i>
 <button class="modal-close" onclick="cerrarModal()">×</button>
 <div class="modal-header">
 <img id="modalImg" src="" alt="">
-<div class="watermark">© Nicaragua Informate</div>
 <div class="modal-title-wrap">
 <span id="modalCat" class="tag"></span>
 <h2 id="modalTitle" style="font-size:32px;font-weight:800;margin-top:12px;"></h2>
@@ -609,21 +312,8 @@ Ver planes <i class="fas fa-arrow-right"></i>
 <div style="display:flex;gap:24px;color:#64748B;font-size:14px;margin-bottom:24px;padding-bottom:24px;border-bottom:2px solid #E2E8F0;">
 <span id="modalFecha">📅 </span>
 <span>⏱️ <span id="modalReadTime">3</span> min lectura</span>
-<span id="modalPremium" style="display:none;" class="premium-badge"><i class="fas fa-crown"></i> Premium</span>
 </div>
 <div id="modalContent" style="font-size:17px;line-height:1.8;"></div>
-
-<!-- Paywall para contenido no premium -->
-<div id="paywall" class="paywall-overlay" style="display: none;">
-<div class="paywall-content">
-<h4>🔒 Continúa leyendo</h4>
-<p>Esta noticia continúa después del resumen. Suscríbete para acceso ilimitado.</p>
-<button onclick="mostrarPremium()" style="padding: 12px 24px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer;">
-Ver suscripción Premium
-</button>
-</div>
-</div>
-
 <div style="margin-top:32px;padding-top:24px;border-top:2px solid #E2E8F0;">
 <h4 style="margin-bottom:16px;"><i class="fas fa-share-alt"></i> Compartir</h4>
 <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
@@ -637,33 +327,6 @@ Ver suscripción Premium
 </div>
 </div>
 
-<!-- Premium Modal -->
-<div class="modal-overlay" id="premiumModal" onclick="cerrarPremiumModal()">
-<div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
-<button class="modal-close" onclick="cerrarPremiumModal()">×</button>
-<div style="padding: 32px; text-align: center;">
-<div style="font-size: 64px; margin-bottom: 16px;">👑</div>
-<h2 style="font-family: var(--font-serif); margin-bottom: 16px;">Nicaragua Informate Premium</h2>
-<p style="color: var(--text-secondary); margin-bottom: 32px;">Accede a contenido exclusivo, análisis profundos y experiencia sin publicidad.</p>
-<div style="display: grid; gap: 16px; margin-bottom: 32px;">
-<div style="border: 2px solid var(--border-color); border-radius: 12px; padding: 20px; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.borderColor='var(--premium-gold)'" onmouseout="this.style.borderColor='var(--border-color)'">
-<div style="font-size: 24px; font-weight: 800; color: var(--premium-gold);">$3.99/mes</div>
-<div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Plan Mensual</div>
-</div>
-<div style="border: 2px solid var(--premium-gold); border-radius: 12px; padding: 20px; cursor: pointer; background: #FFFBEB; position: relative;">
-<div style="position: absolute; top: -10px; right: 20px; background: var(--premium-gold); color: white; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 700;">MEJOR VALOR</div>
-<div style="font-size: 24px; font-weight: 800; color: var(--premium-gold);">$29.99/año</div>
-<div style="font-size: 14px; color: var(--text-secondary); margin-top: 8px;">Plan Anual (37% descuento)</div>
-</div>
-</div>
-<button style="width: 100%; padding: 16px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 12px;" onclick="gtag('event', 'premium_click', {'event_category': 'monetization', 'event_label': 'subscribe_button'});">
-Suscribirme ahora
-</button>
-<p style="font-size: 12px; color: #94A3B8;">Cancela cuando quieras. Pago seguro procesado por Stripe.</p>
-</div>
-</div>
-</div>
-
 <!-- Floating Buttons -->
 <button class="float-share" onclick="sharePage()" title="Compartir">
 <i class="fas fa-share-alt"></i>
@@ -671,14 +334,6 @@ Suscribirme ahora
 <button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">
 <i class="fas fa-arrow-up"></i>
 </button>
-
-<!-- Sticky CTA -->
-<div class="sticky-cta" id="stickyCta">
-<div class="sticky-cta-text">📱 Síguenos en WhatsApp para alertas de última hora</div>
-<button class="sticky-cta-btn" onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17', '_blank'); gtag('event', 'sticky_cta_click', {'event_category': 'conversion', 'event_label': 'whatsapp_sticky'});">
-Unirme al canal
-</button>
-</div>
 
 <!-- Footer -->
 <footer class="footer">
@@ -688,14 +343,7 @@ Unirme al canal
 <img src="/logo.png" alt="Logo" style="width:45px;height:45px;border-radius:50%;" onerror="this.style.display='none'">
 Nicaragua Informate
 </div>
-<p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales. Periodismo independiente desde 2024.</p>
-<div class="footer-social">
-<a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-<a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" title="Facebook 2"><i class="fab fa-facebook-f"></i></a>
-<a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" title="WhatsApp Channel"><i class="fab fa-whatsapp"></i></a>
-<a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-<a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" title="Grupo WhatsApp"><i class="fas fa-users"></i></a>
-</div>
+<p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales.</p>
 </div>
 <div class="footer-section">
 <h4>📂 Secciones</h4>
@@ -708,25 +356,16 @@ Nicaragua Informate
 </ul>
 </div>
 <div class="footer-section">
-<h4>💰 Apoya</h4>
+<h4>📢 Síguenos</h4>
 <ul class="footer-links">
-<li onclick="mostrarPremium()">→ Suscripción Premium</li>
-<li><a href="https://www.paypal.me/NicaraguaInformate" target="_blank" style="color: inherit; text-decoration: none;">→ Donar con PayPal</a></li>
-<li onclick="mostrarAfiliados()">→ Tienda Amazon</li>
-</ul>
-</div>
-<div class="footer-section">
-<h4>📢 Legal</h4>
-<ul class="footer-links">
-<li><a href="privacidad.html" style="color: inherit; text-decoration: none;">→ Política de Privacidad</a></li>
-<li><a href="terminos.html" style="color: inherit; text-decoration: none;">→ Términos de Uso</a></li>
-<li><a href="contacto.html" style="color: inherit; text-decoration: none;">→ Contacto</a></li>
-<li onclick="alert('Todo el contenido está protegido por derechos de autor © 2026 Nicaragua Informate')">→ Derechos de Autor</li>
+<li onclick="window.open('https://www.facebook.com/profile.php?id=61578261125687','_blank')"><i class="fab fa-facebook"></i> Facebook</li>
+<li onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17','_blank')"><i class="fab fa-whatsapp"></i> WhatsApp</li>
+<li onclick="window.open('https://t.me/fHHjncJqMQM3NjZh','_blank')"><i class="fab fa-telegram"></i> Telegram</li>
 </ul>
 </div>
 </div>
 <div class="footer-bottom">
-<div>© 2026 Nicaragua Informate. Todos los derechos reservados. Contenido protegido.</div>
+<div>© 2026 Nicaragua Informate. Todos los derechos reservados.</div>
 <div style="display:flex;gap:24px;">
 <a href="privacidad.html" style="color:#64748B;text-decoration:none;">Privacidad</a>
 <a href="terminos.html" style="color:#64748B;text-decoration:none;">Términos</a>
@@ -738,7 +377,7 @@ Nicaragua Informate
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- App Logic Mejorada -->
+<!-- App Logic -->
 <script>
 // CONFIGURACIÓN
 const CONFIG = {
@@ -784,8 +423,7 @@ const utils = {
       'Tecnología': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
       'Cultura': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
       'Economía': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
-      'Espectáculos': 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80',
-      'Premium': 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80'
+      'Espectáculos': 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80'
     };
     return fallbacks[categoria] || fallbacks['Sucesos'];
   },
@@ -798,14 +436,6 @@ const utils = {
   capitalize: (str) => {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
-  },
-  // Ofuscación para proteger contra scraping
-  obfuscateText: (text) => {
-    if (!text) return '';
-    return text.split('').map(char => {
-      if (char === ' ') return ' ';
-      return '&#' + char.charCodeAt(0) + ';';
-    }).join('');
   }
 };
 
@@ -814,7 +444,6 @@ let noticias = [];
 let categoriaActual = 'Todas';
 let paginaActual = 1;
 let db = null;
-let esUsuarioPremium = false; // Simulación - en producción verificar con backend
 
 // FUNCIONES PRINCIPALES
 function init() {
@@ -823,8 +452,6 @@ function init() {
   initClima();
   initEventListeners();
   initAds();
-  initStickyCTA();
-  mostrarAffiliateBanner();
 }
 
 function initFirebase() {
@@ -852,16 +479,11 @@ function initFirebase() {
 
 function renderizarNoticias() {
   const grid = document.getElementById('newsGrid');
-  let filtradas = categoriaActual === 'Todas' ? noticias : noticias.filter(n => n.categoria === categoriaActual);
-  
-  // Si es premium, mostrar contenido premium
-  if (categoriaActual === 'Premium') {
-    filtradas = noticias.filter(n => n.premium === true);
-  }
+  const filtradas = categoriaActual === 'Todas' ? noticias : noticias.filter(n => n.categoria === categoriaActual);
   
   const iconos = {
     'Todas': '📰', 'Sucesos': '🚨', 'Nacionales': '🏠', 'Deportes': '⚽',
-    'Internacionales': '🌍', 'Tecnología': '💻', 'Cultura': '🎭', 'Espectáculos': '⭐', 'Premium': '👑'
+    'Internacionales': '🌍', 'Tecnología': '💻', 'Cultura': '🎭', 'Espectáculos': '⭐'
   };
   const titulo = categoriaActual === 'Todas' ? 'Últimas Noticias' : `${iconos[categoriaActual] || '📰'} ${categoriaActual}`;
   document.getElementById('sectionTitle').innerHTML = `${titulo} <span style="font-size:14px;color:#64748B;font-weight:500;margin-left:8px;">(${filtradas.length})</span>`;
@@ -891,11 +513,14 @@ function renderizarNoticias() {
       
       if (fechaNoticia) {
         const diff = ahora - fechaNoticia;
-        esNueva = diff < 24 * 60 * 60 * 1000;
+        esNueva = diff < 24 * 60 * 60 * 1000; // 24 horas
       }
     } catch(e) {}
     
+    // Extraer ubicación del contenido si existe
     const ubicacion = extraerUbicacion(n.contenido || n.resumen || '');
+    
+    // Fecha con tooltip
     const fechaRelativa = utils.formatDate(n.fecha);
     let fechaCompleta = '';
     try {
@@ -906,13 +531,10 @@ function renderizarNoticias() {
       if (d) fechaCompleta = d.toLocaleString('es-NI', {day:'numeric', month:'long', year:'numeric', hour:'2-digit', minute:'2-digit'});
     } catch(e) {}
     
-    const badgePremium = n.premium ? '<div class="premium-badge" style="position:absolute;top:12px;right:12px;z-index:10;"><i class="fas fa-crown"></i> Premium</div>' : '';
-    
     if (idx === 0 && categoriaActual === 'Todas') {
       return `<article class="breaking-card" onclick="abrirNoticia('${n.id}')">
         ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
-        ${badgePremium}
-        <div class="card-image"><img src="${img}" alt="${titulo}" loading="eager"><div class="watermark">© Nicaragua Informate</div></div>
+        <div class="card-image"><img src="${img}" alt="${titulo}" loading="eager"></div>
         <div class="breaking-body">
           <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
           <span class="tag" style="color:${getCategoryColor(n.categoria)};margin-bottom:8px;">${(n.categoria || '').toUpperCase()}</span>
@@ -933,8 +555,7 @@ function renderizarNoticias() {
     
     return `<article class="news-card" onclick="abrirNoticia('${n.id}')">
       ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
-      ${badgePremium}
-      <div class="card-image-wrapper"><img src="${img}" alt="${titulo}" loading="lazy"><div class="watermark">© Nicaragua Informate</div></div>
+      <div class="card-image-wrapper"><img src="${img}" alt="${titulo}" loading="lazy"></div>
       <div class="card-body">
         <span class="tag" style="color:${getCategoryColor(n.categoria)}">${(n.categoria || '').toUpperCase()}</span>
         ${ubicacion ? `<span class="news-location">${ubicacion}</span>` : ''}
@@ -976,12 +597,6 @@ function compartirNoticia(plataforma, noticiaId) {
   const titulo = utils.capitalize(n.titulo || '');
   const url = window.location.href;
   
-  gtag('event', 'share', {
-    'method': plataforma,
-    'content_type': 'article',
-    'item_id': noticiaId
-  });
-  
   switch(plataforma) {
     case 'facebook':
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
@@ -996,7 +611,7 @@ function compartirNoticia(plataforma, noticiaId) {
 }
 
 function renderizarCarrusel() {
-  const slides = noticias.filter(n => !n.premium).slice(0, 5);
+  const slides = noticias.slice(0, 5);
   if (!slides.length) return;
   
   const inner = document.getElementById('carouselInner');
@@ -1043,7 +658,7 @@ function renderizarCarrusel() {
 }
 
 function renderizarSidebar() {
-  const top = noticias.filter(n => !n.premium).slice(0, 5);
+  const top = noticias.slice(0, 5);
   
   const trendingContainer = document.getElementById('trendingContainer');
   trendingContainer.innerHTML = top.map((n, i) => {
@@ -1075,7 +690,7 @@ function getCategoryColor(cat) {
   const colors = {
     'Sucesos': '#DC2626', 'Deportes': '#10B981', 'Internacionales': '#7C3AED',
     'Tecnología': '#0284C7', 'Nacionales': '#EA580C', 'Cultura': '#9333EA',
-    'Economía': '#D97706', 'Espectáculos': '#DB2777', 'Premium': '#F59E0B'
+    'Economía': '#D97706', 'Espectáculos': '#DB2777'
   };
   return colors[cat] || '#3B82F6';
 }
@@ -1095,13 +710,6 @@ function cambiarCategoria(cat) {
   });
   
   document.getElementById('carouselSection').style.display = cat === 'Todas' ? 'block' : 'none';
-  
-  // Tracking de categoría
-  gtag('event', 'category_change', {
-    'event_category': 'engagement',
-    'event_label': cat
-  });
-  
   renderizarNoticias();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
@@ -1110,19 +718,7 @@ function abrirNoticia(id) {
   const n = noticias.find(x => x.id === id);
   if (!n) return;
   
-  // Tracking
-  gtag('event', 'article_open', {
-    'event_category': 'engagement',
-    'event_label': n.categoria,
-    'value': n.premium ? 1 : 0
-  });
-  
-  // Si es premium y no es usuario premium, mostrar paywall
-  if (n.premium && !esUsuarioPremium) {
-    mostrarPremium();
-    return;
-  }
-  
+  // Generar página individual con diseño editorial
   generarPaginaNoticia(n);
 }
 
@@ -1133,10 +729,12 @@ function generarPaginaNoticia(noticia) {
   const titulo = utils.capitalize(noticia.titulo || '');
   const resumen = noticia.resumen || (noticia.contenido || '').substring(0, 200) + '...';
   
+  // Formatear contenido en párrafos
   let contenido = noticia.contenido || noticia.resumen || '';
   const parrafos = contenido.split('\n').filter(p => p.trim());
-  const contenidoHTML = parrafos.map(p => `<p class="reveal" style="margin-bottom: 16px;">${p}</p>`).join('\n');
+  const contenidoHTML = parrafos.map(p => `<p class="reveal">${p}</p>`).join('\n');
   
+  // Obtener fecha ISO
   let fechaISO = new Date().toISOString();
   let fechaFormateada = utils.formatDate(noticia.fecha);
   try {
@@ -1147,8 +745,29 @@ function generarPaginaNoticia(noticia) {
     }
   } catch(e) {}
   
-  // Mostrar modal en lugar de nueva ventana para mejor control
-  abrirModal(noticia);
+  // Cargar template y reemplazar variables
+  fetch('/noticia-template.html')
+    .then(res => res.text())
+    .then(template => {
+      const html = template
+        .replace(/\{\{TITULO\}\}/g, titulo)
+        .replace(/\{\{RESUMEN\}\}/g, resumen)
+        .replace(/\{\{CATEGORIA\}\}/g, noticia.categoria || 'Noticias')
+        .replace(/\{\{IMAGEN\}\}/g, img)
+        .replace(/\{\{CONTENIDO\}\}/g, contenidoHTML)
+        .replace(/\{\{FECHA\}\}/g, fechaFormateada)
+        .replace(/\{\{FECHA_ISO\}\}/g, fechaISO)
+        .replace(/\{\{TIEMPO_LECTURA\}\}/g, tiempoLectura);
+      
+      // Abrir en nueva ventana
+      const ventana = window.open('', '_blank');
+      ventana.document.write(html);
+      ventana.document.close();
+    })
+    .catch(() => {
+      // Fallback: abrir modal si falla la carga del template
+      abrirModal(noticia);
+    });
 }
 
 function abrirModal(n) {
@@ -1159,30 +778,12 @@ function abrirModal(n) {
   document.getElementById('modalCat').style.color = getCategoryColor(n.categoria);
   document.getElementById('modalTitle').textContent = utils.capitalize(n.titulo || '');
   document.getElementById('modalImg').src = img;
-  
-  // Si es premium y no es usuario, mostrar solo resumen
-  if (n.premium && !esUsuarioPremium) {
-    document.getElementById('modalContent').innerHTML = `<p>${n.resumen || ''}</p><p style="color: #F59E0B; font-weight: 600; margin-top: 20px;"><i class="fas fa-crown"></i> Contenido exclusivo para suscriptores Premium</p>`;
-    document.getElementById('paywall').style.display = 'flex';
-    document.getElementById('modalPremium').style.display = 'inline-flex';
-  } else {
-    const parrafos = (n.contenido || n.resumen || '').split('\n').filter(p => p.trim());
-    document.getElementById('modalContent').innerHTML = parrafos.map(p => `<p style="margin-bottom: 16px;">${p}</p>`).join('');
-    document.getElementById('paywall').style.display = 'none';
-    document.getElementById('modalPremium').style.display = n.premium ? 'inline-flex' : 'none';
-  }
-  
+  document.getElementById('modalContent').textContent = n.contenido || n.resumen || '';
   document.getElementById('modalFecha').innerHTML = '📅 ' + utils.formatDate(n.fecha);
   document.getElementById('modalReadTime').textContent = Math.max(1, Math.ceil(palabras / 200));
   
   document.getElementById('newsModal').classList.add('active');
   document.body.style.overflow = 'hidden';
-  
-  // Tracking tiempo de lectura
-  gtag('event', 'page_view', {
-    'page_title': n.titulo,
-    'page_location': window.location.href + '#noticia-' + n.id
-  });
 }
 
 function cerrarModal() {
@@ -1190,29 +791,9 @@ function cerrarModal() {
   document.body.style.overflow = '';
 }
 
-function mostrarPremium() {
-  document.getElementById('premiumModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  
-  gtag('event', 'premium_modal_open', {
-    'event_category': 'monetization',
-    'event_label': 'premium_cta'
-  });
-}
-
-function cerrarPremiumModal() {
-  document.getElementById('premiumModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-
 function cargarMas() {
   paginaActual++;
   renderizarNoticias();
-  
-  gtag('event', 'load_more', {
-    'event_category': 'engagement',
-    'event_label': 'page_' + paginaActual
-  });
 }
 
 // RADIO
@@ -1225,7 +806,6 @@ function toggleRadio() {
     radioAudio.src = '';
     radioActiva = false;
     document.getElementById('radioIcon').className = 'fas fa-play';
-    gtag('event', 'radio_stop', {'event_category': 'radio'});
   } else {
     const sel = document.getElementById('radioSelect');
     if (!sel.value) return;
@@ -1234,10 +814,6 @@ function toggleRadio() {
     radioAudio.play().then(() => {
       radioActiva = true;
       document.getElementById('radioIcon').className = 'fas fa-pause';
-      gtag('event', 'radio_play', {
-        'event_category': 'radio',
-        'event_label': sel.options[sel.selectedIndex].text
-      });
     }).catch(() => {
       alert('Error al reproducir la radio');
     });
@@ -1257,26 +833,22 @@ function cambiarRadio() {
 // COMPARTIR
 function shareFacebook() {
   window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-  gtag('event', 'share', {'method': 'facebook'});
 }
 
 function shareTwitter() {
   const text = encodeURIComponent(document.getElementById('modalTitle').textContent + ' - Nicaragua Informate');
   window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-  gtag('event', 'share', {'method': 'twitter'});
 }
 
 function shareWhatsApp() {
   const titulo = document.getElementById('modalTitle').textContent;
   const text = encodeURIComponent(`📰 ${titulo}\n\nLee más en: ${window.location.href}`);
   window.open(`https://wa.me/?text=${text}`, '_blank');
-  gtag('event', 'share', {'method': 'whatsapp'});
 }
 
 function copyLink() {
   navigator.clipboard.writeText(window.location.href).then(() => {
     alert('¡Enlace copiado!');
-    gtag('event', 'share', {'method': 'copy_link'});
   });
 }
 
@@ -1287,62 +859,9 @@ function sharePage() {
       text: 'Noticias de Nicaragua al momento',
       url: window.location.href
     });
-    gtag('event', 'share', {'method': 'native'});
   } else {
     shareFacebook();
   }
-}
-
-// NEWSLETTER
-function suscribirNewsletter(e) {
-  e.preventDefault();
-  const email = e.target.querySelector('input[type="email"]').value;
-  
-  // Aquí integrarías con tu servicio de email (Mailchimp, ConvertKit, etc.)
-  alert('¡Gracias por suscribirte! Revisa tu correo para confirmar.');
-  
-  gtag('event', 'newsletter_signup', {
-    'event_category': 'conversion',
-    'event_label': 'sidebar_form'
-  });
-  
-  e.target.reset();
-}
-
-// MOSTRAR AFFILIATE BANNER
-function mostrarAffiliateBanner() {
-  // Mostrar banner de afiliados aleatoriamente (30% de las veces)
-  if (Math.random() < 0.3) {
-    document.getElementById('affiliateBanner').style.display = 'flex';
-    gtag('event', 'affiliate_impression', {
-      'event_category': 'affiliate',
-      'event_label': 'amazon_banner'
-    });
-  }
-}
-
-function mostrarAfiliados() {
-  document.getElementById('affiliateBanner').style.display = 'flex';
-  document.getElementById('affiliateBanner').scrollIntoView({behavior: 'smooth'});
-}
-
-// STICKY CTA
-function initStickyCTA() {
-  setTimeout(() => {
-    document.getElementById('stickyCta').classList.add('visible');
-  }, 10000); // Mostrar después de 10 segundos
-  
-  // Ocultar al hacer scroll hacia abajo
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    const stickyCta = document.getElementById('stickyCta');
-    
-    if (currentScroll > lastScroll && currentScroll > 500) {
-      stickyCta.classList.remove('visible');
-    }
-    lastScroll = currentScroll;
-  });
 }
 
 // UTILIDADES
@@ -1375,10 +894,7 @@ function initEventListeners() {
   });
   
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      cerrarModal();
-      cerrarPremiumModal();
-    }
+    if (e.key === 'Escape') cerrarModal();
   });
   
   const sentinel = document.getElementById('scrollSentinel');

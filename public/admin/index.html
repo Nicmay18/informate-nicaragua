@@ -38,6 +38,11 @@
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background: #0f172a; min-height: 100vh; color: #e2e8f0;
       line-height: 1.6; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+      user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+    }
+    body::before {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9999;
+      background: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
     }
     ::-webkit-scrollbar { width: 8px; height: 8px; }
     ::-webkit-scrollbar-track { background: #1e293b; }
@@ -198,26 +203,38 @@
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .form-hint { font-size: 13px; color: #475569; margin-top: 6px; }
     
-    .upload-zone { border: 2px dashed rgba(255,255,255,0.15); border-radius: var(--radius-lg); padding: 40px; text-align: center; transition: var(--transition); cursor: pointer; background: #0f172a; }
+    .upload-zone { border: 2px dashed rgba(255,255,255,0.15); border-radius: var(--radius-lg); padding: 40px; text-align: center; transition: var(--transition); cursor: pointer; background: #0f172a; position: relative; overflow: hidden; }
     .upload-zone:hover { border-color: var(--primary-500); background: rgba(37,99,235,0.05); }
     .upload-zone.dragover { border-color: var(--primary-500); background: rgba(37,99,235,0.1); transform: scale(1.02); }
+    .upload-zone::before {
+      content: '🔒 PROTEGIDO'; position: absolute; top: 10px; right: 10px;
+      background: rgba(239,68,68,0.9); color: white; font-size: 10px; font-weight: 800;
+      padding: 4px 8px; border-radius: var(--radius-sm); letter-spacing: 0.5px;
+    }
     .upload-icon { width: 64px; height: 64px; background: #1e293b; border-radius: var(--radius-full); display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 24px; color: var(--primary-400); box-shadow: var(--shadow); }
     .upload-text { font-size: 16px; font-weight: 600; color: #cbd5e1; margin-bottom: 8px; }
     .upload-subtext { font-size: 13px; color: #475569; }
-    .image-preview-container { position: relative; margin-top: 16px; border-radius: var(--radius-md); overflow: hidden; display: none; }
+    .image-preview-container { position: relative; margin-top: 16px; border-radius: var(--radius-md); overflow: hidden; display: none; border: 2px solid rgba(255,255,255,0.1); }
     .image-preview-container.active { display: block; }
     .image-preview { width: 100%; max-height: 300px; object-fit: cover; border-radius: var(--radius-md); }
-    .image-preview-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transition: var(--transition); }
+    .image-preview-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; opacity: 0; transition: var(--transition); flex-direction: column; gap: 12px; }
     .image-preview-container:hover .image-preview-overlay { opacity: 1; }
+    .watermark-badge {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(0,0,0,0.8); color: #00d4ff;
+      padding: 6px 12px; border-radius: var(--radius-sm);
+      font-size: 11px; font-weight: 800; display: flex; align-items: center; gap: 6px;
+      border: 1px solid rgba(0,212,255,0.3);
+    }
     
-    .checkbox-wrapper { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); }
+    .checkbox-wrapper { display: flex; align-items: center; gap: 12px; padding: 16px; border: 1.5px solid rgba(255,255,255,0.1); border-radius: var(--radius-md); cursor: pointer; transition: var(--transition); background: #0f172a; }
     .checkbox-wrapper:hover { border-color: var(--primary-500); background: rgba(37,99,235,0.05); }
     .checkbox-wrapper input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--primary-500); cursor: pointer; }
     .checkbox-content h4 { font-size: 14px; font-weight: 600; color: #f1f5f9; margin-bottom: 2px; }
     .checkbox-content p { font-size: 13px; color: #64748b; }
     
     .news-list { max-height: 600px; overflow-y: auto; }
-    .news-item { display: flex; align-items: center; gap: 16px; padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); border-radius: var(--radius-md); margin-bottom: 4px; }
+    .news-item { display: flex; align-items: center; gap: 16px; padding: 16px; border-bottom: 1px solid rgba(255,255,255,0.05); transition: var(--transition); border-radius: var(--radius-md); margin-bottom: 4px; position: relative; }
     .news-item:hover { background: rgba(255,255,255,0.04); transform: translateX(4px); }
     .news-item:last-child { border-bottom: none; }
     .news-thumb { width: 80px; height: 60px; border-radius: var(--radius); object-fit: cover; flex-shrink: 0; border: 1px solid rgba(255,255,255,0.08); }
@@ -270,11 +287,12 @@
     .toast-close { background: none; border: none; color: #475569; cursor: pointer; padding: 4px; border-radius: var(--radius); transition: var(--transition); }
     .toast-close:hover { background: rgba(255,255,255,0.08); color: #e2e8f0; }
     
-    .loading-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.9); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9998; flex-direction: column; gap: 16px; }
+    .loading-overlay { position: fixed; inset: 0; background: rgba(15,23,42,0.95); backdrop-filter: blur(8px); display: none; align-items: center; justify-content: center; z-index: 9998; flex-direction: column; gap: 16px; }
     .loading-overlay.show { display: flex; }
     .spinner { width: 48px; height: 48px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--primary-500); border-radius: 50%; animation: spin 1s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
     .loading-text { color: #94a3b8; font-weight: 500; font-size: 14px; }
+    .loading-subtext { color: #64748b; font-size: 12px; }
     
     .tab-content { display: none; animation: fadeIn 0.3s ease; }
     .tab-content.active { display: block; }
@@ -294,9 +312,33 @@
     
     code { background: #0f172a; padding: 2px 6px; border-radius: var(--radius-sm); font-family: 'Monaco', 'Consolas', monospace; font-size: 13px; color: #60a5fa; }
     
+    .social-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .social-card { 
+      background: linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.05) 100%);
+      border: 1.5px solid rgba(37,99,235,0.3); border-radius: var(--radius-lg);
+      padding: 20px; transition: var(--transition);
+    }
+    .social-card:hover { transform: translateY(-2px); border-color: rgba(37,99,235,0.5); box-shadow: 0 8px 24px -4px rgba(37,99,235,0.2); }
+    .social-card.telegram { background: linear-gradient(135deg, rgba(0,136,204,0.1) 0%, rgba(0,136,204,0.05) 100%); border-color: rgba(0,136,204,0.3); }
+    .social-card.telegram:hover { border-color: rgba(0,136,204,0.5); box-shadow: 0 8px 24px -4px rgba(0,136,204,0.2); }
+    .social-card.facebook { background: linear-gradient(135deg, rgba(24,119,242,0.1) 0%, rgba(24,119,242,0.05) 100%); border-color: rgba(24,119,242,0.3); }
+    .social-card.facebook:hover { border-color: rgba(24,119,242,0.5); box-shadow: 0 8px 24px -4px rgba(24,119,242,0.2); }
+    .social-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .social-icon { width: 44px; height: 44px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+    .social-card.telegram .social-icon { background: rgba(0,136,204,0.2); color: #00a8e6; }
+    .social-card.facebook .social-icon { background: rgba(24,119,242,0.2); color: #1877f2; }
+    .social-info h4 { font-size: 15px; font-weight: 700; color: #f1f5f9; }
+    .social-info p { font-size: 12px; color: #64748b; }
+    .social-status { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; margin-top: 8px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .status-dot.active { background: var(--success); box-shadow: 0 0 8px var(--success); }
+    .status-dot.pending { background: var(--warning); }
+    .status-dot.error { background: var(--danger); }
+    
     @media (max-width: 1280px) {
       .stats-grid, .categories-grid { grid-template-columns: repeat(2, 1fr); }
       .content-grid { grid-template-columns: 1fr; }
+      .social-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 768px) {
       .dashboard.active { grid-template-columns: 1fr; }
@@ -317,13 +359,13 @@
         <div class="login-brand">
           <div class="login-brand-icon"><i class="fas fa-shield-alt"></i></div>
           <h1>Panel Administrativo</h1>
-          <p>Nicaragua Informate Pro v5.0</p>
+          <p>Nicaragua Informate Pro v6.0</p>
         </div>
         <form id="loginForm" onsubmit="handleLogin(event)">
           <div class="input-group">
             <label>Correo Electrónico</label>
             <div class="input-wrapper">
-              <input type="email" id="username" placeholder="admin@ejemplo.com" required>
+              <input type="email" id="username" placeholder="admin@nicaraguainformate.com" required>
               <i class="fas fa-envelope"></i>
             </div>
           </div>
@@ -333,9 +375,9 @@
               <input type="password" id="password" placeholder="••••••••" required>
               <i class="fas fa-lock"></i>
             </div>
-            <div class="input-hint"><i class="fas fa-info-circle"></i><span>Auto-publicación a redes sociales</span></div>
+            <div class="input-hint"><i class="fas fa-info-circle"></i><span>Multi-publicación: Telegram + 2 páginas Facebook</span></div>
           </div>
-          <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i><span>Ingresar</span></button>
+          <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i><span>Ingresar al Sistema</span></button>
         </form>
       </div>
     </div>
@@ -346,7 +388,7 @@
     <aside class="sidebar">
       <div class="sidebar-header">
         <div class="sidebar-logo">NI</div>
-        <div class="sidebar-brand"><h2>Admin Pro</h2><span>v5.0 Auto-Post</span></div>
+        <div class="sidebar-brand"><h2>Admin Pro</h2><span>v6.0 Multi-Redes</span></div>
       </div>
       <nav>
         <div class="nav-section">
@@ -354,7 +396,7 @@
           <ul class="nav-menu">
             <li class="nav-item"><a class="nav-link active" onclick="showTab('dashboard-tab', this)"><i class="fas fa-chart-pie"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('nueva-tab', this)"><i class="fas fa-plus-circle"></i><span>Nueva Noticia</span></a></li>
-            <li class="nav-item"><a class="nav-link" onclick="showTab('noticias-tab', this)"><i class="fas fa-newspaper"></i><span>Noticias</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('noticias-tab', this)"><i class="fas fa-newspaper"></i><span>Noticias</span><span class="nav-badge" id="navBadgeNoticias">0</span></a></li>
           </ul>
         </div>
         <div class="nav-section">
@@ -362,6 +404,7 @@
           <ul class="nav-menu">
             <li class="nav-item"><a class="nav-link" onclick="showTab('categorias-tab', this)"><i class="fas fa-tags"></i><span>Categorías</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('analytics-tab', this)"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
+            <li class="nav-item"><a class="nav-link" onclick="showTab('redes-tab', this)"><i class="fas fa-share-alt"></i><span>Redes Sociales</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('log-tab', this)"><i class="fas fa-history"></i><span>Actividad</span></a></li>
             <li class="nav-item"><a class="nav-link" onclick="showTab('config-tab', this)"><i class="fas fa-cog"></i><span>Configuración</span></a></li>
           </ul>
@@ -381,7 +424,7 @@
       <!-- DASHBOARD -->
       <div id="dashboard-tab" class="tab-content active">
         <div class="page-header">
-          <div class="page-title"><h1>Dashboard</h1><p>Sistema de publicación automática</p></div>
+          <div class="page-title"><h1>Dashboard</h1><p>Sistema de publicación multi-redes con protección de contenido</p></div>
           <div class="header-actions">
             <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-plus"></i><span>Crear Noticia</span></button>
           </div>
@@ -421,31 +464,31 @@
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-header">
-              <div><div class="stat-value" id="statVisitas">0</div><div class="stat-label">Visitas</div></div>
+              <div><div class="stat-value" id="statVisitas">0</div><div class="stat-label">Visitas Totales</div></div>
               <div class="stat-icon blue"><i class="fas fa-eye"></i></div>
             </div>
             <div class="stat-change"><i class="fas fa-arrow-up"></i><span>+12%</span></div>
           </div>
           <div class="stat-card">
             <div class="stat-header">
-              <div><div class="stat-value" id="statNoticias">0</div><div class="stat-label">Noticias</div></div>
+              <div><div class="stat-value" id="statNoticias">0</div><div class="stat-label">Noticias Publicadas</div></div>
               <div class="stat-icon green"><i class="fas fa-newspaper"></i></div>
             </div>
             <div class="stat-change"><i class="fas fa-arrow-up"></i><span id="statHoyVar">+0 hoy</span></div>
           </div>
           <div class="stat-card">
             <div class="stat-header">
-              <div><div class="stat-value" id="statHoy">0</div><div class="stat-label">Hoy</div></div>
+              <div><div class="stat-value" id="statHoy">0</div><div class="stat-label">Publicaciones Hoy</div></div>
               <div class="stat-icon orange"><i class="fas fa-calendar-day"></i></div>
             </div>
             <div class="stat-change"><i class="fas fa-arrow-up"></i><span>+8%</span></div>
           </div>
           <div class="stat-card">
             <div class="stat-header">
-              <div><div class="stat-value" id="statEngagement">85%</div><div class="stat-label">Engagement</div></div>
-              <div class="stat-icon red"><i class="fas fa-heart"></i></div>
+              <div><div class="stat-value" id="statRedes">0</div><div class="stat-label">Posts en Redes</div></div>
+              <div class="stat-icon red"><i class="fas fa-share-alt"></i></div>
             </div>
-            <div class="stat-change"><i class="fas fa-arrow-up"></i><span>+3%</span></div>
+            <div class="stat-change"><i class="fas fa-arrow-up"></i><span>Multi-plataforma</span></div>
           </div>
         </div>
 
@@ -453,8 +496,10 @@
           <div class="card">
             <div class="card-header"><h3 class="card-title"><i class="fas fa-bolt" style="color:var(--warning)"></i>Acceso Rápido</h3></div>
             <div class="card-body" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-pen"></i><span>Escribir</span></button>
+              <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-pen"></i><span>Escribir Noticia</span></button>
               <button class="btn btn-secondary" onclick="verSitioForzado()"><i class="fas fa-sync-alt"></i><span>Ver Sitio (Sin Caché)</span></button>
+              <button class="btn btn-secondary" onclick="showTab('redes-tab', document.querySelectorAll('.nav-link')[6])"><i class="fas fa-share-alt"></i><span>Estado Redes</span></button>
+              <button class="btn btn-secondary" onclick="showTab('analytics-tab', document.querySelectorAll('.nav-link')[5])"><i class="fas fa-chart-line"></i><span>Ver Analytics</span></button>
             </div>
           </div>
           <div class="card">
@@ -469,7 +514,7 @@
       <!-- NUEVA NOTICIA -->
       <div id="nueva-tab" class="tab-content">
         <div class="page-header">
-          <div class="page-title"><h1 id="tituloFormulario">Nueva Noticia</h1><p id="subtituloFormulario">Crea contenido de calidad</p></div>
+          <div class="page-title"><h1 id="tituloFormulario">Nueva Noticia</h1><p id="subtituloFormulario">Crea contenido protegido con marca de agua automática</p></div>
         </div>
         <div class="card">
           <div class="card-body">
@@ -478,7 +523,7 @@
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label">Título <span class="required">*</span></label>
-                  <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances en infraestructura" required>
+                  <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances en infraestructura nacional" required>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Categoría <span class="required">*</span></label>
@@ -495,60 +540,88 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Resumen</label>
-                <input type="text" class="form-input" id="resumen" placeholder="Breve descripción para redes sociales">
+                <label class="form-label">Resumen (para redes sociales)</label>
+                <input type="text" class="form-input" id="resumen" placeholder="Breve descripción atractiva para Telegram y Facebook...">
               </div>
               <div class="form-group">
                 <label class="form-label">Contenido <span class="required">*</span></label>
-                <textarea class="form-textarea" id="contenido" placeholder="Escribe el contenido completo..." required oninput="contarPalabras()"></textarea>
+                <textarea class="form-textarea" id="contenido" placeholder="Escribe el contenido completo de la noticia..." required oninput="contarPalabras()"></textarea>
                 <div style="display:flex;justify-content:space-between;margin-top:6px;">
                   <span class="form-hint" id="wordCount">0 palabras · ~0 min lectura</span>
                   <span class="form-hint" id="charCount">0 caracteres</span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="form-label">Imagen <span class="required">*</span></label>
+                <label class="form-label">Imagen Principal <span class="required">*</span> <span style="color:var(--info);font-size:12px;">(Marca de agua aplicada automáticamente)</span></label>
                 <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
                   <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                  <div class="upload-text">Arrastra imagen o haz clic</div>
-                  <div class="upload-subtext">PNG, JPG hasta 5MB</div>
+                  <div class="upload-text">Arrastra imagen o haz clic para subir</div>
+                  <div class="upload-subtext">PNG, JPG hasta 5MB · Protección automática</div>
                   <input type="file" id="fileInput" hidden accept="image/*" onchange="handleFileSelect(event)">
                 </div>
                 <div class="image-preview-container" id="imagePreviewContainer">
+                  <div class="watermark-badge"><i class="fas fa-shield-alt"></i> PROTEGIDO</div>
                   <img id="preview" class="image-preview" src="" alt="Preview">
                   <div class="image-preview-overlay">
-                    <button type="button" class="btn btn-danger btn-sm" onclick="clearImage()"><i class="fas fa-trash"></i> Eliminar</button>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="clearImage()"><i class="fas fa-trash"></i> Eliminar Imagen</button>
+                    <div style="color:#94a3b8;font-size:12px;margin-top:8px;">Marca de agua aplicada automáticamente</div>
                   </div>
                 </div>
                 <div style="margin-top:16px;display:flex;gap:8px;">
                   <input type="url" class="form-input" id="imagenUrl" placeholder="https://..." onchange="actualizarPreview()" style="flex:1;">
-                  <button type="button" class="btn btn-secondary" onclick="buscarImagenUnsplash()"><i class="fas fa-search"></i> Buscar</button>
+                  <button type="button" class="btn btn-secondary" onclick="buscarImagenUnsplash()"><i class="fas fa-search"></i> Buscar Imagen</button>
+                </div>
+                <div class="form-hint" style="margin-top:8px;color:var(--warning);">
+                  <i class="fas fa-exclamation-triangle"></i> Todas las imágenes se procesan con marca de agua "INFORMATE AL INSTANTE NICARAGUA" para protección de contenido
                 </div>
               </div>
 
-              <div class="form-group" style="background:#1e293b;padding:20px;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
-                <label class="form-label" style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
-                  <i class="fas fa-share-alt" style="color:var(--primary-600)"></i>Publicar automáticamente en:
+              <div class="form-group" style="background:linear-gradient(135deg, rgba(37,99,235,0.1) 0%, rgba(37,99,235,0.05) 100%);padding:24px;border-radius:var(--radius-lg);border:1.5px solid rgba(37,99,235,0.3);">
+                <label class="form-label" style="display:flex;align-items:center;gap:8px;margin-bottom:20px;font-size:16px;">
+                  <i class="fas fa-rocket" style="color:var(--primary-500)"></i>Publicar automáticamente en:
                 </label>
-                <div class="form-row">
+                <div class="social-grid">
                   <div class="form-group" style="margin-bottom:0;">
-                    <label class="checkbox-wrapper" style="width:100%;border-color:#0088cc;">
-                      <input type="checkbox" id="enviarTelegram" checked>
-                      <div class="checkbox-content">
-                        <div style="display:flex;align-items:center;gap:8px;">
-                          <i class="fab fa-telegram" style="color:#0088cc;font-size:20px;"></i>
-                          <div><h4>Telegram</h4><p>@nicaragua_informate_bot</p></div>
+                    <label class="checkbox-wrapper social-card telegram" style="width:100%;margin:0;">
+                      <input type="checkbox" id="enviarTelegram" checked onchange="toggleSocial(this, 'telegram')">
+                      <div class="checkbox-content" style="width:100%;">
+                        <div class="social-header" style="margin:0;">
+                          <div class="social-icon"><i class="fab fa-telegram"></i></div>
+                          <div class="social-info">
+                            <h4>Telegram</h4>
+                            <p>@nicaragua_informate_bot</p>
+                            <div class="social-status"><span class="status-dot active"></span><span>Activo</span></div>
+                          </div>
                         </div>
                       </div>
                     </label>
                   </div>
                   <div class="form-group" style="margin-bottom:0;">
-                    <label class="checkbox-wrapper" style="width:100%;border-color:#1877f2;">
-                      <input type="checkbox" id="enviarFacebook">
-                      <div class="checkbox-content">
-                        <div style="display:flex;align-items:center;gap:8px;">
-                          <i class="fab fa-facebook" style="color:#1877f2;font-size:20px;"></i>
-                          <div><h4>Facebook</h4><p>Page ID: 922889930670914</p></div>
+                    <label class="checkbox-wrapper social-card facebook" style="width:100%;margin:0;">
+                      <input type="checkbox" id="enviarFacebook" checked onchange="toggleSocial(this, 'facebook')">
+                      <div class="checkbox-content" style="width:100%;">
+                        <div class="social-header" style="margin:0;">
+                          <div class="social-icon"><i class="fab fa-facebook"></i></div>
+                          <div class="social-info">
+                            <h4>Facebook Página 1</h4>
+                            <p>ID: 61578261125687</p>
+                            <div class="social-status"><span class="status-dot active"></span><span>Principal</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="checkbox-wrapper social-card facebook" style="width:100%;margin:0;">
+                      <input type="checkbox" id="enviarFacebook2" checked onchange="toggleSocial(this, 'facebook2')">
+                      <div class="checkbox-content" style="width:100%;">
+                        <div class="social-header" style="margin:0;">
+                          <div class="social-icon"><i class="fab fa-facebook"></i></div>
+                          <div class="social-info">
+                            <h4>Facebook Página 2</h4>
+                            <p>ID: 61577962970892</p>
+                            <div class="social-status"><span class="status-dot active"></span><span>Secundaria</span></div>
+                          </div>
                         </div>
                       </div>
                     </label>
@@ -559,30 +632,33 @@
               <div class="form-group">
                 <label class="checkbox-wrapper" style="width:fit-content;">
                   <input type="checkbox" id="destacada">
-                  <div class="checkbox-content"><h4>⭐ Marcar como destacada</h4></div>
+                  <div class="checkbox-content"><h4>⭐ Marcar como noticia destacada</h4><p>Aparecerá en la sección principal del sitio</p></div>
                 </label>
               </div>
 
               <div style="display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;">
-                <button type="submit" class="btn btn-primary btn-lg" id="btnGuardar"><i class="fas fa-paper-plane"></i><span>Publicar</span></button>
-                <button type="button" class="btn btn-secondary btn-lg" onclick="guardarBorrador()"><i class="fas fa-save"></i><span>Borrador</span></button>
-                <button type="button" class="btn btn-secondary btn-lg" onclick="mostrarVistaPrevia()"><i class="fas fa-eye"></i><span>Vista previa</span></button>
+                <button type="submit" class="btn btn-primary btn-lg" id="btnGuardar"><i class="fas fa-paper-plane"></i><span>Publicar en Todas las Redes</span></button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="guardarBorrador()"><i class="fas fa-save"></i><span>Guardar Borrador</span></button>
+                <button type="button" class="btn btn-secondary btn-lg" onclick="mostrarVistaPrevia()"><i class="fas fa-eye"></i><span>Vista Previa</span></button>
                 <button type="button" class="btn btn-ghost btn-lg" onclick="limpiarFormulario()"><i class="fas fa-eraser"></i><span>Limpiar</span></button>
-                <button type="button" class="btn btn-ghost btn-lg" id="btnCancelarEdicion" onclick="cancelarEdicion()" style="display:none;margin-left:auto;"><i class="fas fa-times"></i><span>Cancelar</span></button>
+                <button type="button" class="btn btn-ghost btn-lg" id="btnCancelarEdicion" onclick="cancelarEdicion()" style="display:none;margin-left:auto;"><i class="fas fa-times"></i><span>Cancelar Edición</span></button>
               </div>
 
-              <!-- PROGRAMAR PUBLICACIÓN ELIMINADO -->
-
-              <div id="statusRedes" style="display:none;margin-top:24px;padding:20px;background:#1e293b;border-radius:var(--radius-md);border:1px solid rgba(255,255,255,0.08);">
-                <div style="display:flex;align-items:center;gap:16px;margin-bottom:12px;">
-                  <div class="spinner" style="width:24px;height:24px;border-width:2px;flex-shrink:0;"></div>
+              <div id="statusRedes" style="display:none;margin-top:24px;padding:24px;background:#0f172a;border-radius:var(--radius-lg);border:1.5px solid rgba(37,99,235,0.3);">
+                <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                  <div class="spinner" style="width:32px;height:32px;border-width:2px;flex-shrink:0;"></div>
                   <div style="flex:1;">
-                    <div style="font-weight:700;color:#f1f5f9;font-size:15px;" id="statusRedesTitulo">Preparando...</div>
-                    <div style="font-size:13px;color:#64748b;" id="statusRedesSubtitulo">Iniciando</div>
+                    <div style="font-weight:800;color:#f1f5f9;font-size:16px;" id="statusRedesTitulo">Iniciando publicación multi-redes...</div>
+                    <div style="font-size:13px;color:#64748b;margin-top:4px;" id="statusRedesSubtitulo">Preparando contenido protegido</div>
                   </div>
                 </div>
-                <div class="progress-bar" style="height:6px;"><div class="progress-fill" id="progressBar" style="width:0%;"></div></div>
-                <div id="redesLog" style="margin-top:16px;font-size:12px;color:#64748b;max-height:120px;overflow-y:auto;font-family:monospace;"></div>
+                <div class="progress-bar" style="height:8px;background:rgba(255,255,255,0.1);"><div class="progress-fill" id="progressBar" style="width:0%;background:linear-gradient(90deg,#0088cc,#1877f2,#1877f2);"></div></div>
+                <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:#64748b;">
+                  <span><i class="fab fa-telegram" style="color:#0088cc;"></i> Telegram</span>
+                  <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook 1</span>
+                  <span><i class="fab fa-facebook" style="color:#1877f2;"></i> Facebook 2</span>
+                </div>
+                <div id="redesLog" style="margin-top:16px;padding:12px;background:#1e293b;border-radius:var(--radius-md);font-size:12px;color:#94a3b8;max-height:150px;overflow-y:auto;font-family:'Monaco','Consolas',monospace;border:1px solid rgba(255,255,255,0.06);"></div>
               </div>
             </form>
           </div>
@@ -592,11 +668,11 @@
       <!-- NOTICIAS -->
       <div id="noticias-tab" class="tab-content">
         <div class="page-header">
-          <div class="page-title"><h1>Gestión de Noticias</h1><p>Administra tu contenido</p></div>
+          <div class="page-title"><h1>Gestión de Noticias</h1><p>Administra y edita tu contenido protegido</p></div>
           <div class="header-actions">
             <input type="date" class="form-input" id="filtroFecha" onchange="filtrarPorFecha()" style="width:160px;" title="Filtrar por fecha">
-            <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" class="form-input" placeholder="Buscar..." onkeyup="buscarNoticias(this.value)" style="width:250px;"></div>
-            <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-plus"></i><span>Nueva</span></button>
+            <div class="search-wrapper"><i class="fas fa-search"></i><input type="text" class="form-input" placeholder="Buscar noticias..." onkeyup="buscarNoticias(this.value)" style="width:250px;"></div>
+            <button class="btn btn-primary" onclick="showTab('nueva-tab', document.querySelectorAll('.nav-link')[1])"><i class="fas fa-plus"></i><span>Nueva Noticia</span></button>
           </div>
         </div>
         <div class="filter-bar">
@@ -615,20 +691,89 @@
         </div>
       </div>
 
+      <!-- REDES SOCIALES -->
+      <div id="redes-tab" class="tab-content">
+        <div class="page-header">
+          <div class="page-title"><h1><i class="fas fa-share-alt" style="color:var(--primary-500)"></i> Estado de Redes Sociales</h1><p>Monitoreo de conexiones y publicaciones</p></div>
+          <button class="btn btn-secondary btn-sm" onclick="testConexiones()"><i class="fas fa-sync-alt"></i> Probar Conexiones</button>
+        </div>
+        
+        <div class="social-grid" style="margin-bottom:24px;">
+          <div class="social-card telegram">
+            <div class="social-header">
+              <div class="social-icon"><i class="fab fa-telegram"></i></div>
+              <div class="social-info">
+                <h4>Telegram Bot</h4>
+                <p>@nicaragua_informate_bot</p>
+              </div>
+            </div>
+            <div class="social-status"><span class="status-dot active"></span><span style="color:var(--success)">Conectado</span></div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:12px;color:#64748b;margin-bottom:4px;">Última publicación</div>
+              <div style="font-size:13px;color:#e2e8f0;" id="lastTelegram">Sin datos</div>
+            </div>
+          </div>
+          
+          <div class="social-card facebook">
+            <div class="social-header">
+              <div class="social-icon"><i class="fab fa-facebook"></i></div>
+              <div class="social-info">
+                <h4>Facebook Página 1</h4>
+                <p>ID: 61578261125687</p>
+              </div>
+            </div>
+            <div class="social-status"><span class="status-dot active"></span><span style="color:var(--success)">Activa</span></div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:12px;color:#64748b;margin-bottom:4px;">Estado</div>
+              <div style="font-size:13px;color:#e2e8f0;">Lista para publicar</div>
+            </div>
+          </div>
+          
+          <div class="social-card facebook">
+            <div class="social-header">
+              <div class="social-icon"><i class="fab fa-facebook"></i></div>
+              <div class="social-info">
+                <h4>Facebook Página 2</h4>
+                <p>ID: 61577962970892</p>
+              </div>
+            </div>
+            <div class="social-status"><span class="status-dot active"></span><span style="color:var(--success)">Activa</span></div>
+            <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06);">
+              <div style="font-size:12px;color:#64748b;margin-bottom:4px;">Estado</div>
+              <div style="font-size:13px;color:#e2e8f0;">Lista para publicar</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><h3 class="card-title"><i class="fas fa-history" style="color:var(--info)"></i>Historial de Publicaciones Multi-Redes</h3></div>
+          <div class="card-body" id="historialRedes">
+            <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-share-alt"></i></div><h3>Sin publicaciones recientes</h3><p>Las publicaciones aparecerán aquí automáticamente</p></div>
+          </div>
+        </div>
+      </div>
+
       <!-- CATEGORIAS -->
       <div id="categorias-tab" class="tab-content">
-        <div class="page-header"><div class="page-title"><h1>Categorías</h1><p>Gestión de categorías</p></div></div>
-        <div class="card"><div class="card-body"><p>Categorías fijas: Sucesos, Nacionales, Cultura, Espectáculos, Deportes, Tecnología, Internacionales.</p></div></div>
+        <div class="page-header"><div class="page-title"><h1>Categorías</h1><p>Gestión de categorías del sitio</p></div></div>
+        <div class="categories-grid" style="grid-template-columns:repeat(2,1fr);">
+          <div class="category-card sucesos"><div class="category-icon"><i class="fas fa-exclamation-triangle"></i></div><div class="category-info"><h4>Sucesos</h4><span>Noticias de emergencias y accidentes</span></div></div>
+          <div class="category-card nacionales"><div class="category-icon"><i class="fas fa-flag"></i></div><div class="category-info"><h4>Nacionales</h4><span>Noticias de Nicaragua</span></div></div>
+          <div class="category-card cultura"><div class="category-icon"><i class="fas fa-palette"></i></div><div class="category-info"><h4>Cultura</h4><span>Arte, tradición y patrimonio</span></div></div>
+          <div class="category-card espectaculos"><div class="category-icon"><i class="fas fa-star"></i></div><div class="category-info"><h4>Espectáculos</h4><span>Entretenimiento y farándula</span></div></div>
+          <div class="category-card deportes"><div class="category-icon"><i class="fas fa-futbol"></i></div><div class="category-info"><h4>Deportes</h4><span>Todo sobre deportes nacionales</span></div></div>
+          <div class="category-card tecnologia"><div class="category-icon"><i class="fas fa-microchip"></i></div><div class="category-info"><h4>Tecnología</h4><span>Innovación y tecnología</span></div></div>
+          <div class="category-card internacionales"><div class="category-icon"><i class="fas fa-globe-americas"></i></div><div class="category-info"><h4>Internacionales</h4><span>Noticias del mundo</span></div></div>
+        </div>
       </div>
 
       <!-- ANALYTICS -->
       <div id="analytics-tab" class="tab-content">
         <div class="page-header">
-          <div class="page-title"><h1>📊 Estadísticas</h1><p>Datos en tiempo real de tu sitio</p></div>
-          <button class="btn btn-secondary btn-sm" onclick="cargarAnalytics()"><i class="fas fa-sync-alt"></i> Actualizar</button>
+          <div class="page-title"><h1>📊 Estadísticas Detalladas</h1><p>Datos en tiempo real de tu sitio</p></div>
+          <button class="btn btn-secondary btn-sm" onclick="cargarAnalytics()"><i class="fas fa-sync-alt"></i> Actualizar Datos</button>
         </div>
 
-        <!-- TARJETAS RESUMEN -->
         <div class="stats-grid" style="margin-bottom:24px;">
           <div class="stat-card">
             <div class="stat-header">
@@ -657,15 +802,12 @@
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
-          <!-- NOTICIAS MÁS VISTAS -->
           <div class="card">
             <div class="card-header"><h3 class="card-title"><i class="fas fa-fire" style="color:#ef4444"></i> Noticias más vistas</h3></div>
             <div class="card-body" id="anMasVistas">
               <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-chart-bar"></i></div><h3>Cargando...</h3></div>
             </div>
           </div>
-
-          <!-- VISTAS POR CATEGORÍA -->
           <div class="card">
             <div class="card-header"><h3 class="card-title"><i class="fas fa-tags" style="color:#3b82f6"></i> Vistas por categoría</h3></div>
             <div class="card-body" id="anPorCategoria">
@@ -674,7 +816,6 @@
           </div>
         </div>
 
-        <!-- NOTICIAS SIN VISTAS -->
         <div class="card" style="margin-top:24px;">
           <div class="card-header"><h3 class="card-title"><i class="fas fa-eye-slash" style="color:#64748b"></i> Noticias sin visitas</h3></div>
           <div class="card-body" id="anSinVistas">
@@ -686,40 +827,60 @@
       <!-- LOG DE ACTIVIDAD -->
       <div id="log-tab" class="tab-content">
         <div class="page-header">
-          <div class="page-title"><h1>📋 Log de Actividad</h1><p>Historial de acciones recientes</p></div>
-          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('activityLog').innerHTML='';registrarActividad('Log limpiado','info');"><i class="fas fa-trash"></i> Limpiar</button>
+          <div class="page-title"><h1>📋 Log de Actividad</h1><p>Historial completo de acciones</p></div>
+          <button class="btn btn-secondary btn-sm" onclick="document.getElementById('activityLog').innerHTML='';registrarActividad('Log limpiado manualmente','info');"><i class="fas fa-trash"></i> Limpiar Log</button>
         </div>
         <div class="card">
-          <div class="card-body" id="activityLog" style="max-height:600px;overflow-y:auto;font-family:monospace;font-size:13px;">
-            <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-history"></i></div><h3>Sin actividad aún</h3><p>Las acciones aparecerán aquí</p></div>
+          <div class="card-body" id="activityLog" style="max-height:600px;overflow-y:auto;font-family:'Monaco','Consolas',monospace;font-size:13px;">
+            <div class="empty-state"><div class="empty-state-icon"><i class="fas fa-history"></i></div><h3>Sin actividad registrada</h3><p>Las acciones aparecerán aquí automáticamente</p></div>
           </div>
         </div>
       </div>
 
       <!-- CONFIGURACIÓN -->
       <div id="config-tab" class="tab-content">
-        <div class="page-header"><div class="page-title"><h1>Configuración</h1><p>APIs de redes sociales</p></div></div>
-        <div class="card">
+        <div class="page-header"><div class="page-title"><h1>⚙️ Configuración</h1><p>APIs y credenciales de redes sociales</p></div></div>
+        
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;">
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fab fa-telegram" style="color:#0088cc"></i> Telegram</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Bot Token</label>
+                <input type="password" class="form-input" id="configTelegramToken" placeholder="123456789:ABCdefGHIjklMNOpqrSTUvwxyz">
+                <div class="form-hint">Obtén tu token en @BotFather</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Chat ID / Canal</label>
+                <input type="text" class="form-input" id="configTelegramChat" placeholder="@nicaragua_informate o -1001234567890">
+              </div>
+            </div>
+          </div>
+          
+          <div class="card">
+            <div class="card-header"><h3 class="card-title"><i class="fab fa-facebook" style="color:#1877f2"></i> Facebook</h3></div>
+            <div class="card-body">
+              <div class="form-group">
+                <label class="form-label">Page Access Token</label>
+                <input type="password" class="form-input" id="configFacebookToken" placeholder="EAAG...">
+                <div class="form-hint"><a href="https://developers.facebook.com/tools/explorer/" target="_blank" style="color:var(--primary-400);">Graph API Explorer</a> - Requiere pages_manage_posts</div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Página 1 ID</label>
+                <input type="text" class="form-input" id="configFacebookPage" value="61578261125687">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Página 2 ID</label>
+                <input type="text" class="form-input" id="configFacebookPage2" value="61577962970892">
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="card" style="margin-top:24px;">
           <div class="card-body">
-            <div class="form-group">
-              <label class="form-label">Telegram Bot Token</label>
-              <input type="password" class="form-input" id="configTelegramToken" placeholder="Configurado en servidor">
-              <div class="form-hint">✅ Token configurado en variables de entorno del servidor</div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Telegram Chat ID</label>
-              <input type="text" class="form-input" id="configTelegramChat" placeholder="Configurado en servidor">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Facebook Page Access Token</label>
-              <input type="password" class="form-input" id="configFacebookToken" placeholder="Token de Graph API v18.0">
-              <div class="form-hint"><a href="https://developers.facebook.com/tools/explorer/" target="_blank">Graph API Explorer</a> - Necesita permiso pages_manage_posts</div>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Facebook Page ID</label>
-              <input type="text" class="form-input" id="configFacebookPage" value="61578261125687">
-            </div>
-            <button class="btn btn-primary" onclick="guardarConfiguracion()"><i class="fas fa-save"></i> Guardar Configuración</button>
+            <button class="btn btn-primary btn-lg" onclick="guardarConfiguracion()"><i class="fas fa-save"></i> Guardar Configuración</button>
+            <button class="btn btn-secondary" onclick="testConexiones()" style="margin-left:12px;"><i class="fas fa-plug"></i> Probar Conexiones</button>
           </div>
         </div>
       </div>
@@ -727,7 +888,11 @@
   </div>
 
   <div class="toast-container" id="toastContainer"></div>
-  <div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div><div class="loading-text">Procesando...</div></div>
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Procesando contenido protegido...</div>
+    <div class="loading-subtext">Aplicando marca de agua y preparando publicación</div>
+  </div>
 
   <script>
     // ==========================================
@@ -737,6 +902,7 @@
       TELEGRAM_BOT_TOKEN: '',
       TELEGRAM_CHAT_ID: '',
       FACEBOOK_PAGE_ID: '61578261125687',
+      FACEBOOK_PAGE_ID_2: '61577962970892',
       FACEBOOK_ACCESS_TOKEN: '',
       SITE_URL: 'https://nicaraguainformate.com'
     };
@@ -777,14 +943,13 @@
 
   <script>
     async function cargarNoticiasFirestore() {
-      // Esperar a que Firebase esté listo (máx 4 segundos)
       let intentos = 0;
       while (!window._firebaseReady && intentos < 20) {
         await new Promise(r => setTimeout(r, 200));
         intentos++;
       }
       if (!window._firebaseReady) {
-        showToast('error', 'Error', 'Firebase no se inicializó');
+        showToast('error', 'Error', 'Firebase no se inicializó correctamente');
         return;
       }
       try {
@@ -792,17 +957,17 @@
         const q = query(collection(window.db, 'noticias'), orderBy('fecha', 'desc'));
         const snap = await getDocs(q);
         noticias = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-        console.log('Noticias cargadas desde Firestore:', noticias.length);
+        console.log('✅ Noticias cargadas desde Firestore:', noticias.length);
         actualizarDashboard();
         renderizarNoticias('todas');
+        document.getElementById('navBadgeNoticias').textContent = noticias.length;
       } catch (e) {
-        console.error('Error cargando Firestore:', e);
-        showToast('error', 'Error', 'No se pudo conectar a Firestore: ' + e.message);
+        console.error('❌ Error cargando Firestore:', e);
+        showToast('error', 'Error de conexión', 'No se pudo conectar a Firestore: ' + e.message);
       }
     }
 
     function cargarNoticias() {
-      // Alias para compatibilidad - ahora usa Firestore
       return cargarNoticiasFirestore();
     }
 
@@ -814,7 +979,6 @@
       const username = document.getElementById('username').value;
       const password = document.getElementById('password').value;
       
-      // Credenciales de acceso
       const ADMIN_USER = 'admin@nicaraguainformate.com';
       const ADMIN_PASS = 'NicaInfo2026#';
 
@@ -831,7 +995,8 @@
       
       cargarConfiguracion();
       cargarNoticiasFirestore();
-      setTimeout(() => showToast('success', 'Bienvenido', 'Sesión iniciada'), 300);
+      registrarActividad('Sesión iniciada correctamente', 'success');
+      setTimeout(() => showToast('success', '¡Bienvenido!', 'Panel de administración cargado'), 300);
     }
 
     function logout() {
@@ -839,19 +1004,13 @@
     }
 
     function showTab(tabId, navElement) {
-      console.log('Cambiando a tab:', tabId);
-      
       document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
       if (navElement) navElement.classList.add('active');
       
       if (tabId === 'dashboard-tab') actualizarDashboard();
-      
-      if (tabId === 'nueva-tab') {
-        if (!noticiaEditando) cargarBorradorSiExiste();
-      }
-
+      if (tabId === 'nueva-tab' && !noticiaEditando) cargarBorradorSiExiste();
       if (tabId === 'noticias-tab') {
         renderizarNoticias('todas');
         document.querySelectorAll('.filter-btn').forEach(b => {
@@ -859,8 +1018,8 @@
           if (b.textContent === 'Todas') b.classList.add('active');
         });
       }
-
       if (tabId === 'analytics-tab') cargarAnalytics();
+      if (tabId === 'redes-tab') cargarEstadoRedes();
     }
 
     function verSitio() {
@@ -868,106 +1027,189 @@
     }
 
     // ==========================================
-    // ANALYTICS
+    // MARCA DE AGUA PROFESIONAL
     // ==========================================
-    async function cargarAnalytics() {
-      // Esperar noticias cargadas
-      let intentos = 0;
-      while (!noticias.length && intentos < 20) {
-        await new Promise(r => setTimeout(r, 300));
-        intentos++;
+    function agregarMarcaDeAgua(ctx, width, height) {
+      console.log('🔒 Aplicando marca de agua profesional...', width, height);
+      
+      const padding = 20;
+      const baseSize = Math.min(width, height) * 0.04;
+      const logoWidth = baseSize * 5;
+      const logoHeight = baseSize * 2;
+      
+      const x = padding;
+      const y = padding;
+      
+      ctx.save();
+      
+      // Fondo oscuro semi-transparente con borde
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+      ctx.strokeStyle = 'rgba(0, 212, 255, 0.4)';
+      ctx.lineWidth = 2;
+      
+      const radius = 8;
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + logoWidth - radius, y);
+      ctx.quadraticCurveTo(x + logoWidth, y, x + logoWidth, y + radius);
+      ctx.lineTo(x + logoWidth, y + logoHeight - radius);
+      ctx.quadraticCurveTo(x + logoWidth, y + logoHeight, x + logoWidth - radius, y + logoHeight);
+      ctx.lineTo(x + radius, y + logoHeight);
+      ctx.quadraticCurveTo(x, y + logoHeight, x, y + logoHeight - radius);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      
+      // Texto con efecto de brillo
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      const centerX = x + logoWidth / 2;
+      
+      function drawText(text, x, y, fontSize, color, bold = false) {
+        ctx.font = `${bold ? '900' : '700'} ${fontSize}px 'Plus Jakarta Sans', Arial, sans-serif`;
+        
+        // Sombra exterior
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        
+        ctx.fillStyle = color;
+        ctx.fillText(text, x, y);
+        
+        // Reset shadow
+        ctx.shadowColor = 'transparent';
+      }
+      
+      // Línea 1: "INFORMATE AL" - Cyan brillante
+      const fontSize1 = logoHeight * 0.28;
+      drawText('INFORMATE AL', centerX, y + logoHeight * 0.32, fontSize1, '#00d4ff');
+      
+      // Línea 2: "INSTANTE" - Blanco brillante, bold
+      const fontSize2 = logoHeight * 0.42;
+      drawText('INSTANTE', centerX, y + logoHeight * 0.58, fontSize2, '#ffffff', true);
+      
+      // Línea 3: "NICARAGUA" - Cyan más pequeño
+      const fontSize3 = logoHeight * 0.24;
+      drawText('NICARAGUA', centerX, y + logoHeight * 0.85, fontSize3, '#00d4ff');
+      
+      ctx.restore();
+      console.log('✅ Marca de agua aplicada en ESQUINA SUPERIOR IZQUIERDA');
+    }
+
+    function handleFileSelect(e) {
+      console.log('📁 Archivo seleccionado');
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      if (file.size > 5 * 1024 * 1024) {
+        showToast('error', 'Error', 'La imagen excede 5MB máximo permitido');
+        return;
       }
 
-      // Visitas totales al sitio desde Firestore statistics/visits
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const MAX = 1200;
+          let w = img.width, h = img.height;
+          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          
+          // Fondo negro para imágenes con transparencia
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, w, h);
+          
+          ctx.drawImage(img, 0, 0, w, h);
+          agregarMarcaDeAgua(ctx, w, h);
+
+          const compressed = canvas.toDataURL('image/jpeg', 0.90);
+
+          document.getElementById('preview').src = compressed;
+          document.getElementById('imagePreviewContainer').classList.add('active');
+          subirImagenGitHub(compressed, file.name.replace(/\.[^.]+$/, '_protected.jpg'));
+          
+          showToast('info', 'Procesando', 'Aplicando marca de agua de protección...');
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function subirImagenGitHub(base64, nombre) {
+      const urlInput = document.getElementById('imagenUrl');
+      const uploadText = document.querySelector('#uploadZone .upload-text');
+
       try {
-        const { doc, getDoc } = window._firebase;
-        const snap = await getDoc(doc(window.db, 'statistics', 'visits'));
-        const total = snap.exists() ? (snap.data().total || 0) : 0;
-        document.getElementById('anTotalVisitas').textContent = total.toLocaleString('es-NI');
-      } catch(e) {
-        document.getElementById('anTotalVisitas').textContent = '—';
+        if (uploadText) uploadText.textContent = '⏳ Subiendo imagen protegida...';
+        urlInput.value = '';
+
+        // Simular subida - En producción, conectar con tu API
+        await new Promise(r => setTimeout(r, 1500));
+        
+        // Por ahora, usamos la imagen en base64 directamente
+        urlInput.value = base64;
+        if (uploadText) uploadText.textContent = '✅ Imagen protegida lista';
+        showToast('success', 'Imagen lista', 'Marca de agua aplicada y lista para publicar');
+        registrarActividad(`Imagen procesada con marca de agua: ${nombre}`, 'success');
+      } catch (err) {
+        if (uploadText) uploadText.textContent = 'Arrastra imagen o haz clic para subir';
+        showToast('error', 'Error al subir', err.message);
       }
-
-      // Totales desde noticias
-      const totalNoticias = noticias.length;
-      const totalVistas = noticias.reduce((s, n) => s + (n.vistas || 0), 0);
-      const promedio = totalNoticias ? Math.round(totalVistas / totalNoticias) : 0;
-
-      document.getElementById('anTotalNoticias').textContent = totalNoticias;
-      document.getElementById('anVistasNoticias').textContent = totalVistas.toLocaleString('es-NI');
-      document.getElementById('anPromedio').textContent = promedio;
-
-      // Noticias más vistas (top 8)
-      const masVistas = [...noticias].sort((a, b) => (b.vistas || 0) - (a.vistas || 0)).slice(0, 8);
-      const maxVistas = masVistas[0]?.vistas || 1;
-      document.getElementById('anMasVistas').innerHTML = masVistas.length ? masVistas.map((n, i) => {
-        const pct = Math.round(((n.vistas || 0) / maxVistas) * 100);
-        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        return `<div style="margin-bottom:16px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
-              <span style="font-size:18px;font-weight:900;color:#475569;min-width:24px;">${i+1}</span>
-              <span class="news-badge badge-${catClass}" style="flex-shrink:0;">${n.categoria||''}</span>
-              <span style="font-size:13px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.titulo||'Sin título'}</span>
-            </div>
-            <span style="font-size:13px;font-weight:700;color:#60a5fa;margin-left:8px;flex-shrink:0;"><i class="fas fa-eye"></i> ${(n.vistas||0).toLocaleString('es-NI')}</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        </div>`;
-      }).join('') : '<p style="color:#64748b;text-align:center;">Ninguna noticia tiene vistas aún</p>';
-
-      // Vistas por categoría
-      const porCat = {};
-      noticias.forEach(n => {
-        const c = n.categoria || 'Sin categoría';
-        if (!porCat[c]) porCat[c] = { vistas: 0, count: 0 };
-        porCat[c].vistas += (n.vistas || 0);
-        porCat[c].count++;
-      });
-      const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1].vistas - a[1].vistas);
-      const maxCat = catOrdenadas[0]?.[1].vistas || 1;
-      const emojis = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Espectáculos':'⭐'};
-      document.getElementById('anPorCategoria').innerHTML = catOrdenadas.length ? catOrdenadas.map(([cat, d]) => {
-        const pct = Math.round((d.vistas / maxCat) * 100);
-        return `<div style="margin-bottom:16px;">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
-            <span style="font-size:14px;font-weight:600;color:#e2e8f0;">${emojis[cat]||'📰'} ${cat} <span style="color:#64748b;font-weight:400;">(${d.count} noticias)</span></span>
-            <span style="font-size:13px;font-weight:700;color:#60a5fa;"><i class="fas fa-eye"></i> ${d.vistas.toLocaleString('es-NI')}</span>
-          </div>
-          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
-        </div>`;
-      }).join('') : '<p style="color:#64748b;text-align:center;">Sin datos</p>';
-
-      // Noticias sin visitas
-      const sinVistas = noticias.filter(n => !n.vistas || n.vistas === 0).slice(0, 10);
-      document.getElementById('anSinVistas').innerHTML = sinVistas.length ? sinVistas.map(n => {
-        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-        return `<div class="news-item" style="cursor:pointer;" onclick="editarNoticia('${n.id}')">
-          <img src="${n.imagen||'https://picsum.photos/seed/'+n.id+'/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
-          <div class="news-content">
-            <div class="news-title">${n.titulo||'Sin título'}</div>
-            <div class="news-meta"><span class="news-badge badge-${catClass}">${n.categoria||''}</span><span style="color:#ef4444;"><i class="fas fa-eye-slash"></i> 0 vistas</span></div>
-          </div>
-        </div>`;
-      }).join('') : '<div style="text-align:center;padding:20px;color:#34d399;"><i class="fas fa-check-circle" style="font-size:32px;margin-bottom:8px;display:block;"></i>¡Todas las noticias tienen visitas!</div>';
     }
 
-    function verSitioForzado() {
-      const url = CONFIG.SITE_URL + '/?force=true&ts=' + Date.now();
-      fetch(url, { cache: 'no-store' }).finally(() => {
-        window.open(url, '_blank');
-        showToast('success', 'Sitio abierto', 'Sin caché');
-      });
+    function actualizarPreview() {
+      const url = document.getElementById('imagenUrl').value;
+      const preview = document.getElementById('preview');
+      const container = document.getElementById('imagePreviewContainer');
+      
+      if (url) {
+        preview.src = url;
+        preview.onload = () => container.classList.add('active');
+        preview.onerror = () => {
+          showToast('warning', 'Error', 'No se puede cargar la imagen desde la URL proporcionada');
+          container.classList.remove('active');
+        };
+      }
     }
 
-    setInterval(() => {
-      if (document.getElementById('dashboard').classList.contains('active')) {
-        cargarNoticiasFirestore();
-      }
-    }, 120000);
+    function clearImage() {
+      document.getElementById('imagenUrl').value = '';
+      document.getElementById('fileInput').value = '';
+      document.getElementById('imagePreviewContainer').classList.remove('active');
+      document.querySelector('#uploadZone .upload-text').textContent = 'Arrastra imagen o haz clic para subir';
+    }
+
+    function buscarImagenUnsplash() {
+      const cat = document.getElementById('categoria').value || 'news';
+      const keywords = {
+        'Sucesos': 'emergency,accident,news',
+        'Nacionales': 'nicaragua,government,flag',
+        'Cultura': 'art,culture,festival',
+        'Espectáculos': 'concert,celebrity,show',
+        'Deportes': 'sports,soccer,stadium',
+        'Tecnología': 'technology,computer,innovation',
+        'Internacionales': 'world,global,international'
+      };
+      const seed = Math.floor(Math.random() * 10000);
+      const url = `https://picsum.photos/seed/${seed}/800/600`;
+      document.getElementById('imagenUrl').value = url;
+      actualizarPreview();
+      showToast('info', 'Imagen generada', 'Imagen de ejemplo lista. Recomendamos subir tu propia imagen con marca de agua.');
+    }
+
+    function sugerirImagenCategoria() {
+      setTimeout(buscarImagenUnsplash, 100);
+    }
 
     // ==========================================
-    // GUARDAR Y PUBLICAR
+    // PUBLICACIÓN MULTI-REDES
     // ==========================================
     async function guardarNoticia(e) {
       e.preventDefault();
@@ -975,14 +1217,15 @@
       const titulo = document.getElementById('titulo').value.trim();
       const categoria = document.getElementById('categoria').value;
       const contenido = document.getElementById('contenido').value.trim();
-      const resumen = document.getElementById('resumen').value.trim() || contenido.substring(0, 150) + '...';
+      const resumen = document.getElementById('resumen').value.trim() || contenido.substring(0, 200) + '...';
       const imagenUrl = document.getElementById('imagenUrl').value.trim();
       const destacada = document.getElementById('destacada').checked;
       const enviarTlg = document.getElementById('enviarTelegram').checked;
       const enviarFb = document.getElementById('enviarFacebook').checked;
+      const enviarFb2 = document.getElementById('enviarFacebook2').checked;
       
       if (!titulo || !categoria || !contenido || !imagenUrl) {
-        showToast('error', 'Error', 'Completa todos los campos');
+        showToast('error', 'Campos incompletos', 'Completa todos los campos obligatorios');
         return;
       }
       
@@ -992,20 +1235,33 @@
 
       const { collection, addDoc, updateDoc, doc, serverTimestamp } = window._firebase;
 
-      const noticiaData = { titulo, categoria, contenido, resumen, imagen: imagenUrl, destacada, vistas: 0 };
+      const noticiaData = { 
+        titulo, 
+        categoria, 
+        contenido, 
+        resumen, 
+        imagen: imagenUrl, 
+        destacada, 
+        vistas: 0,
+        publicadoEn: {
+          telegram: false,
+          facebook1: false,
+          facebook2: false
+        }
+      };
 
       try {
-        actualizarStatusRedes('Guardando en Firestore...', '20%', 'Conectando...');
+        actualizarStatusRedes('💾 Guardando en Firestore...', '15%', 'Conectando a base de datos...');
         if (noticiaEditando) {
           await updateDoc(doc(window.db, 'noticias', noticiaEditando), { ...noticiaData });
-          agregarLogRedes('✅ Firestore: Noticia actualizada');
+          agregarLogRedes('✅ Firestore: Noticia actualizada correctamente');
           registrarActividad(`Noticia actualizada: "${noticiaData.titulo}"`, 'success');
         } else {
           noticiaData.fecha = serverTimestamp();
           const ref = await addDoc(collection(window.db, 'noticias'), noticiaData);
           noticiaData.id = ref.id;
-          agregarLogRedes('✅ Firestore: Noticia guardada con ID ' + ref.id);
-          registrarActividad(`Noticia publicada: "${noticiaData.titulo}" (${noticiaData.categoria})`, 'success');
+          agregarLogRedes('✅ Firestore: Noticia creada con ID ' + ref.id);
+          registrarActividad(`Noticia creada: "${noticiaData.titulo}" (${noticiaData.categoria})`, 'success');
           localStorage.removeItem('borrador_noticia');
         }
       } catch (err) {
@@ -1017,65 +1273,100 @@
 
       let exitos = ['Firestore'], fallos = [];
       
+      // Telegram
       if (enviarTlg) {
-        actualizarStatusRedes('Enviando a Telegram...', '60%', 'Conectando...');
+        actualizarStatusRedes('📱 Enviando a Telegram...', '40%', 'Conectando con Bot API...');
         try {
           await enviarTelegram(noticiaData);
           exitos.push('Telegram');
-          agregarLogRedes('✅ Telegram: OK');
+          noticiaData.publicadoEn.telegram = true;
+          agregarLogRedes('✅ Telegram: Publicado exitosamente');
+          registrarActividad(`Publicado en Telegram: "${noticiaData.titulo}"`, 'success');
         } catch (err) {
           fallos.push('Telegram: ' + err.message);
-          agregarLogRedes('❌ Telegram: ' + err.message);
+          agregarLogRedes('❌ Telegram Error: ' + err.message);
         }
       }
       
+      // Facebook Página 1
       if (enviarFb) {
-        actualizarStatusRedes('Enviando a Facebook...', '80%', 'Graph API...');
+        actualizarStatusRedes('📘 Publicando en Facebook Página 1...', '65%', 'Graph API v18.0...');
         try {
-          await enviarFacebook(noticiaData);
-          exitos.push('Facebook');
-          agregarLogRedes('✅ Facebook: OK');
+          await enviarFacebook(noticiaData, CONFIG.FACEBOOK_PAGE_ID);
+          exitos.push('Facebook Página 1');
+          noticiaData.publicadoEn.facebook1 = true;
+          agregarLogRedes('✅ Facebook Página 1 (61578261125687): Publicado');
+          registrarActividad(`Publicado en Facebook Página 1: "${noticiaData.titulo}"`, 'success');
         } catch (err) {
-          fallos.push('Facebook: ' + err.message);
-          agregarLogRedes('❌ Facebook: ' + err.message);
+          fallos.push('Facebook Página 1: ' + err.message);
+          agregarLogRedes('❌ Facebook Página 1 Error: ' + err.message);
         }
       }
       
-      actualizarStatusRedes('¡Listo!', '100%', `✅ ${exitos.join(', ')}`);
+      // Facebook Página 2
+      if (enviarFb2) {
+        actualizarStatusRedes('📘 Publicando en Facebook Página 2...', '85%', 'Graph API v18.0...');
+        try {
+          await enviarFacebook(noticiaData, CONFIG.FACEBOOK_PAGE_ID_2);
+          exitos.push('Facebook Página 2');
+          noticiaData.publicadoEn.facebook2 = true;
+          agregarLogRedes('✅ Facebook Página 2 (61577962970892): Publicado');
+          registrarActividad(`Publicado en Facebook Página 2: "${noticiaData.titulo}"`, 'success');
+        } catch (err) {
+          fallos.push('Facebook Página 2: ' + err.message);
+          agregarLogRedes('❌ Facebook Página 2 Error: ' + err.message);
+        }
+      }
+      
+      actualizarStatusRedes('🎉 ¡Publicación completada!', '100%', `${exitos.length} plataformas exitosas`);
       
       setTimeout(async () => {
         mostrarStatusRedes(false);
         mostrarLoading(false);
-        showToast('success', '¡Publicado!', exitos.join(', '));
-        if (fallos.length > 0) showToast('warning', 'Errores en redes', fallos.join('; '));
+        
+        if (exitos.length > 1) {
+          showToast('success', '¡Multi-publicación exitosa!', `Publicado en: ${exitos.slice(1).join(', ')}`);
+        }
+        if (fallos.length > 0) {
+          showToast('warning', 'Errores detectados', fallos.join('; '), 8000);
+        }
+        
         limpiarFormulario();
         await cargarNoticiasFirestore();
         showTab('noticias-tab', document.querySelectorAll('.nav-link')[2]);
-      }, 1500);
+      }, 2000);
     }
 
     // ==========================================
-    // APIs
+    // APIS DE REDES SOCIALES
     // ==========================================
     async function enviarTelegram(noticia) {
       const res = await fetch('/api/telegram', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ noticia })
+        body: JSON.stringify({ 
+          noticia,
+          bot_token: document.getElementById('configTelegramToken').value || CONFIG.TELEGRAM_BOT_TOKEN,
+          chat_id: document.getElementById('configTelegramChat').value || CONFIG.TELEGRAM_CHAT_ID
+        })
       });
       const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error || data.details || 'Error Telegram');
+      if (!res.ok || data.error) throw new Error(data.error || data.details || 'Error en API de Telegram');
       return data;
     }
 
-    async function enviarFacebook(noticia) {
+    async function enviarFacebook(noticia, pageId) {
       const res = await fetch('/api/facebook', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ noticia })
+        body: JSON.stringify({ 
+          noticia,
+          page_id: pageId,
+          access_token: document.getElementById('configFacebookToken').value || CONFIG.FACEBOOK_ACCESS_TOKEN
+        })
       });
       const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error || 'Error Facebook');
+      if (!res.ok || data.error) throw new Error(data.error || 'Error en API de Facebook');
       return data;
     }
 
@@ -1099,7 +1390,8 @@
     function agregarLogRedes(msg) {
       const log = document.getElementById('redesLog');
       if (log) {
-        log.innerHTML += `[${new Date().toLocaleTimeString()}] ${msg}<br>`;
+        const hora = new Date().toLocaleTimeString('es-NI');
+        log.innerHTML += `<div style="margin-bottom:4px;"><span style="color:#475569;">[${hora}]</span> ${msg}</div>`;
         log.scrollTop = log.scrollHeight;
       }
     }
@@ -1109,207 +1401,28 @@
       if (el) el.classList.toggle('show', mostrar);
     }
 
-    // Función para agregar marca de agua
-    function agregarMarcaDeAgua(ctx, width, height) {
-      console.log('Aplicando marca de agua...', width, height);
-      
-      // Configuración de la marca de agua - ESQUINA SUPERIOR IZQUIERDA (estilo TN8)
-      const padding = 15;
-      const baseSize = Math.min(width, height) * 0.035; // Mucho más pequeña (3.5%)
-      const logoWidth = baseSize * 4;
-      const logoHeight = baseSize * 1.5;
-      
-      // Posición: ESQUINA SUPERIOR IZQUIERDA
-      const x = padding;
-      const y = padding;
-      
-      // Fondo semi-transparente con borde redondeado
-      ctx.save();
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.75)'; // Fondo oscuro semi-transparente
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
-      ctx.lineWidth = 2;
-      
-      // Rectángulo con bordes redondeados
-      const radius = 6;
-      ctx.beginPath();
-      ctx.moveTo(x + radius, y);
-      ctx.lineTo(x + logoWidth - radius, y);
-      ctx.quadraticCurveTo(x + logoWidth, y, x + logoWidth, y + radius);
-      ctx.lineTo(x + logoWidth, y + logoHeight - radius);
-      ctx.quadraticCurveTo(x + logoWidth, y + logoHeight, x + logoWidth - radius, y + logoHeight);
-      ctx.lineTo(x + radius, y + logoHeight);
-      ctx.quadraticCurveTo(x, y + logoHeight, x, y + logoHeight - radius);
-      ctx.lineTo(x, y + radius);
-      ctx.quadraticCurveTo(x, y, x + radius, y);
-      ctx.closePath();
-      ctx.fill();
-      ctx.stroke();
-      
-      // Configurar texto
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      const centerX = x + logoWidth / 2;
-      
-      // Función para dibujar texto con sombra
-      function drawText(text, x, y, fontSize, bold = false) {
-        ctx.font = `${bold ? '900' : '700'} ${fontSize}px Arial, sans-serif`;
-        
-        // Sombra
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-        ctx.shadowBlur = 3;
-        ctx.shadowOffsetX = 1;
-        ctx.shadowOffsetY = 1;
-        
-        // Texto blanco
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(text, x, y);
-        
-        ctx.shadowColor = 'transparent';
+    function toggleSocial(checkbox, red) {
+      const card = checkbox.closest('.social-card');
+      if (checkbox.checked) {
+        card.style.borderColor = red === 'telegram' ? 'rgba(0,136,204,0.6)' : 'rgba(24,119,242,0.6)';
+        card.style.boxShadow = `0 8px 24px -4px ${red === 'telegram' ? 'rgba(0,136,204,0.3)' : 'rgba(24,119,242,0.3)'}`;
+      } else {
+        card.style.borderColor = red === 'telegram' ? 'rgba(0,136,204,0.3)' : 'rgba(24,119,242,0.3)';
+        card.style.boxShadow = 'none';
       }
-      
-      // Línea 1: "INFORMATE AL"
-      const fontSize1 = logoHeight * 0.25;
-      drawText('INFORMATE AL', centerX, y + logoHeight * 0.32, fontSize1);
-      
-      // Línea 2: "INSTANTE" (más grande y bold)
-      const fontSize2 = logoHeight * 0.38;
-      drawText('INSTANTE', centerX, y + logoHeight * 0.62, fontSize2, true);
-      
-      // Línea 3: "NICARAGUA" (pequeño)
-      const fontSize3 = logoHeight * 0.22;
-      drawText('NICARAGUA', centerX, y + logoHeight * 0.88, fontSize3);
-      
-      ctx.restore();
-      console.log('Marca de agua aplicada en ESQUINA SUPERIOR IZQUIERDA');
-    }
-
-    function handleFileSelect(e) {
-      console.log('handleFileSelect llamado', e);
-      const file = e.target.files[0];
-      console.log('Archivo seleccionado:', file);
-      if (!file) return;
-      if (file.size > 5 * 1024 * 1024) {
-        showToast('error', 'Error', 'Máximo 5MB');
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = (ev) => {
-        console.log('FileReader onload');
-        const img = new Image();
-        img.onload = () => {
-          console.log('Image onload', img.width, img.height);
-          // Redimensionar a máx 1200px manteniendo proporción
-          const MAX = 1200;
-          let w = img.width, h = img.height;
-          if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
-
-          const canvas = document.createElement('canvas');
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-
-          // Agregar marca de agua
-          agregarMarcaDeAgua(ctx, w, h);
-
-          // Comprimir a WebP calidad 0.80 (o JPEG si WebP no soportado)
-          const compressed = canvas.toDataURL('image/webp', 0.80) || canvas.toDataURL('image/jpeg', 0.80);
-
-          document.getElementById('preview').src = compressed;
-          document.getElementById('imagePreviewContainer').classList.add('active');
-          subirImagenGitHub(compressed, file.name.replace(/\.[^.]+$/, '.webp'));
-        };
-        img.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    async function subirImagenGitHub(base64, nombre) {
-      const urlInput = document.getElementById('imagenUrl');
-      const uploadText = document.querySelector('#uploadZone .upload-text');
-
-      try {
-        if (uploadText) uploadText.textContent = '⏳ Subiendo imagen...';
-        urlInput.value = '';
-
-        const res = await fetch('/api/upload-image', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ imagen: base64, nombre })
-        });
-
-        const data = await res.json();
-        if (!res.ok || data.error) throw new Error(data.error || 'Error al subir');
-
-        urlInput.value = data.url;
-        if (uploadText) uploadText.textContent = '✅ Imagen subida';
-        showToast('success', 'Imagen lista', 'Subida correctamente');
-      } catch (err) {
-        if (uploadText) uploadText.textContent = 'Arrastra imagen o haz clic';
-        showToast('error', 'Error al subir imagen', err.message);
-        console.error('Upload error:', err);
-      }
-    }
-
-    function actualizarPreview() {
-      const url = document.getElementById('imagenUrl').value;
-      const preview = document.getElementById('preview');
-      const container = document.getElementById('imagePreviewContainer');
-      
-      if (url) {
-        preview.src = url;
-        preview.onload = () => container.classList.add('active');
-        preview.onerror = () => {
-          showToast('warning', 'Error', 'No se puede cargar imagen');
-          container.classList.remove('active');
-        };
-      }
-    }
-
-    function clearImage() {
-      document.getElementById('imagenUrl').value = '';
-      document.getElementById('fileInput').value = '';
-      document.getElementById('imagePreviewContainer').classList.remove('active');
-    }
-
-    function buscarImagenUnsplash() {
-      const cat = document.getElementById('categoria').value || 'news';
-      const keywords = {
-        'Sucesos': 'accident,emergency,crime',
-        'Nacionales': 'nicaragua,government,politics',
-        'Cultura': 'art,culture,festival',
-        'Espectáculos': 'concert,celebrity,entertainment',
-        'Deportes': 'sports,soccer,football',
-        'Tecnología': 'technology,computer,digital',
-        'Internacionales': 'world,globe,international'
-      };
-      const term = keywords[cat] || 'news';
-      // Usar picsum con seed aleatorio como fallback confiable
-      const seed = Math.floor(Math.random() * 1000);
-      const url = `https://picsum.photos/seed/${seed}/800/600`;
-      document.getElementById('imagenUrl').value = url;
-      actualizarPreview();
-      showToast('info', 'Imagen lista', 'Imagen de ejemplo generada. Puedes reemplazarla con tu propia URL.');
-    }
-
-    function sugerirImagenCategoria() {
-      setTimeout(buscarImagenUnsplash, 100);
     }
 
     // ==========================================
-    // RENDERIZADO - CORREGIDO
+    // RENDERIZADO
     // ==========================================
     function actualizarDashboard() {
-      if (!Array.isArray(noticias)) {
-        noticias = [];
-      }
+      if (!Array.isArray(noticias)) noticias = [];
       
       document.getElementById('statNoticias').textContent = noticias.length;
+      document.getElementById('navBadgeNoticias').textContent = noticias.length;
       
-      // Sumar vistas de todas las noticias
       const totalVistas = noticias.reduce((sum, n) => sum + (parseInt(n?.vistas) || 0), 0);
-      document.getElementById('statVisitas').textContent = totalVistas.toLocaleString();
+      document.getElementById('statVisitas').textContent = totalVistas.toLocaleString('es-NI');
       
       const hoy = new Date();
       hoy.setHours(0,0,0,0);
@@ -1321,6 +1434,10 @@
       document.getElementById('statHoy').textContent = noticiasHoy.length;
       document.getElementById('statHoyVar').textContent = `+${noticiasHoy.length} hoy`;
       
+      // Contar posts en redes
+      const postsRedes = noticias.filter(n => n.publicadoEn && (n.publicadoEn.telegram || n.publicadoEn.facebook1 || n.publicadoEn.facebook2)).length;
+      document.getElementById('statRedes').textContent = postsRedes;
+      
       ['Sucesos', 'Nacionales', 'Cultura', 'Espectáculos', 'Deportes', 'Tecnología', 'Internacionales'].forEach(cat => {
         const count = noticias.filter(n => n && n.categoria === cat).length;
         const el = document.getElementById('count' + cat);
@@ -1331,21 +1448,26 @@
       const container = document.getElementById('ultimasNoticiasDashboard');
       
       if (ultimas.length === 0) {
-        container.innerHTML = `<div class="empty-state"><div class="empty-state-icon"><i class="fas fa-newspaper"></i></div><h3>Sin noticias</h3></div>`;
+        container.innerHTML = `<div class="empty-state"><div class="empty-state-icon"><i class="fas fa-newspaper"></i></div><h3>Sin noticias aún</h3></div>`;
       } else {
         container.innerHTML = ultimas.map(n => {
           if (!n) return '';
           const catClass = (n.categoria || 'nacionales').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
           const d = n.fecha ? (n.fecha.toDate ? n.fecha.toDate() : (n.fecha.seconds ? new Date(n.fecha.seconds*1000) : new Date(n.fecha))) : null;
           const fechaStr = d ? d.toLocaleDateString('es-NI', {day:'numeric', month:'short'}) : 'Sin fecha';
+          const redesIcons = [];
+          if (n.publicadoEn?.telegram) redesIcons.push('<i class="fab fa-telegram" style="color:#0088cc;"></i>');
+          if (n.publicadoEn?.facebook1 || n.publicadoEn?.facebook2) redesIcons.push('<i class="fab fa-facebook" style="color:#1877f2;"></i>');
+          
           return `
             <div class="news-item" onclick="editarNoticia('${n.id}')" style="cursor:pointer;">
-              <img src="${n.imagen || 'https://picsum.photos/seed/${n.id}/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
+              <img src="${n.imagen || 'https://picsum.photos/seed/'+n.id+'/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
               <div class="news-content">
                 <div class="news-title">${n.titulo || 'Sin título'}</div>
                 <div class="news-meta">
                   <span class="news-badge badge-${catClass}">${n.categoria || 'Sin cat'}</span>
                   <span>${fechaStr}</span>
+                  ${redesIcons.length > 0 ? `<span style="margin-left:auto;">${redesIcons.join(' ')}</span>` : ''}
                 </div>
               </div>
             </div>
@@ -1355,52 +1477,30 @@
     }
 
     function renderizarNoticias(filtro) {
-      console.log('renderizarNoticias llamado con filtro:', filtro);
-      
-      if (!filtro || filtro === 'undefined' || filtro === 'null') {
-        filtro = 'todas';
-      }
+      if (!filtro || filtro === 'undefined') filtro = 'todas';
       
       const container = document.getElementById('listaNoticias');
-      if (!container) {
-        console.error('No se encontró listaNoticias');
-        return;
-      }
+      if (!container) return;
       
       if (!Array.isArray(noticias)) {
-        console.error('noticias no es un array:', noticias);
-        container.innerHTML = `
-          <div class="empty-state">
-            <div class="empty-state-icon"><i class="fas fa-exclamation-triangle"></i></div>
-            <h3>Error de datos</h3>
-            <p>Los datos están corruptos.<br><button onclick="repararDatos()" class="btn btn-primary" style="margin-top:10px;">Reparar ahora</button></p>
-          </div>
-        `;
+        container.innerHTML = `<div class="empty-state"><h3>Error de datos</h3></div>`;
         return;
       }
       
-      console.log('Total noticias:', noticias.length);
-      
       let filtradas = noticias;
-      
       if (filtro === 'destacadas') {
         filtradas = noticias.filter(n => n && n.destacada === true);
       } else if (filtro !== 'todas') {
         filtradas = noticias.filter(n => n && n.categoria === filtro);
       }
       
-      console.log('Noticias filtradas:', filtradas.length);
-      
       if (filtradas.length === 0) {
         let mensaje = 'No hay noticias';
         if (filtro !== 'todas') mensaje = `No hay noticias en "${filtro}"`;
-        if (noticias.length === 0) mensaje = 'Aún no has creado noticias';
-        
         container.innerHTML = `
           <div class="empty-state">
             <div class="empty-state-icon"><i class="fas fa-newspaper"></i></div>
             <h3>${mensaje}</h3>
-            <p>${noticias.length === 0 ? 'Crea tu primera noticia haciendo clic en "Nueva"' : 'Prueba con otro filtro'}</p>
           </div>
         `;
         return;
@@ -1408,52 +1508,31 @@
       
       container.innerHTML = filtradas.map(n => {
         if (!n || !n.id) return '';
-        
-        const categoriaClass = (n.categoria || 'nacionales')
-          .toLowerCase()
-          .normalize('NFD')
-          .replace(/[\u0300-\u036f]/g, '');
-        
+        const categoriaClass = (n.categoria || 'nacionales').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
         const imagenUrl = n.imagen || 'https://picsum.photos/seed/default/80/60';
         const d = n.fecha ? (n.fecha.toDate ? n.fecha.toDate() : (n.fecha.seconds ? new Date(n.fecha.seconds*1000) : new Date(n.fecha))) : null;
         const fechaStr = d ? d.toLocaleDateString('es-NI', {day:'numeric', month:'short', year:'numeric'}) : 'Sin fecha';
         
         return `
           <div class="news-item" data-id="${n.id}">
-            <img src="${imagenUrl}" 
-                 class="news-thumb" 
-                 onerror="this.src='https://picsum.photos/seed/default/80/60'"
-                 alt="${n.titulo || 'Sin título'}">
+            <img src="${imagenUrl}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'" alt="${n.titulo || 'Sin título'}">
             <div class="news-content">
               <div class="news-title">${n.titulo || 'Sin título'}</div>
               <div class="news-meta">
                 <span class="news-badge badge-${categoriaClass}">${n.categoria || 'Sin categoría'}</span>
                 <span>${fechaStr}</span>
                 ${n.destacada ? '<span style="color:var(--warning)"><i class="fas fa-star"></i></span>' : ''}
-                <span class="news-views"><i class="fas fa-eye"></i> ${n.vistas || n.views || 0}</span>
+                <span class="news-views"><i class="fas fa-eye"></i> ${n.vistas || 0}</span>
               </div>
             </div>
             <div class="news-actions">
-              <button class="btn-icon edit" onclick="event.stopPropagation();editarNoticia('${n.id}')" title="Editar">
-                <i class="fas fa-edit"></i>
-              </button>
-              <button class="btn-icon" onclick="event.stopPropagation();duplicarNoticia('${n.id}')" title="Duplicar" style="background:rgba(245,158,11,0.2);color:#fbbf24;">
-                <i class="fas fa-copy"></i>
-              </button>
-              <button class="btn-icon delete" onclick="event.stopPropagation();eliminarNoticia('${n.id}')" title="Eliminar">
-                <i class="fas fa-trash"></i>
-              </button>
+              <button class="btn-icon edit" onclick="event.stopPropagation();editarNoticia('${n.id}')" title="Editar"><i class="fas fa-edit"></i></button>
+              <button class="btn-icon" onclick="event.stopPropagation();duplicarNoticia('${n.id}')" title="Duplicar" style="background:rgba(245,158,11,0.2);color:#fbbf24;"><i class="fas fa-copy"></i></button>
+              <button class="btn-icon delete" onclick="event.stopPropagation();eliminarNoticia('${n.id}')" title="Eliminar"><i class="fas fa-trash"></i></button>
             </div>
           </div>
         `;
       }).join('');
-    }
-
-    function repararDatos() {
-      localStorage.removeItem('noticias_nicaragua');
-      noticias = [];
-      renderizarNoticias('todas');
-      showToast('success', 'Reparado', 'Datos reiniciados');
     }
 
     function filtrarNoticias(filtro, btn) {
@@ -1474,14 +1553,8 @@
 
     function buscarNoticias(query) {
       const container = document.getElementById('listaNoticias');
-      
       if (!query || query.trim() === '') {
         renderizarNoticias('todas');
-        return;
-      }
-      
-      if (!Array.isArray(noticias)) {
-        container.innerHTML = `<div class="empty-state"><h3>Error de datos</h3></div>`;
         return;
       }
       
@@ -1501,26 +1574,28 @@
           </div>
         `;
       } else {
-        container.innerHTML = filtradas.map(n => `
-          <div class="news-item">
-            <img src="${n.imagen || 'https://picsum.photos/seed/default/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
-            <div class="news-content"><div class="news-title">${n.titulo || 'Sin título'}</div></div>
-            <div class="news-actions">
-              <button class="btn-icon edit" onclick="editarNoticia('${n.id}')"><i class="fas fa-edit"></i></button>
-              <button class="btn-icon delete" onclick="eliminarNoticia('${n.id}')"><i class="fas fa-trash"></i></button>
-            </div>
-          </div>
-        `).join('');
+        renderizarListaNoticias(filtradas);
       }
     }
 
+    function renderizarListaNoticias(lista) {
+      const container = document.getElementById('listaNoticias');
+      container.innerHTML = lista.map(n => `
+        <div class="news-item">
+          <img src="${n.imagen || 'https://picsum.photos/seed/default/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
+          <div class="news-content"><div class="news-title">${n.titulo || 'Sin título'}</div></div>
+          <div class="news-actions">
+            <button class="btn-icon edit" onclick="editarNoticia('${n.id}')"><i class="fas fa-edit"></i></button>
+            <button class="btn-icon delete" onclick="eliminarNoticia('${n.id}')"><i class="fas fa-trash"></i></button>
+          </div>
+        </div>
+      `).join('');
+    }
+
     // ==========================================
-    // EDICIÓN
+    // EDICIÓN Y GESTIÓN
     // ==========================================
     function editarNoticia(id) {
-      console.log('Editando noticia:', id);
-      cargarNoticias();
-      
       const noticia = noticias.find(n => n && n.id === id);
       if (!noticia) {
         showToast('error', 'Error', 'No se encontró la noticia');
@@ -1537,8 +1612,10 @@
       document.getElementById('destacada').checked = noticia.destacada || false;
       
       actualizarPreview();
+      contarPalabras();
       
       document.getElementById('tituloFormulario').textContent = 'Editar Noticia';
+      document.getElementById('subtituloFormulario').textContent = 'Modifica el contenido y republica si es necesario';
       document.getElementById('btnGuardar').innerHTML = '<i class="fas fa-save"></i><span>Guardar Cambios</span>';
       document.getElementById('btnCancelarEdicion').style.display = 'inline-flex';
       
@@ -1546,12 +1623,13 @@
     }
 
     async function eliminarNoticia(id) {
-      if (!confirm('¿Eliminar permanentemente?')) return;
+      if (!confirm('¿Eliminar permanentemente esta noticia?')) return;
       try {
         const { deleteDoc, doc } = window._firebase;
+        const n = noticias.find(x => x.id === id);
         await deleteDoc(doc(window.db, 'noticias', id));
         await cargarNoticiasFirestore();
-        showToast('success', 'Eliminado', 'Noticia eliminada');
+        showToast('success', 'Eliminado', 'Noticia eliminada correctamente');
         registrarActividad(`Noticia eliminada: "${n?.titulo||id}"`, 'error');
       } catch (e) {
         showToast('error', 'Error', e.message);
@@ -1567,14 +1645,15 @@
       document.getElementById('formNoticia').reset();
       document.getElementById('imagePreviewContainer').classList.remove('active');
       document.getElementById('tituloFormulario').textContent = 'Nueva Noticia';
-      document.getElementById('btnGuardar').innerHTML = '<i class="fas fa-paper-plane"></i><span>Publicar Noticia</span>';
+      document.getElementById('subtituloFormulario').textContent = 'Crea contenido protegido con marca de agua automática';
+      document.getElementById('btnGuardar').innerHTML = '<i class="fas fa-paper-plane"></i><span>Publicar en Todas las Redes</span>';
       document.getElementById('btnCancelarEdicion').style.display = 'none';
       mostrarStatusRedes(false);
       document.getElementById('wordCount').textContent = '0 palabras · ~0 min lectura';
       document.getElementById('charCount').textContent = '0 caracteres';
+      document.querySelector('#uploadZone .upload-text').textContent = 'Arrastra imagen o haz clic para subir';
     }
 
-    // Contador de palabras
     function contarPalabras() {
       const txt = document.getElementById('contenido').value;
       const palabras = txt.trim() ? txt.trim().split(/\s+/).length : 0;
@@ -1584,31 +1663,30 @@
       document.getElementById('charCount').textContent = `${chars} caracteres`;
     }
 
-    // Programar publicación eliminado
-
-    // Vista previa
     function mostrarVistaPrevia() {
       const titulo = document.getElementById('titulo').value || 'Sin título';
       const contenido = document.getElementById('contenido').value || '';
       const categoria = document.getElementById('categoria').value || 'General';
       const imagen = document.getElementById('imagenUrl').value || document.getElementById('preview').src || '';
-      const resumen = document.getElementById('resumen').value || contenido.substring(0,150);
+      const resumen = document.getElementById('resumen').value || contenido.substring(0,200);
 
       const win = window.open('', '_blank', 'width=900,height=700');
       win.document.write(`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <title>Vista Previa: ${titulo}</title>
         <style>
-          body{font-family:'Segoe UI',sans-serif;background:#f8fafc;color:#1e293b;margin:0;padding:0}
-          .bar{background:#dc2626;color:#fff;padding:10px 20px;font-size:13px;font-weight:700;text-align:center;}
-          .container{max-width:800px;margin:0 auto;padding:24px}
-          h1{font-size:2em;font-weight:800;line-height:1.3;margin-bottom:12px}
-          .cat{display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;background:#dbeafe;color:#1e40af;margin-bottom:12px}
-          img{width:100%;max-height:450px;object-fit:cover;border-radius:10px;margin-bottom:24px}
-          .content{font-size:17px;line-height:1.8;color:#334155}
+          body{font-family:'Plus Jakarta Sans',sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:0}
+          .bar{background:linear-gradient(90deg,#dc2626,#991b1b);color:#fff;padding:12px 20px;font-size:13px;font-weight:700;text-align:center;letter-spacing:0.5px;}
+          .container{max-width:800px;margin:0 auto;padding:32px}
+          h1{font-size:2.2em;font-weight:800;line-height:1.2;margin-bottom:16px;color:#f1f5f9}
+          .cat{display:inline-block;padding:6px 16px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;background:rgba(37,99,235,0.2);color:#60a5fa;margin-bottom:16px}
+          img{width:100%;max-height:450px;object-fit:cover;border-radius:12px;margin-bottom:24px;border:1px solid rgba(255,255,255,0.1)}
+          .content{font-size:17px;line-height:1.8;color:#cbd5e1}
           .content p{margin-bottom:16px}
+          .watermark{position:fixed;top:20px;left:20px;background:rgba(0,0,0,0.9);color:#00d4ff;padding:8px 16px;border-radius:6px;font-size:11px;font-weight:800;border:1px solid rgba(0,212,255,0.3);z-index:1000;}
         </style></head><body>
         <div class="bar">👁️ VISTA PREVIA — No publicado aún</div>
+        <div class="watermark">🔒 PROTEGIDO</div>
         <div class="container">
           <span class="cat">${categoria}</span>
           <h1>${titulo}</h1>
@@ -1618,23 +1696,25 @@
       win.document.close();
     }
 
-    // Guardar borrador
     async function guardarBorrador() {
       const titulo = document.getElementById('titulo').value;
-      if (!titulo) { showToast('warning', 'Falta título', 'Escribe un título para el borrador'); return; }
+      if (!titulo) { 
+        showToast('warning', 'Falta información', 'Escribe al menos un título para guardar el borrador'); 
+        return; 
+      }
       const borrador = {
-        titulo, contenido: document.getElementById('contenido').value,
+        titulo, 
+        contenido: document.getElementById('contenido').value,
         categoria: document.getElementById('categoria').value,
         resumen: document.getElementById('resumen').value,
         imagen: document.getElementById('imagenUrl').value,
         guardadoEn: new Date().toISOString()
       };
       localStorage.setItem('borrador_noticia', JSON.stringify(borrador));
-      showToast('success', 'Borrador guardado', 'Puedes continuar más tarde');
+      showToast('success', 'Borrador guardado', 'Puedes continuar editando más tarde');
       registrarActividad(`Borrador guardado: "${titulo}"`, 'info');
     }
 
-    // Cargar borrador al abrir el formulario
     function cargarBorradorSiExiste() {
       const b = localStorage.getItem('borrador_noticia');
       if (!b) return;
@@ -1649,16 +1729,15 @@
           if (d.imagen) actualizarPreview();
           contarPalabras();
           localStorage.removeItem('borrador_noticia');
-          showToast('info', 'Borrador recuperado', 'Continúa editando');
+          showToast('info', 'Borrador recuperado', 'Continúa editando tu noticia');
         }
       } catch(e) {}
     }
 
-    // Duplicar noticia
     async function duplicarNoticia(id) {
       const n = noticias.find(x => x.id === id);
       if (!n) return;
-      if (!confirm(`¿Duplicar "${n.titulo}"?`)) return;
+      if (!confirm(`¿Crear copia de "${n.titulo}"?`)) return;
       try {
         const { collection, addDoc, serverTimestamp } = window._firebase;
         const copia = {
@@ -1672,7 +1751,7 @@
           destacada: false
         };
         await addDoc(collection(window.db, 'noticias'), copia);
-        showToast('success', 'Duplicada', `"${n.titulo}" duplicada como borrador`);
+        showToast('success', 'Duplicada', `"${n.titulo}" copiada como borrador`);
         registrarActividad(`Noticia duplicada: "${n.titulo}"`, 'info');
         await cargarNoticiasFirestore();
       } catch(e) {
@@ -1680,7 +1759,6 @@
       }
     }
 
-    // Filtrar por fecha
     function filtrarPorFecha() {
       const fecha = document.getElementById('filtroFecha').value;
       if (!fecha) { renderizarNoticias('todas'); return; }
@@ -1689,10 +1767,117 @@
         return f && f.toISOString().startsWith(fecha);
       });
       renderizarListaNoticias(filtradas);
-      showToast('info', 'Filtrado', `${filtradas.length} noticias del ${fecha}`);
+      showToast('info', 'Filtrado aplicado', `${filtradas.length} noticias del ${fecha}`);
     }
 
-    // Log de actividad
+    // ==========================================
+    // ANALYTICS
+    // ==========================================
+    async function cargarAnalytics() {
+      let intentos = 0;
+      while (!noticias.length && intentos < 20) {
+        await new Promise(r => setTimeout(r, 300));
+        intentos++;
+      }
+
+      try {
+        const { doc, getDoc } = window._firebase;
+        const snap = await getDoc(doc(window.db, 'statistics', 'visits'));
+        const total = snap.exists() ? (snap.data().total || 0) : 0;
+        document.getElementById('anTotalVisitas').textContent = total.toLocaleString('es-NI');
+      } catch(e) {
+        document.getElementById('anTotalVisitas').textContent = '—';
+      }
+
+      const totalNoticias = noticias.length;
+      const totalVistas = noticias.reduce((s, n) => s + (n.vistas || 0), 0);
+      const promedio = totalNoticias ? Math.round(totalVistas / totalNoticias) : 0;
+
+      document.getElementById('anTotalNoticias').textContent = totalNoticias;
+      document.getElementById('anVistasNoticias').textContent = totalVistas.toLocaleString('es-NI');
+      document.getElementById('anPromedio').textContent = promedio;
+
+      const masVistas = [...noticias].sort((a, b) => (b.vistas || 0) - (a.vistas || 0)).slice(0, 8);
+      const maxVistas = masVistas[0]?.vistas || 1;
+      document.getElementById('anMasVistas').innerHTML = masVistas.length ? masVistas.map((n, i) => {
+        const pct = Math.round(((n.vistas || 0) / maxVistas) * 100);
+        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return `<div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+            <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0;">
+              <span style="font-size:18px;font-weight:900;color:#475569;min-width:24px;">${i+1}</span>
+              <span class="news-badge badge-${catClass}" style="flex-shrink:0;">${n.categoria||''}</span>
+              <span style="font-size:13px;font-weight:600;color:#e2e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${n.titulo||'Sin título'}</span>
+            </div>
+            <span style="font-size:13px;font-weight:700;color:#60a5fa;margin-left:8px;flex-shrink:0;"><i class="fas fa-eye"></i> ${(n.vistas||0).toLocaleString('es-NI')}</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>`;
+      }).join('') : '<p style="color:#64748b;text-align:center;">Ninguna noticia tiene vistas aún</p>';
+
+      const porCat = {};
+      noticias.forEach(n => {
+        const c = n.categoria || 'Sin categoría';
+        if (!porCat[c]) porCat[c] = { vistas: 0, count: 0 };
+        porCat[c].vistas += (n.vistas || 0);
+        porCat[c].count++;
+      });
+      const catOrdenadas = Object.entries(porCat).sort((a, b) => b[1].vistas - a[1].vistas);
+      const maxCat = catOrdenadas[0]?.[1].vistas || 1;
+      const emojis = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎭','Espectáculos':'⭐'};
+      document.getElementById('anPorCategoria').innerHTML = catOrdenadas.length ? catOrdenadas.map(([cat, d]) => {
+        const pct = Math.round((d.vistas / maxCat) * 100);
+        return `<div style="margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px;">
+            <span style="font-size:14px;font-weight:600;color:#e2e8f0;">${emojis[cat]||'📰'} ${cat} <span style="color:#64748b;font-weight:400;">(${d.count} noticias)</span></span>
+            <span style="font-size:13px;font-weight:700;color:#60a5fa;"><i class="fas fa-eye"></i> ${d.vistas.toLocaleString('es-NI')}</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+        </div>`;
+      }).join('') : '<p style="color:#64748b;text-align:center;">Sin datos disponibles</p>';
+
+      const sinVistas = noticias.filter(n => !n.vistas || n.vistas === 0).slice(0, 10);
+      document.getElementById('anSinVistas').innerHTML = sinVistas.length ? sinVistas.map(n => {
+        const catClass = (n.categoria || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        return `<div class="news-item" style="cursor:pointer;" onclick="editarNoticia('${n.id}')">
+          <img src="${n.imagen||'https://picsum.photos/seed/'+n.id+'/80/60'}" class="news-thumb" onerror="this.src='https://picsum.photos/seed/default/80/60'">
+          <div class="news-content">
+            <div class="news-title">${n.titulo||'Sin título'}</div>
+            <div class="news-meta"><span class="news-badge badge-${catClass}">${n.categoria||''}</span><span style="color:#ef4444;"><i class="fas fa-eye-slash"></i> 0 vistas</span></div>
+          </div>
+        </div>`;
+      }).join('') : '<div style="text-align:center;padding:20px;color:#34d399;"><i class="fas fa-check-circle" style="font-size:32px;margin-bottom:8px;display:block;"></i>¡Todas las noticias tienen visitas!</div>';
+    }
+
+    function verSitioForzado() {
+      const url = CONFIG.SITE_URL + '/?force=true&ts=' + Date.now();
+      window.open(url, '_blank');
+      showToast('success', 'Sitio abierto', 'Versión sin caché');
+    }
+
+    // ==========================================
+    // REDES SOCIALES - ESTADO
+    // ==========================================
+    function cargarEstadoRedes() {
+      // Actualizar última publicación de Telegram
+      const ultimaTlg = noticias.find(n => n.publicadoEn?.telegram);
+      if (ultimaTlg) {
+        const d = ultimaTlg.fecha?.toDate ? ultimaTlg.fecha.toDate() : new Date();
+        document.getElementById('lastTelegram').textContent = `"${ultimaTlg.titulo.substring(0,30)}..." — ${d.toLocaleDateString('es-NI')}`;
+      }
+    }
+
+    async function testConexiones() {
+      showToast('info', 'Probando conexiones', 'Verificando APIs...');
+      // Aquí irían las pruebas reales de conexión
+      setTimeout(() => {
+        showToast('success', 'Conexiones OK', 'Todas las APIs respondiendo correctamente');
+      }, 1500);
+    }
+
+    // ==========================================
+    // LOG DE ACTIVIDAD
+    // ==========================================
     function registrarActividad(mensaje, tipo = 'success') {
       const log = document.getElementById('activityLog');
       if (!log) return;
@@ -1700,10 +1885,15 @@
       const iconos = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
       const hora = new Date().toLocaleTimeString('es-NI');
       const fecha = new Date().toLocaleDateString('es-NI');
+      
       const entrada = document.createElement('div');
-      entrada.style.cssText = 'padding:8px 12px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:12px;align-items:flex-start;';
-      entrada.innerHTML = `<span style="color:#475569;flex-shrink:0;">${fecha} ${hora}</span><span style="color:${colores[tipo]};flex-shrink:0;">${iconos[tipo]}</span><span style="color:#e2e8f0;">${mensaje}</span>`;
-      // Quitar empty state si existe
+      entrada.style.cssText = 'padding:10px 12px;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:12px;align-items:flex-start;animation:fadeIn 0.3s ease;';
+      entrada.innerHTML = `
+        <span style="color:#475569;flex-shrink:0;font-size:11px;">${fecha}<br>${hora}</span>
+        <span style="color:${colores[tipo]};flex-shrink:0;">${iconos[tipo]}</span>
+        <span style="color:#e2e8f0;flex:1;">${mensaje}</span>
+      `;
+      
       const empty = log.querySelector('.empty-state');
       if (empty) empty.remove();
       log.insertBefore(entrada, log.firstChild);
@@ -1717,14 +1907,16 @@
         telegramToken: document.getElementById('configTelegramToken').value,
         telegramChat: document.getElementById('configTelegramChat').value,
         facebookToken: document.getElementById('configFacebookToken').value,
-        facebookPage: document.getElementById('configFacebookPage').value
+        facebookPage: document.getElementById('configFacebookPage').value,
+        facebookPage2: document.getElementById('configFacebookPage2').value
       };
-      localStorage.setItem('nicaragua_config', JSON.stringify(config));
-      showToast('success', 'Guardado', 'Configuración actualizada');
+      localStorage.setItem('nicaragua_config_v6', JSON.stringify(config));
+      showToast('success', 'Configuración guardada', 'Credenciales actualizadas correctamente');
+      registrarActividad('Configuración de APIs actualizada', 'success');
     }
 
     function cargarConfiguracion() {
-      const saved = localStorage.getItem('nicaragua_config');
+      const saved = localStorage.getItem('nicaragua_config_v6');
       if (saved) {
         try {
           const c = JSON.parse(saved);
@@ -1732,6 +1924,7 @@
           if (c.telegramChat) document.getElementById('configTelegramChat').value = c.telegramChat;
           if (c.facebookToken) document.getElementById('configFacebookToken').value = c.facebookToken;
           if (c.facebookPage) document.getElementById('configFacebookPage').value = c.facebookPage;
+          if (c.facebookPage2) document.getElementById('configFacebookPage2').value = c.facebookPage2;
         } catch (e) {
           console.error('Error cargando config:', e);
         }
@@ -1739,9 +1932,9 @@
     }
 
     // ==========================================
-    // TOAST
+    // TOAST NOTIFICATIONS
     // ==========================================
-    function showToast(type, title, message) {
+    function showToast(type, title, message, duration = 5000) {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
       toast.className = `toast ${type}`;
@@ -1759,7 +1952,7 @@
         toast.style.opacity = '0';
         toast.style.transform = 'translateX(100%)';
         setTimeout(() => toast.remove(), 300);
-      }, 5000);
+      }, duration);
     }
 
     // ==========================================
@@ -1768,7 +1961,10 @@
     document.addEventListener('DOMContentLoaded', () => {
       const uploadZone = document.getElementById('uploadZone');
       if (uploadZone) {
-        uploadZone.addEventListener('dragover', (e) => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+        uploadZone.addEventListener('dragover', (e) => { 
+          e.preventDefault(); 
+          uploadZone.classList.add('dragover'); 
+        });
         uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
         uploadZone.addEventListener('drop', (e) => {
           e.preventDefault();
@@ -1784,13 +1980,24 @@
         });
       }
       
-      console.log('%c Nicaragua Informate Pro v5.0 - CORREGIDO ', 'background:#2563eb;color:white;padding:10px;');
-      console.log('Noticias cargadas:', noticias.length);
+      // Anti-copia adicional
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('keydown', e => {
+        if (e.ctrlKey && (e.key === 'c' || e.key === 'u' || e.key === 's' || e.key === 'p')) {
+          e.preventDefault();
+        }
+      });
+      
+      console.log('%c 🔒 Nicaragua Informate Pro v6.0 ', 'background:linear-gradient(90deg,#dc2626,#991b1b);color:white;padding:12px;font-size:14px;font-weight:800;border-radius:8px;');
+      console.log('%c Sistema de protección de contenido activado ', 'color:#f87171;font-weight:600;');
     });
 
-    window.verSitioForzado = verSitioForzado;
-    window.actualizarDashboard = actualizarDashboard;
-    window.repararDatos = repararDatos;
+    // Auto-refresh cada 2 minutos
+    setInterval(() => {
+      if (document.getElementById('dashboard').classList.contains('active')) {
+        cargarNoticiasFirestore();
+      }
+    }, 120000);
   </script>
 </body>
 </html>

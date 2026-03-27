@@ -1,0 +1,45 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Noticias - Lectura pública, escritura solo admin
+    match /noticias/{noticiaId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Newsletter Subscribers - Usuarios pueden suscribirse
+    match /newsletter_subscribers/{email} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow create: if request.resource.data.email == email 
+                    && request.resource.data.status == 'active'
+                    && request.resource.data.subscribedAt is timestamp;
+      allow update: if request.auth != null && request.auth.token.admin == true;
+      allow delete: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Newsletter Campaigns - Solo admin
+    match /newsletter_campaigns/{campaignId} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Newsletter Sponsors - Solo admin
+    match /newsletter_sponsors/{sponsorId} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Sponsored Campaigns - Solo admin
+    match /sponsored_campaigns/{campaignId} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+    
+    // Analytics - Solo escritura desde functions
+    match /analytics/{docId} {
+      allow read: if request.auth != null && request.auth.token.admin == true;
+      allow write: if false; // Solo Cloud Functions
+    }
+  }
+}

@@ -4,22 +4,45 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Política de Privacidad | Nicaragua Informate</title>
-  <meta name="description" content="Política de privacidad de Nicaragua Informate.">
+  <meta name="description" content="Política de privacidad de Nicaragua Informate - Cómo protegemos tu información y qué datos recopilamos.">
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B5J61WEP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W1B5J61WEP');
+  </script>
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI',system-ui,sans-serif;line-height:1.7;color:#334155;background:#f8fafc}
-    .header{background:linear-gradient(135deg,#1a56db,#1e3a8a);color:#fff;padding:48px 20px;text-align:center}
-    .header h1{font-size:30px;font-weight:800;margin-bottom:8px}
-    .header p{color:rgba(255,255,255,.85);font-size:15px}
-    .container{max-width:700px;margin:0 auto;padding:40px 20px}
-    .card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:20px}
-    h2{color:#1a56db;font-size:17px;font-weight:700;margin-bottom:10px}
-    p{color:#475569;margin-bottom:10px;font-size:15px}
-    a{color:#1a56db}
-    .date{color:#94a3b8;font-size:13px;margin-bottom:24px}
-    .back{display:inline-block;margin-top:8px;color:#1a56db;text-decoration:none;font-weight:600}
-    footer{background:#1e293b;color:#94a3b8;text-align:center;padding:20px;margin-top:32px;font-size:13px}
-    footer a{color:#93c5fd;text-decoration:none;margin:0 8px}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.7;color:#1e293b;background:#f8fafc}
+    .header{background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:60px 20px;text-align:center;position:relative;overflow:hidden}
+    .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.03)"/></svg>');opacity:0.5}
+    .header h1{font-size:36px;font-weight:900;margin-bottom:12px;position:relative;z-index:1}
+    .header p{color:rgba(255,255,255,.8);font-size:16px;position:relative;z-index:1}
+    .container{max-width:800px;margin:0 auto;padding:48px 20px}
+    .card{background:#fff;border-radius:16px;padding:36px;box-shadow:0 4px 12px rgba(0,0,0,.06);margin-bottom:24px;border:1px solid #e2e8f0;transition:all 0.3s}
+    .card:hover{box-shadow:0 8px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+    h2{color:#0f172a;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+    h2::before{content:'';width:4px;height:24px;background:#dc2626;border-radius:2px}
+    p{color:#475569;margin-bottom:14px;font-size:15px;line-height:1.8}
+    strong{color:#1e293b;font-weight:600}
+    a{color:#dc2626;text-decoration:none;font-weight:600;transition:all 0.2s}
+    a:hover{color:#991b1b;text-decoration:underline}
+    .date{color:#64748b;font-size:14px;margin-bottom:32px;padding:12px 20px;background:#fff;border-radius:12px;display:inline-block;border:1px solid #e2e8f0}
+    .back{display:inline-flex;align-items:center;gap:8px;margin-top:16px;color:#0f172a;text-decoration:none;font-weight:600;padding:12px 24px;background:#fff;border-radius:12px;border:1px solid #e2e8f0;transition:all 0.2s}
+    .back:hover{background:#0f172a;color:#fff;transform:translateX(-4px)}
+    .highlight{background:#fef2f2;border-left:4px solid #dc2626;padding:20px;border-radius:8px;margin:20px 0}
+    .highlight p{margin:0}
+    ul{margin:16px 0;padding-left:24px}
+    li{color:#475569;margin:8px 0;line-height:1.7}
+    footer{background:#0f172a;color:#94a3b8;text-align:center;padding:32px 20px;margin-top:60px;font-size:14px}
+    footer a{color:#cbd5e1;text-decoration:none;margin:0 12px;transition:color 0.2s}
+    footer a:hover{color:#fff}
+    @media(max-width:768px){
+      .header h1{font-size:28px}
+      .card{padding:24px}
+    }
   </style>
 </head>
 <body>
@@ -28,27 +51,88 @@
   <p>Nicaragua Informate — nicaraguainformate.com</p>
 </div>
 <div class="container">
-  <p class="date">Última actualización: 25 de marzo de 2026</p>
+  <p class="date">📅 Última actualización: 27 de marzo de 2026</p>
 
   <div class="card">
-    <h2>¿Qué información usamos?</h2>
-    <p>Nicaragua Informate es un sitio de noticias gratuito. <strong>No recopilamos ni guardamos datos personales</strong> de nuestros visitantes.</p>
-    <p>Usamos <strong>Google Analytics</strong> para ver estadísticas generales del sitio (número de visitas, país de origen) de forma completamente anónima.</p>
-    <p>Usamos <strong>Google AdSense</strong> para mostrar publicidad. Google puede usar cookies para mostrar anuncios relevantes. Puedes gestionar tus preferencias en <a href="https://adssettings.google.com" target="_blank">adssettings.google.com</a>.</p>
+    <h2>1. Información que recopilamos</h2>
+    <p>En <strong>Nicaragua Informate</strong> (nicaraguainformate.com) respetamos tu privacidad. Este sitio es un portal de noticias gratuito y <strong>no recopilamos ni almacenamos datos personales identificables</strong> de nuestros visitantes.</p>
+    
+    <div class="highlight">
+      <p><strong>✅ No pedimos:</strong> Nombre, dirección, teléfono, ni ningún dato personal para leer noticias.</p>
+    </div>
   </div>
 
   <div class="card">
-    <h2>Contacto</h2>
-    <p>Si tienes alguna pregunta, escríbenos a <a href="mailto:kelinrivera20@gmail.com">kelinrivera20@gmail.com</a>.</p>
+    <h2>2. Cookies y tecnologías de seguimiento</h2>
+    <p>Utilizamos las siguientes herramientas de terceros que pueden usar cookies:</p>
+    <ul>
+      <li><strong>Google Analytics (G-W1B5J61WEP):</strong> Para analizar estadísticas de tráfico de forma anónima (número de visitas, páginas vistas, país de origen, dispositivo usado). Esta información es agregada y no identifica a usuarios individuales.</li>
+      <li><strong>Google AdSense (ca-pub-4115203339551838):</strong> Para mostrar publicidad relevante. Google puede usar cookies para personalizar anuncios según tus intereses. Puedes gestionar tus preferencias de anuncios en <a href="https://adssettings.google.com" target="_blank" rel="noopener">adssettings.google.com</a>.</li>
+      <li><strong>Firebase Hosting:</strong> Para alojar el sitio web de forma segura con certificado SSL.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>3. Cómo usamos la información</h2>
+    <p>Los datos anónimos recopilados se utilizan únicamente para:</p>
+    <ul>
+      <li>Mejorar la experiencia del usuario en el sitio</li>
+      <li>Entender qué contenido es más relevante para nuestros lectores</li>
+      <li>Optimizar el rendimiento técnico del sitio</li>
+      <li>Mostrar publicidad que ayuda a mantener el sitio gratuito</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>4. Compartir en redes sociales</h2>
+    <p>Nuestro sitio incluye botones para compartir noticias en Facebook, Twitter y WhatsApp. Al usar estos botones, las redes sociales pueden recopilar información según sus propias políticas de privacidad.</p>
+  </div>
+
+  <div class="card">
+    <h2>5. Enlaces externos</h2>
+    <p>Nicaragua Informate puede incluir enlaces a sitios web externos. No somos responsables de las políticas de privacidad de esos sitios. Te recomendamos leer sus políticas antes de proporcionar información personal.</p>
+  </div>
+
+  <div class="card">
+    <h2>6. Seguridad</h2>
+    <p>Nuestro sitio usa <strong>HTTPS</strong> (certificado SSL) para proteger la conexión entre tu navegador y nuestros servidores. Todos los datos se transmiten de forma cifrada.</p>
+  </div>
+
+  <div class="card">
+    <h2>7. Derechos del usuario</h2>
+    <p>Puedes:</p>
+    <ul>
+      <li>Bloquear cookies desde la configuración de tu navegador</li>
+      <li>Usar modo incógnito/privado para navegar sin guardar historial</li>
+      <li>Desactivar anuncios personalizados en Google AdSense</li>
+      <li>Contactarnos para cualquier consulta sobre privacidad</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>8. Cambios en esta política</h2>
+    <p>Podemos actualizar esta política de privacidad ocasionalmente. Los cambios se publicarán en esta página con la fecha de actualización correspondiente.</p>
+  </div>
+
+  <div class="card">
+    <h2>9. Contacto</h2>
+    <p>Si tienes preguntas sobre esta política de privacidad o sobre cómo manejamos tu información, contáctanos:</p>
+    <ul>
+      <li>📧 Email: <a href="mailto:kelinrivera20@gmail.com">kelinrivera20@gmail.com</a></li>
+      <li>🌐 Sitio web: <a href="https://nicaraguainformate.com">nicaraguainformate.com</a></li>
+      <li>📱 WhatsApp: <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" rel="noopener">Canal de WhatsApp</a></li>
+    </ul>
   </div>
 
   <a href="/" class="back">← Volver al inicio</a>
 </div>
 <footer>
-  <p>&copy; 2026 Nicaragua Informate</p>
-  <a href="/">Inicio</a>
-  <a href="/terminos.html">Términos</a>
-  <a href="/contacto.html">Contacto</a>
+  <p><strong>© 2026 Nicaragua Informate</strong> — Tu fuente confiable de noticias</p>
+  <div style="margin-top:12px">
+    <a href="/">Inicio</a>
+    <a href="/terminos.html">Términos de Uso</a>
+    <a href="/contacto.html">Contacto</a>
+  </div>
 </footer>
 </body>
 </html>

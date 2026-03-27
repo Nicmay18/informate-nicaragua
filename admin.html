@@ -2073,17 +2073,84 @@
           <div>
             <div class="card" style="margin-bottom: 24px;">
               <div class="card-header">
-                <h3 class="card-title">Variables de Entorno</h3>
+                <h3 class="card-title">
+                  <i class="fas fa-cog" style="color: var(--primary-500);"></i>
+                  Configuración de APIs
+                </h3>
               </div>
               <div class="card-body">
-                <p style="color: var(--gray-500); font-size: 14px; margin-bottom: 16px;">
-                  Configuración requerida en Vercel Dashboard:
+                <p style="color: var(--gray-500); font-size: 14px; margin-bottom: 20px;">
+                  Configura los tokens de acceso para Telegram y Facebook. Los datos se guardan localmente en tu navegador.
                 </p>
-                <div class="code-block">
-TG_TOKEN=********<br>
-TG_CHAT_ID=********<br>
-FB_PAGE_ID=122130447284009792<br>
-FB_PAGE_ACCESS_TOKEN=********
+
+                <!-- Telegram Config -->
+                <div style="margin-bottom: 24px; padding: 16px; background: var(--gray-50); border-radius: var(--radius-md); border-left: 3px solid var(--primary-500);">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="fab fa-telegram" style="color: var(--primary-600); font-size: 20px;"></i>
+                    <h4 style="font-size: 15px; font-weight: 700; color: var(--gray-900);">Telegram Bot</h4>
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px;">Bot Token</label>
+                    <input type="text" class="form-input" id="configTgToken" placeholder="1234567890:ABCdefGHIjklMNOpqrsTUVwxyz" style="font-family: monospace; font-size: 13px;">
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label" style="font-size: 13px;">Chat ID</label>
+                    <input type="text" class="form-input" id="configTgChat" placeholder="-1001234567890" style="font-family: monospace; font-size: 13px;">
+                  </div>
+                </div>
+
+                <!-- Facebook Config -->
+                <div style="margin-bottom: 24px; padding: 16px; background: var(--gray-50); border-radius: var(--radius-md); border-left: 3px solid #1877f2;">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="fab fa-facebook" style="color: #1877f2; font-size: 20px;"></i>
+                    <h4 style="font-size: 15px; font-weight: 700; color: var(--gray-900);">Facebook Página 1</h4>
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px;">Page ID</label>
+                    <input type="text" class="form-input" id="configFbPage1Id" placeholder="61578261125687" style="font-family: monospace; font-size: 13px;">
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label" style="font-size: 13px;">Access Token</label>
+                    <input type="password" class="form-input" id="configFbPage1Token" placeholder="EAANHXQ58A0IB..." style="font-family: monospace; font-size: 13px;">
+                  </div>
+                </div>
+
+                <!-- Facebook Page 2 Config -->
+                <div style="margin-bottom: 20px; padding: 16px; background: var(--gray-50); border-radius: var(--radius-md); border-left: 3px solid #1877f2;">
+                  <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                    <i class="fab fa-facebook" style="color: #1877f2; font-size: 20px;"></i>
+                    <h4 style="font-size: 15px; font-weight: 700; color: var(--gray-900);">Facebook Página 2</h4>
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 12px;">
+                    <label class="form-label" style="font-size: 13px;">Page ID</label>
+                    <input type="text" class="form-input" id="configFbPage2Id" placeholder="61577962970892" style="font-family: monospace; font-size: 13px;">
+                  </div>
+                  
+                  <div class="form-group" style="margin-bottom: 0;">
+                    <label class="form-label" style="font-size: 13px;">Access Token</label>
+                    <input type="password" class="form-input" id="configFbPage2Token" placeholder="EAANHXQ58A0IB..." style="font-family: monospace; font-size: 13px;">
+                  </div>
+                </div>
+
+                <div style="display: flex; gap: 8px;">
+                  <button class="btn btn-primary" onclick="guardarConfiguracion()" style="flex: 1;">
+                    <i class="fas fa-save"></i>
+                    <span>Guardar Configuración</span>
+                  </button>
+                  <button class="btn btn-secondary" onclick="cargarConfiguracion()" style="flex: 1;">
+                    <i class="fas fa-sync"></i>
+                    <span>Recargar</span>
+                  </button>
+                </div>
+
+                <div style="margin-top: 16px; padding: 12px; background: var(--info-light); border-radius: var(--radius-md); font-size: 12px; color: var(--gray-600);">
+                  <i class="fas fa-info-circle" style="color: var(--info);"></i>
+                  Los tokens se guardan en localStorage de tu navegador. No se envían a ningún servidor.
                 </div>
               </div>
             </div>
@@ -2368,6 +2435,7 @@ FB_PAGE_ACCESS_TOKEN=********
       if (tabId === 'noticias-tab') cargarNoticias(window.categoriaActiva);
       if (tabId === 'dashboard-tab') cargarEstadisticas();
       if (tabId === 'categorias-tab') cargarResumenCategorias();
+      if (tabId === 'config-tab') cargarConfiguracion();
     };
 
     async function cargarDatosIniciales() {
@@ -2441,7 +2509,31 @@ FB_PAGE_ACCESS_TOKEN=********
     }
 
     async function postToApi(endpoint, payload) {
-      const resp = await fetch(`/api/${endpoint}`, {
+      // Agregar tokens desde localStorage
+      const config = {
+        telegram: {
+          token: localStorage.getItem('admin_tg_token') || '8750159697:AAGwok3dOuAAiQpdliQNuzG1gpRa-3XOPDs',
+          chatId: localStorage.getItem('admin_tg_chat') || '-1003431574597'
+        },
+        facebook: {
+          page1: {
+            id: localStorage.getItem('admin_fb_page1_id') || '61578261125687',
+            token: localStorage.getItem('admin_fb_page1_token') || ''
+          },
+          page2: {
+            id: localStorage.getItem('admin_fb_page2_id') || '61577962970892',
+            token: localStorage.getItem('admin_fb_page2_token') || ''
+          }
+        }
+      };
+
+      // Agregar configuración al payload
+      payload.config = config;
+
+      // Usar Vercel URL
+      const url = `/api/${endpoint}`;
+
+      const resp = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -2450,6 +2542,7 @@ FB_PAGE_ACCESS_TOKEN=********
       if (!resp.ok) throw new Error(data.error || data.message || `Error ${resp.status}`);
       return data;
     }
+
 
     window.guardarNoticia = async function(e) {
       e.preventDefault();
@@ -2895,6 +2988,79 @@ FB_PAGE_ACCESS_TOKEN=********
         fbDiv.innerHTML = '<i class="fas fa-times-circle"></i><span>Error</span>';
       }
     };
+
+    // Configuration Management
+    window.cargarConfiguracion = function() {
+      console.log('Cargando configuración...');
+      
+      // Cargar desde localStorage o usar valores por defecto
+      const tgToken = localStorage.getItem('admin_tg_token') || '8750159697:AAGwok3dOuAAiQpdliQNuzG1gpRa-3XOPDs';
+      const tgChat = localStorage.getItem('admin_tg_chat') || '-1003431574597';
+      const fbPage1Id = localStorage.getItem('admin_fb_page1_id') || '61578261125687';
+      const fbPage1Token = localStorage.getItem('admin_fb_page1_token') || '';
+      const fbPage2Id = localStorage.getItem('admin_fb_page2_id') || '61577962970892';
+      const fbPage2Token = localStorage.getItem('admin_fb_page2_token') || '';
+      
+      // Asignar valores a los campos
+      const tokenInput = document.getElementById('configTgToken');
+      const chatInput = document.getElementById('configTgChat');
+      const page1IdInput = document.getElementById('configFbPage1Id');
+      const page1TokenInput = document.getElementById('configFbPage1Token');
+      const page2IdInput = document.getElementById('configFbPage2Id');
+      const page2TokenInput = document.getElementById('configFbPage2Token');
+      
+      if (tokenInput) tokenInput.value = tgToken;
+      if (chatInput) chatInput.value = tgChat;
+      if (page1IdInput) page1IdInput.value = fbPage1Id;
+      if (page1TokenInput) page1TokenInput.value = fbPage1Token;
+      if (page2IdInput) page2IdInput.value = fbPage2Id;
+      if (page2TokenInput) page2TokenInput.value = fbPage2Token;
+      
+      console.log('Configuración cargada:', { tgToken, tgChat, fbPage1Id, fbPage2Id });
+      showToast('Configuración cargada', 'info');
+    };
+
+    window.guardarConfiguracion = function() {
+      // Guardar en localStorage
+      const tgToken = document.getElementById('configTgToken').value.trim();
+      const tgChat = document.getElementById('configTgChat').value.trim();
+      const fbPage1Id = document.getElementById('configFbPage1Id').value.trim();
+      const fbPage1Token = document.getElementById('configFbPage1Token').value.trim();
+      const fbPage2Id = document.getElementById('configFbPage2Id').value.trim();
+      const fbPage2Token = document.getElementById('configFbPage2Token').value.trim();
+
+      if (!tgToken || !tgChat) {
+        showToast('Completa los datos de Telegram', 'error');
+        return;
+      }
+
+      if (!fbPage1Id || !fbPage1Token) {
+        showToast('Completa los datos de Facebook Página 1', 'error');
+        return;
+      }
+
+      localStorage.setItem('admin_tg_token', tgToken);
+      localStorage.setItem('admin_tg_chat', tgChat);
+      localStorage.setItem('admin_fb_page1_id', fbPage1Id);
+      localStorage.setItem('admin_fb_page1_token', fbPage1Token);
+      localStorage.setItem('admin_fb_page2_id', fbPage2Id);
+      localStorage.setItem('admin_fb_page2_token', fbPage2Token);
+
+      showToast('Configuración guardada correctamente', 'success');
+      
+      // Actualizar display de IDs en el panel de estado
+      const fbStatusDiv = document.querySelector('#statusFacebook').closest('div').querySelector('div[style*="font-size: 13px"]');
+      if (fbStatusDiv && fbPage1Id) {
+        fbStatusDiv.textContent = `ID: ${fbPage1Id}`;
+      }
+    };
+
+    // Cargar configuración al iniciar
+    setTimeout(() => {
+      if (document.getElementById('configTgToken')) {
+        cargarConfiguracion();
+      }
+    }, 1000);
   </script>
 </body>
 </html>

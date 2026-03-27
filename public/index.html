@@ -66,18 +66,20 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--surface-light);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
 
-    .carousel-item{height:380px;background:#1e293b;position:relative;overflow:hidden}
-    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.4);transform:scale(1.15)}
-    .carousel-item .carousel-fg{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center}
-    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.7) 40%,transparent 100%);left:0!important;right:0!important;bottom:0;padding:32px 24px 24px;text-align:left;z-index:2;position:absolute}
-    .carousel-caption h3{font-size:26px;font-weight:800;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,.9);line-height:1.3;text-transform:none}
-    .carousel-caption p{font-size:14px;opacity:.9;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5}
-    .carousel-meta{display:flex;gap:16px;font-size:12px;color:#94a3b8;margin-top:8px}
-    .carousel-indicators button{width:10px;height:10px;border-radius:50%;margin:0 5px;opacity:.5;transition:all .3s}
-    .carousel-indicators button.active{opacity:1;width:24px;border-radius:5px}
-    .carousel-control-prev,.carousel-control-next{width:44px;height:44px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border-radius:50%;top:50%;transform:translateY(-50%);margin:0 16px;transition:all .2s}
-    .carousel-control-prev:hover,.carousel-control-next:hover{background:rgba(255,255,255,.25)}
-    .carousel-badge{display:inline-block;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:10px;color:#fff;letter-spacing:.3px}
+    .carousel-item{height:400px;background:#1e293b;position:relative;overflow:hidden}
+    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(20px) brightness(.35);transform:scale(1.15)}
+    .carousel-item .carousel-fg{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center}
+    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.92) 0%,rgba(0,0,0,.65) 35%,transparent 100%);left:0!important;right:0!important;bottom:0;padding:36px 28px 28px;text-align:left;z-index:2;position:absolute}
+    .carousel-caption h3{font-size:28px;font-weight:800;margin-bottom:12px;text-shadow:0 2px 12px rgba(0,0,0,.95);line-height:1.25;text-transform:none;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .carousel-caption p{font-size:15px;opacity:.92;margin-bottom:10px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+    .carousel-meta{display:flex;gap:20px;font-size:13px;color:#cbd5e1;margin-top:10px;align-items:center}
+    .carousel-meta span{display:flex;align-items:center;gap:6px}
+    .carousel-indicators{bottom:16px}
+    .carousel-indicators button{width:8px;height:8px;border-radius:50%;margin:0 4px;opacity:.4;transition:all .3s;background:#fff}
+    .carousel-indicators button.active{opacity:1;width:28px;border-radius:4px;background:#fff}
+    .carousel-control-prev,.carousel-control-next{width:42px;height:42px;background:rgba(255,255,255,.12);backdrop-filter:blur(8px);border-radius:50%;top:50%;transform:translateY(-50%);margin:0 16px;transition:all .2s;border:1px solid rgba(255,255,255,.15)}
+    .carousel-control-prev:hover,.carousel-control-next:hover{background:rgba(255,255,255,.22);transform:translateY(-50%) scale(1.05)}
+    .carousel-badge{display:inline-block;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:12px;color:#fff;letter-spacing:.5px;backdrop-filter:blur(8px)}
 
     /* Contador de visitas integrado en topbar */
     .visit-counter{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.2)}
@@ -160,15 +162,15 @@
     .resumen-item:last-child{border-bottom:none}
     .resumen-item strong{color:#1e293b}
 
-    /* ESTILOS ADSENSE MEJORADOS */
-    .ad-box{background:#fff;padding:24px;border-radius:16px;box-shadow:var(--sombra);min-height:250px;display:flex;align-items:center;justify-content:center;border:2px dashed #cbd5e1;overflow:hidden}
+    /* ADSENSE MEJORADOS - Con placeholder visible */
+    .ad-box{background:#fff;padding:24px;border-radius:16px;box-shadow:var(--sombra);min-height:250px;display:flex;align-items:center;justify-content:center;border:1px solid #E2E8F0;overflow:hidden;position:relative}
+    .ad-box::before{content:"Publicidad";position:absolute;top:8px;left:8px;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
     .ad-box ins.adsbygoogle{display:block;width:100%;min-height:250px}
-    .ad-inline{background:#fff;padding:20px;margin:24px 0;border-radius:16px;box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:90px}
+    .ad-inline{background:#fff;padding:20px;margin:24px 0;border-radius:12px;box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:90px;border:1px solid #E2E8F0;position:relative}
+    .ad-inline::before{content:"Publicidad";position:absolute;top:6px;left:6px;font-size:9px;color:#cbd5e1;text-transform:uppercase;letter-spacing:.5px;font-weight:600}
     .ad-inline ins.adsbygoogle{display:block;width:100%}
 
-    .ad-whatsapp{background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);color:#fff;padding:14px 18px;border-radius:12px;margin:24px 0;cursor:pointer;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(37,211,102,0.25);transition:all 0.3s}
-    .ad-whatsapp:hover{transform:translateY(-2px)}
-    .icon-wa{width:44px;height:44px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.3)}
+    /* WhatsApp CTA eliminado - ahora es inline HTML */
 
     #modal{position:fixed;inset:0;background:rgba(15,23,42,.9);display:none;justify-content:center;align-items:center;z-index:9999;padding:20px;backdrop-filter:blur(8px)}
     #modalContent{background:#fff;width:100%;max-width:780px;max-height:90vh;overflow-y:auto;border-radius:20px;position:relative;animation:modalIn .3s ease-out}
@@ -183,8 +185,7 @@
     .close-btn{position:absolute;top:16px;right:16px;width:40px;height:40px;background:rgba(0,0,0,.4);border:2px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;font-size:20px;cursor:pointer;z-index:10;transition:all .2s;display:flex;align-items:center;justify-content:center}
     .close-btn:hover{background:rgba(0,0,0,.6);transform:rotate(90deg)}
 
-    .floating-share{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:var(--azul);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 8px 24px rgba(13,71,161,.4);transition:all .3s;z-index:100;border:none}
-    .floating-share:hover{transform:scale(1.1) rotate(10deg)}
+    /* Botones flotantes - Eliminado del CSS, ahora inline */
 
     .footer{margin-top:60px;background:linear-gradient(135deg,#0f172a 0%,#1e293b 100%);color:#fff;padding:60px 24px 24px;position:relative}
     .footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--azul),var(--sucesos),var(--deportes),var(--inter))}
@@ -357,11 +358,11 @@
     <button class="menu-hamburger" id="menuToggle" onclick="toggleMenu()" style="display:none;">☰ Categorías</button>
   </div>
 
-  <!-- NOTIFICACIONES PUSH -->
-  <div id="notifBanner" style="display:none;background:linear-gradient(90deg,#1e3a8a,#1a56db);color:#fff;padding:10px 20px;text-align:center;font-size:14px;font-weight:600;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
-    <span>🔔 Recibe alertas de noticias en tu celular</span>
-    <button onclick="suscribirNotificaciones()" style="background:#fff;color:#1a56db;border:none;padding:7px 18px;border-radius:20px;font-weight:700;cursor:pointer;font-size:13px;">Activar notificaciones</button>
-    <button onclick="document.getElementById('notifBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,.7);border:none;cursor:pointer;font-size:18px;padding:0 4px;">✕</button>
+  <!-- NOTIFICACIONES PUSH - Versión minimalista -->
+  <div id="notifBanner" style="display:none;background:#F8FAFC;border-bottom:1px solid #E2E8F0;color:#475569;padding:8px 20px;text-align:center;font-size:13px;font-weight:500;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+    <span>🔔 Recibe alertas de noticias</span>
+    <button onclick="suscribirNotificaciones()" style="background:transparent;color:#3B82F6;border:1px solid #3B82F6;padding:4px 14px;border-radius:6px;font-weight:600;cursor:pointer;font-size:12px;transition:all .2s;">Activar</button>
+    <button onclick="document.getElementById('notifBanner').style.display='none'" style="background:transparent;color:#94a3b8;border:none;cursor:pointer;font-size:16px;padding:0 4px;margin-left:4px;">✕</button>
   </div>
 
   <!-- RADIO EN VIVO - Minimizado por defecto -->
@@ -390,8 +391,10 @@
   
   <!-- Botón flotante para abrir radio -->
   <button id="radioFloatingBtn" onclick="document.getElementById('radioPlayer').classList.add('active')" 
-          style="display:flex;position:fixed;bottom:24px;left:24px;width:48px;height:48px;background:var(--azul);color:#fff;border:none;border-radius:50%;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(59,130,246,.4);z-index:998;transition:all .3s;"
-          title="Abrir radio en vivo">
+          style="display:flex;position:fixed;bottom:88px;right:24px;width:48px;height:48px;background:#1e293b;color:#fff;border:none;border-radius:50%;align-items:center;justify-content:center;font-size:16px;cursor:pointer;box-shadow:0 4px 16px rgba(30,41,59,.35);z-index:998;transition:all .3s;"
+          onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'"
+          title="Radio en vivo">
     <i class="fas fa-broadcast-tower"></i>
   </button>
 
@@ -430,12 +433,19 @@
              data-ad-format="auto" data-full-width-responsive="true"></ins>
       </div>
 
-      <div class="ad-whatsapp" onclick="window.open('https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv','_blank')">
-        <div class="icon-wa"><i class="fab fa-whatsapp"></i></div>
-        <div>
-          <div style="font-weight:700;font-size:15px;margin-bottom:2px;">📢 ¿Tienes una noticia?</div>
-          <div style="font-size:13px;opacity:.85;">Envíala a nuestro grupo</div>
+      <!-- WhatsApp CTA - Estilo tarjeta sutil -->
+      <div onclick="window.open('https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv','_blank')" 
+           style="background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:16px 20px;margin:24px 0;cursor:pointer;display:flex;align-items:center;gap:16px;transition:all .3s;box-shadow:0 1px 3px rgba(0,0,0,.05);"
+           onmouseover="this.style.borderColor='#10B981';this.style.boxShadow='0 4px 12px rgba(16,185,129,.15)'"
+           onmouseout="this.style.borderColor='#E2E8F0';this.style.boxShadow='0 1px 3px rgba(0,0,0,.05)'">
+        <div style="width:40px;height:40px;background:#10B981;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#fff;flex-shrink:0;">
+          <i class="fab fa-whatsapp"></i>
         </div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:14px;color:#1e293b;margin-bottom:2px;">¿Tienes una noticia?</div>
+          <div style="font-size:13px;color:#64748b;">Envíala a nuestro grupo de WhatsApp</div>
+        </div>
+        <i class="fas fa-arrow-right" style="color:#10B981;font-size:16px;"></i>
       </div>
 
       <h2 class="section-title" id="sectionTitle">📰 Últimas Noticias</h2>
@@ -555,7 +565,9 @@
     </div>
   </div>
 
-  <button class="floating-share" onclick="sharePage()" title="Compartir"><i class="fas fa-share-alt"></i></button>
+  <button class="floating-share" onclick="sharePage()" title="Compartir" style="position:fixed;bottom:24px;right:24px;width:52px;height:52px;background:var(--azul);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(59,130,246,.35);transition:all .3s;z-index:100;border:none;">
+    <i class="fas fa-share-alt"></i>
+  </button>
   <button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba" style="display:none;position:fixed;bottom:90px;right:24px;width:44px;height:44px;background:#1e293b;color:#fff;border:none;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.3);z-index:100;transition:all .3s;align-items:center;justify-content:center;">
     <i class="fas fa-arrow-up"></i>
   </button>
@@ -1200,16 +1212,23 @@
         const img = sanitizarImg(n.imagen, n.id||n.titulo||'nicaragua', n.categoria);
         const fb = fallbackImg(n.categoria);
         const url = `/noticia?id=${n.id}`;
+        
+        // Formatear título: Title Case si está en MAYÚSCULAS
+        let titulo = n.titulo || '';
+        if (titulo === titulo.toUpperCase()) {
+          titulo = titulo.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+        }
+        
         if (idx === 0 && cat === 'Todas') {
           return `<article class="breaking-card" onclick="window.location='${url}'">
             <div class="card-image-wrapper">
               <img class="img-bg" src="${img}" aria-hidden="true" onerror="this.style.display='none'">
-              <img class="img-fg" src="${img}" alt="${n.titulo||''}" loading="eager" onerror="this.src='${fb}'">
+              <img class="img-fg" src="${img}" alt="${titulo}" loading="eager" onerror="this.src='${fb}'">
             </div>
             <div class="breaking-body">
               <div><span class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</span></div>
               <span class="tag ${n.categoria}" style="margin-bottom:12px;">${n.categoria||''}</span>
-              <h2>${n.titulo||''}</h2>
+              <h2>${titulo}</h2>
               <p>${(n.resumen||n.contenido||'').substring(0,200)}...</p>
               <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#94a3b8;margin-top:12px;">
                 <span><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</span>
@@ -1221,18 +1240,18 @@
         return `<article class="card" onclick="window.location='${url}'">
           <div class="card-image-wrapper">
             <img class="img-bg" src="${img}" aria-hidden="true" onerror="this.style.display='none'">
-            <img class="img-fg" src="${img}" alt="${n.titulo||''}" loading="lazy" onerror="this.src='${fb}'">
+            <img class="img-fg" src="${img}" alt="${titulo}" loading="lazy" onerror="this.src='${fb}'">
           </div>
           <div class="card-body">
             <span class="tag ${n.categoria}">${n.categoria||''}</span>
-            <h3>${n.titulo||''}</h3>
+            <h3>${titulo}</h3>
             <p>${(n.resumen||n.contenido||'').substring(0,150)}...</p>
             <div class="card-footer">
-              <span>📅 ${fmtFecha(n.fecha)}</span>
+              <span><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</span>
               <div style="display:flex;gap:8px;align-items:center;">
-                <button onclick="event.stopPropagation();compartirWA('${url}','${(n.titulo||'').replace(/'/g,'')}')" style="background:#25d366;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;">💬 WA</button>
-                <button onclick="event.stopPropagation();compartirFB('${url}')" style="background:#1877f2;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;">👍 FB</button>
-                <span class="read-more">Leer →</span>
+                <button onclick="event.stopPropagation();compartirWA('${url}','${titulo.replace(/'/g,'')}')" style="background:#10B981;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"><i class="fab fa-whatsapp"></i> WA</button>
+                <button onclick="event.stopPropagation();compartirFB('${url}')" style="background:#1877f2;color:#fff;border:none;padding:5px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:4px;"><i class="fab fa-facebook-f"></i> FB</button>
+                <span class="read-more">Leer <i class="fas fa-arrow-right"></i></span>
               </div>
             </div>
           </div>
@@ -1280,16 +1299,26 @@
         const tiempo = fmtFecha(n.fecha);
         const palabras = (n.contenido||n.resumen||'').split(/\s+/).length;
         const minLectura = Math.max(1, Math.ceil(palabras / 200));
+        
+        // Formatear título: Title Case
+        let titulo = n.titulo || '';
+        if (titulo === titulo.toUpperCase()) {
+          titulo = titulo.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+        }
+        // Limitar a 2 líneas (~100 caracteres)
+        if (titulo.length > 100) titulo = titulo.substring(0,97) + '...';
+        
         return `<div class="carousel-item${i===0?' active':''}" data-noticia-id="${n.id}" style="cursor:pointer">
           <img src="${img}" class="carousel-bg" aria-hidden="true">
-          <img src="${img}" class="carousel-fg d-block w-100" alt="${n.titulo||''}" onerror="this.src='${fallbackImg(n.categoria)}'">
+          <img src="${img}" class="carousel-fg d-block w-100" alt="${titulo}" onerror="this.src='${fallbackImg(n.categoria)}'">
           <div class="carousel-caption">
             <span class="carousel-badge" style="background:${color}">${n.categoria||''}</span>
-            <h3>${n.titulo||''}</h3>
-            <p>${(n.resumen||n.contenido||'').substring(0,120)}...</p>
+            <h3>${titulo}</h3>
+            <p>${(n.resumen||n.contenido||'').substring(0,140)}...</p>
             <div class="carousel-meta">
               <span><i class="far fa-clock"></i> ${tiempo}</span>
-              <span><i class="fas fa-book-open"></i> ${minLectura} min lectura</span>
+              <span><i class="fas fa-book-reader"></i> ${minLectura} min</span>
+              <span style="opacity:.7;">Por: Redacción</span>
             </div>
           </div>
         </div>`;

@@ -21,11 +21,46 @@ module.exports = async function handler(req, res) {
   }
 
   try {
+    const https = require('https');
+    
     const mensaje = `${noticia.titulo}\n\n${noticia.resumen || noticia.contenido?.substring(0, 500) || ''}\n\n#${(noticia.categoria || 'Noticias').replace(/\s+/g, '')} #Nicaragua #InformateAlInstante`;
     const esBase64 = (noticia.imagen || '').startsWith('data:');
     const tieneUrl = noticia.imagen && !esBase64;
     
     const results = [];
+
+    // Función helper para hacer peticiones HTTPS
+    const makeRequest = (url, body) => {
+      return new Promise((resolve, reject) => {
+        const urlObj = new URL(url);
+        const postData = JSON.stringify(body);
+        
+        const options = {
+          hostname: urlObj.hostname,
+          path: urlObj.pathname + urlObj.search,
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(postData)
+          }
+        };
+
+        const req = https.request(options, (res) => {
+          let data = '';
+          res.on('data', (chunk) => data += chunk);
+          res.on('end', () => {
+            try {
+              resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
+            } catch (e) {
+              reject(new Error('Invalid JSON response'));
+            }
+          });
+        });
+        req.on('error', reject);
+        req.write(postData);
+        req.end();
+      });
+    };
 
     // Publicar en Página 1
     const fbUrl1 = tieneUrl
@@ -35,8 +70,8 @@ module.exports = async function handler(req, res) {
       ? { url: noticia.imagen, caption: mensaje, access_token: FB_PAGE_ACCESS_TOKEN }
       : { message: mensaje, access_token: FB_PAGE_ACCESS_TOKEN };
     
-    const r1 = await fetch(fbUrl1, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body1) });
-    const data1 = await r1.json();
+    const response1 = await makeRequest(fbUrl1, body1);
+    const data1 = response1.body;
 
     console.log('[FB Page 1] Respuesta:', JSON.stringify(data1));
 
@@ -55,8 +90,8 @@ module.exports = async function handler(req, res) {
         ? { url: noticia.imagen, caption: mensaje, access_token: FB_PAGE_2_TOKEN }
         : { message: mensaje, access_token: FB_PAGE_2_TOKEN };
       
-      const r2 = await fetch(fbUrl2, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body2) });
-      const data2 = await r2.json();
+      const response2 = await makeRequest(fbUrl2, body2);
+      const data2 = response2.body;
 
       console.log('[FB Page 2] Respuesta:', JSON.stringify(data2));
 
@@ -70,6 +105,6 @@ module.exports = async function handler(req, res) {
     return res.json({ success: true, results });
   } catch (error) {
     console.error('[FB] Error:', error);
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 }

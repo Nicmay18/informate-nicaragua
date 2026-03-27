@@ -27,7 +27,6 @@ module.exports = async (req, res) => {
 
     const titulo = (noticia.titulo || '').substring(0, 200);
     const resumenCompleto = noticia.resumen || noticia.contenido || '';
-    // Cortar en punto o coma para no dejar frase incompleta
     let resumen = resumenCompleto.substring(0, 300);
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
@@ -62,27 +61,52 @@ module.exports = async (req, res) => {
       };
     }
 
-    const response = await fetch(telegramUrl, {
+    // Usar https module en lugar de fetch
+    const https = require('https');
+    const urlObj = new URL(telegramUrl);
+    const postData = JSON.stringify(body);
+
+    const options = {
+      hostname: urlObj.hostname,
+      path: urlObj.pathname,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body)
+      headers: {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(postData)
+      }
+    };
+
+    const response = await new Promise((resolve, reject) => {
+      const req = https.request(options, (res) => {
+        let data = '';
+        res.on('data', (chunk) => data += chunk);
+        res.on('end', () => {
+          try {
+            resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
+          } catch (e) {
+            reject(new Error('Invalid JSON response'));
+          }
+        });
+      });
+      req.on('error', reject);
+      req.write(postData);
+      req.end();
     });
 
-    const data = await response.json();
-
-    if (!data.ok) {
+    if (response.statusCode !== 200 || !response.body.ok) {
       return res.status(500).json({ 
         error: 'Telegram API error', 
-        details: data.description 
+        details: response.body.description || 'Unknown error'
       });
     }
 
     return res.status(200).json({ 
       success: true, 
-      messageId: data.result.message_id 
+      messageId: response.body.result.message_id 
     });
 
   } catch (e) {
+    console.error('[Telegram] Error:', e);
     return res.status(500).json({ error: e.message });
   }
 };

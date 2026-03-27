@@ -4,8 +4,7 @@
     { "source": "/manifest.json", "destination": "/manifest.json" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/noticia", "destination": "/api/noticia" },
-    { "source": "/noticia.html", "destination": "/api/noticia" },
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/noticia.html", "destination": "/api/noticia" }
   ],
   "redirects": [
     { "source": "/404", "destination": "/404.html", "permanent": false }

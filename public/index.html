@@ -37,88 +37,125 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
-    :root{--azul:#1a56db;--azul2:#1e40af;--sucesos:#dc2626;--deportes:#16a34a;--inter:#7c3aed;--tecnologia:#0284c7;--nacionales:#ea580c;--economia:#d97706;--cultura:#9333ea;--sombra:0 4px 6px -1px rgba(0,0,0,.08);--sombra-lg:0 20px 25px -5px rgba(0,0,0,.12)}
+    :root{
+      --brand-primary:#0F172A;
+      --brand-accent:#E11D48;
+      --brand-secondary:#3B82F6;
+      --surface-light:#F8FAFC;
+      --text-primary:#1E293B;
+      --success:#10B981;
+      --azul:#3B82F6;
+      --azul2:#1e40af;
+      --azul-claro:#60a5fa;
+      --sucesos:#E11D48;
+      --deportes:#10B981;
+      --inter:#7c3aed;
+      --tecnologia:#0284c7;
+      --nacionales:#ea580c;
+      --economia:#d97706;
+      --cultura:#9333ea;
+      --gris-50:#F8FAFC;
+      --gris-100:#f1f5f9;
+      --gris-200:#e2e8f0;
+      --gris-600:#475569;
+      --gris-900:#0F172A;
+      --sombra:0 1px 3px rgba(0,0,0,.08);
+      --sombra-md:0 4px 6px -1px rgba(0,0,0,.08);
+      --sombra-lg:0 10px 15px -3px rgba(0,0,0,.1)
+    }
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',system-ui,sans-serif;background:#eef2f7;color:#1e293b;line-height:1.6}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;background:var(--surface-light);color:var(--text-primary);line-height:1.6;-webkit-font-smoothing:antialiased}
 
-    .carousel-item{height:340px;background:#1e293b;position:relative;overflow:hidden}
-    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.5);transform:scale(1.15)}
+    .carousel-item{height:380px;background:#1e293b;position:relative;overflow:hidden}
+    .carousel-item .carousel-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(18px) brightness(.4);transform:scale(1.15)}
     .carousel-item .carousel-fg{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center}
-    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.6) 50%,transparent 100%);left:0!important;right:0!important;bottom:0;padding:30px 20px 20px;text-align:left;z-index:2;position:absolute}
-    .carousel-caption h3{font-size:28px;font-weight:800;margin-bottom:8px;text-shadow:0 2px 6px rgba(0,0,0,.9);line-height:1.2}
-    .carousel-caption p{font-size:13px;opacity:.9;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .carousel-indicators button{width:12px;height:12px;border-radius:50%;margin:0 6px}
-    .carousel-control-prev,.carousel-control-next{width:50px;height:50px;background:rgba(255,255,255,.2);border-radius:50%;top:50%;transform:translateY(-50%);margin:0 20px}
-    .carousel-badge{display:inline-block;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;margin-bottom:12px;color:#fff}
+    .carousel-caption{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.7) 40%,transparent 100%);left:0!important;right:0!important;bottom:0;padding:32px 24px 24px;text-align:left;z-index:2;position:absolute}
+    .carousel-caption h3{font-size:26px;font-weight:800;margin-bottom:10px;text-shadow:0 2px 8px rgba(0,0,0,.9);line-height:1.3;text-transform:none}
+    .carousel-caption p{font-size:14px;opacity:.9;margin-bottom:8px;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.5}
+    .carousel-meta{display:flex;gap:16px;font-size:12px;color:#94a3b8;margin-top:8px}
+    .carousel-indicators button{width:10px;height:10px;border-radius:50%;margin:0 5px;opacity:.5;transition:all .3s}
+    .carousel-indicators button.active{opacity:1;width:24px;border-radius:5px}
+    .carousel-control-prev,.carousel-control-next{width:44px;height:44px;background:rgba(255,255,255,.15);backdrop-filter:blur(4px);border-radius:50%;top:50%;transform:translateY(-50%);margin:0 16px;transition:all .2s}
+    .carousel-control-prev:hover,.carousel-control-next:hover{background:rgba(255,255,255,.25)}
+    .carousel-badge{display:inline-block;padding:5px 12px;border-radius:6px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:10px;color:#fff;letter-spacing:.3px}
 
     /* Contador de visitas integrado en topbar */
     .visit-counter{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);color:#fff;padding:6px 14px;border-radius:20px;font-size:13px;font-weight:600;border:1px solid rgba(255,255,255,.2)}
 
-    .ticker{background:linear-gradient(90deg,#0f172a 0%,#1e293b 100%);color:#fff;font-size:13px;padding:10px 0;overflow:hidden;border-bottom:3px solid var(--azul)}
-    .ticker-content{display:flex;animation:ticker 30s linear infinite;white-space:nowrap}
-    .ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 30px;font-weight:500}
-    .ticker-item span{color:#60a5fa;font-weight:700}
-    @keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+    /* ELIMINAR TICKER - Reemplazado por categoría "Última hora" */
+    .ticker{display:none}
 
-    .topbar{background:linear-gradient(135deg,#1a56db 0%,#1e3a8a 100%);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 4px 12px rgba(26,86,219,.3);position:relative;z-index:100}
-    .logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;color:#fff;text-decoration:none}
-    .logo img{width:50px;height:50px;border-radius:50%;object-fit:cover;border:3px solid rgba(255,255,255,.4)}
-    .logo-title{font-size:20px;font-weight:800;color:#fff;line-height:1.2}
-    .logo-subtitle{font-size:12px;color:rgba(255,255,255,.7);font-weight:500}
-    .infoTop{text-align:right;font-size:14px}
-    #hora{font-weight:700;color:#fff;font-size:15px}
-    #clima{color:rgba(255,255,255,.85);font-size:13px}
+    /* HEADER SIMPLIFICADO - Solo logo y búsqueda */
+    .topbar{background:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.08);position:sticky;top:0;z-index:100;border-bottom:1px solid var(--gris-200)}
+    .logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:18px;color:var(--gris-900);text-decoration:none}
+    .logo img{width:40px;height:40px;border-radius:8px;object-fit:cover}
+    .logo-title{font-size:18px;font-weight:700;color:var(--gris-900);line-height:1.2}
+    .logo-subtitle{font-size:12px;color:var(--gris-600);font-weight:400}
+    
+    /* Búsqueda más sutil */
+    .search-wrapper{position:relative}
+    #searchInput{background:var(--gris-100);border:1px solid var(--gris-200);color:var(--gris-900);padding:8px 36px 8px 14px;border-radius:20px;font-size:14px;width:200px;outline:none;transition:all .2s}
+    #searchInput:focus{background:#fff;border-color:var(--azul);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+    .search-icon{position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--gris-600);pointer-events:none;font-size:14px}
 
-    .menu{display:flex;justify-content:center;gap:6px;padding:12px 16px;background:#1e3a8a;position:sticky;top:0;z-index:90;box-shadow:0 2px 8px rgba(0,0,0,.2);flex-wrap:wrap}
-    .menu button{border:none;background:rgba(255,255,255,.1);font-weight:600;cursor:pointer;padding:9px 18px;color:rgba(255,255,255,.85);border-radius:9999px;transition:all .3s;font-size:13px;display:flex;align-items:center;gap:6px}
-    .menu button:hover{background:rgba(255,255,255,.2);color:#fff;transform:translateY(-1px)}
-    .menu button.active{background:#fff;color:#1a56db;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+    /* MENÚ DE CATEGORÍAS - Más limpio */
+    .menu{display:flex;justify-content:flex-start;gap:8px;padding:16px 20px;background:#fff;border-bottom:1px solid var(--gris-200);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+    .menu::-webkit-scrollbar{display:none}
+    .menu button{border:none;background:transparent;font-weight:600;cursor:pointer;padding:8px 16px;color:var(--gris-600);border-radius:20px;transition:all .2s;font-size:14px;white-space:nowrap;flex-shrink:0}
+    .menu button:hover{background:var(--gris-100);color:var(--gris-900)}
+    .menu button.active{background:var(--azul);color:#fff;box-shadow:0 2px 8px rgba(37,99,235,.2)}
 
-    .radio{background:linear-gradient(90deg,#dc2626 0%,#b91c1c 100%);color:#fff;padding:12px 20px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center}
-    .live-indicator{display:flex;align-items:center;gap:8px;font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:700;flex-shrink:0}
-    .pulse{width:8px;height:8px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
-    .radio-player{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center}
-    .radio-select{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;max-width:220px}
-    .radio-select option{background:#b91c1c;color:#fff}
-    .radio-btn{width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
-    .radio-btn:hover{background:rgba(255,255,255,.3);transform:scale(1.1)}
-    .radio-btn.playing{background:rgba(255,255,255,.25);border-color:#fff}
-    .radio-name{font-size:13px;font-weight:600;opacity:.9;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    /* STICKY RADIO PLAYER EN FOOTER - Gris oscuro profesional */
+    .radio{position:fixed;bottom:0;left:0;right:0;background:rgba(30,41,59,.98);backdrop-filter:blur(10px);color:#fff;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:999;box-shadow:0 -2px 10px rgba(0,0,0,.15);transform:translateY(100%);transition:transform .3s;border-top:1px solid rgba(255,255,255,.1)}
+    .radio.active{transform:translateY(0)}
+    .live-indicator{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;color:#94a3b8}
+    .pulse{width:5px;height:5px;background:var(--azul);border-radius:50%;animation:pulse 2s infinite}
+    .radio-player{display:flex;align-items:center;gap:10px;flex:1;max-width:400px}
+    .radio-select{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#e2e8f0;padding:6px 12px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;flex:1;min-width:0;transition:all .2s}
+    .radio-select:hover{background:rgba(255,255,255,.12)}
+    .radio-btn{width:34px;height:34px;border-radius:50%;border:none;background:var(--azul);color:#fff;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;flex-shrink:0}
+    .radio-btn:hover{transform:scale(1.05);background:var(--azul-claro)}
+    .radio-btn.playing{background:var(--azul);animation:pulse-btn 2s infinite}
+    .radio-close{background:transparent;border:none;color:rgba(255,255,255,.5);cursor:pointer;padding:4px 8px;font-size:16px;transition:color .2s}
+    .radio-close:hover{color:#fff}
+    @keyframes pulse-btn{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,.7)}50%{box-shadow:0 0 0 6px rgba(59,130,246,0)}}
 
-    .main-wrapper{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 300px;gap:24px;padding:24px}
+    /* LAYOUT - Columna única en móvil, sidebar abajo */
+    .main-wrapper{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:32px;padding:32px 20px}
     .content-main{min-width:0}
+    
+    /* Espaciado generoso */
+    .section-title{font-size:24px;font-weight:700;color:var(--gris-900);margin:48px 0 24px;display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:2px solid var(--gris-200)}
+    .section-title::after{content:"";flex:1;height:2px;background:linear-gradient(90deg,var(--gris-200) 0%,transparent 100%)}
+    .grid{display:grid;grid-template-columns:1fr;gap:24px}
 
-    .section-title{font-size:20px;font-weight:800;color:#1e293b;margin:32px 0 20px;display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:3px solid #e2e8f0}
-    .section-title::after{content:"";flex:1;height:3px;background:linear-gradient(90deg,var(--azul) 0%,transparent 100%)}
-    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-
-    .card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--sombra);cursor:pointer;display:flex;flex-direction:column;transition:all .3s;border:1px solid #dde3ed}
-    .card:hover{transform:translateY(-6px);box-shadow:var(--sombra-lg);border-color:var(--azul)}
-    .card-image-wrapper{position:relative;overflow:hidden;height:160px;background:#1e293b;display:flex;align-items:center;justify-content:center}
+    /* TARJETAS - Más aire, tipografía mejorada, sin bordes rojos */
+    .card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--sombra);cursor:pointer;display:flex;flex-direction:column;transition:all .3s;border:1px solid var(--gris-200)}
+    .card:hover{transform:translateY(-4px);box-shadow:var(--sombra-lg);border-color:var(--azul-claro)}
+    .card-image-wrapper{position:relative;overflow:hidden;height:200px;background:var(--gris-900);display:flex;align-items:center;justify-content:center}
     .card-image-wrapper .img-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(12px) brightness(.5);transform:scale(1.15)}
-    .card-image-wrapper .img-fg{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center;transition:transform .5s}
+    .card-image-wrapper .img-fg{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .5s}
     .card:hover .img-fg{transform:scale(1.05)}
-    .card-body{padding:20px;flex:1;display:flex;flex-direction:column}
-    .tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:12px;width:fit-content}
+    .card-body{padding:24px;flex:1;display:flex;flex-direction:column;gap:12px}
+    .tag{display:inline-block;padding:5px 12px;border-radius:6px;font-size:11px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:4px;width:fit-content;letter-spacing:.3px}
     .tag.Sucesos{background:var(--sucesos)}.tag.Deportes{background:var(--deportes)}.tag.Internacionales{background:var(--inter)}.tag.Tecnología{background:var(--tecnologia)}.tag.Nacionales{background:var(--nacionales)}.tag.Economía{background:var(--economia)}.tag.Cultura{background:var(--cultura)}.tag.Espectáculos{background:#db2777}
-    .card h3{font-size:22px;line-height:1.3;margin-bottom:12px;color:#1e293b;font-weight:800;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .card p{color:#64748b;font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-    .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8}
-    .read-more{color:var(--azul);font-weight:700;display:flex;align-items:center;gap:4px;transition:gap .2s}
+    .card h3{font-size:18px;line-height:1.4;margin:0;color:var(--gris-900);font-weight:700;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-transform:none}
+    .card p{color:var(--gris-600);font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;margin:0}
+    .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:16px;border-top:1px solid var(--gris-200);font-size:13px;color:var(--gris-600)}
+    .read-more{color:var(--azul);font-weight:600;display:flex;align-items:center;gap:4px;transition:gap .2s}
     .card:hover .read-more{gap:8px}
 
     .sidebar-right{display:flex;flex-direction:column;gap:24px}
-    .popular-box{background:#fff;padding:24px;border-radius:16px;box-shadow:var(--sombra)}
-    .popular-box h4{font-size:16px;margin-bottom:16px;color:#1e293b;font-weight:700;display:flex;align-items:center;gap:8px}
-    .trending-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:14px;cursor:pointer;padding:8px;border-radius:8px;transition:background .2s}
-    .trending-item:hover{background:#f1f5f9}
-    .trending-number{font-size:20px;font-weight:900;color:#cbd5e1;min-width:28px;line-height:1}
-    .trending-item:nth-child(1) .trending-number{color:#ef4444}
-    .trending-item:nth-child(2) .trending-number{color:#f97316}
-    .trending-item:nth-child(3) .trending-number{color:#eab308}
-    .trending-title{font-size:13px;font-weight:600;color:#1e293b;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-    .trending-meta{font-size:11px;color:#94a3b8;margin-top:3px}
+    .popular-box{background:#fff;padding:24px;border-radius:16px;box-shadow:var(--sombra);border:1px solid var(--gris-200)}
+    .popular-box h4{font-size:15px;margin-bottom:20px;color:#1e293b;font-weight:700;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px;font-size:12px;color:#64748b}
+    .trending-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;cursor:pointer;padding:10px;border-radius:8px;transition:all .2s;border:1px solid transparent}
+    .trending-item:hover{background:#f8fafc;border-color:var(--gris-200)}
+    .trending-number{font-size:24px;font-weight:900;color:#e2e8f0;min-width:32px;line-height:1;font-family:Georgia,serif}
+    .trending-item:nth-child(1) .trending-number{color:var(--azul);font-size:28px}
+    .trending-item:nth-child(2) .trending-number{color:var(--azul-claro)}
+    .trending-item:nth-child(3) .trending-number{color:#60a5fa}
+    .trending-title{font-size:13px;font-weight:600;color:#1e293b;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .trending-meta{font-size:11px;color:#94a3b8;margin-top:4px;display:flex;align-items:center;gap:4px}
     .resumen-item{font-size:13px;color:#334155;padding:8px 0;border-bottom:1px solid #f1f5f9;line-height:1.4}
     .resumen-item:last-child{border-bottom:none}
     .resumen-item strong{color:#1e293b}
@@ -129,9 +166,9 @@
     .ad-inline{background:#fff;padding:20px;margin:24px 0;border-radius:16px;box-shadow:var(--sombra);display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:90px}
     .ad-inline ins.adsbygoogle{display:block;width:100%}
 
-    .ad-whatsapp{background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);color:#fff;padding:24px;border-radius:20px;margin:32px 0;cursor:pointer;display:flex;align-items:center;gap:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(37,211,102,0.3);transition:all 0.3s}
-    .ad-whatsapp:hover{transform:translateY(-4px)}
-    .icon-wa{width:60px;height:60px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.3)}
+    .ad-whatsapp{background:linear-gradient(135deg,#25D366 0%,#128C7E 100%);color:#fff;padding:14px 18px;border-radius:12px;margin:24px 0;cursor:pointer;display:flex;align-items:center;gap:14px;position:relative;overflow:hidden;box-shadow:0 4px 16px rgba(37,211,102,0.25);transition:all 0.3s}
+    .ad-whatsapp:hover{transform:translateY(-2px)}
+    .icon-wa{width:44px;height:44px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,0.3)}
 
     #modal{position:fixed;inset:0;background:rgba(15,23,42,.9);display:none;justify-content:center;align-items:center;z-index:9999;padding:20px;backdrop-filter:blur(8px)}
     #modalContent{background:#fff;width:100%;max-width:780px;max-height:90vh;overflow-y:auto;border-radius:20px;position:relative;animation:modalIn .3s ease-out}
@@ -166,17 +203,18 @@
     @keyframes shimmer{0%{background-color:#e2e8f0}50%{background-color:#eef2f7}100%{background-color:#e2e8f0}}
     #loadMoreBtn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(26,86,219,.4)!important}
 
-    /* BREAKING NEWS */
-    .breaking-card{grid-column:1/-1;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--sombra-lg);cursor:pointer;display:grid;grid-template-columns:1fr 1fr;border:2px solid #dc2626;transition:all .3s}
-    .breaking-card:hover{transform:translateY(-4px)}
+    /* BREAKING NEWS - Sin borde rojo, más sutil */
+    .breaking-card{grid-column:1/-1;background:#fff;border-radius:16px;overflow:hidden;box-shadow:var(--sombra-lg);cursor:pointer;display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--gris-200);transition:all .3s;position:relative}
+    .breaking-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--azul),var(--sucesos));z-index:1}
+    .breaking-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.12)}
     .breaking-card .card-image-wrapper{height:320px;background:#1e293b}
     .breaking-card .card-image-wrapper .img-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(12px) brightness(.5);transform:scale(1.15)}
-    .breaking-card .card-image-wrapper .img-fg{position:relative;z-index:1;width:100%;height:100%;object-fit:contain;object-position:center}
-    .breaking-badge{background:#dc2626;color:#fff;font-size:11px;font-weight:800;padding:4px 10px;border-radius:4px;text-transform:uppercase;letter-spacing:1px;display:inline-flex;align-items:center;gap:6px;margin-bottom:10px}
-    .breaking-badge::before{content:"";width:7px;height:7px;background:#fff;border-radius:50%;animation:pulse 1.5s infinite}
-    .breaking-body{padding:28px;display:flex;flex-direction:column;justify-content:center}
-    .breaking-body h2{font-size:26px;font-weight:800;line-height:1.3;margin-bottom:12px;color:#1e293b}
-    .breaking-body p{color:#64748b;font-size:14px;line-height:1.6;margin-bottom:16px}
+    .breaking-card .card-image-wrapper .img-fg{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:center}
+    .breaking-badge{background:var(--azul);color:#fff;font-size:10px;font-weight:700;padding:5px 12px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px;display:inline-flex;align-items:center;gap:6px;margin-bottom:10px}
+    .breaking-badge::before{content:"";width:6px;height:6px;background:#fff;border-radius:50%;animation:pulse 1.5s infinite}
+    .breaking-body{padding:32px;display:flex;flex-direction:column;justify-content:center}
+    .breaking-body h2{font-size:28px;font-weight:800;line-height:1.3;margin-bottom:14px;color:#1e293b;text-transform:none}
+    .breaking-body p{color:#64748b;font-size:15px;line-height:1.6;margin-bottom:16px}
 
     /* SEARCH RESULTS */
     .search-result-item{padding:12px 16px;border-bottom:1px solid #f1f5f9;cursor:pointer;display:flex;gap:10px;align-items:center;transition:background .15s}
@@ -326,27 +364,36 @@
     <button onclick="document.getElementById('notifBanner').style.display='none'" style="background:transparent;color:rgba(255,255,255,.7);border:none;cursor:pointer;font-size:18px;padding:0 4px;">✕</button>
   </div>
 
-  <!-- RADIO EN VIVO -->
-  <div class="radio">    <div class="live-indicator">
+  <!-- RADIO EN VIVO - Minimizado por defecto -->
+  <div class="radio" id="radioPlayer">
+    <div class="live-indicator">
       <span class="pulse" id="radioPulse"></span>
-      🔴 Radio en Vivo
+      EN VIVO
     </div>
     <div class="radio-player">
-      <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
-        <option value="">📻 Elige una radio</option>
-        <option value="https://stream.zenolive.com/axr92qawesmtv">📻 Radio Ya 99.1 FM</option>
-        <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
-        <option value="https://stream2.305stream.com/proxy/client032?mp=/stream">📻 Radio Maranatha 103.5</option>
-        <option value="https://stream.zeno.fm/primerisima921">📻 La Primerísima 91.7</option>
-        <option value="https://stream.zeno.fm/gwkd66k0a7duv">📻 Radio Corporación 97.5</option>
-      </select>
       <button class="radio-btn" id="radioPlayBtn" onclick="toggleRadio()" title="Play/Pause">
         <i class="fas fa-play" id="radioIcon"></i>
       </button>
-      <span class="radio-name" id="radioNombre">Selecciona y dale play</span>
+      <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
+        <option value="">Seleccionar emisora</option>
+        <option value="https://stream.zenolive.com/axr92qawesmtv">Radio Ya 99.1 FM</option>
+        <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+        <option value="https://stream2.305stream.com/proxy/client032?mp=/stream">Radio Maranatha 103.5</option>
+        <option value="https://stream.zeno.fm/primerisima921">La Primerísima 91.7</option>
+        <option value="https://stream.zeno.fm/gwkd66k0a7duv">Radio Corporación 97.5</option>
+      </select>
+      <span class="radio-name" id="radioNombre" style="font-size:12px;color:#94a3b8;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📻 Radio en vivo</span>
     </div>
+    <button class="radio-close" onclick="document.getElementById('radioPlayer').classList.remove('active')" title="Cerrar">✕</button>
     <audio id="radioAudio" preload="none"></audio>
   </div>
+  
+  <!-- Botón flotante para abrir radio -->
+  <button id="radioFloatingBtn" onclick="document.getElementById('radioPlayer').classList.add('active')" 
+          style="display:flex;position:fixed;bottom:24px;left:24px;width:48px;height:48px;background:var(--azul);color:#fff;border:none;border-radius:50%;align-items:center;justify-content:center;font-size:18px;cursor:pointer;box-shadow:0 4px 16px rgba(59,130,246,.4);z-index:998;transition:all .3s;"
+          title="Abrir radio en vivo">
+    <i class="fas fa-broadcast-tower"></i>
+  </button>
 
   <div class="main-wrapper">
 
@@ -386,8 +433,8 @@
       <div class="ad-whatsapp" onclick="window.open('https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv','_blank')">
         <div class="icon-wa"><i class="fab fa-whatsapp"></i></div>
         <div>
-          <div style="font-weight:800;font-size:18px;margin-bottom:4px;">📢 ¿Tienes una noticia?</div>
-          <div style="font-size:14px;opacity:.9;">Envíala a nuestro grupo de WhatsApp</div>
+          <div style="font-weight:700;font-size:15px;margin-bottom:2px;">📢 ¿Tienes una noticia?</div>
+          <div style="font-size:13px;opacity:.85;">Envíala a nuestro grupo</div>
         </div>
       </div>
 
@@ -813,7 +860,21 @@
     // RADIO EN VIVO
     // ==========================================
     const radioAudio = document.getElementById('radioAudio');
+    const radioPlayer = document.getElementById('radioPlayer');
+    const radioFloatingBtn = document.getElementById('radioFloatingBtn');
     let radioActiva = false;
+
+    // Mostrar/ocultar botón flotante según estado del player
+    if (radioPlayer && radioFloatingBtn) {
+      const observer = new MutationObserver(() => {
+        if (radioPlayer.classList.contains('active')) {
+          radioFloatingBtn.style.display = 'none';
+        } else {
+          radioFloatingBtn.style.display = 'flex';
+        }
+      });
+      observer.observe(radioPlayer, { attributes: true, attributeFilter: ['class'] });
+    }
 
     const RADIOS = {
       'https://stream.zenolive.com/axr92qawesmtv': 'Radio Ya 99.1 FM',
@@ -841,12 +902,16 @@
         radioAudio.pause(); radioAudio.src = ''; radioActiva = false;
         document.getElementById('radioIcon').className = 'fas fa-play';
         document.getElementById('radioPlayBtn').classList.remove('playing');
-        document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
+        document.getElementById('radioNombre').textContent = '📻 Radio en vivo';
         if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'none';
       } else {
         const sel = document.getElementById('radioSelect');
-        if (!sel.value) return;
-        const nombre = sel.options[sel.selectedIndex].text.replace('📻 ','');
+        if (!sel.value) {
+          // Si no hay emisora seleccionada, abrir el player
+          if (radioPlayer) radioPlayer.classList.add('active');
+          return;
+        }
+        const nombre = sel.options[sel.selectedIndex].text;
         document.getElementById('radioNombre').textContent = '⏳ Conectando...';
         radioAudio.src = sel.value;
         radioAudio.load();
@@ -857,9 +922,11 @@
           document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
           setupMediaSession(nombre);
           if ('mediaSession' in navigator) navigator.mediaSession.playbackState = 'playing';
+          // Abrir player si está cerrado
+          if (radioPlayer) radioPlayer.classList.add('active');
         }).catch(() => {
           radioActiva = false;
-          document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+          document.getElementById('radioNombre').textContent = '⚠️ Sin señal';
         });
       }
     }
@@ -878,7 +945,7 @@
       radioActiva = false;
       document.getElementById('radioIcon').className = 'fas fa-play';
       document.getElementById('radioPlayBtn').classList.remove('playing');
-      document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
+      document.getElementById('radioNombre').textContent = '⚠️ Sin señal';
     });
 
     // Reconectar si se corta el stream
@@ -1140,13 +1207,13 @@
               <img class="img-fg" src="${img}" alt="${n.titulo||''}" loading="eager" onerror="this.src='${fb}'">
             </div>
             <div class="breaking-body">
-              <div><span class="breaking-badge">🔴 Última hora</span></div>
+              <div><span class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</span></div>
               <span class="tag ${n.categoria}" style="margin-bottom:12px;">${n.categoria||''}</span>
               <h2>${n.titulo||''}</h2>
               <p>${(n.resumen||n.contenido||'').substring(0,200)}...</p>
-              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#94a3b8;">
-                <span>📅 ${fmtFecha(n.fecha)}</span>
-                <span style="color:var(--azul);font-weight:700;">Leer más →</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#94a3b8;margin-top:12px;">
+                <span><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</span>
+                <span style="color:var(--azul);font-weight:700;">Leer más <i class="fas fa-arrow-right"></i></span>
               </div>
             </div>
           </article>`;
@@ -1210,12 +1277,20 @@
       inner.innerHTML = slides.map((n,i) => {
         const img = sanitizarImgCarrusel(n.imagen, n.id||'slide'+i, n.categoria);
         const color = getColor(n.categoria);
+        const tiempo = fmtFecha(n.fecha);
+        const palabras = (n.contenido||n.resumen||'').split(/\s+/).length;
+        const minLectura = Math.max(1, Math.ceil(palabras / 200));
         return `<div class="carousel-item${i===0?' active':''}" data-noticia-id="${n.id}" style="cursor:pointer">
           <img src="${img}" class="carousel-bg" aria-hidden="true">
           <img src="${img}" class="carousel-fg d-block w-100" alt="${n.titulo||''}" onerror="this.src='${fallbackImg(n.categoria)}'">
           <div class="carousel-caption">
             <span class="carousel-badge" style="background:${color}">${n.categoria||''}</span>
             <h3>${n.titulo||''}</h3>
+            <p>${(n.resumen||n.contenido||'').substring(0,120)}...</p>
+            <div class="carousel-meta">
+              <span><i class="far fa-clock"></i> ${tiempo}</span>
+              <span><i class="fas fa-book-open"></i> ${minLectura} min lectura</span>
+            </div>
           </div>
         </div>`;
       }).join('');
@@ -1253,9 +1328,11 @@
       if (!container || !top.length) return;
       container.innerHTML = top.map((n,i) => `
         <div class="trending-item" onclick="abrirFirestore('${n.id}')">
-          <div class="trending-number">${i+1}</div>
-          <div class="trending-title">${n.titulo||''}</div>
-          <div class="trending-meta"><i class="fas fa-clock"></i> ${fmtFecha(n.fecha)} • ${n.categoria||''}</div>
+          <div class="trending-number">${String(i+1).padStart(2,'0')}</div>
+          <div style="flex:1;">
+            <div class="trending-title">${n.titulo||''}</div>
+            <div class="trending-meta"><i class="far fa-clock"></i> ${fmtFecha(n.fecha)}</div>
+          </div>
         </div>`).join('');
 
       // Populares sidebar derecha con noticias reales

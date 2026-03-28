@@ -2531,8 +2531,8 @@
       // Agregar configuración al payload
       payload.config = config;
 
-      // Usar Vercel URL
-      const url = `/api/${endpoint}`;
+      // Usar Vercel URL directamente para evitar problemas de dominio
+      const url = `https://informate-nicaragua.vercel.app/api/${endpoint}`;
 
       const resp = await fetch(url, {
         method: 'POST',

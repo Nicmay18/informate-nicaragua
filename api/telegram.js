@@ -8,7 +8,6 @@ export default async (req, res) => {
   try {
     const { noticia, config } = req.body || {};
     
-    // Usar tokens del config (desde admin) o del .env (fallback)
     const TG_TOKEN = config?.telegram?.token || process.env.TG_TOKEN;
     const TG_CHAT_ID = config?.telegram?.chatId || process.env.TG_CHAT_ID;
 
@@ -31,23 +30,20 @@ export default async (req, res) => {
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
     const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
-    const slug = noticia.slug || noticia.id || Date.now().toString(36);
-    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || slug}`;
+    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || noticia.slug || Date.now().toString(36)}`;
 
     const text = `${emoji[noticia.categoria] || '📰'} *${cat}*\n\n*${titulo}*\n\n${resumen}\n\n🔗 [Leer noticia completa](${url})`;
 
     let telegramUrl, body;
-    
-    if (noticia.imagen) {
+
+    if (noticia.imagen && !noticia.imagen.startsWith('data:')) {
       telegramUrl = `https://api.telegram.org/bot${TG_TOKEN}/sendPhoto`;
       body = {
         chat_id: TG_CHAT_ID,
         photo: noticia.imagen,
         caption: text.slice(0, 1024),
         parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [[{ text: "📰 Leer noticia completa", url: url }]]
-        }
+        reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] }
       };
     } else {
       telegramUrl = `https://api.telegram.org/bot${TG_TOKEN}/sendMessage`;
@@ -55,55 +51,23 @@ export default async (req, res) => {
         chat_id: TG_CHAT_ID,
         text: text.slice(0, 4096),
         parse_mode: 'Markdown',
-        reply_markup: {
-          inline_keyboard: [[{ text: "📰 Leer noticia completa", url: url }]]
-        }
+        reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] }
       };
     }
 
-    // Usar https module en lugar de fetch
-    const https = require('https');
-    const urlObj = new URL(telegramUrl);
-    const postData = JSON.stringify(body);
-
-    const options = {
-      hostname: urlObj.hostname,
-      path: urlObj.pathname,
+    const response = await fetch(telegramUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Content-Length': Buffer.byteLength(postData)
-      }
-    };
-
-    const response = await new Promise((resolve, reject) => {
-      const req = https.request(options, (res) => {
-        let data = '';
-        res.on('data', (chunk) => data += chunk);
-        res.on('end', () => {
-          try {
-            resolve({ statusCode: res.statusCode, body: JSON.parse(data) });
-          } catch (e) {
-            reject(new Error('Invalid JSON response'));
-          }
-        });
-      });
-      req.on('error', reject);
-      req.write(postData);
-      req.end();
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
     });
 
-    if (response.statusCode !== 200 || !response.body.ok) {
-      return res.status(500).json({ 
-        error: 'Telegram API error', 
-        details: response.body.description || 'Unknown error'
-      });
+    const data = await response.json();
+
+    if (!data.ok) {
+      return res.status(500).json({ error: 'Telegram API error', details: data.description });
     }
 
-    return res.status(200).json({ 
-      success: true, 
-      messageId: response.body.result.message_id 
-    });
+    return res.status(200).json({ success: true, messageId: data.result.message_id });
 
   } catch (e) {
     console.error('[Telegram] Error:', e);

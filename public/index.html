@@ -526,11 +526,11 @@ Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
 <div style="text-align:center;padding:40px;">Cargando...</div>
 </div>
 
-<!-- Load More -->
-<div id="loadMoreContainer" style="display:none;text-align:center;padding:32px;">
-<div id="scrollSentinel">
-<i class="fas fa-circle-notch fa-spin" style="color:#3B82F6;font-size:24px;"></i>
-</div>
+<!-- Paginación -->
+<div id="loadMoreContainer" style="display:none;text-align:center;padding:32px 0 48px;">
+<button id="verMasBtn" onclick="cargarMas()" style="padding:14px 40px;background:#0F172A;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;" onmouseover="this.style.background='#DC2626'" onmouseout="this.style.background='#0F172A'">
+<i class="fas fa-newspaper"></i> Ver más noticias <span id="contadorRestantes" style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:12px;font-size:13px;"></span>
+</button>
 </div>
 
 <!-- Newsletter Inline -->
@@ -982,6 +982,10 @@ function renderizarNoticias() {
   
   const hayMas = filtradas.length > CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
   document.getElementById('loadMoreContainer').style.display = hayMas ? 'block' : 'none';
+  if (hayMas) {
+    const restantes = filtradas.length - CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
+    document.getElementById('contadorRestantes').textContent = restantes + ' más';
+  }
 }
 
 function extraerUbicacion(texto) {
@@ -1398,13 +1402,6 @@ function initEventListeners() {
       cerrarPremiumModal();
     }
   });
-  
-  const sentinel = document.getElementById('scrollSentinel');
-  if (sentinel) {
-    new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) cargarMas();
-    }, { rootMargin: '200px' }).observe(sentinel);
-  }
   
   const radioPlayer = document.getElementById('radioPlayer');
   const radioFloatBtn = document.getElementById('radioFloatBtn');

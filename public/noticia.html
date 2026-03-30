@@ -123,9 +123,9 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // Obtener slug de URL
+  // Obtener slug o id de URL
   const urlParams = new URLSearchParams(window.location.search);
-  const slug = urlParams.get('slug') || window.location.pathname.split('/').pop();
+  const slug = urlParams.get('id') || urlParams.get('slug') || window.location.pathname.split('/').pop();
 
   async function cargarNoticia() {
     try {

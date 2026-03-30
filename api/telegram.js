@@ -13,7 +13,7 @@ export default async (req, res) => {
     const TG_CHAT_ID = config?.telegram?.chatId || process.env.TG_CHAT_ID;
 
     if (!TG_TOKEN || !TG_CHAT_ID) {
-      return res.status(400).json({ error: 'Token o Chat ID faltante', token: !!TG_TOKEN, chatId: !!TG_CHAT_ID });
+      return res.status(400).json({ error: 'Token o Chat ID faltante' });
     }
     if (!noticia?.titulo) {
       return res.status(400).json({ error: 'Falta título' });
@@ -26,23 +26,22 @@ export default async (req, res) => {
 
     const titulo = (noticia.titulo || '').substring(0, 200);
     const resumenCompleto = noticia.resumen || noticia.contenido || '';
-    let resumen = resumenCompleto.substring(0, 300);
+    let resumen = resumenCompleto.substring(0, 250);
     const ultimoPunto = resumen.lastIndexOf('.');
-    if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
-    const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
+    if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
+    const cat = noticia.categoria?.toUpperCase() || 'NOTICIA';
     const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || Date.now().toString(36)}`;
-    const text = `${emoji[noticia.categoria] || '📰'} *${cat}*\n\n*${titulo}*\n\n${resumen}\n\n🔗 [Leer noticia completa](${url})`;
-    const boton = { reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] } };
 
-    // Siempre enviar solo texto (más confiable)
+    // Sin Markdown para evitar errores con caracteres especiales
+    const text = `${emoji[noticia.categoria] || '📰'} ${cat}\n\n${titulo}\n\n${resumen}\n\n🔗 Leer completo: ${url}`;
+
     const msgResp = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         chat_id: TG_CHAT_ID,
         text: text.slice(0, 4096),
-        parse_mode: 'Markdown',
-        ...boton
+        reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] }
       })
     });
 
@@ -50,17 +49,15 @@ export default async (req, res) => {
 
     if (!msgData.ok) {
       return res.status(500).json({ 
-        error: 'Telegram API error', 
+        error: 'Telegram error', 
         details: msgData.description,
-        error_code: msgData.error_code,
-        chat_id: TG_CHAT_ID
+        code: msgData.error_code
       });
     }
 
     return res.status(200).json({ success: true, messageId: msgData.result.message_id });
 
   } catch (e) {
-    console.error('[Telegram] Error:', e);
     return res.status(500).json({ error: e.message });
   }
 };

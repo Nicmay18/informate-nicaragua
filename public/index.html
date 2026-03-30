@@ -4,28 +4,46 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
-<meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información.">
+<meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
 <meta name="keywords" content="Nicaragua, noticias, sucesos, deportes, tecnología, nacionales, internacionales">
 <meta name="author" content="Nicaragua Informate">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://nicaraguainformate.com" id="canonicalLink">
+
+<!-- Open Graph completo -->
 <meta property="og:title" content="Nicaragua Informate - Noticias al Instante">
-<meta property="og:description" content="Tu fuente confiable de noticias de Nicaragua">
+<meta property="og:description" content="Tu fuente confiable de noticias de Nicaragua. Información actualizada sobre sucesos, deportes, tecnología y más.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nicaraguainformate.com">
 <meta property="og:image" content="https://nicaraguainformate.com/logo.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Nicaragua Informate">
+<meta property="og:locale" content="es_NI">
+
+<!-- Twitter Cards -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nicaragua Informate - Noticias al Instante">
+<meta name="twitter:description" content="Tu fuente confiable de noticias de Nicaragua">
+<meta name="twitter:image" content="https://nicaraguainformate.com/logo.png">
 
 <!-- PWA -->
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#DC2626">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NI Noticias">
+<meta name="apple-mobile-web-app-title" content="NI Informate">
+<link rel="apple-touch-icon" href="/logo.png">
 
-<!-- SEO -->
-<link rel="canonical" href="https://nicaraguainformate.com">
-<meta name="max-image-preview" content="large">
-
-<!-- Schema.org WebSite -->
+<!-- Preconnect crítico -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://www.googletagmanager.com">
+<link rel="preconnect" href="https://pagead2.googlesyndication.com">
+<link rel="dns-prefetch" href="https://firestore.googleapis.com">
+<link rel="dns-prefetch" href="https://images.unsplash.com">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -51,12 +69,11 @@ gtag('js', new Date());
 gtag('config', 'G-W1B5J61WEP', {
   'anonymize_ip': true,
   'allow_google_signals': true,
-  'enhanced_measurement': {
-    'scrolls': true,
-    'outbound_clicks': true,
-    'site_search': true,
-    'video_engagement': true,
-    'file_downloads': true
+  'send_page_view': true,
+  'custom_map': {
+    'dimension1': 'article_author',
+    'dimension2': 'article_category',
+    'dimension3': 'content_type'
   }
 });
 

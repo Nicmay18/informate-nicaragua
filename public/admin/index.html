@@ -2013,7 +2013,7 @@
       const url = `https://nicaraguainformate.com/noticia?id=${noticia.id}`;
       const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 200);
       
-      const texto = `${cat} *${(noticia.titulo || '').toUpperCase()}*\n\n${resumen}...\n\n🔗 Leer completo: ${url}\n\n📲 *Nicaragua Informate*\n👉 Canal: https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17`;
+      const texto = `${cat} *${(noticia.titulo || '').toUpperCase()}*\n\n🔗 ${url}`;
 
       // Crear modal con el texto
       const modal = document.createElement('div');

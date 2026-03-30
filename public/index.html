@@ -31,6 +31,21 @@ gtag('config', 'G-W1B5J61WEP', {
     'file_downloads': true
   }
 });
+
+// Scroll depth tracking
+(function() {
+  const marks = [25, 50, 75, 90];
+  const fired = [];
+  window.addEventListener('scroll', function() {
+    const pct = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+    marks.forEach(m => {
+      if (pct >= m && !fired.includes(m)) {
+        fired.push(m);
+        gtag('event', 'scroll_depth', { 'event_category': 'engagement', 'event_label': m + '%', 'value': m });
+      }
+    });
+  }, { passive: true });
+})();
 </script>
 
 <!-- Google AdSense -->
@@ -69,11 +84,8 @@ gtag('config', 'G-W1B5J61WEP', {
 --premium-gold: #F59E0B;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; user-select: none; -webkit-user-select: none; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: var(--font-sans); background: var(--surface-light); color: var(--text-primary); line-height: 1.6; }
-
-/* Protección de contenido - permitir selección solo en inputs */
-input, textarea { user-select: text; -webkit-user-select: text; }
 
 /* Header */
 .topbar { background: #fff; border-bottom: 1px solid var(--border-color); padding: 16px 24px; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
@@ -306,96 +318,17 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 }
 </style>
 
-<!-- Protección Anti-Copia y Anti-DevTools -->
+<!-- Protección básica de imágenes -->
 <script>
-// Desactivar clic derecho en contenido
 document.addEventListener('contextmenu', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body, .carousel-item')) {
-        e.preventDefault();
-        showAntiCopyToast('🔒 Contenido protegido por Nicaragua Informate');
-        gtag('event', 'right_click_blocked', {
-            'event_category': 'content_protection',
-            'event_label': 'right_click_attempt'
-        });
-    }
+  if (e.target.tagName === 'IMG') e.preventDefault();
 });
-
-// Bloquear selección de texto en noticias
-document.addEventListener('selectstart', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body') && !e.target.closest('input, textarea')) {
-        e.preventDefault();
-    }
-});
-
-// Bloquear copia
-document.addEventListener('copy', function(e) {
-    if (e.target.closest('.news-card, .breaking-card, .modal-body')) {
-        e.preventDefault();
-        showAntiCopyToast('📰 Para compartir, usa los botones de redes sociales');
-        gtag('event', 'copy_blocked', {
-            'event_category': 'content_protection',
-            'event_label': 'copy_attempt'
-        });
-    }
-});
-
-// Bloquear cortar
-document.addEventListener('cut', function(e) {
-    e.preventDefault();
-});
-
-// Detectar DevTools
-let devtoolsOpen = false;
-const element = new Image();
-Object.defineProperty(element, 'id', {
-    get: function() {
-        devtoolsOpen = true;
-        window.location.href = 'about:blank';
-    }
-});
-console.log('%c', element);
-
-// Anti-scraping: Detectar bots
-(function() {
-    const botPatterns = /bot|crawler|spider|crawling/i;
-    if (botPatterns.test(navigator.userAgent)) {
-        document.body.innerHTML = '<h1>Access Denied</h1>';
-        gtag('event', 'bot_detected', {
-            'event_category': 'security',
-            'event_label': navigator.userAgent
-        });
-    }
-    
-    // Rate limiting para scraping
-    let pageViews = parseInt(localStorage.getItem('pageViews') || '0');
-    pageViews++;
-    localStorage.setItem('pageViews', pageViews);
-    
-    if (pageViews > 100) {
-        document.body.innerHTML = '<h1>Rate Limit Exceeded</h1><p>Please try again later.</p>';
-    }
-})();
-
-// Función para mostrar toast
 function showAntiCopyToast(message) {
-    let toast = document.getElementById('antiCopyToast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'antiCopyToast';
-        toast.className = 'anti-copy-toast';
-        document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-}
-
-// Ofuscación de contenido para prevenir scraping automático
-function obfuscateContent(text) {
-    return text.split('').map(char => {
-        if (char === ' ') return ' ';
-        return '&#' + char.charCodeAt(0) + ';';
-    }).join('');
+  let toast = document.getElementById('antiCopyToast');
+  if (!toast) { toast = document.createElement('div'); toast.id = 'antiCopyToast'; toast.className = 'anti-copy-toast'; document.body.appendChild(toast); }
+  toast.textContent = message;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 3000);
 }
 </script>
 </head>
@@ -531,17 +464,6 @@ Ver ofertas en Amazon <i class="fas fa-external-link-alt"></i>
 <button id="verMasBtn" onclick="cargarMas()" style="padding:14px 40px;background:#0F172A;color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;display:inline-flex;align-items:center;gap:10px;" onmouseover="this.style.background='#DC2626'" onmouseout="this.style.background='#0F172A'">
 <i class="fas fa-newspaper"></i> Ver más noticias <span id="contadorRestantes" style="background:rgba(255,255,255,0.2);padding:2px 8px;border-radius:12px;font-size:13px;"></span>
 </button>
-</div>
-
-<!-- Newsletter Inline -->
-<div class="newsletter-box" style="margin: 48px 0;">
-<h4>📧 Suscríbete a nuestro Newsletter</h4>
-<p>Recibe las noticias más importantes de Nicaragua directamente en tu correo cada mañana. ¡Es gratis!</p>
-<form onsubmit="suscribirNewsletter(event)">
-<input type="email" class="newsletter-input" placeholder="Tu correo electrónico" required>
-<button type="submit" class="newsletter-btn">Suscribirme ahora</button>
-</form>
-<p style="font-size: 11px; margin-top: 12px; opacity: 0.8;">Al suscribirte, aceptas nuestra política de privacidad. Puedes darte de baja en cualquier momento.</p>
 </div>
 
 <!-- Ad Footer -->
@@ -818,14 +740,6 @@ const utils = {
   capitalize: (str) => {
     if (!str) return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
-  },
-  // Ofuscación para proteger contra scraping
-  obfuscateText: (text) => {
-    if (!text) return '';
-    return text.split('').map(char => {
-      if (char === ' ') return ' ';
-      return '&#' + char.charCodeAt(0) + ';';
-    }).join('');
   }
 };
 

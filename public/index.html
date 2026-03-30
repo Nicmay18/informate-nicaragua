@@ -940,7 +940,7 @@ function renderizarNoticias() {
     return `<article class="news-card" onclick="abrirNoticia('${n.id}')">
       ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
       ${badgePremium}
-      <div class="card-image-wrapper"><img src="${img}" alt="${titulo}" loading="lazy"><div class="watermark">© Nicaragua Informate</div></div>
+      <div class="card-image-wrapper"><img src="${img}" alt="${titulo}" loading="lazy" decoding="async" width="300" height="169"><div class="watermark">© Nicaragua Informate</div></div>
       <div class="card-body">
         <span class="tag" style="color:${getCategoryColor(n.categoria)}">${(n.categoria || '').toUpperCase()}</span>
         ${ubicacion ? `<span class="news-location">${ubicacion}</span>` : ''}
@@ -958,6 +958,7 @@ function renderizarNoticias() {
           <button onclick="compartirNoticia('facebook', '${n.id}')" title="Compartir en Facebook"><i class="fab fa-facebook-f"></i></button>
           <button onclick="compartirNoticia('twitter', '${n.id}')" title="Compartir en Twitter"><i class="fab fa-twitter"></i></button>
           <button onclick="compartirNoticia('whatsapp', '${n.id}')" title="Compartir en WhatsApp"><i class="fab fa-whatsapp"></i></button>
+          <button onclick="guardarParaDespues('${n.id}', this)" title="Guardar para leer después" style="margin-left:auto;">${estaGuardada(n.id) ? '🔖' : '🔖'}</button>
         </div>
       </div>
     </article>`;
@@ -1409,13 +1410,38 @@ function initEventListeners() {
 }
 
 function initAds() {
-  setTimeout(() => {
-    if (typeof adsbygoogle !== 'undefined') {
-      document.querySelectorAll('.adsbygoogle').forEach(() => {
+  // Lazy loading de AdSense con IntersectionObserver
+  const adSlots = document.querySelectorAll('.adsbygoogle');
+  if (!adSlots.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
         try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-      });
-    }
-  }, 1000);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '200px' });
+  adSlots.forEach(slot => observer.observe(slot));
+}
+
+// Guardar para leer después
+function estaGuardada(id) {
+  const guardadas = JSON.parse(localStorage.getItem('noticias_guardadas') || '[]');
+  return guardadas.includes(id);
+}
+
+function guardarParaDespues(id, btn) {
+  let guardadas = JSON.parse(localStorage.getItem('noticias_guardadas') || '[]');
+  if (guardadas.includes(id)) {
+    guardadas = guardadas.filter(x => x !== id);
+    if (btn) btn.style.opacity = '0.5';
+    showAntiCopyToast('Noticia eliminada de guardados');
+  } else {
+    guardadas.push(id);
+    if (btn) btn.style.opacity = '1';
+    showAntiCopyToast('📖 Noticia guardada para leer después');
+  }
+  localStorage.setItem('noticias_guardadas', JSON.stringify(guardadas));
 }
 
 // INICIAR

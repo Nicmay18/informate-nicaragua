@@ -117,11 +117,33 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 /* Carousel */
 .carousel-item { height: 450px; background: var(--brand-primary); position: relative; overflow: hidden; border-radius: 12px; }
 .carousel-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.carousel-caption-custom { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); padding: 48px 32px 32px; color: #fff; }
-.carousel-badge { display: inline-block; padding: 6px 14px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
-.carousel-caption-custom h3 { font-family: var(--font-serif); font-size: 32px; font-weight: 700; line-height: 1.2; margin-bottom: 12px; }
-.carousel-caption-custom p { font-size: 15px; opacity: 0.9; line-height: 1.5; }
-.carousel-meta { display: flex; gap: 20px; font-size: 13px; color: #CBD5E1; margin-top: 10px; }
+.carousel-caption-custom { 
+  position: absolute; 
+  bottom: 0; 
+  left: 0; 
+  right: 0; 
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); 
+  padding: 60px 40px 40px; 
+  color: #fff; 
+}
+.carousel-badge { 
+  display: inline-block; 
+  padding: 8px 16px; 
+  border-radius: 6px; 
+  font-size: 10px; 
+  font-weight: 700; 
+  text-transform: uppercase; 
+  margin-bottom: 16px;
+  letter-spacing: 1px;
+}
+.carousel-caption-custom h3 { 
+  font-family: var(--font-serif); 
+  font-size: 36px; 
+  font-weight: 700; 
+  line-height: 1.3; 
+  margin: 0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
 
 /* Cards con Protección */
 .breaking-card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: 32px; cursor: pointer; transition: all 0.3s; border: 1px solid var(--border-color); position: relative; }
@@ -277,7 +299,8 @@ input, textarea { user-select: text; -webkit-user-select: text; }
 .breaking-card .card-image { height: 200px; }
 .footer-grid { grid-template-columns: 1fr; }
 .carousel-item { height: 300px; }
-.carousel-caption-custom h3 { font-size: 22px; }
+.carousel-caption-custom h3 { font-size: 24px; }
+.carousel-caption-custom { padding: 40px 24px 24px; }
 .sticky-cta { flex-direction: column; text-align: center; }
 .topbar-actions { display: none; }
 }
@@ -1014,12 +1037,7 @@ function renderizarCarrusel() {
       <img src="${img}" alt="${titulo}">
       <div class="carousel-caption-custom">
         <span class="carousel-badge" style="background:${color}">${(n.categoria || '').toUpperCase()}</span>
-        <h3>${titulo.length > 100 ? titulo.substring(0, 97) + '...' : titulo}</h3>
-        <p>${(n.resumen || n.contenido || '').substring(0, 140)}...</p>
-        <div class="carousel-meta">
-          <span><i class="far fa-clock"></i> ${tiempo}</span>
-          <span><i class="fas fa-book-reader"></i> ${minLectura} min</span>
-        </div>
+        <h3>${titulo}</h3>
       </div>
     </div>`;
   }).join('');

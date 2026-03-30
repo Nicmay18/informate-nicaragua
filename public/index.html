@@ -14,6 +14,34 @@
 <meta property="og:url" content="https://nicaraguainformate.com">
 <meta property="og:image" content="https://nicaraguainformate.com/logo.png">
 
+<!-- PWA -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#DC2626">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NI Noticias">
+
+<!-- SEO -->
+<link rel="canonical" href="https://nicaraguainformate.com">
+<meta name="max-image-preview" content="large">
+
+<!-- Schema.org WebSite -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "Nicaragua Informate",
+  "url": "https://nicaraguainformate.com",
+  "logo": "https://nicaraguainformate.com/logo.png",
+  "sameAs": [
+    "https://www.facebook.com/profile.php?id=61577962970892",
+    "https://t.me/+fHHjncJqMQM3NjZh"
+  ],
+  "foundingDate": "2024",
+  "description": "Tu fuente confiable de noticias de Nicaragua al instante"
+}
+</script>
+
 <!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B5J61WEP"></script>
 <script>
@@ -1092,6 +1120,21 @@ function abrirModal(n) {
   document.getElementById('modalCat').style.color = getCategoryColor(n.categoria);
   document.getElementById('modalTitle').textContent = utils.capitalize(n.titulo || '');
   document.getElementById('modalImg').src = img;
+
+  // Schema.org NewsArticle dinámico
+  let schema = document.getElementById('schemaArticle');
+  if (!schema) { schema = document.createElement('script'); schema.id = 'schemaArticle'; schema.type = 'application/ld+json'; document.head.appendChild(schema); }
+  const fecha = n.fecha?.toDate ? n.fecha.toDate() : (n.fecha?.seconds ? new Date(n.fecha.seconds*1000) : new Date());
+  schema.textContent = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": n.titulo,
+    "image": [img.startsWith('data:') ? 'https://nicaraguainformate.com/logo.png' : img],
+    "datePublished": fecha.toISOString(),
+    "author": { "@type": "Person", "name": "Keyling Rivera" },
+    "publisher": { "@type": "Organization", "name": "Nicaragua Informate", "logo": { "@type": "ImageObject", "url": "https://nicaraguainformate.com/logo.png" } },
+    "description": n.resumen || ''
+  });
   
   // Si es premium y no es usuario, mostrar solo resumen
   if (n.premium && !esUsuarioPremium) {
@@ -1333,6 +1376,13 @@ function initAds() {
 
 // INICIAR
 document.addEventListener('DOMContentLoaded', init);
+
+// Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+  });
+}
 </script>
 </body>
 </html>

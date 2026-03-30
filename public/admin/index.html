@@ -523,11 +523,16 @@
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label">Título <span class="required">*</span></label>
-                  <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances en infraestructura nacional" required>
-                  <button type="button" onclick="redactarConIA()" style="margin-top:10px;padding:10px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
-                    <i class="fas fa-magic"></i> Redactar con IA (Gemini)
-                  </button>
-                  <span id="iaStatus" style="margin-left:10px;font-size:13px;color:#94a3b8;"></span>
+                  <div class="input-wrapper">
+                    <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances en infraestructura nacional" required>
+                  </div>
+                  <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <button type="button" onclick="redactarConIA()" style="padding:10px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
+                      <i class="fas fa-magic"></i> Redactar con IA (Gemini)
+                    </button>
+                    <span id="iaStatus" style="font-size:13px;color:#94a3b8;"></span>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label class="form-label">Categoría <span class="required">*</span></label>
                   <select class="form-select" id="categoria" required onchange="sugerirImagenCategoria()">
@@ -907,8 +912,16 @@
       FACEBOOK_PAGE_ID: '61578261125687',
       FACEBOOK_PAGE_ID_2: '61577962970892',
       FACEBOOK_ACCESS_TOKEN: '',
-      SITE_URL: 'https://nicaraguainformate.com'
+      SITE_URL: 'https://nicaraguainformate.com',
+      API_BASE: 'https://informate-nicaragua.vercel.app'
     };
+
+    function esImagenValidaParaRedes(url) {
+      if (!url || typeof url !== 'string') return false;
+      if (url.startsWith('data:')) return false;
+      if (url.startsWith('blob:')) return false;
+      return url.startsWith('http://') || url.startsWith('https://');
+    }
 
     let noticias = [];
     let noticiaEditando = null;
@@ -1365,41 +1378,45 @@
     // APIS DE REDES SOCIALES
     // ==========================================
     async function enviarTelegram(noticia) {
-      const token = document.getElementById('configTelegramToken')?.value || CONFIG.TELEGRAM_BOT_TOKEN;
-      const chatId = document.getElementById('configTelegramChat')?.value || CONFIG.TELEGRAM_CHAT_ID;
-
-      const url = `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
-      const mensaje = `${noticia.categoria ? '🔴' : '📰'} ${noticia.titulo}\n\n${(noticia.resumen || '').substring(0, 200)}\n\n🔗 ${url}`;
-
-      // Enviar directo al bot desde el navegador
-      const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      const imagenUrl = noticia.imagenRedes || noticia.imagen;
+      const payload = {
+        noticia: {
+          titulo: noticia.titulo,
+          contenido: noticia.contenido,
+          resumen: noticia.resumen,
+          categoria: noticia.categoria,
+          imagen: esImagenValidaParaRedes(imagenUrl) ? imagenUrl : null,
+          id: noticia.id
+        }
+      };
+      const res = await fetch(`${CONFIG.API_BASE}/api/telegram`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: mensaje,
-          reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] }
-        })
+        body: JSON.stringify(payload)
       });
-
-      const data = await resp.json();
-      if (!data.ok) throw new Error(data.description || 'Error Telegram');
-      return data;
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+      return await res.json();
     }
 
     async function enviarFacebook(noticia, pageId) {
-      const res = await fetch('/api/facebook', {
+      const imagenUrl = noticia.imagenRedes || noticia.imagen;
+      const payload = {
+        noticia: {
+          titulo: noticia.titulo,
+          contenido: noticia.contenido,
+          resumen: noticia.resumen,
+          categoria: noticia.categoria,
+          imagen: esImagenValidaParaRedes(imagenUrl) ? imagenUrl : null
+        },
+        page_id: pageId
+      };
+      const res = await fetch(`${CONFIG.API_BASE}/api/facebook`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          noticia,
-          page_id: pageId,
-          access_token: document.getElementById('configFacebookToken').value || CONFIG.FACEBOOK_ACCESS_TOKEN
-        })
+        body: JSON.stringify(payload)
       });
-      const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error || 'Error en API de Facebook');
-      return data;
+      if (!res.ok) throw new Error(`HTTP ${res.status}: ${await res.text()}`);
+      return await res.json();
     }
 
     // ==========================================
@@ -2024,12 +2041,21 @@
       console.log('%c Sistema de protección de contenido activado ', 'color:#f87171;font-weight:600;');
     });
 
-    // Auto-refresh cada 2 minutos
+    // Auto-refresh inteligente cada 5 minutos
+    let lastRefresh = 0;
     setInterval(() => {
-      if (document.getElementById('dashboard').classList.contains('active')) {
-        cargarNoticiasFirestore();
+      const now = Date.now();
+      const dashboard = document.getElementById('dashboard');
+      if (dashboard?.classList.contains('active') && (now - lastRefresh > 300000)) {
+        const formDirty = document.getElementById('titulo').value || document.getElementById('contenido').value;
+        if (!formDirty && !noticiaEditando) {
+          cargarNoticiasFirestore();
+          lastRefresh = now;
+        }
       }
-    }, 120000);
+    }, 60000);
+
+    document.addEventListener('DOMContentLoaded', () => { lastRefresh = Date.now(); });
 
     // IA - Redactar con Gemini via API Vercel
     window.redactarConIA = async function() {
@@ -2039,11 +2065,12 @@
 
       const status = document.getElementById('iaStatus');
       const btn = document.querySelector('button[onclick="redactarConIA()"]');
-      status.textContent = '⏳ Consultando IA...';
-      if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+      status.textContent = '⏳ Consultando a Gemini...';
+      status.style.color = '#60a5fa';
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.6'; }
 
       try {
-        const resp = await fetch('https://informate-nicaragua.vercel.app/api/gemini', {
+        const resp = await fetch(`${CONFIG.API_BASE}/api/gemini`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ titulo, categoria: categoria || 'General', palabras: 400 })
@@ -2054,19 +2081,25 @@
 
         document.getElementById('contenido').value = data.contenido;
         if (!document.getElementById('resumen').value) {
-          document.getElementById('resumen').value = data.contenido.split('\n')[0].substring(0, 150) + '...';
+          const primerParrafo = data.contenido.split('\n\n')[0] || data.contenido;
+          document.getElementById('resumen').value = primerParrafo.substring(0, 150).trim() + '...';
         }
         contarPalabras();
 
-        status.textContent = '✅ Listo';
+        status.textContent = `✅ Listo (${data.tokens || '~'} tokens)`;
         status.style.color = '#34d399';
         showToast('success', 'IA lista', 'Noticia redactada correctamente');
-        setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 3000);
+        setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 4000);
 
       } catch (err) {
         status.textContent = '❌ ' + err.message;
         status.style.color = '#f87171';
         showToast('error', 'Error IA', err.message);
+        const plantilla = `[CIUDAD], Nicaragua. ${new Date().toLocaleDateString('es-NI')} — \n\n[Desarrollo: ${titulo}]\n\n[Contexto y detalles]\n\n[Conclusión]`;
+        if (confirm('¿Usar plantilla manual?')) {
+          document.getElementById('contenido').value = plantilla;
+          contarPalabras();
+        }
         setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 5000);
       } finally {
         if (btn) { btn.disabled = false; btn.style.opacity = '1'; }

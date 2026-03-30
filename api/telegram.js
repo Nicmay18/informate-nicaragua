@@ -13,7 +13,7 @@ export default async (req, res) => {
     const TG_CHAT_ID = config?.telegram?.chatId || process.env.TG_CHAT_ID;
 
     if (!TG_TOKEN || !TG_CHAT_ID) {
-      return res.status(400).json({ error: 'Telegram no configurado' });
+      return res.status(400).json({ error: 'Token o Chat ID faltante', token: !!TG_TOKEN, chatId: !!TG_CHAT_ID });
     }
     if (!noticia?.titulo) {
       return res.status(400).json({ error: 'Falta título' });
@@ -30,35 +30,11 @@ export default async (req, res) => {
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
     const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
-    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || noticia.slug || Date.now().toString(36)}`;
+    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || Date.now().toString(36)}`;
     const text = `${emoji[noticia.categoria] || '📰'} *${cat}*\n\n*${titulo}*\n\n${resumen}\n\n🔗 [Leer noticia completa](${url})`;
     const boton = { reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] } };
 
-    // Intentar con foto si la imagen es una URL válida (no base64)
-    const imagenValida = noticia.imagen && 
-      !noticia.imagen.startsWith('data:') && 
-      (noticia.imagen.startsWith('http://') || noticia.imagen.startsWith('https://'));
-
-    if (imagenValida) {
-      const fotoResp = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendPhoto`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: TG_CHAT_ID,
-          photo: noticia.imagen,
-          caption: text.slice(0, 1024),
-          parse_mode: 'Markdown',
-          ...boton
-        })
-      });
-      const fotoData = await fotoResp.json();
-      if (fotoData.ok) {
-        return res.status(200).json({ success: true, messageId: fotoData.result.message_id });
-      }
-      // Si falla la foto, cae al mensaje de texto
-    }
-
-    // Enviar solo texto
+    // Siempre enviar solo texto (más confiable)
     const msgResp = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -69,10 +45,16 @@ export default async (req, res) => {
         ...boton
       })
     });
+
     const msgData = await msgResp.json();
 
     if (!msgData.ok) {
-      return res.status(500).json({ error: 'Telegram API error', details: msgData.description });
+      return res.status(500).json({ 
+        error: 'Telegram API error', 
+        details: msgData.description,
+        error_code: msgData.error_code,
+        chat_id: TG_CHAT_ID
+      });
     }
 
     return res.status(200).json({ success: true, messageId: msgData.result.message_id });

@@ -1,6 +1,6 @@
-const STATIC_CACHE = 'static-v2';
-const IMAGE_CACHE = 'images-v2';
-const API_CACHE = 'api-v2';
+const STATIC_CACHE = 'static-v3';
+const IMAGE_CACHE = 'images-v3';
+const API_CACHE = 'api-v3';
 
 const STATIC_ASSETS = ['/', '/offline.html', '/logo.png'];
 

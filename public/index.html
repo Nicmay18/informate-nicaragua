@@ -810,7 +810,7 @@ const utils = {
     return fallbacks[categoria] || fallbacks['Sucesos'];
   },
   sanitizeImage: (url, categoria) => {
-    if (!url || url.startsWith('data:') || /scontent|fbcdn\.net|facebook\.com\/photo/i.test(url)) {
+    if (!url || /scontent|fbcdn\.net|facebook\.com\/photo/i.test(url)) {
       return utils.getFallbackImage(categoria);
     }
     return url;

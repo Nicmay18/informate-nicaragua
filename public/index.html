@@ -112,11 +112,13 @@ gtag('config', 'G-W1B5J61WEP', {
     })(window, document, "clarity", "script", "YOUR_CLARITY_ID");
 </script> -->
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+<!-- Bootstrap CSS - defer via preload -->
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></noscript>
 
 <!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -668,15 +670,6 @@ Unirme al canal
 </button>
 </div>
 
-<!-- PWA Install Banner -->
-<div id="pwaInstallBanner" style="position:fixed;bottom:0;left:0;right:0;background:#0F172A;color:white;padding:16px 24px;display:none;align-items:center;justify-content:space-between;gap:16px;z-index:1000;box-shadow:0 -4px 20px rgba(0,0,0,0.2);">
-  <div>📱 Instala Nicaragua Informate para leer noticias sin conexión</div>
-  <div style="display:flex;gap:8px;">
-    <button onclick="installPWA()" style="padding:8px 16px;background:#DC2626;color:white;border:none;border-radius:6px;font-weight:600;cursor:pointer;">Instalar</button>
-    <button onclick="this.closest('#pwaInstallBanner').remove()" style="padding:8px 16px;background:transparent;color:white;border:1px solid rgba(255,255,255,0.3);border-radius:6px;cursor:pointer;">✕</button>
-  </div>
-</div>
-
 <!-- Footer -->
 <footer class="footer">
 <div class="footer-grid">
@@ -1009,7 +1002,7 @@ function renderizarCarrusel() {
     const titulo = utils.capitalize(n.titulo || '');
     
     return `<div class="carousel-item ${i === 0 ? 'active' : ''}" data-noticia-id="${n.id}">
-      <img src="${img}" alt="${titulo}" ${i === 0 ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async">
+      <img src="${img}" alt="${titulo}">
       <div class="carousel-caption-custom">
         <span class="carousel-badge" style="background:${color}">${(n.categoria || '').toUpperCase()}</span>
         <h3>${titulo}</h3>
@@ -1439,25 +1432,6 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').catch(() => {});
   });
-}
-
-// PWA Install Banner
-let deferredPrompt = null;
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  deferredPrompt = e;
-  setTimeout(() => {
-    const banner = document.getElementById('pwaInstallBanner');
-    if (banner) banner.classList.add('visible');
-  }, 30000);
-});
-
-async function installPWA() {
-  if (!deferredPrompt) return;
-  deferredPrompt.prompt();
-  const { outcome } = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') document.getElementById('pwaInstallBanner').remove();
-  deferredPrompt = null;
 }
 </script>
 </body>

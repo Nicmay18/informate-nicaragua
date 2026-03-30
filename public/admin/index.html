@@ -1367,21 +1367,23 @@
     async function enviarTelegram(noticia) {
       const token = document.getElementById('configTelegramToken')?.value || CONFIG.TELEGRAM_BOT_TOKEN;
       const chatId = document.getElementById('configTelegramChat')?.value || CONFIG.TELEGRAM_CHAT_ID;
-      // Usar imagen sin base64 para Telegram
-      const noticiaParaTelegram = { 
-        ...noticia, 
-        imagen: noticia.imagenRedes || (noticia.imagen?.startsWith('data:') ? '' : noticia.imagen)
-      };
-      const res = await fetch('https://informate-nicaragua.vercel.app/api/telegram', {
+
+      const url = `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
+      const mensaje = `${noticia.categoria ? '🔴' : '📰'} ${noticia.titulo}\n\n${(noticia.resumen || '').substring(0, 200)}\n\n🔗 ${url}`;
+
+      // Enviar directo al bot desde el navegador
+      const resp = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          noticia: noticiaParaTelegram,
-          config: { telegram: { token, chatId } }
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: mensaje,
+          reply_markup: { inline_keyboard: [[{ text: "📰 Leer noticia completa", url }]] }
         })
       });
-      const data = await res.json();
-      if (!res.ok || data.error) throw new Error(data.error || data.details || 'Error en API de Telegram');
+
+      const data = await resp.json();
+      if (!data.ok) throw new Error(data.description || 'Error Telegram');
       return data;
     }
 
@@ -2033,7 +2035,7 @@
     function mostrarFormatoWhatsApp(noticia) {
       const emoji = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎨','Espectáculos':'⭐'};
       const cat = emoji[noticia.categoria] || '📰';
-      const url = `https://nicaraguainformate.com/noticia?id=${noticia.id}`;
+      const url = `https://nicaraguainformate.com/noticia.html?id=${noticia.id}`;
       const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 200);
       
       const texto = `${cat} *${(noticia.titulo || '').toUpperCase()}*\n\n🔗 ${url}`;

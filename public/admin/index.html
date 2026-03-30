@@ -1158,6 +1158,8 @@
         
         // Por ahora, usamos la imagen en base64 directamente
         urlInput.value = base64;
+        // Guardar URL original para Telegram (no base64)
+        urlInput.dataset.originalUrl = '';
         if (uploadText) uploadText.textContent = '✅ Imagen protegida lista';
         showToast('success', 'Imagen lista', 'Marca de agua aplicada y lista para publicar');
         registrarActividad(`Imagen procesada con marca de agua: ${nombre}`, 'success');
@@ -1222,6 +1224,9 @@
       const contenido = document.getElementById('contenido').value.trim();
       const resumen = document.getElementById('resumen').value.trim() || contenido.substring(0, 200) + '...';
       const imagenUrl = document.getElementById('imagenUrl').value.trim();
+      // Para Telegram usar URL original si la imagen es base64
+      const imagenUrlOriginal = document.getElementById('imagenUrl').dataset.originalUrl || 
+        (imagenUrl.startsWith('data:') ? '' : imagenUrl);
       const destacada = document.getElementById('destacada').checked;
       const enviarTlg = document.getElementById('enviarTelegram').checked;
       const enviarFb = document.getElementById('enviarFacebook').checked;
@@ -1263,6 +1268,8 @@
           noticiaData.fecha = serverTimestamp();
           const ref = await addDoc(collection(window.db, 'noticias'), noticiaData);
           noticiaData.id = ref.id;
+          // Para redes sociales usar imagen sin base64
+          noticiaData.imagenRedes = imagenUrlOriginal || imagenUrl;
           agregarLogRedes('✅ Firestore: Noticia creada con ID ' + ref.id);
           registrarActividad(`Noticia creada: "${noticiaData.titulo}" (${noticiaData.categoria})`, 'success');
           localStorage.removeItem('borrador_noticia');
@@ -1349,11 +1356,16 @@
     async function enviarTelegram(noticia) {
       const token = document.getElementById('configTelegramToken')?.value || CONFIG.TELEGRAM_BOT_TOKEN;
       const chatId = document.getElementById('configTelegramChat')?.value || CONFIG.TELEGRAM_CHAT_ID;
+      // Usar imagen sin base64 para Telegram
+      const noticiaParaTelegram = { 
+        ...noticia, 
+        imagen: noticia.imagenRedes || (noticia.imagen?.startsWith('data:') ? '' : noticia.imagen)
+      };
       const res = await fetch('https://informate-nicaragua.vercel.app/api/telegram', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
-          noticia,
+          noticia: noticiaParaTelegram,
           config: { telegram: { token, chatId } }
         })
       });

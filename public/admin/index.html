@@ -2031,6 +2031,48 @@
       }
     }, 120000);
 
+    // IA - Redactar con Gemini via API Vercel
+    window.redactarConIA = async function() {
+      const titulo = document.getElementById('titulo').value.trim();
+      const categoria = document.getElementById('categoria').value;
+      if (!titulo) { showToast('warning', 'Falta titular', 'Escribe el titular primero'); return; }
+
+      const status = document.getElementById('iaStatus');
+      const btn = document.querySelector('button[onclick="redactarConIA()"]');
+      status.textContent = '⏳ Consultando IA...';
+      if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+
+      try {
+        const resp = await fetch('https://informate-nicaragua.vercel.app/api/gemini', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ titulo, categoria: categoria || 'General', palabras: 400 })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.details || data.error || 'Error desconocido');
+
+        document.getElementById('contenido').value = data.contenido;
+        if (!document.getElementById('resumen').value) {
+          document.getElementById('resumen').value = data.contenido.split('\n')[0].substring(0, 150) + '...';
+        }
+        contarPalabras();
+
+        status.textContent = '✅ Listo';
+        status.style.color = '#34d399';
+        showToast('success', 'IA lista', 'Noticia redactada correctamente');
+        setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 3000);
+
+      } catch (err) {
+        status.textContent = '❌ ' + err.message;
+        status.style.color = '#f87171';
+        showToast('error', 'Error IA', err.message);
+        setTimeout(() => { status.textContent = ''; status.style.color = ''; }, 5000);
+      } finally {
+        if (btn) { btn.disabled = false; btn.style.opacity = '1'; }
+      }
+    };
+
     // Formato WhatsApp para copiar y pegar
     function mostrarFormatoWhatsApp(noticia) {
       const emoji = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎨','Espectáculos':'⭐'};

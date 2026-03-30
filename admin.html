@@ -1715,6 +1715,10 @@
                   <label class="form-label">Título <span class="required">*</span></label>
                   <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances significativos en infraestructura vial" required>
                   <div class="form-hint">Máximo 120 caracteres recomendados para SEO</div>
+                  <button type="button" onclick="redactarConIA()" style="margin-top:10px;padding:10px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
+                    <i class="fas fa-magic"></i> Redactar con IA (Gemini)
+                  </button>
+                  <span id="iaStatus" style="margin-left:10px;font-size:13px;color:#6b7280;"></span>
                 </div>
 
                 <div class="form-group">
@@ -3062,6 +3066,65 @@
         cargarConfiguracion();
       }
     }, 1000);
+
+    // IA - Redactar con Gemini
+    window.redactarConIA = async function() {
+      const titulo = document.getElementById('titulo').value.trim();
+      const categoria = document.getElementById('categoria').value;
+      
+      if (!titulo) {
+        showToast('Escribe el titular primero', 'warning');
+        return;
+      }
+
+      const status = document.getElementById('iaStatus');
+      status.textContent = '⏳ Redactando...';
+
+      try {
+        const GEMINI_KEY = 'AIzaSyCQituTaOZOhktUw71r088NYzAe2XLbzBk';
+        const prompt = `Eres un periodista profesional de Nicaragua Informate. Redacta una noticia completa en español, estilo BBC/CNN en Español, sobre el siguiente titular: "${titulo}". Categoría: ${categoria || 'General'}.
+
+La noticia debe tener:
+- Un primer párrafo impactante con los datos más importantes (quién, qué, cuándo, dónde)
+- 3 o 4 párrafos de desarrollo con contexto y detalles
+- Un párrafo final con perspectiva o conclusión
+- Tono serio, objetivo y profesional
+- Sin inventar datos específicos como nombres o fechas exactas si no los conoces
+- Máximo 400 palabras
+
+Devuelve SOLO el contenido de la noticia, sin título, sin encabezados.`;
+
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }]
+          })
+        });
+
+        const data = await resp.json();
+        const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!texto) throw new Error('No se obtuvo respuesta de Gemini');
+
+        document.getElementById('contenido').value = texto.trim();
+        
+        // Generar resumen automático
+        const resumen = texto.trim().split('\n')[0].substring(0, 150) + '...';
+        if (!document.getElementById('resumen').value) {
+          document.getElementById('resumen').value = resumen;
+        }
+
+        status.textContent = '✅ Listo';
+        showToast('Noticia redactada con IA', 'success');
+        setTimeout(() => status.textContent = '', 3000);
+
+      } catch (err) {
+        status.textContent = '❌ Error';
+        showToast('Error con Gemini: ' + err.message, 'error');
+        setTimeout(() => status.textContent = '', 3000);
+      }
+    };
   </script>
 </body>
 </html>

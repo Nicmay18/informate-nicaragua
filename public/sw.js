@@ -1,8 +1,7 @@
-const STATIC_CACHE = 'static-v3';
-const IMAGE_CACHE = 'images-v3';
-const API_CACHE = 'api-v3';
+const STATIC_CACHE = 'static-v4';
+const IMAGE_CACHE = 'images-v4';
 
-const STATIC_ASSETS = ['/', '/offline.html', '/logo.png'];
+const STATIC_ASSETS = ['/', '/offline.html', '/logo.png', '/manifest.json'];
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -14,65 +13,52 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => ![STATIC_CACHE, IMAGE_CACHE, API_CACHE].includes(name))
-          .map((name) => caches.delete(name))
-      );
-    }).then(() => self.clients.claim())
+    caches.keys().then((keys) =>
+      Promise.all(keys.filter((k) => k !== STATIC_CACHE && k !== IMAGE_CACHE).map((k) => caches.delete(k)))
+    ).then(() => self.clients.claim())
   );
 });
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+
+  // SOLO cachear GET - nunca POST, PUT, DELETE
+  if (request.method !== 'GET') return;
+
   const url = new URL(request.url);
+
+  // No cachear APIs ni Firebase
+  if (url.pathname.startsWith('/api/') || url.hostname.includes('firestore') || url.hostname.includes('googleapis')) return;
 
   // Imágenes: Cache First
   if (request.destination === 'image') {
     event.respondWith(
-      caches.open(IMAGE_CACHE).then((cache) => {
-        return cache.match(request).then((response) => {
-          if (response) {
-            fetch(request).then((nr) => { if (nr.ok) cache.put(request, nr.clone()); });
-            return response;
-          }
-          return fetch(request).then((nr) => {
-            if (nr.ok) cache.put(request, nr.clone());
-            return nr;
-          });
-        });
-      })
+      caches.open(IMAGE_CACHE).then((cache) =>
+        cache.match(request).then((cached) => {
+          if (cached) return cached;
+          return fetch(request).then((res) => {
+            if (res.ok) cache.put(request, res.clone());
+            return res;
+          }).catch(() => cached);
+        })
+      )
     );
     return;
   }
 
-  // Firestore: Network First
-  if (url.hostname.includes('firestore.googleapis.com')) {
-    event.respondWith(
-      caches.open(API_CACHE).then((cache) => {
-        return fetch(request).then((nr) => {
-          if (nr.ok) cache.put(request, nr.clone());
-          return nr;
-        }).catch(() => cache.match(request).then((cr) => cr || new Response(JSON.stringify({offline: true}))));
-      })
-    );
-    return;
-  }
-
-  // HTML: Network First
+  // HTML: Network First con fallback offline
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request).catch(() => {
-        return caches.match(request).then((cr) => cr || caches.match('/offline.html'));
-      })
+      fetch(request).catch(() =>
+        caches.match(request).then((cached) => cached || caches.match('/offline.html'))
+      )
     );
     return;
   }
 
-  // Default: Cache First
+  // Resto: Cache First
   event.respondWith(
-    caches.match(request).then((cr) => cr || fetch(request))
+    caches.match(request).then((cached) => cached || fetch(request))
   );
 });
 
@@ -82,24 +68,15 @@ self.addEventListener('push', (event) => {
   const data = event.data.json();
   event.waitUntil(
     self.registration.showNotification(data.title || 'Nicaragua Informate', {
-      body: data.body || 'Nueva noticia importante',
+      body: data.body || 'Nueva noticia',
       icon: '/logo.png',
       badge: '/logo.png',
-      tag: data.tag || 'breaking-news',
-      requireInteraction: true,
-      actions: [
-        {action: 'read', title: 'Leer ahora'},
-        {action: 'close', title: 'Cerrar'}
-      ],
-      data: {url: data.url || '/', noticiaId: data.noticiaId}
+      data: { url: data.url || '/' }
     })
   );
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const { url } = event.notification.data || {};
-  if (event.action === 'read' || !event.action) {
-    event.waitUntil(clients.openWindow(url));
-  }
+  event.waitUntil(clients.openWindow(event.notification.data?.url || '/'));
 });

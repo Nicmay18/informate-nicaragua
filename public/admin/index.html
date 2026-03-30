@@ -1824,27 +1824,45 @@
     // APIS REDES
     // ==========================================
     async function enviarTelegram(noticia) {
-      const resp = await fetch(`${CONFIG.API_BASE}/api/telegram`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ noticia })
-      });
-      
-      const data = await resp.json();
-      if (!resp.ok || data.error) throw new Error(data.error || 'Error Telegram');
-      return data;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const resp = await fetch(`${CONFIG.API_BASE}/api/telegram`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ noticia }),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || data.details || 'Error Telegram');
+        return data;
+      } catch(e) {
+        clearTimeout(timeout);
+        if (e.name === 'AbortError') throw new Error('Telegram: tiempo de espera agotado');
+        throw e;
+      }
     }
 
     async function enviarFacebook(noticia, pageId) {
-      const resp = await fetch(`${CONFIG.API_BASE}/api/facebook`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ noticia, page_id: pageId })
-      });
-      
-      const data = await resp.json();
-      if (!resp.ok || data.error) throw new Error(data.error || 'Error Facebook');
-      return data;
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+      try {
+        const resp = await fetch(`${CONFIG.API_BASE}/api/facebook`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ noticia, page_id: pageId }),
+          signal: controller.signal
+        });
+        clearTimeout(timeout);
+        const data = await resp.json();
+        if (!resp.ok || data.error) throw new Error(data.error || 'Error Facebook');
+        return data;
+      } catch(e) {
+        clearTimeout(timeout);
+        if (e.name === 'AbortError') throw new Error('Facebook: tiempo de espera agotado');
+        throw e;
+      }
     }
 
     // ==========================================

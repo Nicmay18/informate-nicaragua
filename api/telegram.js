@@ -23,9 +23,10 @@ export default async (req, res) => {
     let resumen = resumenCompleto.substring(0, 300);
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
-    const cat = noticia.categoria?.toUpperCase() || 'NOTICIA';
     const url = `https://nicaraguainformate.com/noticia.html?id=${noticia.id || Date.now().toString(36)}`;
-    const cat_emoji = emoji[noticia.categoria] || '📰';
+
+    // Solo título, resumen y link - sin categoría
+    const text = `${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;
 
     // Imagen válida (no base64)
     const imagen = noticia.imagenRedes || noticia.imagen;
@@ -34,8 +35,7 @@ export default async (req, res) => {
     let respuesta;
 
     if (imagenValida) {
-      // Enviar con foto - se ve como en la captura
-      const caption = `${cat_emoji} ${cat}\n\n${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;
+      const caption = `${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;
       respuesta = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendPhoto`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,7 +48,6 @@ export default async (req, res) => {
       });
     } else {
       // Sin imagen, solo texto
-      const text = `${cat_emoji} ${cat}\n\n${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;
       respuesta = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

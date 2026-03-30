@@ -1,89 +1,168 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sobre Nosotros | Nicaragua Informate</title>
-  <meta name="description" content="Conoce al equipo detrás de Nicaragua Informate, tu fuente confiable de noticias de Nicaragua.">
-  <style>
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;color:#334155;background:#f8fafc}
-    .header{background:linear-gradient(135deg,#1a56db,#1e3a8a);color:#fff;padding:60px 20px;text-align:center}
-    .header h1{font-size:36px;font-weight:800;margin-bottom:8px}
-    .header p{color:rgba(255,255,255,.85);font-size:16px;max-width:500px;margin:0 auto}
-    .container{max-width:800px;margin:0 auto;padding:48px 20px}
-    .card{background:#fff;border-radius:16px;padding:32px;box-shadow:0 4px 12px rgba(0,0,0,.08);margin-bottom:24px}
-    h2{color:#1a56db;font-size:22px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:10px}
-    p{color:#475569;margin-bottom:14px;line-height:1.7}
-    .values{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:8px}
-    .value-item{background:#f1f5f9;border-radius:12px;padding:20px;text-align:center}
-    .value-icon{font-size:32px;margin-bottom:8px}
-    .value-title{font-weight:700;color:#1e293b;font-size:15px;margin-bottom:4px}
-    .value-desc{font-size:13px;color:#64748b}
-    .contact-cta{background:linear-gradient(135deg,#1a56db,#1e3a8a);color:#fff;border-radius:16px;padding:32px;text-align:center}
-    .contact-cta h2{color:#fff;justify-content:center}
-    .contact-cta p{color:rgba(255,255,255,.85)}
-    .btn{display:inline-block;margin-top:16px;padding:12px 28px;background:#fff;color:#1a56db;border-radius:9999px;font-weight:700;text-decoration:none;transition:transform .2s}
-    .btn:hover{transform:translateY(-2px)}
-    .back{display:inline-block;margin-top:8px;color:#1a56db;text-decoration:none;font-weight:600;font-size:15px}
-    .back:hover{text-decoration:underline}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sobre Nosotros | Nicaragua Informate</title>
+<meta name="description" content="Conoce más sobre Nicaragua Informate - Tu fuente confiable de noticias">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B5J61WEP"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-W1B5J61WEP');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --primary: #1e40af;
+  --text: #1e293b;
+  --text-light: #64748b;
+  --bg: #f8fafc;
+  --white: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: 'Inter', sans-serif; 
+  background: var(--bg); 
+  color: var(--text); 
+  line-height: 1.7;
+}
+.header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 60px 24px;
+  text-align: center;
+}
+.header h1 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.header p {
+  font-size: 18px;
+  opacity: 0.9;
+}
+.container {
+  max-width: 800px;
+  margin: -40px auto 60px;
+  background: var(--white);
+  padding: 48px;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 40px 0 16px;
+  color: var(--primary);
+}
+p, li {
+  margin-bottom: 16px;
+  color: var(--text-light);
+  font-size: 16px;
+}
+ul {
+  margin-left: 24px;
+}
+a {
+  color: var(--primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.back-link {
+  display: inline-block;
+  margin-bottom: 24px;
+  color: var(--primary);
+  font-weight: 600;
+}
+.cta-box {
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  padding: 32px;
+  border-radius: 12px;
+  margin: 40px 0;
+  text-align: center;
+  border: 2px solid #bfdbfe;
+}
+.cta-box h3 {
+  color: var(--primary);
+  margin-bottom: 16px;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 8px;
+  transition: all 0.3s;
+}
+.btn:hover {
+  background: #1e3a8a;
+  transform: translateY(-2px);
+}
+</style>
 </head>
 <body>
 
-  <div class="header">
-    <h1>🇳🇮 Sobre Nosotros</h1>
-    <p>Conoce quiénes somos y por qué hacemos lo que hacemos</p>
+<div class="header">
+  <h1>Sobre Nosotros</h1>
+  <p>NICARAGUA INFORMATE</p>
+</div>
+
+<div class="container">
+  <a href="/" class="back-link">← Volver al inicio</a>
+  
+  <p><strong>Nicaragua Informate</strong> nació en 2024 con un objetivo claro: ofrecer información veraz, oportuna y accesible para todos los nicaragüenses.</p>
+
+  <p>En un entorno donde la información es clave, creemos en el <strong>periodismo independiente</strong> como herramienta para mantener a nuestra comunidad informada sobre sucesos, política, deportes, cultura y más.</p>
+
+  <h2>Nuestra misión</h2>
+  <p>Brindar noticias confiables con inmediatez, sin filtros ni intereses ocultos. Queremos que cada lector tenga acceso a información de calidad de forma gratuita.</p>
+
+  <h2>Nuestros valores</h2>
+  <ul>
+    <li><strong>Honestidad:</strong> Publicamos basados en hechos y fuentes verificables.</li>
+    <li><strong>Independencia:</strong> No tenemos vínculos con partidos políticos ni grupos de poder.</li>
+    <li><strong>Cercanía:</strong> Estamos atentos a lo que ocurre en cada rincón de Nicaragua.</li>
+    <li><strong>Mejora continua:</strong> Escuchamos a nuestros lectores y corregimos cuando nos equivocamos.</li>
+  </ul>
+
+  <h2>El equipo</h2>
+  <p>Detrás de Nicaragua Informate hay un equipo comprometido con el periodismo digital. Nos formamos cada día para ofrecerte la mejor experiencia informativa.</p>
+
+  <p><strong>Redacción:</strong> Keyling Rivera</p>
+
+  <div class="cta-box">
+    <h3>¿Tienes una noticia, denuncia o sugerencia?</h3>
+    <p>Contáctanos a través de nuestro formulario o por correo</p>
+    <a href="contacto.html" class="btn">Contactar</a>
+    <a href="mailto:kelinrivera20@gmail.com" class="btn">Enviar correo</a>
   </div>
 
-  <div class="container">
+  <h2>Apoya el periodismo independiente</h2>
+  <p>Mantener este sitio libre y sin muros de pago es posible gracias a lectores como tú. Si valoras nuestro trabajo, puedes apoyarnos con una donación voluntaria a través de PayPal.</p>
 
-    <div class="card">
-      <h2>📰 ¿Quiénes somos?</h2>
-      <p>Nicaragua Informate es un portal de noticias digital dedicado a mantener informados a los nicaragüenses dentro y fuera del país. Nacimos con la misión de llevar información veraz, rápida y accesible sobre los sucesos más importantes de Nicaragua.</p>
-      <p>Cubrimos noticias de sucesos, deportes, política nacional, tecnología, cultura e internacionales, con un enfoque en la inmediatez y la claridad.</p>
-    </div>
-
-    <div class="card">
-      <h2>🎯 Nuestra misión</h2>
-      <p>Ser la fuente de información más confiable y accesible para los nicaragüenses, ofreciendo noticias verificadas al instante, con un lenguaje claro y directo que llegue a todos.</p>
-    </div>
-
-    <div class="card">
-      <h2>⭐ Nuestros valores</h2>
-      <div class="values">
-        <div class="value-item">
-          <div class="value-icon">✅</div>
-          <div class="value-title">Veracidad</div>
-          <div class="value-desc">Solo publicamos información verificada y de fuentes confiables</div>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">⚡</div>
-          <div class="value-title">Inmediatez</div>
-          <div class="value-desc">Noticias al momento, porque la información no puede esperar</div>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">🤝</div>
-          <div class="value-title">Compromiso</div>
-          <div class="value-desc">Comprometidos con el servicio a la comunidad nicaragüense</div>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">🔓</div>
-          <div class="value-title">Accesibilidad</div>
-          <div class="value-desc">Información gratuita y disponible para todos</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contact-cta">
-      <h2>📬 ¿Tienes una noticia?</h2>
-      <p>Si eres testigo de un suceso o tienes información de interés público, escríbenos. Revisamos cada mensaje y publicamos las noticias verificadas.</p>
-      <a href="contacto.html" class="btn">Contáctanos</a>
-    </div>
-
-    <br>
-    <a href="/" class="back">← Volver al inicio</a>
+  <div style="text-align: center; margin: 32px 0;">
+    <a href="https://www.paypal.me/NicaraguaInformate" target="_blank" class="btn">Donar con PayPal</a>
   </div>
+
+  <p style="text-align: center; font-size: 18px; font-weight: 600; color: var(--primary); margin-top: 40px;">
+    Gracias por confiar en Nicaragua Informate.<br>
+    Tu fuente confiable.
+  </p>
+
+  <hr style="margin: 40px 0; border: none; border-top: 1px solid #e2e8f0;">
+
+  <p style="text-align: center; color: var(--text-light); font-size: 14px;">
+    © 2026 Nicaragua Informate. Todos los derechos reservados.
+  </p>
+</div>
 
 </body>
 </html>

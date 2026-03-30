@@ -902,8 +902,8 @@
     // CONFIGURACIÓN
     // ==========================================
     const CONFIG = {
-      TELEGRAM_BOT_TOKEN: '',
-      TELEGRAM_CHAT_ID: '',
+      TELEGRAM_BOT_TOKEN: '8750159697:AAGwok3dOuAAiQpdliQNuzG1gpRa-3XOPDs',
+      TELEGRAM_CHAT_ID: '-1003431574597',
       FACEBOOK_PAGE_ID: '61578261125687',
       FACEBOOK_PAGE_ID_2: '61577962970892',
       FACEBOOK_ACCESS_TOKEN: '',
@@ -1333,6 +1333,9 @@
         if (fallos.length > 0) {
           showToast('warning', 'Errores detectados', fallos.join('; '), 8000);
         }
+
+        // Mostrar formato WhatsApp para copiar
+        mostrarFormatoWhatsApp(noticiaData);
         
         limpiarFormulario();
         await cargarNoticiasFirestore();
@@ -1344,13 +1347,14 @@
     // APIS DE REDES SOCIALES
     // ==========================================
     async function enviarTelegram(noticia) {
-      const res = await fetch('/api/telegram', {
+      const token = document.getElementById('configTelegramToken')?.value || CONFIG.TELEGRAM_BOT_TOKEN;
+      const chatId = document.getElementById('configTelegramChat')?.value || CONFIG.TELEGRAM_CHAT_ID;
+      const res = await fetch('https://informate-nicaragua.vercel.app/api/telegram', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
           noticia,
-          bot_token: document.getElementById('configTelegramToken').value || CONFIG.TELEGRAM_BOT_TOKEN,
-          chat_id: document.getElementById('configTelegramChat').value || CONFIG.TELEGRAM_CHAT_ID
+          config: { telegram: { token, chatId } }
         })
       });
       const data = await res.json();
@@ -2001,6 +2005,35 @@
         cargarNoticiasFirestore();
       }
     }, 120000);
+
+    // Formato WhatsApp para copiar y pegar
+    function mostrarFormatoWhatsApp(noticia) {
+      const emoji = {'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽','Internacionales':'🌍','Tecnología':'💻','Cultura':'🎨','Espectáculos':'⭐'};
+      const cat = emoji[noticia.categoria] || '📰';
+      const url = `https://nicaraguainformate.com/noticia?id=${noticia.id}`;
+      const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 200);
+      
+      const texto = `${cat} *${(noticia.titulo || '').toUpperCase()}*\n\n${resumen}...\n\n🔗 Leer completo: ${url}\n\n📲 *Nicaragua Informate*\n👉 Canal: https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17`;
+
+      // Crear modal con el texto
+      const modal = document.createElement('div');
+      modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
+      modal.innerHTML = `
+        <div style="background:#1e293b;border-radius:16px;padding:28px;max-width:560px;width:100%;border:1px solid rgba(255,255,255,0.1);">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+            <h3 style="color:#25D366;font-size:18px;"><i class="fab fa-whatsapp"></i> Formato para Canal WhatsApp</h3>
+            <button onclick="this.closest('div[style*=fixed]').remove()" style="background:transparent;border:none;color:#94a3b8;font-size:22px;cursor:pointer;">✕</button>
+          </div>
+          <textarea id="waTexto" style="width:100%;height:200px;background:#0f172a;color:#e2e8f0;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;font-size:14px;line-height:1.6;resize:none;font-family:inherit;">${texto}</textarea>
+          <button onclick="navigator.clipboard.writeText(document.getElementById('waTexto').value).then(()=>{this.textContent='✅ Copiado!';setTimeout(()=>this.textContent='📋 Copiar texto',2000)})" 
+            style="width:100%;margin-top:14px;padding:14px;background:#25D366;color:white;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;">
+            📋 Copiar texto
+          </button>
+          <p style="color:#64748b;font-size:12px;margin-top:10px;text-align:center;">Pega este texto directamente en tu canal de WhatsApp</p>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
 
     // IA - Redactar con Gemini
     window.redactarConIA = async function() {

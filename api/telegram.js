@@ -29,7 +29,7 @@ export default async (req, res) => {
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
     const cat = noticia.categoria?.toUpperCase() || 'NOTICIA';
-    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || Date.now().toString(36)}`;
+    const url = `https://nicaraguainformate.com/noticia.html?id=${noticia.id || Date.now().toString(36)}`;
 
     // Sin Markdown para evitar errores con caracteres especiales
     const text = `${emoji[noticia.categoria] || '📰'} ${cat}\n\n${titulo}\n\n${resumen}\n\n🔗 Leer completo: ${url}`;

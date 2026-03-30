@@ -1150,22 +1150,33 @@
       const uploadText = document.querySelector('#uploadZone .upload-text');
 
       try {
-        if (uploadText) uploadText.textContent = '⏳ Subiendo imagen protegida...';
-        urlInput.value = '';
+        if (uploadText) uploadText.textContent = '⏳ Subiendo imagen...';
+        urlInput.value = base64; // Mostrar base64 mientras sube
 
-        // Simular subida - En producción, conectar con tu API
-        await new Promise(r => setTimeout(r, 1500));
-        
-        // Por ahora, usamos la imagen en base64 directamente
-        urlInput.value = base64;
-        // Guardar URL original para Telegram (no base64)
-        urlInput.dataset.originalUrl = '';
-        if (uploadText) uploadText.textContent = '✅ Imagen protegida lista';
-        showToast('success', 'Imagen lista', 'Marca de agua aplicada y lista para publicar');
-        registrarActividad(`Imagen procesada con marca de agua: ${nombre}`, 'success');
+        const resp = await fetch('https://informate-nicaragua.vercel.app/api/upload-image', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ imagen: base64, nombre })
+        });
+
+        const data = await resp.json();
+
+        if (data.url) {
+          urlInput.value = data.url; // URL pública de GitHub
+          urlInput.dataset.originalUrl = data.url;
+          if (uploadText) uploadText.textContent = '✅ Imagen lista';
+          showToast('success', 'Imagen lista', 'Subida correctamente con marca de agua');
+        } else {
+          // Si falla la subida, usar base64
+          urlInput.value = base64;
+          urlInput.dataset.originalUrl = '';
+          if (uploadText) uploadText.textContent = '✅ Imagen lista (local)';
+          showToast('info', 'Imagen lista', 'Guardada localmente');
+        }
+        registrarActividad(`Imagen procesada: ${nombre}`, 'success');
       } catch (err) {
-        if (uploadText) uploadText.textContent = 'Arrastra imagen o haz clic para subir';
-        showToast('error', 'Error al subir', err.message);
+        urlInput.value = base64;
+        if (uploadText) uploadText.textContent = '✅ Imagen lista (local)';
       }
     }
 

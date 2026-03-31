@@ -65,7 +65,12 @@ self.addEventListener('fetch', (event) => {
 // Push Notifications
 self.addEventListener('push', (event) => {
   if (!event.data) return;
-  const data = event.data.json();
+  let data;
+  try {
+    data = event.data.json();
+  } catch(e) {
+    data = { title: 'Nicaragua Informate', body: event.data.text(), url: '/' };
+  }
   event.waitUntil(
     self.registration.showNotification(data.title || 'Nicaragua Informate', {
       body: data.body || 'Nueva noticia',

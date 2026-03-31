@@ -179,8 +179,10 @@ body { font-family: var(--font-sans); background: var(--surface-light); color: v
 .ad-label { font-size: 10px; color: #94A3B8; text-align: center; margin-bottom: 4px; text-transform: uppercase; }
 
 /* Main Layout */
-.main-wrapper { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr; gap: 32px; }
-@media (min-width: 1024px) { .main-wrapper { grid-template-columns: 1fr 320px; gap: 48px; } }
+.main-wrapper { max-width: 1200px; margin: 0 auto; padding: 32px 24px; display: grid; grid-template-columns: 1fr 320px; gap: 48px; align-items: start; }
+@media (max-width: 1023px) { .main-wrapper { grid-template-columns: 1fr; gap: 32px; } }
+.content-main { min-width: 0; }
+.sidebar-right { display: flex; flex-direction: column; gap: 24px; width: 320px; }
 
 /* Carousel */
 .carousel-item { height: 450px; background: var(--brand-primary); position: relative; overflow: hidden; border-radius: 12px; }

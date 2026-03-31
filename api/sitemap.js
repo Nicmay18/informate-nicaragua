@@ -7,39 +7,45 @@ export default async function handler(req, res) {
 
   // Páginas estáticas
   const paginas = [
-    { loc: BASE, lastmod: now, changefreq: 'hourly', priority: '1.0' },
-    { loc: `${BASE}/privacidad.html`, lastmod: now, changefreq: 'monthly', priority: '0.3' },
-    { loc: `${BASE}/terminos.html`, lastmod: now, changefreq: 'monthly', priority: '0.3' },
-    { loc: `${BASE}/contacto.html`, lastmod: now, changefreq: 'monthly', priority: '0.4' },
+    { loc: BASE, priority: '1.0', changefreq: 'hourly' },
+    { loc: `${BASE}/privacidad.html`, priority: '0.3', changefreq: 'monthly' },
+    { loc: `${BASE}/terminos.html`, priority: '0.3', changefreq: 'monthly' },
+    { loc: `${BASE}/contacto.html`, priority: '0.4', changefreq: 'monthly' },
   ];
 
-  // Noticias desde Firestore REST API
-  let noticiasUrls = [];
+  let noticiaUrls = [];
+
   try {
+    // Obtener noticias de Firestore via REST API
     const PROJECT = 'informate-instant-nicaragua';
     const url = `https://firestore.googleapis.com/v1/projects/${PROJECT}/databases/(default)/documents/noticias?pageSize=100`;
     const r = await fetch(url);
     if (r.ok) {
       const data = await r.json();
       const docs = data.documents || [];
-      noticiasUrls = docs.map(doc => {
+      noticiaUrls = docs.map(doc => {
         const id = doc.name.split('/').pop();
         const ts = doc.fields?.fecha?.timestampValue || doc.fields?.fecha?.stringValue;
         const lastmod = ts ? new Date(ts).toISOString() : now;
-        return { loc: `${BASE}/noticia.html?id=${id}`, lastmod, changefreq: 'weekly', priority: '0.8' };
+        return {
+          loc: `${BASE}/noticia.html?id=${id}`,
+          lastmod,
+          priority: '0.8',
+          changefreq: 'weekly'
+        };
       });
     }
   } catch(e) {}
 
-  const allUrls = [...paginas, ...noticiasUrls];
+  const allUrls = [...paginas, ...noticiaUrls];
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${allUrls.map(u => `  <url>
     <loc>${u.loc}</loc>
-    <lastmod>${u.lastmod}</lastmod>
-    <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
+    <lastmod>${u.lastmod || now}</lastmod>
+    <changefreq>${u.changefreq || 'weekly'}</changefreq>
+    <priority>${u.priority || '0.5'}</priority>
   </url>`).join('\n')}
 </urlset>`;
 

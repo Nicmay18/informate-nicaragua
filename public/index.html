@@ -1715,53 +1715,27 @@ body {
 <!-- Premium Modal -->
 
 <div class="modal-overlay" id="premiumModal" onclick="cerrarPremiumModal()">
-
   <div class="modal-content premium-modal-content" onclick="event.stopPropagation()">
-
     <button class="modal-close" onclick="cerrarPremiumModal()" aria-label="Cerrar">×</button>
-
     <div class="premium-icon">👑</div>
-
     <h2>Nicaragua Informate Premium</h2>
-
     <p>Accede a contenido exclusivo, análisis profundos y experiencia sin publicidad.</p>
-
-    
-
     <div class="pricing-grid">
-
-      <div class="pricing-option" onclick="selectPlan('monthly')">
-
+      <div class="pricing-option" onclick="pagarPayPal('mensual')">
         <div class="pricing-price">$3.99<span style="font-size: 16px;">/mes</span></div>
-
         <div class="pricing-period">Plan Mensual</div>
-
       </div>
-
-      <div class="pricing-option recommended" onclick="selectPlan('yearly')">
-
+      <div class="pricing-option recommended" onclick="pagarPayPal('anual')">
         <div class="pricing-badge">MEJOR VALOR</div>
-
         <div class="pricing-price">$29.99<span style="font-size: 16px;">/año</span></div>
-
         <div class="pricing-period">Plan Anual (37% descuento)</div>
-
       </div>
-
     </div>
-
-    
-
-    <button style="width: 100%; padding: 14px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-bottom: 12px;" onclick="gtag('event', 'premium_click', {event_category: 'monetization', event_label: 'subscribe'}); alert('Redirigiendo a pasarela de pago...');">
-
-      Suscribirme ahora
-
+    <button style="width:100%;padding:14px;background:#0070BA;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;" onclick="pagarPayPal('mensual')">
+      <i class="fab fa-paypal"></i> Pagar con PayPal
     </button>
-
-    <p style="font-size: 12px; color: #94A3B8;">Cancela cuando quieras. Pago seguro procesado por Stripe.</p>
-
+    <p style="font-size:12px;color:#94A3B8;">Pago seguro procesado por PayPal. Después del pago activa tu cuenta escribiéndonos.</p>
   </div>
-
 </div>
 
 <!-- Floating Buttons -->
@@ -4196,11 +4170,15 @@ function mostrarPremium() {
 }
 
 function cerrarPremiumModal() {
-
   document.getElementById('premiumModal').classList.remove('active');
-
   document.body.style.overflow = '';
+}
 
+function pagarPayPal(plan) {
+  const monto = plan === 'anual' ? '29.99' : '3.99';
+  const url = `https://www.paypal.com/paypalme/NicaraguaInformate/${monto}USD`;
+  gtag('event', 'premium_click', {event_category: 'monetization', event_label: plan});
+  window.open(url, '_blank');
 }
 
 function selectPlan(plan) {

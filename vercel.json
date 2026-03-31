@@ -1,5 +1,6 @@
 {
   "rewrites": [
+    { "source": "/rss.xml", "destination": "/api/rss" },
     { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/:path*", "destination": "/public/:path*" }
   ],

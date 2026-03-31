@@ -1414,6 +1414,25 @@ function guardarParaDespues(id, btn) {
 // INICIAR
 document.addEventListener('DOMContentLoaded', init);
 
+// Limpiar caché viejo automáticamente
+(async function() {
+  if ('caches' in window) {
+    const keys = await caches.keys();
+    const validCaches = ['static-v5', 'images-v5'];
+    await Promise.all(keys.filter(k => !validCaches.includes(k)).map(k => caches.delete(k)));
+  }
+  if ('serviceWorker' in navigator) {
+    const regs = await navigator.serviceWorker.getRegistrations();
+    for (const reg of regs) {
+      const sw = reg.installing || reg.waiting || reg.active;
+      if (sw) {
+        const url = sw.scriptURL;
+        if (!url.includes('sw.js')) await reg.unregister();
+      }
+    }
+  }
+})();
+
 // Service Worker
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {

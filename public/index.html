@@ -3663,7 +3663,7 @@ function renderizarNoticias() {
 
   
 
-  grid.innerHTML = visibles.map((n, idx) => {
+  const cards = visibles.map((n, idx) => {
 
     const img = utils.sanitizeImage(n.imagen, n.categoria);
 
@@ -3801,7 +3801,27 @@ function renderizarNoticias() {
 
     </article>`;
 
-  }).join('');
+  });
+
+  // Insertar anuncio cada 3 noticias
+  const adHTML = `<div style="margin:16px 0;min-height:90px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;"><span style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:9px;color:#94a3b8;text-transform:uppercase;">Publicidad</span><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px;" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins></div>`;
+
+  const resultado = [];
+  cards.forEach((card, i) => {
+    resultado.push(card);
+    if ((i + 1) % 3 === 0 && i < cards.length - 1) {
+      resultado.push(adHTML);
+    }
+  });
+
+  grid.innerHTML = resultado.join('');
+
+  // Activar nuevos slots de AdSense
+  setTimeout(() => {
+    grid.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])').forEach(() => {
+      try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+    });
+  }, 300);
 
   
 

@@ -2224,7 +2224,7 @@
       const ultimoPunto = resumen.lastIndexOf('.');
       const resumenCorto = ultimoPunto > 80 ? resumen.substring(0, ultimoPunto + 1) : resumen;
 
-      const texto = `${titulo}\n\n${resumenCorto}\n\n📲 Más detalles: ${url}`;
+      const texto = `🚨 ${(noticia.categoria || 'NOTICIAS').toUpperCase()}\n\n${titulo}\n\n${resumenCorto}\n\n📲 Más detalles: ${url}`;
 
       const modal = document.createElement('div');
       modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';

@@ -1292,6 +1292,33 @@ body {
 
 </nav>
 
+<!-- Indicadores Económicos -->
+<div id="indicadoresEconomicos" style="background:#fff;border-bottom:3px solid #DC2626;padding:10px 24px;overflow-x:auto;white-space:nowrap;">
+  <div style="max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:nowrap;">
+    <div style="font-size:11px;font-weight:700;color:#DC2626;text-transform:uppercase;letter-spacing:0.5px;display:flex;align-items:center;gap:6px;flex-shrink:0;">
+      <i class="fas fa-chart-line"></i> INDICADORES ECONÓMICOS (NICARAGUA)
+    </div>
+    <div style="display:flex;gap:32px;align-items:center;">
+      <div style="text-align:center;border-left:1px solid #e2e8f0;padding-left:24px;">
+        <div style="font-size:11px;color:#64748b;font-weight:600;">Dólar BCN</div>
+        <div style="font-size:20px;font-weight:800;color:#1e40af;">C$<span id="ind-dolar">--</span></div>
+      </div>
+      <div style="text-align:center;border-left:1px solid #e2e8f0;padding-left:24px;">
+        <div style="font-size:11px;color:#64748b;font-weight:600;">Gasolina Regular</div>
+        <div style="font-size:20px;font-weight:800;color:#1e40af;">C$<span id="ind-regular">--</span><span style="font-size:12px;font-weight:500;">/ltr</span></div>
+      </div>
+      <div style="text-align:center;border-left:1px solid #e2e8f0;padding-left:24px;">
+        <div style="font-size:11px;color:#64748b;font-weight:600;">Gasolina Súper</div>
+        <div style="font-size:20px;font-weight:800;color:#1e40af;">C$<span id="ind-super">--</span><span style="font-size:12px;font-weight:500;">/ltr</span></div>
+      </div>
+      <div style="text-align:center;border-left:1px solid #e2e8f0;padding-left:24px;">
+        <div style="font-size:11px;color:#64748b;font-weight:600;">Diesel</div>
+        <div style="font-size:20px;font-weight:800;color:#1e40af;">C$<span id="ind-diesel">--</span><span style="font-size:12px;font-weight:500;">/ltr</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Radio Player -->
 
 <div class="radio-player" id="radioPlayer">
@@ -3440,6 +3467,32 @@ function init() {
 
   initCarousel();
 
+  initIndicadores();
+
+}
+
+// INDICADORES ECONÓMICOS
+async function initIndicadores() {
+  try {
+    // Datos del BCN Nicaragua (actualizados manualmente o via API)
+    // Usamos valores fijos actualizados - se pueden conectar a una API real
+    const datos = await fetch('https://api.exchangerate-api.com/v4/latest/USD')
+      .then(r => r.json())
+      .catch(() => null);
+    
+    const dolar = datos?.rates?.NIO ? datos.rates.NIO.toFixed(4) : '36.6243';
+    document.getElementById('ind-dolar').textContent = dolar;
+    
+    // Precios de combustible BCN (valores fijos actualizados)
+    document.getElementById('ind-regular').textContent = '47.84';
+    document.getElementById('ind-super').textContent = '49.03';
+    document.getElementById('ind-diesel').textContent = '43.21';
+  } catch(e) {
+    document.getElementById('ind-dolar').textContent = '36.62';
+    document.getElementById('ind-regular').textContent = '47.84';
+    document.getElementById('ind-super').textContent = '49.03';
+    document.getElementById('ind-diesel').textContent = '43.21';
+  }
 }
 
 function initFirebase() {

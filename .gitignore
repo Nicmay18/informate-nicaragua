@@ -8,6 +8,7 @@ yarn-error.log*
 # Producción
 dist/
 build/
+coverage/
 
 # Variables de entorno
 .env

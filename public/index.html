@@ -1071,6 +1071,14 @@ body {
   flex: 1;
   max-width: 400px;
 }
+.radio-latency {
+  color: #cbd5e1;
+  font-size: 11px;
+  margin-top: 6px;
+  line-height: 1.2;
+  text-align: left;
+  width: 100%;
+}
 .radio-btn {
   width: 36px;
   height: 36px;
@@ -1084,6 +1092,20 @@ body {
   justify-content: center;
   font-size: 14px;
   flex-shrink: 0;
+}
+.radio-secondary-btn {
+  margin-left: 8px;
+  border: 1px solid rgba(226, 232, 240, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.radio-secondary-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
 }
 .radio-select {
   background: rgba(255,255,255,0.1);
@@ -1414,14 +1436,21 @@ body {
     <button class="radio-btn" onclick="toggleRadio()" aria-label="Reproducir/Pausar">
       <i class="fas fa-play" id="radioIcon"></i>
     </button>
-    <select class="radio-select" id="radioSelect" onchange="cambiarRadio()">
+    <select class="radio-select" id="radioSelect" onchange="cambiarRadio()" aria-label="Seleccionar emisora">
       <option value="">Seleccionar emisora</option>
       <option value="https://stream.zenolive.com/axr92qawesmtv">Radio Ya 99.1 FM</option>
       <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+      <option value="https://edge..listen2myradio.com/live.mp3?type=.mp3">Radio Sandino</option>
+      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">La Primerísima</option>
+      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">Futura 91.3</option>
+      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">Radio ABC</option>
     </select>
+    <button class="radio-secondary-btn" onclick="activarModoBajaLatencia()" aria-label="Modo baja latencia">🌐 Latencia baja</button>
+    <div id="radioCurrentStation" class="radio-current" aria-live="polite">Estación: ninguna</div>
   </div>
   <button class="radio-close" onclick="document.getElementById('radioPlayer').classList.remove('active')" aria-label="Cerrar reproductor">✕</button>
-  <audio id="radioAudio" preload="none"></audio>
+  <audio id="radioAudio" preload="auto" playsinline></audio>
+  <div id="radioLatencyInfo" class="radio-latency">Consejo: la señal en línea presenta retraso inherente al stream. Prueba otra emisora si es necesario.</div>
 </div>
 <button class="radio-float-btn" id="radioFloatBtn" onclick="document.getElementById('radioPlayer').classList.add('active')" title="Radio" aria-label="Abrir radio">
   <i class="fas fa-broadcast-tower"></i>
@@ -2349,39 +2378,143 @@ function sharePage() {
 }
 const radioAudio = document.getElementById('radioAudio');
 let radioActiva = false;
+let radioReintento = null;
+
+function actualizarRadioTexto() {
+  const sel = document.getElementById('radioSelect');
+  const texto = sel.value ? `Estación: ${sel.options[sel.selectedIndex].text}` : 'Estación: ninguna';
+  document.getElementById('radioCurrentStation').textContent = texto;
+}
+
+function iniciarRadio() {
+  const sel = document.getElementById('radioSelect');
+  if (!sel.value) {
+    alert('Selecciona una emisora antes de reproducir.');
+    return;
+  }
+  if (radioReintento) {
+    clearTimeout(radioReintento);
+    radioReintento = null;
+  }
+
+  radioAudio.preload = 'auto';
+  radioAudio.src = sel.value;
+  radioAudio.load();
+  radioAudio.play().then(() => {
+    radioActiva = true;
+    document.getElementById('radioIcon').className = 'fas fa-pause';
+    actualizarRadioTexto();
+    document.getElementById('radioLatencyInfo').textContent = 'Reproduciendo en vivo (con latencia de stream). Si ves retraso, prueba otra emisora.';
+    gtag('event', 'radio_play', {
+      event_category: 'radio',
+      event_label: sel.options[sel.selectedIndex].text
+    });
+  }).catch((err) => {
+    console.log('Error de reproducción, reintentando... ', err);
+    document.getElementById('radioLatencyInfo').textContent = 'Error de conexión. Reintentando...';
+    scheduleReintento();
+  });
+}
+
+function detenerRadio() {
+  if (radioReintento) {
+    clearTimeout(radioReintento);
+    radioReintento = null;
+  }
+  radioAudio.pause();
+  radioActiva = false;
+  document.getElementById('radioIcon').className = 'fas fa-play';
+  gtag('event', 'radio_stop', {event_category: 'radio'});
+}
+
 function toggleRadio() {
   if (radioActiva) {
-    radioAudio.pause();
-    radioAudio.src = '';
-    radioActiva = false;
-    document.getElementById('radioIcon').className = 'fas fa-play';
-    gtag('event', 'radio_stop', {event_category: 'radio'});
+    detenerRadio();
   } else {
-    const sel = document.getElementById('radioSelect');
-    if (!sel.value) return;
-    radioAudio.src = sel.value;
-    radioAudio.load();
-    radioAudio.play().then(() => {
-      radioActiva = true;
-      document.getElementById('radioIcon').className = 'fas fa-pause';
-      gtag('event', 'radio_play', {
-        event_category: 'radio',
-        event_label: sel.options[sel.selectedIndex].text
-      });
-    }).catch(() => {
-      alert('Error al reproducir la radio');
-    });
+    iniciarRadio();
   }
 }
+
+function scheduleReintento() {
+  if (radioReintento) return;
+  radioReintento = setTimeout(() => {
+    radioReintento = null;
+    if (!navigator.onLine) {
+      scheduleReintento();
+      return;
+    }
+    if (radioActiva || document.getElementById('radioSelect').value) {
+      iniciarRadio();
+    }
+  }, 5000);
+}
+
+const lowLatencyStreams = {
+  'https://stream.zenolive.com/axr92qawesmtv': 'https://stream.zeno.fm/axr92qawesmtv',
+  'https://online.radionicaragua.com.ni/stream.mp3': 'https://radionicaragua.stream.publica.io/radio.mp3',
+  'https://edge..listen2myradio.com/live.mp3?type=.mp3': 'https://stream.zeno.fm/7f7pj2jtpazuv',
+  'https://stream.zeno.fm/53gyb6d8gs0uv': 'https://edge.zeno.fm/s2b2cd7m9duvv',
+  'https://stream.zeno.fm/h0x2jp7nrtzuv': 'https://edge.zeno.fm/jk873y07k7quv',
+  'https://stream.zeno.fm/vtxcp1k7c7quv': 'https://edge.zeno.fm/xf4b2b18v8quv'
+};
+
+function activarModoBajaLatencia() {
+  const sel = document.getElementById('radioSelect');
+  if (!sel.value) {
+    alert('Selecciona primero una emisora antes de activar el modo baja latencia.');
+    return;
+  }
+
+  const lowLat = lowLatencyStreams[sel.value];
+  if (!lowLat) {
+    document.getElementById('radioLatencyInfo').textContent = 'No hay stream de baja latencia disponible para esta emisora.';
+    return;
+  }
+
+  sel.value = lowLat;
+  document.getElementById('radioLatencyInfo').textContent = 'Modo baja latencia activo. Reproduciendo estación más rápida...';
+  if (radioActiva) {
+    iniciarRadio();
+  } else {
+    iniciarRadio();
+  }
+}
+
 function cambiarRadio() {
+  const sel = document.getElementById('radioSelect');
+  actualizarRadioTexto();
+  if (!sel.value) {
+    detenerRadio();
+    return;
+  }
+  if (radioActiva) {
+    iniciarRadio();
+  }
+}
+
+radioAudio.addEventListener('error', () => {
+  console.log('audio error - reintentando señal');
+  scheduleReintento();
+});
+
+radioAudio.addEventListener('stalled', () => {
+  console.log('audio stalled - reintentando');
+  scheduleReintento();
+});
+
+window.addEventListener('online', () => {
+  console.log('online event - reintentando radio');
+  if (!radioActiva && document.getElementById('radioSelect').value) {
+    iniciarRadio();
+  }
+});
+
+window.addEventListener('offline', () => {
+  console.log('offline event - pausa temporal');
   if (radioActiva) {
     radioAudio.pause();
-    radioAudio.src = '';
-    radioActiva = false;
-    document.getElementById('radioIcon').className = 'fas fa-play';
-    toggleRadio();
   }
-}
+});
 function suscribirNewsletter(e) {
   e.preventDefault();
   const email = e.target.querySelector('input[type="email"]').value;

@@ -4098,9 +4098,8 @@ function abrirNoticia(id) {
 }
 
 function abrirModal(n) {
-
+  window._noticiaModal = n;
   const img = utils.sanitizeImage(n.imagen, n.categoria);
-
   const palabras = (n.contenido || n.resumen || '').split(/\s+/).length;
 
   
@@ -4330,8 +4329,10 @@ function compartirNoticia(plataforma, noticiaId) {
       break;
 
     case 'whatsapp':
-
-      window.open(`https://wa.me/?text=${encodeURIComponent('📰 ' + titulo + '\n\n' + url)}`, '_blank');
+      const resumenWA = (n.resumen || n.contenido || '').substring(0, 300);
+      const ultimoPuntoWA = resumenWA.lastIndexOf('.');
+      const resumenCortoWA = ultimoPuntoWA > 80 ? resumenWA.substring(0, ultimoPuntoWA + 1) : resumenWA;
+      window.open(`https://wa.me/?text=${encodeURIComponent(titulo + '\n\n' + resumenCortoWA + '\n\n📲 Más detalles: ' + url)}`, '_blank');
 
       break;
 
@@ -4358,15 +4359,16 @@ function shareTwitter() {
 }
 
 function shareWhatsApp() {
-
-  const titulo = document.getElementById('modalTitle').textContent;
-
-  const text = encodeURIComponent(`📰 ${titulo}\n\nLee más en: ${window.location.href}`);
-
+  const n = window._noticiaModal;
+  const titulo = n ? utils.capitalize(n.titulo || '') : document.getElementById('modalTitle').textContent;
+  const url = n?.slug ? `https://nicaraguainformate.com/noticia/${n.slug}` : window.location.href;
+  const resumenCompleto = n ? (n.resumen || n.contenido || '') : '';
+  let resumen = resumenCompleto.substring(0, 300);
+  const ultimoPunto = resumen.lastIndexOf('.');
+  if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
+  const text = encodeURIComponent(`${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`);
   window.open(`https://wa.me/?text=${text}`, '_blank');
-
   gtag('event', 'share', {method: 'whatsapp'});
-
 }
 
 function copyLink() {

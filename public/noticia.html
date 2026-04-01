@@ -212,19 +212,52 @@
 
   async function cargarNoticiaPorSlug(slug) {
     try {
-      // Primero buscar por campo slug
-      const q = query(collection(db, 'noticias'), where('slug', '==', slug), limit(1));
-      const snap = await getDocs(q);
-      if (!snap.empty) {
-        const docSnap = snap.docs[0];
+      // 1. Buscar por campo slug exacto
+      const q1 = query(collection(db, 'noticias'), where('slug', '==', slug), limit(1));
+      const snap1 = await getDocs(q1);
+      if (!snap1.empty) {
+        const docSnap = snap1.docs[0];
         const n = { id: docSnap.id, ...docSnap.data() };
         updateDoc(docSnap.ref, { vistas: increment(1) }).catch(() => {});
         mostrarNoticia(n);
         cargarRelacionadas(n.categoria, n.id);
         return;
       }
-      // Si no encuentra por slug, intentar como ID directo (noticias antiguas)
-      await cargarNoticia(slug);
+
+      // 2. Intentar como ID directo de Firestore
+      try {
+        const ref = doc(db, 'noticias', slug);
+        const snap2 = await getDoc(ref);
+        if (snap2.exists()) {
+          const n = { id: snap2.id, ...snap2.data() };
+          updateDoc(ref, { vistas: increment(1) }).catch(() => {});
+          mostrarNoticia(n);
+          cargarRelacionadas(n.categoria, n.id);
+          return;
+        }
+      } catch(e2) {}
+
+      // 3. Reconstruir título desde slug y buscar
+      const tituloAprox = slug.replace(/-/g, ' ');
+      const q3 = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(100));
+      const snap3 = await getDocs(q3);
+      const match = snap3.docs.find(d => {
+        const t = (d.data().titulo || '').toLowerCase()
+          .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+          .replace(/[^\w\s]/g, '').replace(/\s+/g, '-').substring(0, 80);
+        return t === slug || t.startsWith(slug.substring(0, 40));
+      });
+      if (match) {
+        const n = { id: match.id, ...match.data() };
+        updateDoc(match.ref, { vistas: increment(1) }).catch(() => {});
+        // Guardar slug para futuras visitas
+        updateDoc(match.ref, { slug }).catch(() => {});
+        mostrarNoticia(n);
+        cargarRelacionadas(n.categoria, n.id);
+        return;
+      }
+
+      mostrarError();
     } catch(e) { mostrarError(); }
   }
 

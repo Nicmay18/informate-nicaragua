@@ -66,6 +66,7 @@ gtag('config', 'G-W1B5J61WEP', {
 });
 </script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1640,6 +1641,7 @@ body {
         <div class="pricing-period">Plan Anual (37% descuento)</div>
       </div>
     </div>
+    <div id="paypal-button-container" style="margin-bottom: 12px;"></div>
     <button style="width:100%;padding:14px;background:#0070BA;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;" onclick="pagarPayPal('mensual')">
       <i class="fab fa-paypal"></i> Pagar con PayPal
     </button>
@@ -2300,10 +2302,57 @@ function cerrarPremiumModal() {
   document.body.style.overflow = '';
 }
 function pagarPayPal(plan) {
-  const monto = plan === 'anual' ? '29.99' : '3.99';
-  const url = `https://www.paypal.com/paypalme/NicaraguaInformate/${monto}USD`;
-  gtag('event', 'premium_click', {event_category: 'monetization', event_label: plan});
-  window.open(url, '_blank');
+  const planId = plan === 'anual' ? 'P-ANNUAL_PLAN_ID' : 'P-MONTHLY_PLAN_ID';
+  const planLabel = plan === 'anual' ? 'plan_anual' : 'plan_mensual';
+
+  gtag('event', 'premium_click', {event_category: 'monetization', event_label: planLabel});
+
+  // Render PayPal Smart Button
+  paypal.Buttons({
+    createSubscription: (data, actions) => {
+      return actions.subscription.create({
+        'plan_id': planId
+      });
+    },
+    onApprove: (data, actions) => {
+      guardarSuscripcion(data.subscriptionID, plan);
+      alert('¡Suscripción activada! Recarga la página.');
+      document.getElementById('premiumModal').classList.remove('active');
+      document.body.style.overflow = '';
+    },
+    onError: (err) => {
+      console.error('PayPal error:', err);
+      alert('Ocurrió un error con la suscripción PayPal. Intenta de nuevo.');
+    }
+  }).render('#paypal-button-container');
+}
+
+async function guardarSuscripcion(subscriptionId, plan) {
+  try {
+    if (!db) return;
+    const now = new Date();
+    const validUntil = new Date(now);
+    validUntil.setMonth(validUntil.getMonth() + (plan === 'anual' ? 12 : 1));
+
+    const data = {
+      subscriptionId,
+      plan,
+      createdAt: now,
+      validUntil,
+      status: 'active'
+    };
+
+    const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js').then(m => ({
+      doc: m.doc,
+      setDoc: m.setDoc
+    }));
+
+    await setDoc(doc(db, 'suscripciones', subscriptionId), data);
+    localStorage.setItem('premium_valid_until', validUntil.toISOString());
+    esUsuarioPremium = true;
+  } catch (e) {
+    console.error('Error guardando suscripción en Firestore:', e);
+  }
 }
 function cargarMas() {
   paginaActual++;

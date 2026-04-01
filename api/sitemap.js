@@ -25,10 +25,11 @@ export default async function handler(req, res) {
       const docs = data.documents || [];
       noticiaUrls = docs.map(doc => {
         const id = doc.name.split('/').pop();
+        const slug = doc.fields?.slug?.stringValue;
         const ts = doc.fields?.fecha?.timestampValue || doc.fields?.fecha?.stringValue;
         const lastmod = ts ? new Date(ts).toISOString() : now;
         return {
-          loc: `${BASE}/noticia.html?id=${id}`,
+          loc: slug ? `${BASE}/noticia/${slug}` : `${BASE}/noticia.html?id=${id}`,
           lastmod,
           priority: '0.8',
           changefreq: 'weekly'

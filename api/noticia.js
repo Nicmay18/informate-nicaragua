@@ -16,22 +16,39 @@ if (!getApps().length) {
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
-  const { id } = req.query;
-  if (!id) return res.redirect('/noticia.html');
+  const { id, slug } = req.query;
+  const lookup = id || slug;
+  if (!lookup) return res.redirect('/noticia.html');
 
   try {
     const db = getFirestore();
-    const doc = await db.collection('noticias').doc(id).get();
+    let docData = null;
+    let docId = null;
 
-    if (!doc.exists) {
-      return res.redirect('/noticia.html?id=' + id);
+    // Try direct ID lookup first
+    if (id) {
+      const docSnap = await db.collection('noticias').doc(id).get();
+      if (docSnap.exists) { docData = docSnap.data(); docId = docSnap.id; }
     }
 
-    const n = doc.data();
+    // Fallback: query by slug
+    if (!docData && slug) {
+      const q = await db.collection('noticias').where('slug', '==', slug).limit(1).get();
+      if (!q.empty) { docData = q.docs[0].data(); docId = q.docs[0].id; }
+    }
+
+    if (!docData) {
+      return res.redirect('/noticia.html?id=' + lookup);
+    }
+
+    const n = docData;
     const titulo = n.titulo || 'Nicaragua Informate';
     const descripcion = n.resumen || (n.contenido || '').substring(0, 200);
     const imagen = n.imagen?.startsWith('data:') ? 'https://nicaraguainformate.com/logo.png' : (n.imagen || 'https://nicaraguainformate.com/logo.png');
-    const url = `https://nicaraguainformate.com/noticia.html?id=${id}`;
+    const canonicalUrl = n.slug
+      ? `https://nicaraguainformate.com/noticia/${n.slug}`
+      : `https://nicaraguainformate.com/noticia.html?id=${docId}`;
+    const url = canonicalUrl;
 
     const html = `<!DOCTYPE html>
 <html lang="es">

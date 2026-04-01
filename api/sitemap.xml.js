@@ -13,9 +13,10 @@ module.exports = async (req, res) => {
     const urls = docs.map(d => {
       const id = d.name.split('/').pop();
       const ts = d.fields?.fecha?.timestampValue;
+      const slug = d.fields?.slug?.stringValue;
       const fecha = ts ? new Date(ts).toISOString().split('T')[0] : today;
       return `  <url>
-    <loc>${BASE}/noticia?id=${id}</loc>
+    <loc>${slug ? `${BASE}/noticia/${slug}` : `${BASE}/noticia.html?id=${id}`}</loc>
     <lastmod>${fecha}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

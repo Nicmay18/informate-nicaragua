@@ -56,7 +56,9 @@ exports.telegram = functions.https.onRequest(async (req, res) => {
     if (ultimoPunto > 100) resumen = resumen.substring(0, ultimoPunto + 1);
     const cat = (noticia.categoria?.toUpperCase() || 'NOTICIA').substring(0, 30);
     const slug = noticia.slug || noticia.id || Date.now().toString(36);
-    const url = `https://nicaraguainformate.com/noticia?id=${noticia.id || slug}`;
+    const url = noticia.slug
+      ? `https://nicaraguainformate.com/noticia/${noticia.slug}`
+      : `https://nicaraguainformate.com/noticia.html?id=${noticia.id}`;
 
     const text = `${emoji[noticia.categoria] || '📰'} *${cat}*\n\n*${titulo}*\n\n${resumen}\n\n🔗 [Leer noticia completa](${url})`;
 
@@ -434,7 +436,7 @@ function getTemplate(type) {
     <div class="article">
       <h2 class="title">${article.titulo}</h2>
       <p>${article.resumen || ''}</p>
-      <a href="https://nicaraguainformate.com/noticia?id=${article.id}" class="cta">Leer completo →</a>
+      <a href="${article.slug ? `https://nicaraguainformate.com/noticia/${article.slug}` : `https://nicaraguainformate.com/noticia.html?id=${article.id}`}" class="cta">Leer completo →</a>
     </div>
   `).join('')}
 </body>

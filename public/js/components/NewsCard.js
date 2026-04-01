@@ -45,7 +45,7 @@ export class NewsCard {
     const img = sanitizarImagen(noticia.imagen, noticia.id, noticia.categoria);
     const fallback = getFallbackImage(noticia.categoria);
     const titulo = toTitleCase(noticia.titulo || '');
-    const url = `/noticia?id=${noticia.id}`;
+    const url = noticia.slug ? `/noticia/${noticia.slug}` : `/noticia?id=${noticia.id}`;
     const fecha = formatearFecha(noticia.fecha);
     const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 150);
 
@@ -84,7 +84,7 @@ export class NewsCard {
     const img = sanitizarImagen(noticia.imagen, noticia.id, noticia.categoria);
     const fallback = getFallbackImage(noticia.categoria);
     const titulo = toTitleCase(noticia.titulo || '');
-    const url = `/noticia?id=${noticia.id}`;
+    const url = noticia.slug ? `/noticia/${noticia.slug}` : `/noticia?id=${noticia.id}`;
     const fecha = formatearFecha(noticia.fecha);
     const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 200);
 
@@ -176,7 +176,7 @@ export class NewsCard {
       if (typeof this.options.onClick === 'function') {
         this.options.onClick(this.noticia.id, this.noticia);
       } else {
-        window.location.href = `/noticia?id=${this.noticia.id}`;
+        window.location.href = this.noticia.slug ? `/noticia/${this.noticia.slug}` : `/noticia?id=${this.noticia.id}`;
       }
     });
     

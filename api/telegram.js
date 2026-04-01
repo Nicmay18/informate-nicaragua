@@ -23,7 +23,9 @@ export default async (req, res) => {
     let resumen = resumenCompleto.substring(0, 300);
     const ultimoPunto = resumen.lastIndexOf('.');
     if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
-    const url = `https://nicaraguainformate.com/noticia.html?id=${noticia.id || Date.now().toString(36)}`;
+    const url = noticia.slug
+      ? `https://nicaraguainformate.com/noticia/${noticia.slug}`
+      : `https://nicaraguainformate.com/noticia.html?id=${noticia.id || Date.now().toString(36)}`;
 
     // Solo título, resumen y link - sin categoría
     const text = `${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;

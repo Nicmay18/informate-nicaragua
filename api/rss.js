@@ -28,13 +28,14 @@ module.exports = async (req, res) => {
     const items = docs.map(doc => {
       const f = doc.fields || {};
       const id = doc.name.split('/').pop();
+      const slug = f.slug?.stringValue;
       const titulo = esc(f.titulo?.stringValue || 'Sin título');
       const resumen = esc((f.resumen?.stringValue || f.contenido?.stringValue || '').substring(0, 300));
       const categoria = esc(f.categoria?.stringValue || 'General');
       const imagen = f.imagen?.stringValue || '';
       const ts = f.fecha?.timestampValue || f.fecha?.stringValue;
       const fecha = ts ? new Date(ts) : new Date();
-      const link = `${BASE}/noticia.html?id=${id}`;
+      const link = slug ? `${BASE}/noticia/${slug}` : `${BASE}/noticia.html?id=${id}`;
       const img = imagen && !imagen.startsWith('data:') && !imagen.includes('fbcdn')
         ? `<enclosure url="${esc(imagen)}" type="image/jpeg"/>`
         : '';

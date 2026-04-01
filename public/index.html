@@ -4246,7 +4246,7 @@ function compartirNoticia(plataforma, noticiaId) {
 
   const titulo = utils.capitalize(n.titulo || '');
 
-  const url = window.location.href;
+  const url = n.slug ? ("https://nicaraguainformate.com/noticia/" + n.slug) : ("https://nicaraguainformate.com/noticia.html?id=" + n.id);
 
   
 

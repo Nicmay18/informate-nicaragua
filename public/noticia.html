@@ -212,14 +212,19 @@
 
   async function cargarNoticiaPorSlug(slug) {
     try {
+      // Primero buscar por campo slug
       const q = query(collection(db, 'noticias'), where('slug', '==', slug), limit(1));
       const snap = await getDocs(q);
-      if (snap.empty) { mostrarError(); return; }
-      const docSnap = snap.docs[0];
-      const n = { id: docSnap.id, ...docSnap.data() };
-      updateDoc(docSnap.ref, { vistas: increment(1) }).catch(() => {});
-      mostrarNoticia(n);
-      cargarRelacionadas(n.categoria, n.id);
+      if (!snap.empty) {
+        const docSnap = snap.docs[0];
+        const n = { id: docSnap.id, ...docSnap.data() };
+        updateDoc(docSnap.ref, { vistas: increment(1) }).catch(() => {});
+        mostrarNoticia(n);
+        cargarRelacionadas(n.categoria, n.id);
+        return;
+      }
+      // Si no encuentra por slug, intentar como ID directo (noticias antiguas)
+      await cargarNoticia(slug);
     } catch(e) { mostrarError(); }
   }
 

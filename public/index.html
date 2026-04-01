@@ -4157,31 +4157,20 @@ function abrirModal(n) {
   const fecha = n.fecha?.toDate ? n.fecha.toDate() : (n.fecha?.seconds ? new Date(n.fecha.seconds*1000) : new Date());
 
   schema.textContent = JSON.stringify({
-
     "@context": "https://schema.org",
-
     "@type": "NewsArticle",
-
     "headline": n.titulo,
-
     "image": [img.startsWith('data:') ? 'https://nicaraguainformate.com/logo.png' : img],
-
     "datePublished": fecha.toISOString(),
-
-    "author": { "@type": "Person", "name": "Keyling Rivera" },
-
-    "publisher": { 
-
-      "@type": "Organization", 
-
-      "name": "Nicaragua Informate", 
-
-      "logo": { "@type": "ImageObject", "url": "https://nicaraguainformate.com/logo.png" } 
-
+    "dateModified": fecha.toISOString(),
+    "author": { "@type": "Organization", "name": "Nicaragua Informate" },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Nicaragua Informate",
+      "logo": { "@type": "ImageObject", "url": "https://nicaraguainformate.com/logo.png", "width": 600, "height": 60 }
     },
-
-    "description": n.resumen || ''
-
+    "description": n.resumen || '',
+    "mainEntityOfPage": { "@type": "WebPage", "@id": "https://nicaraguainformate.com/noticia/" + (n.slug || n.id) }
   });
 
   

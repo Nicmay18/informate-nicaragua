@@ -191,6 +191,15 @@ audio{width:300px;height:36px;border-radius:18px;position:relative;z-index:1}
 <style>
 /* SIDEBAR RIGHT */
 .sidebar-right{display:flex;flex-direction:column;gap:24px}
+.sidebar-box.indicadores-box{background:var(--surface);padding:18px; border-radius:16px;box-shadow:var(--sombra);border:1px solid var(--border);}
+.sidebar-box.indicadores-box h4{font-size:16px;margin-bottom:12px;color:var(--text);font-weight:700;display:flex;align-items:center;gap:8px;}
+.indicadores-list{display:grid;gap:8px;font-size:14px;color:var(--text-dark);}
+.indicadores-list .label{color:var(--text-muted);font-weight:600;margin-right:6px;}
+.indicadores-list strong{font-weight:800;color:var(--azul);}
+.indicadores-footer{margin-top:10px;font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.refresh-btn{margin-top:10px;padding:8px 12px;border:1px solid var(--azul);background:#fff;color:var(--azul);font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s;}
+.refresh-btn:hover{background:var(--azul);color:#fff;}
+.indicadores-box .small{margin-top:12px;font-size:12px;color:var(--text-muted);}
 .popular-box{background:var(--surface);padding:24px;border-radius:16px;box-shadow:var(--sombra);transition:background .3s}
 .popular-box h4{font-size:16px;margin-bottom:16px;color:var(--text);font-weight:700}
 .ad-box{background:var(--surface);padding:24px;border-radius:16px;box-shadow:var(--sombra);min-height:250px;display:flex;align-items:center;justify-content:center}
@@ -270,22 +279,6 @@ audio{width:300px;height:36px;border-radius:18px;position:relative;z-index:1}
 <div class="visit-counter" id="visitCounter" aria-label="Visitantes">
   <i class="fas fa-eye" aria-hidden="true"></i>
   <span id="visitCount">...</span>
-</div>
-
-<!-- TICKER -->
-<div class="ticker" role="marquee" aria-label="Indicadores económicos">
-  <div class="ticker-content">
-    <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
-    <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
-    <div class="ticker-item">⛽ Súper: <span>C$ 49.03/ltr</span></div>
-    <div class="ticker-item">🛢 Diésel: <span>C$ 43.21/ltr</span></div>
-    <div class="ticker-item">📅 <span id="tickerDate"></span></div>
-    <div class="ticker-item">💵 Dólar BCN: <span>C$ 36.6243</span></div>
-    <div class="ticker-item">⛽ Regular: <span>C$ 47.84/ltr</span></div>
-    <div class="ticker-item">⛽ Súper: <span>C$ 49.03/ltr</span></div>
-    <div class="ticker-item">🛢 Diésel: <span>C$ 43.21/ltr</span></div>
-    <div class="ticker-item">📅 <span id="tickerDate2"></span></div>
-  </div>
 </div>
 
 <!-- HEADER -->
@@ -468,6 +461,20 @@ audio{width:300px;height:36px;border-radius:18px;position:relative;z-index:1}
 
   <!-- SIDEBAR DERECHA -->
   <aside class="sidebar-right" aria-label="Noticias populares y publicidad">
+    <div class="sidebar-box indicadores-box">
+      <h4><i class="fas fa-chart-line"></i> Indicadores económicos</h4>
+      <div class="indicadores-list" aria-live="polite" aria-atomic="true">
+        <div><span class="label">Dólar BCN</span> <strong id="ind-dolar">C$ 36.62</strong></div>
+        <div><span class="label">Gasolina Regular</span> <strong id="ind-regular">C$ 47.84</strong> /ltr</div>
+        <div><span class="label">Gasolina Súper</span> <strong id="ind-super">C$ 49.03</strong> /ltr</div>
+        <div><span class="label">Diésel</span> <strong id="ind-diesel">C$ 43.21</strong> /ltr</div>
+      </div>
+      <div class="indicadores-footer">
+        <span>Última actualización:</span> <strong id="ind-last-updated">--:--</strong>
+      </div>
+      <button id="refreshIndicadoresBtn" type="button" class="refresh-btn" aria-label="Actualizar indicadores">Actualizar</button>
+      <p class="small">Se actualiza cada 30 minutos automáticamente.</p>
+    </div>
     <div class="popular-box">
       <h4>⭐ Populares</h4>
       <div id="popularPosts">
@@ -650,7 +657,7 @@ function showToast(msg, type = 'default', duration = 3000) {
 // FIREBASE
 // ============================================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzZKOJxcA",
@@ -674,29 +681,55 @@ const POR_PAGINA = 8;
 let currentNoticia = null;
 
 // ============================================
-// CARGAR NOTICIAS
+// INDICADORES ECONÓMICOS (Firestore / API)
+// ============================================
+async function getIndicadoresConfig() {
+  try {
+    const ref = doc(db, 'config', 'indicadores');
+    const snapshot = await getDoc(ref);
+    return snapshot.exists() ? snapshot.data() : null;
+  } catch (e) {
+    console.warn('No se pudo leer config indicadores:', e);
+    return null;
+  }
+}
+
+// ============================================
+// CARGAR NOTICIAS (real-time)
 // ============================================
 async function cargar() {
   try {
     const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'));
-    const snap = await getDocs(q);
-    todas = [];
-    snap.forEach((d, idx) => {
-      const data = d.data();
-      data.id = d.id;
-      const rawImg = data.imagen || data.image || data.img || data.urlImagen || data.photo || data.foto || '';
-      data.imagen = sanitizarImagen(rawImg, data.categoria, idx);
-      todas.push(data);
+    onSnapshot(q, (snap) => {
+      todas = [];
+      snap.forEach((d, idx) => {
+        const data = d.data();
+        data.id = d.id;
+        const rawImg = data.imagen || data.image || data.img || data.urlImagen || data.photo || data.foto || '';
+        data.imagen = sanitizarImagen(rawImg, data.categoria, idx);
+        todas.push(data);
+      });
+      if (!todas.length) todas = getNoticiasEjemplo();
+      pintar();
+      cargarPopulares();
+      cargarTrending();
+    }, (err) => {
+      console.error('Error en snapshot de noticias:', err);
+      if (!todas.length) {
+        todas = getNoticiasEjemplo();
+        pintar();
+      }
     });
-    if (!todas.length) todas = getNoticiasEjemplo();
+
+    incrementarVisita();
   } catch(e) {
     console.error('Error cargando:', e);
     todas = getNoticiasEjemplo();
+    pintar();
+    cargarPopulares();
+    cargarTrending();
+    incrementarVisita();
   }
-  pintar();
-  cargarPopulares();
-  cargarTrending();
-  incrementarVisita();
 }
 
 function getNoticiasEjemplo() {
@@ -986,8 +1019,10 @@ function actualizarHora() {
     const ahora = new Date();
     document.getElementById('hora').textContent = ahora.toLocaleDateString('es-NI', {weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
     const fecha = ahora.toLocaleDateString('es-NI');
-    document.getElementById('tickerDate').textContent = fecha;
-    document.getElementById('tickerDate2').textContent = fecha;
+    const tickerDate = document.getElementById('tickerDate');
+    const tickerDate2 = document.getElementById('tickerDate2');
+    if (tickerDate) tickerDate.textContent = fecha;
+    if (tickerDate2) tickerDate2.textContent = fecha;
   } catch(e) {}
 }
 actualizarHora();
@@ -1010,6 +1045,72 @@ async function cargarClima() {
   }
 }
 setTimeout(cargarClima, 1000);
+
+async function obtenerTasaDolarNIO() {
+  const sources = [
+    'https://api.exchangerate-api.com/v4/latest/USD',
+    'https://open.er-api.com/v6/latest/USD',
+    'https://api.frankfurter.app/latest?from=USD&to=NIO'
+  ];
+
+  for (const url of sources) {
+    try {
+      const resp = await fetch(url, { cache: 'no-store', mode: 'cors' });
+      if (!resp.ok) continue;
+      const data = await resp.json();
+      if (data?.rates?.NIO) return Number(data.rates.NIO).toFixed(4);
+      const key = Object.keys(data?.rates || {}).find(k => k.toUpperCase() === 'NIO');
+      if (key) return Number(data.rates[key]).toFixed(4);
+    } catch (e) {
+      continue;
+    }
+  }
+  return null;
+}
+
+async function actualizarIndicadoresEconomicos() {
+  const defaultValues = {dolar:'36.62', regular:'47.84', super:'49.03', diesel:'43.21'};
+  const hora = new Date().toLocaleTimeString('es-NI', {hour:'2-digit', minute:'2-digit'});
+
+  let dolar = null;
+  let fuelValues = null;
+
+  try {
+    dolar = await obtenerTasaDolarNIO();
+    if (!dolar) throw new Error('No rate');
+
+    const config = await getIndicadoresConfig();
+    if (config?.gasolina) {
+      fuelValues = {
+        regular: config.gasolina.regular ?? defaultValues.regular,
+        super: config.gasolina.super ?? defaultValues.super,
+        diesel: config.gasolina.diesel ?? defaultValues.diesel,
+      };
+    }
+  } catch (e) {
+    const saved = JSON.parse(localStorage.getItem('indicadoresEconomicos') || 'null');
+    dolar = (saved && saved.dolar) ? saved.dolar : defaultValues.dolar;
+    if (saved && saved.regular && saved.super && saved.diesel) {
+      fuelValues = {regular: saved.regular, super: saved.super, diesel: saved.diesel};
+    } else {
+      fuelValues = defaultValues;
+    }
+  }
+
+  const finalFuel = fuelValues || defaultValues;
+
+  document.getElementById('ind-dolar').textContent = `C$ ${dolar}`;
+  document.getElementById('ind-regular').textContent = `C$ ${finalFuel.regular}`;
+  document.getElementById('ind-super').textContent = `C$ ${finalFuel.super}`;
+  document.getElementById('ind-diesel').textContent = `C$ ${finalFuel.diesel}`;
+  document.getElementById('ind-last-updated').textContent = hora;
+
+  localStorage.setItem('indicadoresEconomicos', JSON.stringify({dolar, ...finalFuel, updated: hora}));
+}
+
+
+actualizarIndicadoresEconomicos();
+setInterval(actualizarIndicadoresEconomicos, 1000 * 60 * 5); // cada 5 minutos (mayor frecuencia para noticias recientes)
 
 // DARK MODE
 const darkToggle = document.getElementById('darkToggle');

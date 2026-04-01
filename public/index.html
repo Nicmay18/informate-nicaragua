@@ -2630,19 +2630,44 @@ function initEventListeners() {
   observer.observe(radioPlayer, { attributes: true, attributeFilter: ['class'] });
 }
 function initAds() {
+  // 1. Verificar si hay bloqueador
+  if (window.canRunAds === undefined) {
+    console.log('AdBlock detectado - mostrando mensaje alternativo');
+    document.querySelectorAll('.ad-slot').forEach(slot => {
+      slot.innerHTML = `
+        <div style="padding:20px;text-align:center;background:#f8fafc;">
+          <p>📢 Apoya nuestro periodismo</p>
+          <button onclick="mostrarPremium()" style="padding:8px 16px;background:var(--premium-gold);color:white;border:none;border-radius:6px;cursor:pointer;">
+            Ver suscripción Premium
+          </button>
+        </div>`;
+    });
+    return;
+  }
+
+  // 2. Cargar anuncios solo cuando son visibles (Lazy loading)
   const adSlots = document.querySelectorAll('.adsbygoogle');
-  if (!adSlots.length || !window.adsbygoogle) return;
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        try { 
-          (adsbygoogle = window.adsbygoogle || []).push({}); 
-        } catch(e) {}
+      if (entry.isIntersecting && !entry.target.getAttribute('data-ad-loaded')) {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+          entry.target.setAttribute('data-ad-slot', generateUniqueSlotId()); // IDs únicos
+          entry.target.setAttribute('data-ad-loaded', 'true');
+        } catch(e) {
+          console.error('Error cargando anuncio:', e);
+        }
         observer.unobserve(entry.target);
       }
     });
-  }, { rootMargin: '200px' });
+  }, { rootMargin: '100px' });
+
   adSlots.forEach(slot => observer.observe(slot));
+}
+
+// Generar IDs únicos para cada slot
+function generateUniqueSlotId() {
+  return 'slot-' + Math.random().toString(36).substr(2, 9);
 }
 function initStickyCTA() {
   setTimeout(() => {

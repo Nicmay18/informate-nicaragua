@@ -1726,8 +1726,18 @@
 
       const { collection, addDoc, updateDoc, doc, serverTimestamp } = window._firebase;
 
+      // Generar slug SEO desde el título
+      const slug = titulo.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .substring(0, 80)
+        .replace(/-+$/, '');
+
       const noticiaData = { 
-        titulo, 
+        titulo,
+        slug,
         categoria, 
         contenido, 
         resumen, 
@@ -2205,15 +2215,16 @@
     // WHATSAPP
     // ==========================================
     function mostrarFormatoWhatsApp(noticia) {
-      const emoji = {
-        'Sucesos':'🚨','Nacionales':'🇳🇮','Deportes':'⚽',
-        'Internacionales':'🌍','Tecnología':'💻','Cultura':'🎨','Espectaculos':'⭐'
-      };
-      
-      const cat = emoji[noticia.categoria] || '📰';
-      const url = `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
-      
-      const texto = `${cat} *${(noticia.titulo || '').toUpperCase()}*\n\n🔗 ${url}`;
+      const url = noticia.slug
+        ? `${CONFIG.SITE_URL}/noticia/${noticia.slug}`
+        : `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
+
+      const titulo = (noticia.titulo || '').trim();
+      const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 250);
+      const ultimoPunto = resumen.lastIndexOf('.');
+      const resumenCorto = ultimoPunto > 80 ? resumen.substring(0, ultimoPunto + 1) : resumen;
+
+      const texto = `${titulo}\n\n${resumenCorto}\n\n📲 Más detalles: ${url}`;
 
       const modal = document.createElement('div');
       modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';

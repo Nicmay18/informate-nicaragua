@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test - Reproductor de Radio Nicaragua</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+:root {
+  --brand-primary: #1e293b;
+  --brand-accent: #dc2626;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+  font-family: 'Inter', system-ui, sans-serif;
+  background: #f8fafc;
+  padding: 40px 20px;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+h1 {
+  color: var(--brand-primary);
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.subtitle {
+  color: #64748b;
+  margin-bottom: 30px;
+  font-size: 16px;
+}
+
+.info-box {
+  background: #f1f5f9;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  border-left: 4px solid var(--brand-accent);
+}
+
+.radio-list {
+  list-style: none;
+  padding: 0;
+}
+
+.radio-list li {
+  padding: 12px 0;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 16px;
+}
+
+.radio-list li:last-child {
+  border-bottom: none;
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #10b981;
+  margin-right: 8px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* REPRODUCTOR DE RADIO */
+.radio-player {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 50px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s;
+  cursor: pointer;
+  min-width: 240px;
+  border: 2px solid rgba(255,255,255,0.1);
+}
+
+.radio-player:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  border-color: rgba(255,255,255,0.2);
+}
+
+.radio-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--brand-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+
+.radio-icon:hover {
+  transform: scale(1.1);
+  background: #b91c1c;
+}
+
+.radio-icon.playing {
+  animation: iconPulse 2s infinite;
+  background: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
+}
+
+.radio-icon.loading {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.8);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.radio-info {
+  flex: 1;
+  min-width: 0;
+}
+
+#radioSelector {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 2px;
+  width: 100%;
+  padding: 2px 0;
+}
+
+#radioSelector:hover {
+  opacity: 0.9;
+}
+
+#radioSelector option {
+  background: var(--brand-primary);
+  color: white;
+  padding: 8px;
+}
+
+.radio-status {
+  font-size: 11px;
+  opacity: 0.9;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+@media (max-width: 640px) {
+  .radio-player {
+    bottom: 20px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
+    border-radius: 16px;
+    padding: 12px 16px;
+  }
+  .radio-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  #radioSelector {
+    font-size: 13px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>🎵 Reproductor de Radio Nicaragua</h1>
+  <p class="subtitle">Prueba del reproductor con 5 radios principales</p>
+  
+  <div class="info-box">
+    <h3 style="margin-bottom: 15px; color: var(--brand-primary);">📻 Radios Disponibles:</h3>
+    <ul class="radio-list">
+      <li><span class="status-indicator"></span> 🔴 Radio Ya 99.1 FM</li>
+      <li><span class="status-indicator"></span> 📻 La Primerísima</li>
+      <li><span class="status-indicator"></span> 🎵 Viva FM</li>
+      <li><span class="status-indicator"></span> 💃 La Pachanguera</li>
+      <li><span class="status-indicator"></span> ⚡ Futura Radio 91.3</li>
+    </ul>
+  </div>
+
+  <div class="info-box">
+    <h3 style="margin-bottom: 15px; color: var(--brand-primary);">🎯 Instrucciones:</h3>
+    <ol style="padding-left: 20px; line-height: 1.8;">
+      <li>Busca el reproductor flotante en la esquina inferior derecha</li>
+      <li>Click en el icono de <strong>play (▶️)</strong> para iniciar</li>
+      <li>Espera unos segundos mientras conecta</li>
+      <li>Verás "🔴 En vivo" cuando esté reproduciendo</li>
+      <li>Usa el selector para cambiar de radio</li>
+      <li>Click en <strong>pause (⏸️)</strong> para detener</li>
+    </ol>
+  </div>
+
+  <div class="info-box" style="border-left-color: #10b981;">
+    <h3 style="margin-bottom: 10px; color: #10b981;">✅ Características:</h3>
+    <ul style="padding-left: 20px; line-height: 1.8;">
+      <li>Indicador de carga mientras conecta</li>
+      <li>Animación de pulso cuando está en vivo</li>
+      <li>Manejo de errores automático</li>
+      <li>Diseño responsive para móviles</li>
+      <li>Volumen optimizado al 70%</li>
+    </ul>
+  </div>
+</div>
+
+<!-- REPRODUCTOR DE RADIO FLOTANTE -->
+<div class="radio-player" id="radioPlayer">
+  <div class="radio-icon" id="radioIcon">
+    <i class="fas fa-play"></i>
+  </div>
+  <div class="radio-info">
+    <select id="radioSelector">
+      <option value="https://s5.mexside.net:7048/stream">🔴 Radio Ya 99.1 FM</option>
+      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima</option>
+      <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
+      <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
+      <option value="https://stream.zeno.fm/nqhxqhx2gg0uv">⚡ Futura Radio 91.3</option>
+    </select>
+    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+  </div>
+</div>
+
+<script>
+const radioPlayer = {
+  audio: null,
+  isPlaying: false,
+  isLoading: false,
+  
+  init() {
+    const icon = document.getElementById('radioIcon');
+    const selector = document.getElementById('radioSelector');
+    
+    if (icon) {
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggle();
+      });
+    }
+    
+    if (selector) {
+      selector.addEventListener('change', () => {
+        if (this.isPlaying) {
+          this.stop();
+          setTimeout(() => this.play(), 200);
+        }
+      });
+      
+      selector.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+    }
+  },
+  
+  toggle() {
+    if (this.isLoading) return;
+    
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  },
+  
+  play() {
+    const selector = document.getElementById('radioSelector');
+    const streamUrl = selector?.value || 'https://s5.mexside.net:7048/stream';
+    
+    this.stop();
+    
+    this.isLoading = true;
+    this.updateStatus('Conectando...');
+    const icon = document.getElementById('radioIcon');
+    if (icon) {
+      icon.classList.add('loading');
+      icon.innerHTML = '<i class="fas fa-spinner"></i>';
+    }
+    
+    this.audio = new Audio(streamUrl);
+    this.audio.volume = 0.7;
+    this.audio.preload = 'none';
+    
+    this.audio.addEventListener('loadstart', () => {
+      this.updateStatus('Cargando...');
+    });
+    
+    this.audio.addEventListener('canplay', () => {
+      this.isLoading = false;
+      this.isPlaying = true;
+      this.updateUI();
+    });
+    
+    this.audio.addEventListener('error', (e) => {
+      console.error('Error en el stream:', e);
+      this.isLoading = false;
+      this.isPlaying = false;
+      this.updateStatus('Error - Intenta otra radio');
+      if (icon) {
+        icon.classList.remove('loading', 'playing');
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+      }
+      setTimeout(() => {
+        if (!this.isPlaying) {
+          icon.innerHTML = '<i class="fas fa-play"></i>';
+          this.updateStatus('Click para reproducir');
+        }
+      }, 3000);
+    });
+    
+    const playPromise = this.audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          this.isLoading = false;
+          this.isPlaying = true;
+          this.updateUI();
+        })
+        .catch(err => {
+          console.error('Error reproduciendo:', err);
+          this.isLoading = false;
+          this.isPlaying = false;
+          this.updateStatus('Click para reproducir');
+          if (icon) {
+            icon.classList.remove('loading');
+            icon.innerHTML = '<i class="fas fa-play"></i>';
+          }
+        });
+    }
+  },
+  
+  pause() {
+    if (this.audio) {
+      this.audio.pause();
+    }
+    this.isPlaying = false;
+    this.isLoading = false;
+    this.updateUI();
+  },
+  
+  stop() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio = null;
+    }
+    this.isPlaying = false;
+    this.isLoading = false;
+  },
+  
+  updateUI() {
+    const icon = document.getElementById('radioIcon');
+    
+    if (icon) {
+      icon.classList.remove('loading');
+      
+      if (this.isPlaying) {
+        icon.classList.add('playing');
+        icon.innerHTML = '<i class="fas fa-pause"></i>';
+        this.updateStatus('🔴 En vivo');
+      } else {
+        icon.classList.remove('playing');
+        icon.innerHTML = '<i class="fas fa-play"></i>';
+        this.updateStatus('Click para reproducir');
+      }
+    }
+  },
+  
+  updateStatus(text) {
+    const status = document.getElementById('radioStatus');
+    if (status) status.textContent = text;
+  }
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  radioPlayer.init();
+});
+</script>
+
+</body>
+</html>

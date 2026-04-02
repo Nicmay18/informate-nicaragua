@@ -36,12 +36,18 @@
 <meta property="twitter:description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales.">
 <meta property="twitter:image" content="https://nicaraguainformate.com/logo.png">
 
+<!-- Optimización de carga de fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome con carga diferida -->
 <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
-<link rel="stylesheet" href="/css/anuncios.css">
+
+<!-- CSS de anuncios con carga diferida -->
+<link rel="preload" href="/css/anuncios.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="/css/anuncios.css"></noscript>
 <style>
 :root {
   --brand-primary: #1e293b;
@@ -857,62 +863,7 @@ body.dark-theme .skeleton-card {
   transform: translateY(-2px);
 }
 
-/* FOOTER */
-.footer {
-  margin-top: 80px;
-  background: var(--brand-primary);
-  color: #fff;
-  padding: 60px 24px 30px;
-}
-.footer-grid {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 60px;
-  margin-bottom: 40px;
-}
-.footer-brand {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 16px;
-  font-family: var(--font-serif);
-}
-.footer-desc { 
-  color: #94a3b8; 
-  line-height: 1.7; 
-  font-size: 14px;
-  max-width: 300px;
-}
-.footer-section h4 {
-  color: #fff;
-  font-size: 13px;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 700;
-}
-.footer-links { list-style: none; }
-.footer-links li {
-  margin: 12px 0;
-  color: #94a3b8;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-.footer-links li:hover { 
-  color: #fff; 
-  transform: translateX(4px); 
-}
-.footer-bottom {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding-top: 30px;
-  border-top: 1px solid #334155;
-  color: #64748b;
-  font-size: 13px;
-  text-align: center;
-}
+/* FOOTER - Estilos inline en el HTML */
 
 /* REPRODUCTOR DE RADIO FLOTANTE */
 .radio-player {
@@ -1057,8 +1008,6 @@ body.dark-theme .skeleton-card {
   .news-card { grid-template-columns: 1fr; }
   .card-image-wrapper { aspect-ratio: 16/9; }
   .breaking-body h2 { font-size: 22px; }
-  .footer-grid { grid-template-columns: 1fr; gap: 40px; }
-  .premium-sticky { left: 20px; right: 20px; max-width: none; }
 }
 </style>
 </head>
@@ -1188,32 +1137,68 @@ body.dark-theme .skeleton-card {
   </div>
 </div>
 
-<footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <div class="footer-brand">Nicaragua Informate</div>
-      <p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información actualizada sobre sucesos, deportes, tecnología e internacionales.</p>
+<!-- FOOTER PROFESIONAL ESTILO CNN -->
+<footer style="background: #1a1a1a; color: #999; padding: 40px 20px 20px; font-size: 0.9rem;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <!-- Logo y Redes Sociales -->
+    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 30px; border-bottom: 1px solid #333; flex-wrap: wrap; gap: 20px;">
+      <div>
+        <h3 style="color: white; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.5rem; margin: 0;">
+          Nicaragua Informate
+        </h3>
+        <p style="margin: 5px 0 0; font-size: 0.85rem;">Tu fuente confiable de noticias</p>
+      </div>
+      <div style="display: flex; gap: 15px; align-items: center;">
+        <span style="color: #ccc; font-size: 0.9rem;">Síguenos:</span>
+        <a href="https://facebook.com/nicaraguainformate" target="_blank" style="color: #999; font-size: 1.3rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'" title="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://whatsapp.com/channel/0029VbAMvCO4fepaUwpQXo0I" target="_blank" style="color: #999; font-size: 1.3rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'" title="Canal de WhatsApp">
+          <i class="fab fa-whatsapp"></i>
+        </a>
+      </div>
     </div>
-    <div class="footer-section">
-      <h4>Secciones</h4>
-      <ul class="footer-links">
-        <li onclick="cambiarCategoria('Todas')">Última Hora</li>
-        <li onclick="cambiarCategoria('Sucesos')">Sucesos</li>
-        <li onclick="cambiarCategoria('Deportes')">Deportes</li>
-        <li onclick="cambiarCategoria('Internacionales')">Internacionales</li>
-      </ul>
+
+    <!-- Links del Footer -->
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; padding: 30px 0; border-bottom: 1px solid #333;">
+      <div>
+        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Secciones</h4>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 10px;"><a href="/" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Inicio</a></li>
+          <li style="margin-bottom: 10px;"><a href="/?cat=Sucesos" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Sucesos</a></li>
+          <li style="margin-bottom: 10px;"><a href="/?cat=Deportes" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Deportes</a></li>
+          <li style="margin-bottom: 10px;"><a href="/?cat=Internacionales" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Internacionales</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Acerca de</h4>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 10px;"><a href="/nosotros.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Nosotros</a></li>
+          <li style="margin-bottom: 10px;"><a href="/contacto.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Legal</h4>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          <li style="margin-bottom: 10px;"><a href="/privacidad.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Privacidad</a></li>
+          <li style="margin-bottom: 10px;"><a href="/terminos.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Términos de uso</a></li>
+          <li style="margin-bottom: 10px;"><a href="/cookies.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Cookies</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Newsletter</h4>
+        <p style="margin-bottom: 15px; font-size: 0.85rem; line-height: 1.5;">Recibe las noticias más importantes en tu correo</p>
+        <form style="display: flex; gap: 5px;" onsubmit="suscribirNewsletter(event)">
+          <input type="email" placeholder="tu@email.com" required style="flex: 1; padding: 10px; border: 1px solid #333; background: #2a2a2a; color: white; border-radius: 4px; font-size: 0.85rem;">
+          <button type="submit" style="padding: 10px 20px; background: var(--rojo); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">Enviar</button>
+        </form>
+      </div>
     </div>
-    <div class="footer-section">
-      <h4>Legal</h4>
-      <ul class="footer-links">
-        <li><a href="privacidad.html" style="color: inherit; text-decoration: none;">Privacidad</a></li>
-        <li><a href="terminos.html" style="color: inherit; text-decoration: none;">Términos</a></li>
-        <li><a href="contacto.html" style="color: inherit; text-decoration: none;">Contacto</a></li>
-      </ul>
+
+    <!-- Copyright -->
+    <div style="padding-top: 20px; text-align: center; font-size: 0.8rem;">
+      <p style="margin: 0;">© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
     </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
   </div>
 </footer>
 

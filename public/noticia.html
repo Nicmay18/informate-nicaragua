@@ -306,16 +306,20 @@
     const palabras = (n.contenido || '').split(/\s+/).length;
     document.getElementById('readTime').textContent = Math.max(1, Math.ceil(palabras / 200));
 
+    function escHtml(s) {
+      return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
     const parrafos = (n.contenido || n.resumen || '').split('\n').filter(p => p.trim());
     const adHTML = `<div style="margin:24px 0;min-height:90px;background:#1e293b;border-radius:8px;border:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;"><span style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:9px;color:#475569;text-transform:uppercase;">Publicidad</span><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px;" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins></div>`;
     const donacionHTML = `<div style="background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.3);padding:20px;border-radius:12px;text-align:center;margin-top:32px;"><p style="color:#fca5a5;font-size:15px;margin-bottom:14px;">❤️ Apoya el periodismo independiente en Nicaragua.<br>Tu aporte mantiene este medio activo.</p><a href="https://www.paypal.me/NicaraguaInformate" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:#DC2626;color:white;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:700;font-size:14px;"><i class="fab fa-paypal"></i> Donar ahora</a></div>`;
     const compartirHTML = `<div style="background:rgba(24,119,242,0.12);border:2px solid #1877f2;border-radius:12px;padding:20px;text-align:center;margin:32px 0;"><p style="color:#93c5fd;font-size:16px;font-weight:700;margin-bottom:14px;">👉 Comparte esta noticia con tus amigos</p><a href="#" onclick="compartirFB();return false;" style="display:inline-flex;align-items:center;gap:8px;background:#1877f2;color:white;padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:700;font-size:15px;"><i class='fab fa-facebook-f'></i> Compartir en Facebook</a></div>`;
 
     // Insertar anuncio después del 3er párrafo, compartir al final del contenido
-    let contenidoHTML = parrafos.map(p => `<p>${p}</p>`).join('');
+    let contenidoHTML = parrafos.map(p => `<p>${escHtml(p)}</p>`).join('');
     if (parrafos.length > 3) {
-      const mitad = parrafos.slice(0, 3).map(p => `<p>${p}</p>`).join('');
-      const resto = parrafos.slice(3).map(p => `<p>${p}</p>`).join('');
+      const mitad = parrafos.slice(0, 3).map(p => `<p>${escHtml(p)}</p>`).join('');
+      const resto = parrafos.slice(3).map(p => `<p>${escHtml(p)}</p>`).join('');
       contenidoHTML = mitad + adHTML + resto;
     }
     document.getElementById('articleContent').innerHTML = contenidoHTML + compartirHTML + donacionHTML;
@@ -358,7 +362,7 @@
       document.getElementById('relatedGrid').innerHTML = rel.map(n => {
         const img = n.imagen && !n.imagen.startsWith('data:') ? n.imagen : `https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60`;
         const fecha = n.fecha?.toDate ? n.fecha.toDate() : new Date();
-        return `<a href="${n.slug ? `/noticia/${n.slug}` : `noticia.html?id=${n.id}`}" class="related-card">
+        return `<a href="noticia.html?id=${n.id}" class="related-card">
           <img src="${img}" alt="" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60'">
           <div class="related-card-body"><h4>${n.titulo}</h4><span>${fecha.toLocaleDateString('es-NI')}</span></div>
         </a>`;

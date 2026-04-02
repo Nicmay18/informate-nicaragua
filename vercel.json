@@ -1,12 +1,4 @@
 {
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.nicaraguainformate.com" }],
-      "destination": "https://nicaraguainformate.com/:path*",
-      "permanent": true
-    }
-  ],
   "rewrites": [
     { "source": "/rss.xml", "destination": "/api/rss" },
     { "source": "/noticia/:slug", "destination": "/public/noticia.html" },

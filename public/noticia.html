@@ -14,6 +14,10 @@
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
+    <!-- Firebase Compat (versión más ligera) con defer -->
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+    <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+    
     <style>
         :root { --rojo: #d0021b; --azul: #003366; --negro: #1a1a1a; --gris-suave: #f8f9fa; }
         body { font-family: 'Inter', sans-serif; margin: 0; color: var(--negro); line-height: 1.6; }
@@ -220,60 +224,62 @@
         </div>
     </footer>
 
-    <script type="module" defer>
-        // Importar solo lo necesario de Firebase (reducir JS sin usar)
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { initializeFirestore, memoryLocalCache, doc, getDoc, collection, getDocs, query, where, orderBy, limit, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-        // Configuración Firebase
-        const app = initializeApp({
-            apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
-            authDomain: "informate-instant-nicaragua.firebaseapp.com",
-            projectId: "informate-instant-nicaragua",
-            storageBucket: "informate-instant-nicaragua.firebasestorage.app",
-            messagingSenderId: "24988088146",
-            appId: "1:24988088146:web:d26a207508da055668ec8b"
-        });
-
-        const db = initializeFirestore(app, { localCache: memoryLocalCache() });
-        const urlParams = new URLSearchParams(window.location.search);
-        const id = urlParams.get('id');
-
-        // Función para optimizar URLs de imágenes
-        function optimizeImageUrl(url) {
-            if (!url) return null;
-            
-            // Si es de Firebase Storage, agregar parámetros de optimización
-            if (url.includes('firebasestorage.googleapis.com')) {
-                // Agregar parámetros para reducir calidad y tamaño
-                const separator = url.includes('?') ? '&' : '?';
-                return url + separator + 'alt=media&token=optimize';
-            }
-            
-            return url;
-        }
-
-        // Cargar noticia
-        async function loadArticle() {
-            console.log('loadArticle iniciado, ID:', id);
-            
-            if (!id) {
-                alert('No se encontró el ID de la noticia');
-                window.location.href = '/';
+    <script defer>
+        // Esperar a que Firebase se cargue
+        function initNoticia() {
+            if (typeof firebase === 'undefined') {
+                setTimeout(initNoticia, 100);
                 return;
             }
-
-            const docRef = doc(db, "noticias", id);
             
-            try {
-                const docSnap = await getDoc(docRef);
+            // Configuración Firebase
+            firebase.initializeApp({
+                apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+                authDomain: "informate-instant-nicaragua.firebaseapp.com",
+                projectId: "informate-instant-nicaragua",
+                storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+                messagingSenderId: "24988088146",
+                appId: "1:24988088146:web:d26a207508da055668ec8b"
+            });
+
+            const db = firebase.firestore();
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+
+            // Función para optimizar URLs de imágenes
+            function optimizeImageUrl(url) {
+                if (!url) return null;
                 
-                if (docSnap.exists()) {
-                    const n = docSnap.data();
-                    console.log('Datos de la noticia:', n);
+                // Si es de Firebase Storage, agregar parámetros de optimización
+                if (url.includes('firebasestorage.googleapis.com')) {
+                    const separator = url.includes('?') ? '&' : '?';
+                    return url + separator + 'alt=media';
+                }
+                
+                return url;
+            }
+
+            // Cargar noticia
+            async function loadArticle() {
+                console.log('loadArticle iniciado, ID:', id);
+                
+                if (!id) {
+                    alert('No se encontró el ID de la noticia');
+                    window.location.href = '/';
+                    return;
+                }
+
+                const docRef = db.collection("noticias").doc(id);
+                
+                try {
+                    const docSnap = await docRef.get();
                     
-                    // Títulos y Meta
-                    if(document.getElementById('title')) {
+                    if (docSnap.exists) {
+                        const n = docSnap.data();
+                        console.log('Datos de la noticia:', n);
+                        
+                        // Títulos y Meta
+                        if(document.getElementById('title')) {
                         document.getElementById('title').innerText = n.titulo;
                         document.title = n.titulo + " | Nicaragua Informate";
                     }
@@ -312,7 +318,7 @@
                     }
                     
                     // Incrementar vistas (sin esperar)
-                    updateDoc(docRef, { vistas: increment(1) }).catch(() => {});
+                    docRef.update({ vistas: firebase.firestore.FieldValue.increment(1) }).catch(() => {});
                     
                     // Contenido de la noticia
                     if(document.getElementById('news-content')) {
@@ -338,61 +344,73 @@
             }
         }
 
-        async function cargarNoticiasRelacionadas(categoria, excludeId) {
-            try {
-                const ref = collection(db, 'noticias');
-                let q = query(ref, where('categoria', '==', categoria), limit(5));
-                let snap = await getDocs(q);
-                let rel = snap.docs
-                    .map(d => ({ id: d.id, ...d.data() }))
-                    .filter(n => n.id !== excludeId);
-
-                if (rel.length < 3) {
-                    const q2 = query(ref, orderBy('fecha', 'desc'), limit(6));
-                    const snap2 = await getDocs(q2);
-                    const recientes = snap2.docs
+            async function cargarNoticiasRelacionadas(categoria, excludeId) {
+                try {
+                    // Query con compat API
+                    let q = db.collection('noticias')
+                        .where('categoria', '==', categoria)
+                        .limit(5);
+                    
+                    let snap = await q.get();
+                    let rel = snap.docs
                         .map(d => ({ id: d.id, ...d.data() }))
                         .filter(n => n.id !== excludeId);
-                    rel = [...new Map([...rel, ...recientes].map(item => [item.id, item])).values()].slice(0, 4);
+
+                    if (rel.length < 3) {
+                        const q2 = db.collection('noticias')
+                            .orderBy('fecha', 'desc')
+                            .limit(6);
+                        const snap2 = await q2.get();
+                        const recientes = snap2.docs
+                            .map(d => ({ id: d.id, ...d.data() }))
+                            .filter(n => n.id !== excludeId);
+                        rel = [...new Map([...rel, ...recientes].map(item => [item.id, item])).values()].slice(0, 4);
+                    }
+
+                    if (rel.length === 0) return;
+
+                    document.getElementById('relatedSection').style.display = 'block';
+                    document.getElementById('relatedGrid').innerHTML = rel.map(n => {
+                        const img = optimizeImageUrl(n.imagen) || '/logo.png';
+                        return `
+                            <a href="noticia.html?id=${n.id}" class="related-card">
+                                <img src="${img}" loading="lazy" decoding="async" alt="${escapeHtml(n.titulo || '')}">
+                                <h4>${escapeHtml(n.titulo || '')}</h4>
+                            </a>
+                        `;
+                    }).join('');
+
+                } catch (error) {
+                    console.error("Error cargando relacionadas:", error);
                 }
+            }
 
-                if (rel.length === 0) return;
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
 
-                document.getElementById('relatedSection').style.display = 'block';
-                document.getElementById('relatedGrid').innerHTML = rel.map(n => {
-                    const img = optimizeImageUrl(n.imagen) || 
-                        (n.imagen && !n.imagen.includes('facebook') ? n.imagen : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60');
-                    return `
-                        <a href="noticia.html?id=${n.id}" class="related-card">
-                            <img src="${img}" loading="lazy" decoding="async" alt="${escapeHtml(n.titulo || '')}">
-                            <h4>${escapeHtml(n.titulo || '')}</h4>
-                        </a>
-                    `;
-                }).join('');
+            // Cargar cuando el DOM esté listo (más rápido que window.load)
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadArticle);
+            } else {
+                loadArticle();
+            }
 
-            } catch (error) {
-                console.error("Error cargando relacionadas:", error);
+            // Registrar Service Worker
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
             }
         }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Cargar cuando el DOM esté listo (más rápido que window.load)
+        
+        // Iniciar cuando el DOM esté listo
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', loadArticle);
+            document.addEventListener('DOMContentLoaded', initNoticia);
         } else {
-            loadArticle();
-        }
-
-        // Registrar Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js').catch(() => {});
-            });
+            initNoticia();
         }
     </script>
     

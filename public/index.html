@@ -44,6 +44,11 @@
 <!-- CSS de anuncios con carga diferida -->
 <link rel="preload" href="/css/anuncios.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
 <noscript><link rel="stylesheet" href="/css/anuncios.css"></noscript>
+
+<!-- Firebase Compat (versión más ligera) con defer -->
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
+<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+
 <style>
 :root {
   --brand-primary: #1e293b;
@@ -1277,29 +1282,45 @@ function initReloj() {
 }
 
 // FIREBASE OPTIMIZADO
+// FIREBASE OPTIMIZADO CON COMPAT (más ligero)
 function initFirebase() {
-  import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js')
-    .then(({ initializeApp }) => {
-      return import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
-        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit }) => {
-          const app = initializeApp(CONFIG.FIREBASE_CONFIG);
-          db = initializeFirestore(app, { localCache: memoryLocalCache() });
-          
-          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(20));
-          onSnapshot(q, (snapshot) => {
-            if (!snapshot.empty) {
-              noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-              document.getElementById('skeletonContainer').style.display = 'none';
-              document.getElementById('newsGrid').style.display = 'flex';
-              renderizarTodo();
-            }
-          });
-        });
-    })
-    .catch(() => {
-      document.getElementById('skeletonContainer').innerHTML = 
-        '<p style="text-align:center;color:#64748b;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:8px 16px;border-radius:6px;margin-top:10px;cursor:pointer;">Recargar</button></p>';
+  // Esperar a que los scripts de Firebase se carguen
+  if (typeof firebase === 'undefined') {
+    setTimeout(initFirebase, 100);
+    return;
+  }
+  
+  try {
+    // Inicializar Firebase con compat API
+    firebase.initializeApp(CONFIG.FIREBASE_CONFIG);
+    db = firebase.firestore();
+    
+    // Query optimizada
+    const q = db.collection('noticias')
+      .orderBy('fecha', 'desc')
+      .limit(20);
+    
+    // Listener en tiempo real
+    q.onSnapshot((snapshot) => {
+      if (!snapshot.empty) {
+        noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        document.getElementById('skeletonContainer').style.display = 'none';
+        document.getElementById('newsGrid').style.display = 'flex';
+        renderizarTodo();
+      }
+    }, (error) => {
+      console.error('Error en snapshot:', error);
+      mostrarErrorConexion();
     });
+  } catch (error) {
+    console.error('Error inicializando Firebase:', error);
+    mostrarErrorConexion();
+  }
+}
+
+function mostrarErrorConexion() {
+  document.getElementById('skeletonContainer').innerHTML = 
+    '<p style="text-align:center;color:#64748b;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:8px 16px;border-radius:6px;margin-top:10px;cursor:pointer;">Recargar</button></p>';
 }
 
 // RENDERIZADO

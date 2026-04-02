@@ -561,10 +561,11 @@ body.dark-theme .skeleton-card {
 .card-img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9; /* Reserva el espacio exacto aunque la foto no haya cargado */
+  aspect-ratio: 16 / 9;
   object-fit: cover;
   background: #f0f0f0;
   transition: transform 0.4s;
+  content-visibility: auto;
 }
 .news-card:hover .card-image-wrapper img { transform: scale(1.05); }
 .card-body {
@@ -1248,6 +1249,11 @@ const utils = {
       };
       return fallbacks[categoria] || fallbacks['Sucesos'];
     }
+    // Optimizar URLs de Firebase Storage
+    if (url.includes('firebasestorage.googleapis.com')) {
+      const separator = url.includes('?') ? '&' : '?';
+      return url + separator + 'alt=media';
+    }
     return url;
   },
   
@@ -1323,9 +1329,11 @@ function renderizarCarrusel() {
   inner.innerHTML = slides.map((n, i) => {
     const img = utils.sanitizeImage(n.imagen, n.categoria);
     const titulo = utils.escapeHtml(n.titulo || '');
+    const loadingAttr = i === 0 ? 'eager' : 'lazy';
+    const fetchPriority = i === 0 ? 'fetchpriority="high"' : '';
     return `
       <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
-        <img class="card-img" src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
+        <img class="card-img" src="${img}" alt="${titulo}" loading="${loadingAttr}" decoding="async" ${fetchPriority}>
         <div class="carousel-caption-custom">
           <span class="carousel-badge">${n.categoria || 'Noticias'}</span>
           <h3>${titulo}</h3>
@@ -1364,7 +1372,7 @@ function renderizarNoticias() {
       return `
         <a href="noticia.html?id=${n.id}" class="breaking-card">
           <div class="card-image">
-            <img class="card-img" src="${img}" alt="${titulo}" loading="eager" decoding="async">
+            <img class="card-img" src="${img}" alt="${titulo}" loading="eager" decoding="async" fetchpriority="high">
           </div>
           <div class="breaking-body">
             <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>

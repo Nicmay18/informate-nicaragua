@@ -47,7 +47,18 @@
             line-height: 1;
         }
         
-        .hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+        .hero-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            opacity: 0.7;
+            content-visibility: auto;
+        }
+        
+        /* Placeholder mientras carga la imagen */
+        .hero-img[data-src] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
 
         .hero-overlay {
             position: absolute; bottom: 0; left: 0; width: 100%; height: 70%;
@@ -83,7 +94,13 @@
         }
         .related-card { text-decoration: none; color: inherit; background: white; transition: 0.3s; }
         .related-card:hover { transform: translateY(-5px); }
-        .related-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .related-card img { 
+            width: 100%; 
+            aspect-ratio: 16/9; 
+            object-fit: cover;
+            background: #f0f0f0;
+            content-visibility: auto;
+        }
         .related-card h4 { padding: 15px; margin: 0; font-size: 1rem; line-height: 1.4; }
 
         /* Publicidad Adaptativa */
@@ -101,7 +118,7 @@
 
     <article>
         <header class="news-header-hero">
-            <img id="main-img" src="" class="hero-img" alt="">
+            <img id="main-img" src="" class="hero-img" alt="" loading="eager" decoding="async" fetchpriority="high">
             <div class="hero-overlay">
                 <div class="hero-content">
                     <span id="category" class="badge-cat">Sucesos</span>
@@ -208,9 +225,9 @@
     </footer>
 
     <script type="module">
-        // Importar Firebase
+        // Importar solo lo necesario de Firebase (reducir JS sin usar)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { initializeFirestore, memoryLocalCache, collection, doc, getDoc, getDocs, query, orderBy, limit, where, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { initializeFirestore, memoryLocalCache, doc, getDoc, collection, getDocs, query, where, orderBy, limit, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
         // Configuración Firebase
         const app = initializeApp({
@@ -225,6 +242,20 @@
         const db = initializeFirestore(app, { localCache: memoryLocalCache() });
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get('id');
+
+        // Función para optimizar URLs de imágenes
+        function optimizeImageUrl(url) {
+            if (!url) return null;
+            
+            // Si es de Firebase Storage, agregar parámetros de optimización
+            if (url.includes('firebasestorage.googleapis.com')) {
+                // Agregar parámetros para reducir calidad y tamaño
+                const separator = url.includes('?') ? '&' : '?';
+                return url + separator + 'alt=media&token=optimize';
+            }
+            
+            return url;
+        }
 
         // Cargar noticia
         async function loadArticle() {
@@ -245,7 +276,7 @@
                     const n = docSnap.data();
                     console.log('Datos de la noticia:', n);
                     
-                    // ESTO ES LO QUE AGREGA LOS DATOS AL HTML:
+                    // Títulos y Meta
                     if(document.getElementById('title')) {
                         document.getElementById('title').innerText = n.titulo;
                         document.title = n.titulo + " | Nicaragua Informate";
@@ -255,9 +286,18 @@
                         document.getElementById('category').innerText = n.categoria;
                     }
                     
+                    // Imagen Principal optimizada
                     if(document.getElementById('main-img')) {
-                        document.getElementById('main-img').src = n.imagen || 'https://nicaraguainformate.com/logo.png';
-                        document.getElementById('main-img').alt = n.titulo;
+                        const imgElement = document.getElementById('main-img');
+                        const optimizedUrl = optimizeImageUrl(n.imagen) || 'https://nicaraguainformate.com/logo.png';
+                        
+                        // Precargar la imagen antes de asignarla
+                        const img = new Image();
+                        img.onload = () => {
+                            imgElement.src = optimizedUrl;
+                        };
+                        img.src = optimizedUrl;
+                        imgElement.alt = n.titulo;
                     }
                     
                     // Formatear fecha
@@ -275,12 +315,11 @@
                         document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
                     }
                     
-                    // Incrementar vistas
+                    // Incrementar vistas (sin esperar)
                     updateDoc(docRef, { vistas: increment(1) }).catch(() => {});
                     
-                    // El contenido de la noticia
+                    // Contenido de la noticia
                     if(document.getElementById('news-content')) {
-                        // Convertimos los saltos de línea en párrafos reales para que se vea pro
                         document.getElementById('news-content').innerHTML = n.contenido
                             .split('\n')
                             .filter(p => p.trim())
@@ -288,8 +327,8 @@
                             .join('');
                     }
                     
-                    // Ejecutar las relacionadas después de cargar la principal
-                    cargarNoticiasRelacionadas(n.categoria, id);
+                    // Cargar relacionadas después (no bloquear)
+                    setTimeout(() => cargarNoticiasRelacionadas(n.categoria, id), 100);
                     
                 } else {
                     console.log("No existe la noticia");
@@ -325,12 +364,11 @@
 
                 document.getElementById('relatedSection').style.display = 'block';
                 document.getElementById('relatedGrid').innerHTML = rel.map(n => {
-                    const img = n.imagen && !n.imagen.includes('facebook')
-                        ? n.imagen
-                        : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60';
+                    const img = optimizeImageUrl(n.imagen) || 
+                        (n.imagen && !n.imagen.includes('facebook') ? n.imagen : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60');
                     return `
                         <a href="noticia.html?id=${n.id}" class="related-card">
-                            <img src="${img}" loading="lazy" alt="${escapeHtml(n.titulo || '')}">
+                            <img src="${img}" loading="lazy" decoding="async" alt="${escapeHtml(n.titulo || '')}">
                             <h4>${escapeHtml(n.titulo || '')}</h4>
                         </a>
                     `;
@@ -347,20 +385,12 @@
             return div.innerHTML;
         }
 
-        // Aseguramos que nada se ejecute hasta que el navegador esté listo
-        window.addEventListener('load', async () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const noticiaId = urlParams.get('id');
-            
-            if (noticiaId) {
-                console.log("Cargando noticia ID:", noticiaId);
-                await loadArticle();
-            } else {
-                console.warn("No se encontró ID en la URL");
-                alert('No se encontró el ID de la noticia');
-                window.location.href = '/';
-            }
-        });
+        // Cargar cuando el DOM esté listo (más rápido que window.load)
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadArticle);
+        } else {
+            loadArticle();
+        }
 
         // Registrar Service Worker
         if ('serviceWorker' in navigator) {

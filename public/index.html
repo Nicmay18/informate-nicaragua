@@ -35,7 +35,7 @@
 <!-- Optimización de carga de fuentes -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
 
 <!-- Font Awesome con media print trick (carga más rápida) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -340,7 +340,7 @@ body.dark-theme .skeleton-card {
   border-radius: 16px;
   overflow: hidden;
   background: var(--brand-primary);
-  height: 400px;
+  height: 450px;
   box-shadow: var(--shadow-lg);
 }
 .carousel-inner-custom {
@@ -348,35 +348,33 @@ body.dark-theme .skeleton-card {
   position: relative;
 }
 
-/* Contenedor de la imagen en el carrusel */
+/* Limpieza total del Carrusel */
 .carousel-item-custom {
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity 0.6s ease;
-  display: block;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 450px !important;
+  overflow: hidden;
   text-decoration: none;
   color: inherit;
   background: #000;
-  overflow: hidden;
   border-radius: 16px;
 }
 .carousel-item-custom.active { opacity: 1; }
 
-/* Imagen COMPLETA sin recortes */
+/* Imagen arriba - 55% */
 .carousel-item-custom img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center center;
-  opacity: 1;
+  height: 55% !important;
+  width: 100% !important;
+  object-fit: cover !important;
+  object-position: center top !important;
   transition: transform 0.6s ease;
-  position: absolute;
-  top: 0;
-  left: 0;
 }
 .carousel-item-custom:hover img { 
-  transform: scale(1.02); 
+  transform: scale(1.05); 
 }
 
 /* Marca de agua en la imagen */
@@ -409,19 +407,17 @@ body.dark-theme .skeleton-card {
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
-/* Área de texto ABAJO de la imagen */
+/* Texto abajo - 45% */
 .carousel-caption-custom {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.8) 70%, transparent 100%);
-  color: white;
-  z-index: 10;
-  padding: 30px 30px 20px;
+  height: 45% !important;
+  background: #1a1a1a !important;
+  position: relative !important;
+  padding: 20px !important;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
+  color: white;
+  z-index: 10;
 }
 .carousel-badge {
   display: inline-block;
@@ -436,16 +432,16 @@ body.dark-theme .skeleton-card {
   z-index: 10;
   width: fit-content;
 }
+/* Letra GRANDE en el Titular */
 .carousel-caption-custom h3 {
-  font-family: 'Inter', var(--font-sans);
-  font-size: 1.6rem;
+  font-size: 2.2rem !important;
+  line-height: 1.1;
   font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.5px;
+  color: #ffffff !important;
   margin: 0;
+  font-family: 'Playfair Display', serif;
   text-transform: uppercase;
-  color: white;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: -0.5px;
 }
 .carousel-controls {
   position: absolute;
@@ -1086,13 +1082,14 @@ body.dark-theme .skeleton-card {
 @media (max-width: 640px) {
   .topbar-content { flex-direction: column; gap: 12px; }
   .search-wrapper { width: 100%; }
-  .carousel-custom { height: 350px; }
+  .carousel-custom { height: 400px; }
+  .carousel-item-custom { height: 400px !important; }
   .carousel-caption-custom { 
-    padding: 20px 15px 15px;
+    padding: 15px !important;
   }
   .carousel-caption-custom h3 { 
-    font-size: 1.1rem;
-    line-height: 1.3;
+    font-size: 1.4rem !important;
+    line-height: 1.2;
   }
   .news-card { grid-template-columns: 1fr; }
   .card-image-wrapper { aspect-ratio: 16/9; }

@@ -1,306 +1,242 @@
+<!-- index.html - VERSIÓN OPTIMIZADA -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
-<meta name="keywords" content="noticias Nicaragua, Managua hoy, sucesos Nicaragua, noticias hoy Nicaragua, última hora Nicaragua, noticias nacionales Nicaragua">
-<meta name="author" content="Nicaragua Informate">
-<meta name="robots" content="index, follow">
-<meta name="googlebot" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="https://nicaraguainformate.com">
-<link rel="alternate" type="application/rss+xml" title="Noticias Nicaragua Informate" href="https://nicaraguainformate.com/rss.xml">
-<meta property="og:title" content="Nicaragua Informate - Noticias al Instante">
-<meta property="og:description" content="Tu fuente confiable de noticias de Nicaragua. Información actualizada sobre sucesos, deportes, tecnología y más.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nicaraguainformate.com">
-<meta property="og:image" content="https://nicaraguainformate.com/logo.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="Nicaragua Informate">
-<meta property="og:locale" content="es_NI">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nicaragua Informate - Noticias al Instante">
-<meta name="twitter:description" content="Tu fuente confiable de noticias de Nicaragua">
-<meta name="twitter:image" content="https://nicaraguainformate.com/logo.png">
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#DC2626">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NI Informate">
-<meta name="referrer" content="strict-origin-when-cross-origin">
-<link rel="apple-touch-icon" href="/logo.png">
-<link rel="icon" type="image/png" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-<link rel="dns-prefetch" href="https://firestore.googleapis.com">
-<link rel="dns-prefetch" href="https://images.unsplash.com">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "NewsMediaOrganization",
-  "name": "Nicaragua Informate",
-  "url": "https://nicaraguainformate.com",
-  "logo": "https://nicaraguainformate.com/logo.png",
-  "sameAs": [
-    "https://www.facebook.com/profile.php?id=61577962970892",
-    "https://t.me/+fHHjncJqMQM3NjZh"
-  ],
-  "foundingDate": "2024",
-  "description": "Tu fuente confiable de noticias de Nicaragua al instante"
-}
-</script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-W1B5J61WEP"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-W1B5J61WEP', {
-  'anonymize_ip': true,
-  'allow_google_signals': true,
-  'send_page_view': true
-});
-</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
-<script src="https://www.paypal.com/sdk/js?client-id=AZqELsas9wPXSWNslXEEuFPOJ4GmTlf_bzIOnoJU4m4Xfp_VPnHVoITDUvOYtOdIh3GpbSw7qlJbUbm&vault=true&intent=subscription" data-sdk-integration-source="button-factory"></script>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --brand-primary: #0F172A;
-  --brand-accent: #DC2626;
-  --brand-secondary: #3B82F6;
-  --surface-light: #F8FAFC;
-  --text-primary: #1E293B;
-  --text-secondary: #64748B;
-  --border-color: #E2E8F0;
-  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+  --brand-primary: #1e293b;
+  --brand-accent: #dc2626;
+  --brand-secondary: #2563eb;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
   --font-serif: 'Merriweather', Georgia, serif;
-  --font-sans: 'Inter', sans-serif;
-  --premium-gold: #F59E0B;
+  --font-sans: 'Inter', system-ui, sans-serif;
 }
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { 
   font-family: var(--font-sans); 
-  background: var(--surface-light); 
-  color: var(--text-primary); 
+  background: var(--surface-alt); 
+  color: var(--text-primary);
   line-height: 1.6;
-  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
+
+/* HEADER LIMPIO */
 .topbar { 
-  background: #fff; 
-  border-bottom: 1px solid var(--border-color); 
-  padding: 12px 16px; 
+  background: var(--surface); 
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
   position: sticky; 
   top: 0; 
-  z-index: 1000; 
-  box-shadow: var(--shadow-sm); 
+  z-index: 1000;
+  box-shadow: var(--shadow);
 }
 .topbar-content { 
-  max-width: 1200px; 
+  max-width: 1280px; 
   margin: 0 auto; 
   display: flex; 
   justify-content: space-between; 
   align-items: center; 
-  gap: 16px; 
 }
 .logo { 
   display: flex; 
   align-items: center; 
   gap: 12px; 
   text-decoration: none; 
-  color: var(--text-primary); 
-  flex-shrink: 0;
+  color: var(--text-primary);
 }
 .logo img { 
-  width: 40px; 
-  height: 40px; 
+  width: 42px; 
+  height: 42px; 
   border-radius: 8px; 
-  object-fit: cover; 
+  object-fit: cover;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .logo-title { 
   font-family: var(--font-serif); 
-  font-size: 20px; 
+  font-size: 24px; 
   font-weight: 900; 
   color: var(--brand-primary);
-  white-space: nowrap;
+  letter-spacing: -0.5px;
 }
 .logo-subtitle { 
-  font-size: 11px; 
+  font-size: 12px; 
   color: var(--text-secondary);
-  display: none;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-.topbar-actions { 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  flex: 1;
-  justify-content: flex-end;
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 .search-wrapper { 
   position: relative;
-  max-width: 200px;
-  width: 100%;
+  width: 280px;
 }
 #searchInput { 
-  background: var(--surface-light); 
-  border: 1px solid var(--border-color); 
-  padding: 8px 36px 8px 14px; 
+  background: var(--surface-alt); 
+  border: 1px solid var(--border); 
+  padding: 10px 16px 10px 40px; 
   border-radius: 9999px; 
-  font-size: 13px; 
-  width: 100%; 
-  outline: none; 
+  font-size: 14px; 
+  width: 100%;
+  transition: all 0.2s;
 }
 #searchInput:focus { 
   background: #fff; 
-  border-color: var(--brand-secondary); 
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); 
+  border-color: var(--brand-secondary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 .search-icon { 
   position: absolute; 
-  right: 12px; 
+  left: 14px; 
   top: 50%; 
   transform: translateY(-50%); 
-  color: var(--text-secondary); 
-  font-size: 13px;
+  color: var(--text-secondary);
+  font-size: 14px;
 }
 #searchResults {
   position: absolute;
-  top: 100%;
+  top: 110%;
   left: 0;
   right: 0;
   background: white;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  margin-top: 8px;
-  max-height: 300px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  max-height: 400px;
   overflow-y: auto;
   z-index: 100;
   display: none;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border);
+  padding: 8px 0;
 }
-.visit-counter { 
-  display: none;
-  align-items: center; 
-  gap: 6px; 
-  background: var(--surface-light); 
-  padding: 6px 12px; 
-  border-radius: 20px; 
-  font-size: 12px; 
-  font-weight: 600; 
-  color: var(--text-secondary); 
-  border: 1px solid var(--border-color);
-  white-space: nowrap;
-}
-.info-top { 
-  display: none;
-  text-align: right; 
-  font-size: 13px; 
-  color: #6b7280; 
-  font-weight: 500; 
-}
+
+/* NAVEGACIÓN */
 .menu-nav { 
-  background: #fff; 
-  border-bottom: 1px solid var(--border-color); 
-  padding: 0 16px; 
+  background: var(--brand-primary); 
+  padding: 0 24px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
 }
 .menu-nav::-webkit-scrollbar { display: none; }
 .menu-content { 
-  max-width: 1200px; 
+  max-width: 1280px; 
   margin: 0 auto; 
   display: flex; 
-  justify-content: flex-start; 
   gap: 4px; 
-  padding: 8px 0; 
+  padding: 4px 0;
   min-width: max-content;
 }
 .menu-btn { 
   border: none; 
   background: transparent; 
-  color: var(--text-secondary); 
+  color: rgba(255,255,255,0.7); 
   font-size: 13px; 
-  font-weight: 500; 
-  padding: 8px 12px; 
+  font-weight: 600; 
+  padding: 12px 20px; 
   cursor: pointer; 
-  border-bottom: 2px solid transparent; 
-  transition: all 0.2s; 
-  white-space: nowrap;
   border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 .menu-btn:hover { 
-  color: var(--text-primary); 
-  background: var(--surface-light); 
+  background: rgba(255,255,255,0.1);
+  color: white;
 }
 .menu-btn.active { 
-  color: var(--brand-accent); 
-  font-weight: 600; 
-  border-bottom-color: var(--brand-accent); 
-  background: rgba(220, 38, 38, 0.05);
+  background: var(--brand-accent);
+  color: white;
 }
-.menu-btn.premium { color: var(--premium-gold) !important; }
-.carousel-section { margin-bottom: 24px; }
+
+/* CARRUSEL OPTIMIZADO - IMÁGENES PROFESIONALES */
+.carousel-section { 
+  margin-bottom: 32px;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 24px;
+}
 .carousel-custom {
   position: relative;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background: var(--brand-primary);
+  height: 450px;
+  box-shadow: var(--shadow-lg);
+}
+.carousel-inner-custom {
+  height: 100%;
+  position: relative;
 }
 .carousel-item-custom {
-  position: relative;
-  height: 250px;
-  background: var(--brand-primary);
-  display: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  display: block;
   text-decoration: none;
   color: inherit;
 }
-.carousel-item-custom.active { display: block; }
+.carousel-item-custom.active { opacity: 1; }
 .carousel-item-custom img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  opacity: 0.8;
+  object-fit: cover; /* Esto arregla las imágenes */
+  object-position: center 20%;
+  transition: transform 8s ease;
 }
+.carousel-item-custom:hover img { transform: scale(1.05); }
 .carousel-caption-custom {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 50%, transparent 100%);
-  padding: 30px 20px 20px;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+  padding: 40px;
   color: #fff;
 }
 .carousel-badge {
   display: inline-block;
-  padding: 4px 10px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 8px;
-  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  letter-spacing: 0.8px;
+  background: var(--brand-accent);
 }
 .carousel-caption-custom h3 {
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 32px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.2;
   margin: 0;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  max-width: 700px;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 .carousel-controls {
   position: absolute;
@@ -309,24 +245,24 @@ body {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0 10px;
+  padding: 0 20px;
   pointer-events: none;
 }
 .carousel-btn {
-  width: 36px;
-  height: 36px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: rgba(255,255,255,0.9);
+  background: rgba(255,255,255,0.95);
   border: none;
   color: var(--brand-primary);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 16px;
   pointer-events: all;
   transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 .carousel-btn:hover {
   background: #fff;
@@ -334,100 +270,70 @@ body {
 }
 .carousel-indicators-custom {
   position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  bottom: 20px;
+  right: 40px;
   display: flex;
-  gap: 6px;
+  gap: 8px;
 }
 .indicator {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: rgba(255,255,255,0.4);
   border: none;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s;
 }
 .indicator.active {
   background: #fff;
-  width: 20px;
-  border-radius: 4px;
+  width: 32px;
+  border-radius: 5px;
 }
+
+/* LAYOUT PRINCIPAL */
 .main-wrapper {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px 16px;
+  padding: 0 24px 60px;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
 }
-.content-main { min-width: 0; }
-.sidebar-right {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 4px;
-}
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-.skeleton-card {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
-}
-.skeleton-image { width: 100%; height: 180px; border-radius: 8px; }
-.skeleton-title { height: 20px; width: 80%; }
-.skeleton-text { height: 14px; width: 100%; }
-.skeleton-text.short { width: 60%; }
+
+/* SECCIÓN NOTICIAS */
 .section-title {
   font-family: var(--font-serif);
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
-  margin: 0 0 20px;
+  margin: 0 0 24px;
   padding-bottom: 12px;
-  border-bottom: 2px solid var(--border-color);
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  border-bottom: 3px solid var(--brand-accent);
+  display: inline-block;
 }
-.news-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
+
+/* NOTICIA DESTACADA (PRIMERA) */
 .breaking-card {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1.2fr 1fr;
   gap: 0;
-  background: #fff;
-  border-radius: 12px;
+  background: var(--surface);
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: var(--shadow-md);
-  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
   cursor: pointer;
   transition: all 0.3s;
-  border: 1px solid var(--border-color);
-  position: relative;
+  border: 1px solid var(--border);
   text-decoration: none;
   color: inherit;
 }
 .breaking-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
 }
 .breaking-card .card-image {
-  height: 200px;
+  height: 100%;
+  min-height: 320px;
   overflow: hidden;
   position: relative;
 }
@@ -435,11 +341,11 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.6s;
 }
 .breaking-card:hover .card-image img { transform: scale(1.05); }
 .breaking-body {
-  padding: 20px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -448,82 +354,98 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--brand-secondary);
+  background: var(--brand-accent);
   color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 16px;
   width: fit-content;
+  letter-spacing: 0.5px;
 }
 .breaking-body h2 {
   font-family: var(--font-serif);
-  font-size: 20px;
+  font-size: 28px;
   font-weight: 700;
   line-height: 1.3;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
 }
 .breaking-body p {
   color: var(--text-secondary);
-  font-size: 14px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
-.news-card {
+.breaking-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* GRID DE NOTICIAS NORMALES */
+.news-grid {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding-bottom: 20px;
-  margin-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
+  gap: 24px;
+}
+.news-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  background: var(--surface);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
+  transition: all 0.3s;
   text-decoration: none;
   color: inherit;
 }
-.news-card:hover { border-bottom-color: var(--brand-accent); }
-.news-card:last-child { border-bottom: none; }
+.news-card:hover {
+  border-color: var(--brand-accent);
+  box-shadow: var(--shadow);
+}
 .card-image-wrapper {
-  aspect-ratio: 16/9;
+  aspect-ratio: 16/10;
   overflow: hidden;
-  background: var(--surface-light);
   border-radius: 8px;
-  position: relative;
-  width: 100%;
+  background: var(--surface-alt);
 }
 .card-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 20%;
-  transition: transform 0.5s ease;
+  transition: transform 0.4s;
 }
 .news-card:hover .card-image-wrapper img { transform: scale(1.05); }
 .card-body {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 .tag {
   display: inline-flex;
   width: fit-content;
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.5px;
   color: var(--brand-accent);
   background: rgba(220, 38, 38, 0.08);
-  padding: 3px 8px;
+  padding: 4px 10px;
   border-radius: 4px;
 }
 .news-card h3 {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
   line-height: 1.4;
+  color: var(--text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -543,172 +465,71 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-top: auto;
-  padding-top: 8px;
+  padding-top: 12px;
   font-size: 12px;
-  color: #6b7280;
+  color: var(--text-secondary);
   font-weight: 500;
 }
-.news-badge-new {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  background: #dc2626;
-  color: white;
-  padding: 4px 10px;
-  font-size: 10px;
-  font-weight: 700;
-  border-radius: 4px;
-  z-index: 10;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 6px rgba(220, 38, 38, 0.4);
-}
-.news-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  color: #6b7280;
-  margin-left: 8px;
-}
-.share-mini {
-  display: flex;
-  gap: 8px;
-  margin-top: 8px;
-}
-.share-mini button {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background: #fff;
-  color: var(--text-secondary);
+.read-more {
+  color: var(--brand-secondary);
+  font-weight: 600;
   display: flex;
   align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 12px;
-}
-.share-mini button:hover {
-  background: var(--brand-accent);
-  color: #fff;
-  border-color: var(--brand-accent);
-}
-.premium-badge-inline {
-  display: inline-flex;
-  align-items: center;
   gap: 4px;
-  background: linear-gradient(135deg, var(--premium-gold), #D97706);
-  color: white;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
+  transition: gap 0.2s;
+}
+.news-card:hover .read-more { gap: 8px; }
+
+/* SIDEBAR LIMPIA - SOLO LO ESENCIAL */
+.sidebar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 .sidebar-box {
-  background: #fff;
-  padding: 20px;
+  background: var(--surface);
+  padding: 24px;
   border-radius: 12px;
-  box-shadow: var(--shadow-sm);
-  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
 }
-.top-indicators {
-  background: #fff;
-  border-top: 3px solid #dc2626;
-  border-bottom: 2px solid #e2e8f0;
-  padding: 10px 0;
-}
-.top-indicators-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.top-indicator-title {
-  flex: 1 1 100%;
-  text-align: center;
-  font-weight: 800;
-  color: #1e3a8a;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  margin-bottom: 6px;
-}
-.top-indicator-item {
-  flex: 1 1 180px;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e3a8a;
-}
-.top-indicator-item span { display:block;font-size:12px;color:#64748b;font-weight:500; }
-.top-indicator-item small { color:#64748b;font-size:12px; margin-left:2px; }
-.top-indicator-info { flex: 1 1 100%; text-align: center; font-size: 12px; color:#475569; margin-top:5px; }
-.sidebar-box.indicadores-box .indicadores-footer {
-  margin-top: 10px;
-  font-size: 13px;
-  color: #64748b;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.sidebar-box.indicadores-box .refresh-btn {
-  margin-top: 10px;
-  padding: 8px 12px;
-  border: 1px solid #3B82F6;
-  background: #fff;
-  color: #3B82F6;
-  font-weight: 700;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.sidebar-box.indicadores-box .refresh-btn:hover { background: #3B82F6; color: white; }
 .sidebar-box h4 {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 16px;
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.sidebar-box.trending h4 { color: #dc2626; }
-.sidebar-box.popular h4 { color: #3B82F6; }
-.sidebar-box.premium {
-  background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-  border: 2px solid var(--premium-gold);
-}
-.sidebar-box.premium h4 { color: var(--premium-gold); }
 .trending-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  margin-bottom: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
   cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
   transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
 }
-.trending-item:hover { background: var(--surface-light); }
+.trending-item:last-child { border-bottom: none; }
+.trending-item:hover { padding-left: 8px; }
 .trending-number {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 900;
-  color: var(--border-color);
-  min-width: 28px;
+  color: var(--border);
+  min-width: 32px;
   font-family: Georgia, serif;
   line-height: 1;
 }
-.trending-item:nth-child(1) .trending-number { color: #dc2626; font-size: 24px; }
-.trending-item:nth-child(2) .trending-number { color: #f97316; font-size: 22px; }
-.trending-item:nth-child(3) .trending-number { color: #fbbf24; font-size: 20px; }
+.trending-item:nth-child(1) .trending-number { color: var(--brand-accent); }
+.trending-item:nth-child(2) .trending-number { color: #f59e0b; }
+.trending-item:nth-child(3) .trending-number { color: #10b981; }
 .trending-title {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-primary);
   line-height: 1.4;
@@ -718,711 +539,253 @@ body {
   overflow: hidden;
 }
 .trending-meta {
-  font-size: 11px;
-  color: #6b7280;
-  margin-top: 4px;
-  font-weight: 500;
-}
-.popular-item {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 14px;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 8px;
-  transition: all 0.2s;
-}
-.popular-item:hover { background: var(--surface-light); }
-.popular-item img {
-  width: 60px;
-  height: 60px;
-  border-radius: 6px;
-  object-fit: cover;
-  flex-shrink: 0;
-}
-.popular-item > div { flex: 1; min-width: 0; }
-.popular-item-title {
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
-  margin-bottom: 4px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.popular-item-cat {
-  font-size: 11px;
-  color: #6b7280;
-  font-weight: 500;
-}
-.social-links {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-}
-.social-btn {
-  padding: 10px;
-  border-radius: 8px;
-  color: white;
-  text-decoration: none;
   font-size: 12px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: all 0.2s;
+  color: var(--text-secondary);
+  margin-top: 4px;
 }
-.social-btn:hover { transform: translateY(-2px); opacity: 0.9; }
-.social-facebook { background: #1877F2; }
-.social-whatsapp { background: #25D366; }
-.social-telegram { background: #0088cc; }
-.social-whatsapp-group { background: #128C7E; }
+
+/* NEWSLETTER SUTIL */
 .newsletter-box {
-  background: linear-gradient(135deg, var(--brand-primary) 0%, #1E293B 100%);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
   color: white;
-  padding: 20px;
+  padding: 24px;
   border-radius: 12px;
   text-align: center;
 }
 .newsletter-box h4 {
   color: white;
-  margin-bottom: 10px;
   justify-content: center;
+  margin-bottom: 8px;
 }
 .newsletter-box p {
   font-size: 13px;
   opacity: 0.9;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 .newsletter-input {
   width: 100%;
-  padding: 10px;
-  border-radius: 6px;
+  padding: 12px;
+  border-radius: 8px;
   border: none;
   margin-bottom: 10px;
-  font-size: 13px;
+  font-size: 14px;
 }
 .newsletter-btn {
   width: 100%;
+  padding: 12px;
+  background: var(--brand-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.newsletter-btn:hover { background: #b91c1c; }
+
+/* CTA SUSCRIPCIÓN ÚNICO SUTIL */
+.premium-sticky {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  padding: 16px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  border: 1px solid var(--border);
+  max-width: 320px;
+  z-index: 100;
+  transform: translateY(150%);
+  transition: transform 0.4s;
+}
+.premium-sticky.visible { transform: translateY(0); }
+.premium-sticky h5 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.premium-sticky p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+.premium-sticky button {
+  width: 100%;
   padding: 10px;
   background: var(--brand-accent);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  font-size: 13px;
+}
+.close-sticky {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+}
+
+/* SKELETON */
+.skeleton {
+  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.skeleton-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.skeleton-image { width: 100%; aspect-ratio: 16/10; }
+.skeleton-text { height: 16px; margin-bottom: 8px; }
+.skeleton-text.short { width: 60%; }
+
+/* LOAD MORE */
+.load-more-container { 
+  text-align: center; 
+  padding: 40px 0; 
+}
+.load-more-btn {
+  padding: 14px 32px;
+  background: var(--brand-primary);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
-  font-size: 13px;
-}
-.newsletter-btn:hover { background: #B91C1C; }
-.donation-box {
-  background: #F0FDF4;
-  border: 2px solid #10B981;
-  padding: 20px;
-  border-radius: 12px;
-  text-align: center;
-}
-.donation-box h4 {
-  color: #059669;
-  margin-bottom: 10px;
-  justify-content: center;
-}
-.donation-box p {
-  font-size: 13px;
-  color: #6b7280;
-  margin-bottom: 14px;
-}
-.donation-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
-  background: #10B981;
-  color: white;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 13px;
-  transition: all 0.2s;
 }
-.donation-btn:hover { background: #059669; transform: translateY(-2px); }
-.ad-slot {
-  margin: 20px 0;
-  min-height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #fff;
-  border-radius: 12px;
-  border: 1px solid var(--border-color);
-  position: relative;
-  overflow: hidden;
-}
-.ad-slot::before {
-  content: "Publicidad";
-  position: absolute;
-  top: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 9px;
-  color: #94A3B8;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.ad-slot-sticky { position: sticky; top: 80px; }
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.95);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  padding: 16px;
-  backdrop-filter: blur(8px);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.modal-overlay.active { display: flex; opacity: 1; }
-.modal-content {
-  background: #fff;
-  width: 100%;
-  max-width: 720px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 16px;
-  position: relative;
-  transform: scale(0.95);
-  transition: transform 0.3s;
-}
-.modal-overlay.active .modal-content { transform: scale(1); }
-.modal-header {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-  background: var(--brand-primary);
-}
-.modal-header img { width: 100%; height: 100%; object-fit: cover; }
-.modal-header::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-}
-.modal-title-wrap {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 20px;
-  color: #fff;
-  z-index: 2;
-}
-.modal-body { padding: 24px; position: relative; }
-.modal-close {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  width: 36px;
-  height: 36px;
-  background: rgba(0,0,0,0.5);
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  cursor: pointer;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-}
-.modal-close:hover { background: rgba(0,0,0,0.8); transform: rotate(90deg); }
-.modal-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  color: #64748B;
-  font-size: 13px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--border-color);
-}
-.modal-content-text {
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--text-primary);
-}
-.modal-content-text p { margin-bottom: 16px; }
-.paywall-overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 180px;
-  background: linear-gradient(to top, white 0%, transparent 100%);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 30px;
-}
-.paywall-content {
-  text-align: center;
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
-  border: 2px solid var(--premium-gold);
-  max-width: 90%;
-}
-.paywall-content h4 { margin-bottom: 8px; color: var(--text-primary); }
-.paywall-content p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
-.share-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-color);
-}
-.share-grid button {
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.2s;
-}
-.share-grid button:hover { transform: translateY(-2px); }
-.premium-modal-content {
-  max-width: 480px;
-  text-align: center;
-  padding: 32px;
-}
-.premium-icon { font-size: 56px; margin-bottom: 16px; }
-.premium-modal-content h2 {
-  font-family: var(--font-serif);
-  margin-bottom: 12px;
-  font-size: 24px;
-}
-.premium-modal-content > p { color: var(--text-secondary); margin-bottom: 24px; font-size: 14px; }
-.pricing-grid { display: grid; gap: 12px; margin-bottom: 24px; }
-.pricing-option {
-  border: 2px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-  position: relative;
-}
-.pricing-option:hover { border-color: var(--premium-gold); }
-.pricing-option.recommended {
-  border-color: var(--premium-gold);
-  background: #FFFBEB;
-}
-.pricing-badge {
-  position: absolute;
-  top: -10px;
-  right: 20px;
-  background: var(--premium-gold);
-  color: white;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 700;
-}
-.pricing-price { font-size: 28px; font-weight: 800; color: var(--premium-gold); }
-.pricing-period { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-.radio-player {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(15, 23, 42, 0.98);
-  backdrop-filter: blur(10px);
-  color: #fff;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  z-index: 998;
-  transform: translateY(100%);
-  transition: transform 0.3s;
-}
-.radio-player.active { transform: translateY(0); }
-.radio-live-indicator {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 11px;
-  color: #94A3B8;
-  text-transform: uppercase;
-  font-weight: 600;
-}
-.radio-live-dot {
-  width: 8px;
-  height: 8px;
-  background: #3B82F6;
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
-.radio-controls {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex: 1;
-  max-width: 400px;
-}
-.radio-latency {
-  color: #cbd5e1;
-  font-size: 11px;
-  margin-top: 6px;
-  line-height: 1.2;
-  text-align: left;
-  width: 100%;
-}
-.radio-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  background: var(--brand-secondary);
-  color: #fff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  flex-shrink: 0;
-}
-.radio-secondary-btn {
-  margin-left: 8px;
-  border: 1px solid rgba(226, 232, 240, 0.35);
-  background: rgba(255, 255, 255, 0.12);
-  color: #e2e8f0;
-  border-radius: 8px;
-  padding: 6px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  white-space: nowrap;
-}
-.radio-secondary-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-.radio-select {
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: #E2E8F0;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  flex: 1;
-  min-width: 0;
-}
-.radio-close {
-  background: transparent;
-  border: none;
-  color: #94A3B8;
-  cursor: pointer;
-  font-size: 18px;
-  padding: 4px;
-}
-.radio-float-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 16px;
-  width: 48px;
-  height: 48px;
-  background: var(--brand-primary);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 997;
-  animation: pulseRadio 2s infinite;
-  transition: all 0.3s;
-}
-.radio-float-btn.hidden { display: none; }
-@keyframes pulseRadio {
-  0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-  50% { box-shadow: 0 4px 20px rgba(59, 130, 246, 0.5); }
-}
-.float-share {
-  position: fixed;
-  bottom: 140px;
-  right: 16px;
-  width: 48px;
-  height: 48px;
-  background: var(--brand-secondary);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.35);
-  z-index: 996;
-  transition: all 0.3s;
-}
-.float-share:hover { transform: scale(1.1); }
-.back-to-top {
-  position: fixed;
-  bottom: 20px;
-  right: 16px;
-  width: 44px;
-  height: 44px;
-  background: var(--brand-primary);
-  color: #fff;
-  border: none;
-  border-radius: 50%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
-  cursor: pointer;
-  z-index: 995;
-  opacity: 0;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.back-to-top.visible { display: flex; opacity: 1; }
-.sticky-cta {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-top: 2px solid var(--brand-accent);
-  padding: 12px 16px;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  z-index: 994;
-  box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
-  transform: translateY(100%);
-  transition: transform 0.3s;
-}
-.sticky-cta.visible { display: flex; transform: translateY(0); }
-.sticky-cta-text { font-weight: 600; color: var(--text-primary); font-size: 13px; line-height: 1.3; }
-.sticky-cta-btn {
-  padding: 8px 16px;
+.load-more-btn:hover { 
   background: var(--brand-accent);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 13px;
-  white-space: nowrap;
-  transition: all 0.2s;
+  transform: translateY(-2px);
 }
-.sticky-cta-btn:hover { background: #B91C1C; }
+
+/* FOOTER */
 .footer {
-  margin-top: 40px;
-  background: linear-gradient(135deg, var(--brand-primary) 0%, #1E293B 100%);
+  margin-top: 80px;
+  background: var(--brand-primary);
   color: #fff;
-  padding: 40px 16px 20px;
+  padding: 60px 24px 30px;
 }
 .footer-grid {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 32px;
-  margin-bottom: 32px;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 40px;
 }
 .footer-brand {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  margin-bottom: 16px;
+  font-family: var(--font-serif);
 }
-.footer-brand img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; }
-.footer-desc { color: #94A3B8; line-height: 1.6; font-size: 13px; }
+.footer-desc { 
+  color: #94a3b8; 
+  line-height: 1.7; 
+  font-size: 14px;
+  max-width: 300px;
+}
 .footer-section h4 {
   color: #fff;
   font-size: 13px;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+  font-weight: 700;
 }
 .footer-links { list-style: none; }
 .footer-links li {
-  margin: 10px 0;
-  color: #94A3B8;
+  margin: 12px 0;
+  color: #94a3b8;
   cursor: pointer;
-  transition: all 0.2s;
-  font-size: 13px;
-}
-.footer-links li:hover { color: #fff; transform: translateX(4px); }
-.footer-social { display: flex; gap: 10px; margin-top: 16px; }
-.footer-social a {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-decoration: none;
   transition: all 0.2s;
   font-size: 14px;
 }
-.footer-social a:hover { background: var(--brand-accent); transform: translateY(-3px); }
+.footer-links li:hover { 
+  color: #fff; 
+  transform: translateX(4px); 
+}
 .footer-bottom {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding-top: 20px;
+  padding-top: 30px;
   border-top: 1px solid #334155;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  color: #64748B;
-  font-size: 12px;
+  color: #64748b;
+  font-size: 13px;
   text-align: center;
 }
-.footer-bottom-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-.footer-bottom a { color: #64748B; text-decoration: none; transition: color 0.2s; }
-.footer-bottom a:hover { color: #fff; }
-.watermark {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  background: rgba(0,0,0,0.6);
-  color: white;
-  padding: 3px 6px;
-  font-size: 9px;
-  border-radius: 3px;
-  opacity: 0.7;
-  pointer-events: none;
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .main-wrapper { grid-template-columns: 1fr; }
+  .sidebar-right { display: none; } /* En móvil, priorizar contenido */
+  .breaking-card { grid-template-columns: 1fr; }
+  .breaking-card .card-image { min-height: 240px; }
+  .news-card { grid-template-columns: 200px 1fr; }
 }
-.hidden { display: none !important; }
-.empty-state { text-align: center; padding: 40px 20px; color: #64748B; }
-.empty-state-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.5; }
-.load-more-btn {
-  padding: 12px 32px;
-  background: var(--brand-primary);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.load-more-btn:hover { background: var(--brand-accent); transform: translateY(-2px); }
-.load-more-container { text-align: center; padding: 32px 0 48px; }
-.anti-copy-toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-100px); background: var(--brand-accent); color: white; padding: 12px 24px; border-radius: 8px; font-weight: 600; z-index: 10000; transition: all 0.3s; box-shadow: var(--shadow-lg); }
-:focus-visible {
-  outline: 2px solid var(--brand-secondary);
-  outline-offset: 2px;
-}
-.card-image-wrapper img[src=""], .card-image-wrapper img:not([src]),
-.breaking-card .card-image img[src=""] {
-  background: linear-gradient(135deg, #f0f4f8 25%, #e2e8f0 50%, #f0f4f8 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  min-height: 200px;
-}
-.card-image-wrapper img, .breaking-card .card-image img {
-  background: linear-gradient(135deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-}
-@media (max-width: 768px) {
-  .sidebar-box.indicadores-box .indicadores-list { gap: 8px; }
-  .sidebar-box.indicadores-box .indicadores-list div { display: flex; justify-content: space-between; gap: 8px; }
-  .sidebar-box.indicadores-box { padding: 16px; }
-}
-@media (min-width: 640px) {
-  .topbar { padding: 16px 24px; }
-  .logo-title { font-size: 22px; }
-  .logo-subtitle { display: block; }
-  .visit-counter { display: flex; }
-  .info-top { display: block; }
-  .search-wrapper { max-width: 240px; }
-  .carousel-item-custom { height: 240px !important; }
-  .carousel-caption-custom { padding: 40px 30px 30px; }
-  .carousel-caption-custom h3 { font-size: 24px; }
-  .main-wrapper { padding: 24px; }
-  .breaking-card .card-image { height: 240px; }
-  .breaking-body h2 { font-size: 24px; }
-  .news-card { flex-direction: row; gap: 16px; }
-  .card-image-wrapper { width: 240px; flex-shrink: 0; }
-  .news-card h3 { font-size: 18px; -webkit-line-clamp: 3; }
-  .news-excerpt { -webkit-line-clamp: 3; }
-  .modal-header { height: 280px; }
-  .modal-title-wrap { padding: 30px; }
-  .modal-body { padding: 32px; }
-  .footer-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (min-width: 1024px) {
-  .menu-content { justify-content: center; }
-  .menu-btn { padding: 8px 16px; font-size: 14px; }
-  .carousel-item-custom { height: 280px !important; }
-  .carousel-caption-custom h3 { font-size: 32px; }
-  .main-wrapper { grid-template-columns: 1fr 300px; gap: 40px; }
-  .breaking-card { grid-template-columns: 1fr 1fr; }
-  .breaking-card .card-image { height: 100%; min-height: 300px; }
-  .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
-  .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; }
-}
-@media (min-width: 1200px) {
-  .main-wrapper { grid-template-columns: 1fr 340px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+
+@media (max-width: 640px) {
+  .topbar-content { flex-direction: column; gap: 12px; }
+  .search-wrapper { width: 100%; }
+  .carousel-custom { height: 300px; }
+  .carousel-caption-custom { padding: 24px; }
+  .carousel-caption-custom h3 { font-size: 20px; }
+  .news-card { grid-template-columns: 1fr; }
+  .card-image-wrapper { aspect-ratio: 16/9; }
+  .breaking-body h2 { font-size: 22px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+  .premium-sticky { left: 20px; right: 20px; max-width: none; }
 }
 </style>
-<link href="/css/carousel-optimized.css" rel="stylesheet">
 </head>
 <body>
-<a href="#main-content" style="position:absolute;left:-9999px;z-index:10000;background:var(--brand-accent);color:white;padding:8px 16px;text-decoration:none;" onfocus="this.style.left='10px';this.style.top='10px';" onblur="this.style.left='-9999px';">Saltar al contenido</a>
-<div id="toast" class="anti-copy-toast"></div>
+
 <header class="topbar">
   <div class="topbar-content">
     <a href="/" class="logo">
-      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'; this.nextElementSibling.style.marginLeft='0'">
-      <div class="logo-text">
+      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
+      <div>
         <div class="logo-title">Nicaragua Informate</div>
         <div class="logo-subtitle">Tu fuente de noticias confiable</div>
       </div>
     </a>
-    <div class="topbar-actions">
+    <div class="header-meta">
       <div class="search-wrapper">
         <input type="text" id="searchInput" placeholder="Buscar noticias..." autocomplete="off">
         <i class="fas fa-search search-icon"></i>
         <div id="searchResults"></div>
       </div>
-      <div class="visit-counter">
-        <i class="fas fa-eye"></i>
-        <span id="visitCount">0</span>
-      </div>
-      <div class="info-top">
-        <div id="hora">--:--</div>
-        <div id="clima">Managua: --°C</div>
-      </div>
+      <span id="currentTime"></span>
     </div>
   </div>
 </header>
+
 <nav class="menu-nav">
   <div class="menu-content">
     <button class="menu-btn active" data-cat="Todas">🔥 Última hora</button>
@@ -1432,305 +795,113 @@ body {
     <button class="menu-btn" data-cat="Internacionales">🌍 Internacionales</button>
     <button class="menu-btn" data-cat="Tecnología">💻 Tecnología</button>
     <button class="menu-btn" data-cat="Cultura">🎭 Cultura</button>
-    <button class="menu-btn premium" data-cat="Premium">⭐ Premium</button>
   </div>
 </nav>
-<div class="radio-player" id="radioPlayer">
-  <div class="radio-live-indicator">
-    <span class="radio-live-dot"></span>
-    <span>EN VIVO</span>
-  </div>
-  <div class="radio-controls">
-    <button class="radio-btn" onclick="toggleRadio()" aria-label="Reproducir/Pausar">
-      <i class="fas fa-play" id="radioIcon"></i>
-    </button>
-    <select class="radio-select" id="radioSelect" onchange="cambiarRadio()" aria-label="Seleccionar emisora">
-      <option value="">Seleccionar emisora</option>
-      <option value="https://stream.zenolive.com/axr92qawesmtv">Radio Ya 99.1 FM</option>
-      <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
-      <option value="https://edge..listen2myradio.com/live.mp3?type=.mp3">Radio Sandino</option>
-      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">La Primerísima</option>
-      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">Futura 91.3</option>
-      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">Radio ABC</option>
-    </select>
-    <button class="radio-secondary-btn" onclick="activarModoBajaLatencia()" aria-label="Modo baja latencia">🌐 Latencia baja</button>
-    <div id="radioCurrentStation" class="radio-current" aria-live="polite">Estación: ninguna</div>
-  </div>
-  <button class="radio-close" onclick="document.getElementById('radioPlayer').classList.remove('active')" aria-label="Cerrar reproductor">✕</button>
-  <audio id="radioAudio" preload="auto" playsinline></audio>
-  <div id="radioLatencyInfo" class="radio-latency">Consejo: la señal en línea presenta retraso inherente al stream. Prueba otra emisora si es necesario.</div>
-</div>
-<button class="radio-float-btn" id="radioFloatBtn" onclick="document.getElementById('radioPlayer').classList.add('active')" title="Radio" aria-label="Abrir radio">
-  <i class="fas fa-broadcast-tower"></i>
-</button>
-<div class="main-wrapper">
-  <main class="content-main" id="main-content">
-    <section class="carousel-section" id="carouselSection">
-      <div class="carousel-custom" id="carouselNoticias">
-        <div class="carousel-inner-custom" id="carouselInner">
-          <div class="carousel-item-custom active" style="display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e293b, #0f172a);">
-            <div style="text-align: center; color: #fff;">
-              <div style="font-size: 40px; margin-bottom: 12px;">📰</div>
-              <div style="font-size: 14px;">Cargando noticias...</div>
-            </div>
-          </div>
-        </div>
-        <div class="carousel-controls">
-          <button class="carousel-btn" onclick="prevSlide()" aria-label="Anterior">
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <button class="carousel-btn" onclick="nextSlide()" aria-label="Siguiente">
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-        <div class="carousel-indicators-custom" id="carouselIndicators"></div>
-      </div>
-    </section>
-    <div class="ad-slot">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins>
+
+<div class="carousel-section">
+  <div class="carousel-custom" id="carouselNoticias">
+    <div class="carousel-inner-custom" id="carouselInner">
+      <!-- Se llena dinámicamente -->
     </div>
-    <h2 class="section-title" id="sectionTitle">
-      📰 Últimas Noticias
-      <span style="font-size: 13px; color: #64748B; font-weight: 500; margin-left: 8px;" id="newsCount"></span>
-    </h2>
+    <div class="carousel-controls">
+      <button class="carousel-btn" onclick="prevSlide()" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn" onclick="nextSlide()" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="carousel-indicators-custom" id="carouselIndicators"></div>
+  </div>
+</div>
+
+<div class="main-wrapper">
+  <main class="content-main">
+    <h2 class="section-title" id="sectionTitle">📰 Últimas Noticias</h2>
+    
     <div id="skeletonContainer">
       <div class="skeleton-card">
         <div class="skeleton skeleton-image"></div>
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text short"></div>
+        <div>
+          <div class="skeleton skeleton-text" style="width: 30%; margin-bottom: 16px;"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text short"></div>
+        </div>
       </div>
       <div class="skeleton-card">
         <div class="skeleton skeleton-image"></div>
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text short"></div>
-      </div>
-      <div class="skeleton-card">
-        <div class="skeleton skeleton-image"></div>
-        <div class="skeleton skeleton-title"></div>
-        <div class="skeleton skeleton-text"></div>
-        <div class="skeleton skeleton-text short"></div>
+        <div>
+          <div class="skeleton skeleton-text" style="width: 30%; margin-bottom: 16px;"></div>
+          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton skeleton-text"></div>
+        </div>
       </div>
     </div>
+
     <div class="news-grid" id="newsGrid" style="display: none;"></div>
-    <div id="emptyState" class="empty-state" style="display: none;">
-      <div class="empty-state-icon">📭</div>
-      <p>No hay noticias disponibles en este momento</p>
-      <button onclick="location.reload()" style="margin-top: 16px; padding: 10px 20px; background: var(--brand-secondary); color: white; border: none; border-radius: 6px; cursor: pointer;">
-        <i class="fas fa-sync-alt"></i> Recargar
-      </button>
-    </div>
+    
     <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-      <button class="load-more-btn" id="verMasBtn" onclick="cargarMas()">
-        <i class="fas fa-newspaper"></i>
-        Ver más noticias
-        <span id="contadorRestantes" style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-left: 4px;"></span>
+      <button class="load-more-btn" onclick="cargarMas()">
+        Ver más noticias <i class="fas fa-arrow-down"></i>
       </button>
     </div>
   </main>
+
   <aside class="sidebar-right">
     <div class="sidebar-box">
-      <h4><i class="fas fa-share-alt"></i> Síguenos</h4>
-      <div class="social-links">
-        <a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" class="social-btn social-facebook" onclick="gtag('event', 'social_click', {event_category: 'social', event_label: 'facebook'});">
-          <i class="fab fa-facebook-f"></i> Facebook
-        </a>
-        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" class="social-btn social-whatsapp" onclick="gtag('event', 'social_click', {event_category: 'social', event_label: 'whatsapp_channel'});">
-          <i class="fab fa-whatsapp"></i> Canal
-        </a>
-        <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" class="social-btn social-telegram" onclick="gtag('event', 'social_click', {event_category: 'social', event_label: 'telegram'});">
-          <i class="fab fa-telegram-plane"></i> Telegram
-        </a>
-        <a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" class="social-btn social-whatsapp-group" onclick="gtag('event', 'social_click', {event_category: 'social', event_label: 'whatsapp_group'});">
-          <i class="fas fa-users"></i> Grupo
-        </a>
-      </div>
+      <h4><i class="fas fa-fire" style="color: var(--brand-accent);"></i> Tendencias</h4>
+      <div id="trendingContainer"></div>
     </div>
-    <div class="sidebar-box trending">
-      <h4><i class="fas fa-fire"></i> Trending</h4>
-      <div id="trendingContainer">
-        <div style="padding: 20px; text-align: center; color: #64748B;">
-          <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; color: #3B82F6;"></i>
-        </div>
-      </div>
-    </div>
-    <div class="donation-box">
-      <h4><i class="fas fa-heart"></i> Apoya el periodismo</h4>
-      <p>Tu contribución nos ayuda a mantener la información libre y accesible.</p>
-      <a href="https://www.paypal.me/NicaraguaInformate" target="_blank" class="donation-btn" onclick="gtag('event', 'donation_click', {event_category: 'monetization', event_label: 'paypal'});">
-        <i class="fab fa-paypal"></i> Donar con PayPal
-      </a>
-    </div>
-    <div class="sidebar-box popular">
-      <h4><i class="fas fa-chart-line"></i> Populares</h4>
-      <div id="popularContainer">
-        <div style="padding: 20px; text-align: center; color: #64748B;">
-          <i class="fas fa-circle-notch fa-spin" style="font-size: 20px; color: #3B82F6;"></i>
-        </div>
-      </div>
-    </div>
-    <div class="sidebar-box premium">
-      <h4><i class="fas fa-crown"></i> Premium</h4>
-      <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;">
-        Accede a análisis exclusivos, reportajes especiales y contenido sin publicidad.
-      </p>
-      <button onclick="mostrarPremium()" style="width: 100%; padding: 12px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 14px;">
-        Ver planes <i class="fas fa-arrow-right" style="margin-left: 4px;"></i>
-      </button>
-    </div>
+
     <div class="newsletter-box">
       <h4><i class="fas fa-envelope"></i> Newsletter</h4>
-      <p>Recibe las noticias más importantes cada mañana.</p>
+      <p>Recibe las noticias más importantes cada mañana en tu correo.</p>
       <form onsubmit="suscribirNewsletter(event)">
         <input type="email" class="newsletter-input" placeholder="tu@email.com" required>
-        <button type="submit" class="newsletter-btn">Suscribirme</button>
+        <button type="submit" class="newsletter-btn">Suscribirme gratis</button>
       </form>
-    </div>
-    <div class="ad-slot ad-slot-sticky" style="min-height: 250px;">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins>
     </div>
   </aside>
 </div>
-<div class="modal-overlay" id="newsModal" onclick="cerrarModal()">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="cerrarModal()" aria-label="Cerrar">×</button>
-    <div class="modal-header">
-      <img id="modalImg" src="" alt="">
-      <div class="watermark">© Nicaragua Informate</div>
-      <div class="modal-title-wrap">
-        <span id="modalCat" class="tag"></span>
-        <h2 id="modalTitle" style="font-size: 24px; font-weight: 800; margin-top: 8px; line-height: 1.3;"></h2>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div class="modal-meta">
-        <span id="modalFecha"><i class="far fa-clock"></i> </span>
-        <span><i class="fas fa-book-reader"></i> <span id="modalReadTime">3</span> min lectura</span>
-        <span id="modalPremium" class="premium-badge-inline" style="display: none;"><i class="fas fa-crown"></i> Premium</span>
-      </div>
-      <div class="modal-content-text" id="modalContent"></div>
-      <div id="paywall" class="paywall-overlay">
-        <div class="paywall-content">
-          <h4><i class="fas fa-lock"></i> Continúa leyendo</h4>
-          <p>Esta noticia continúa después del resumen. Suscríbete para acceso ilimitado.</p>
-          <button onclick="mostrarPremium()" style="padding: 12px 24px; background: var(--premium-gold); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 14px;">
-            Ver suscripción Premium
-          </button>
-        </div>
-      </div>
-      <div style="margin-top: 24px;">
-        <h4 style="font-size: 14px; margin-bottom: 12px; color: var(--text-secondary);"><i class="fas fa-share-alt"></i> Compartir</h4>
-        <div class="share-grid">
-          <button onclick="shareFacebook()" style="background: #1877F2;" aria-label="Facebook"><i class="fab fa-facebook-f"></i></button>
-          <button onclick="shareTwitter()" style="background: #1DA1F2;" aria-label="Twitter"><i class="fab fa-twitter"></i></button>
-          <button onclick="shareWhatsApp()" style="background: #25D366;" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-          <button onclick="copyLink()" style="background: #64748B;" aria-label="Copiar enlace"><i class="fas fa-link"></i></button>
-        </div>
-      </div>
-    </div>
-  </div>
+
+<!-- ÚNICO CTA STICKY SUTIL -->
+<div class="premium-sticky" id="premiumSticky">
+  <button class="close-sticky" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
+  <h5>⭐ Nicaragua Informate Premium</h5>
+  <p>Accede a contenido exclusivo sin anuncios.</p>
+  <button onclick="window.location.href='#premium'">Ver planes</button>
 </div>
-<div class="modal-overlay" id="premiumModal" onclick="cerrarPremiumModal()">
-  <div class="modal-content premium-modal-content" onclick="event.stopPropagation()">
-    <button class="modal-close" onclick="cerrarPremiumModal()" aria-label="Cerrar">×</button>
-    <div class="premium-icon">👑</div>
-    <h2>Nicaragua Informate Premium</h2>
-    <p>Accede a contenido exclusivo, análisis profundos y experiencia sin publicidad.</p>
-    <div class="pricing-grid">
-      <div class="pricing-option" onclick="pagarPayPal('mensual')">
-        <div class="pricing-price">$3.99<span style="font-size: 16px;">/mes</span></div>
-        <div class="pricing-period">Plan Mensual</div>
-      </div>
-      <div class="pricing-option recommended" onclick="pagarPayPal('anual')">
-        <div class="pricing-badge">MEJOR VALOR</div>
-        <div class="pricing-price">$29.99<span style="font-size: 16px;">/año</span></div>
-        <div class="pricing-period">Plan Anual (37% descuento)</div>
-      </div>
-    </div>
-    <div id="paypal-button-container" style="margin-bottom: 12px;"></div>
-    <button style="width:100%;padding:14px;background:#0070BA;color:white;border:none;border-radius:8px;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:10px;" onclick="pagarPayPal('mensual')">
-      <i class="fab fa-paypal"></i> Pagar con PayPal
-    </button>
-    <p style="font-size:12px;color:#94A3B8;">Pago seguro procesado por PayPal. Después del pago activa tu cuenta escribiéndonos.</p>
-  </div>
-</div>
-<button class="float-share" onclick="sharePage()" title="Compartir" aria-label="Compartir página">
-  <i class="fas fa-share-alt"></i>
-</button>
-<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Volver arriba">
-  <i class="fas fa-arrow-up"></i>
-</button>
-<div class="sticky-cta" id="stickyCta">
-  <div class="sticky-cta-text">📱 Síguenos en WhatsApp para alertas de última hora</div>
-  <button class="sticky-cta-btn" onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17', '_blank'); gtag('event', 'sticky_cta_click', {event_category: 'conversion', event_label: 'whatsapp_sticky'});">
-    Unirme al canal
-  </button>
-</div>
-<section class="top-indicators" aria-label="Indicadores económicos (Nicaragua)">
-  <div class="top-indicators-inner">
-    <div class="top-indicator-title"><i class="fas fa-chart-line"></i> INDICADORES ECONÓMICOS (NICARAGUA)</div>
-    <div class="top-indicator-item"><span>Dólar BCN</span> <strong id="ind-dolar">C$ --</strong></div>
-    <div class="top-indicator-item"><span>Gasolina Regular</span> <strong id="ind-regular">C$ --</strong><small>/ltr</small></div>
-    <div class="top-indicator-item"><span>Gasolina Súper</span> <strong id="ind-super">C$ --</strong><small>/ltr</small></div>
-    <div class="top-indicator-item"><span>Diésel</span> <strong id="ind-diesel">C$ --</strong><small>/ltr</small></div>
-    <div class="top-indicator-item"><span>Última actualización</span> <strong id="ind-last-updated">--:--</strong></div>
-  </div>
-</section>
+
 <footer class="footer">
   <div class="footer-grid">
     <div>
-      <div class="footer-brand">
-        <img src="/logo.png" alt="Logo" onerror="this.style.display='none'">
-        Nicaragua Informate
-      </div>
-      <p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales. Periodismo independiente desde 2024.</p>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-        <a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" title="Grupo"><i class="fas fa-users"></i></a>
-      </div>
+      <div class="footer-brand">Nicaragua Informate</div>
+      <p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información actualizada sobre sucesos, deportes, tecnología e internacionales.</p>
     </div>
     <div class="footer-section">
       <h4>Secciones</h4>
       <ul class="footer-links">
         <li onclick="cambiarCategoria('Todas')">Última Hora</li>
         <li onclick="cambiarCategoria('Sucesos')">Sucesos</li>
-        <li onclick="cambiarCategoria('Nacionales')">Nacionales</li>
         <li onclick="cambiarCategoria('Deportes')">Deportes</li>
         <li onclick="cambiarCategoria('Internacionales')">Internacionales</li>
       </ul>
     </div>
     <div class="footer-section">
-      <h4>Apoya</h4>
-      <ul class="footer-links">
-        <li onclick="mostrarPremium()">Suscripción Premium</li>
-        <li><a href="https://www.paypal.me/NicaraguaInformate" target="_blank" style="color: inherit; text-decoration: none;">Donar con PayPal</a></li>
-      </ul>
-    </div>
-    <div class="footer-section">
       <h4>Legal</h4>
       <ul class="footer-links">
-        <li><a href="privacidad.html" style="color: inherit; text-decoration: none;">Política de Privacidad</a></li>
-        <li><a href="terminos.html" style="color: inherit; text-decoration: none;">Términos de Uso</a></li>
+        <li><a href="privacidad.html" style="color: inherit; text-decoration: none;">Privacidad</a></li>
+        <li><a href="terminos.html" style="color: inherit; text-decoration: none;">Términos</a></li>
         <li><a href="contacto.html" style="color: inherit; text-decoration: none;">Contacto</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <div>© 2026 Nicaragua Informate. Todos los derechos reservados.</div>
-    <div class="footer-bottom-links">
-      <a href="privacidad.html">Privacidad</a>
-      <a href="terminos.html">Términos</a>
-      <a href="contacto.html">Contacto</a>
-    </div>
+    <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
   </div>
 </footer>
+
 <script>
+// CONFIGURACIÓN OPTIMIZADA
 const CONFIG = {
-  NOTICIAS_POR_PAGINA: 12,
-  CACHE_TTL: 30 * 60 * 1000,
+  NOTICIAS_POR_PAGINA: 10,
   FIREBASE_CONFIG: {
     apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
     authDomain: "informate-instant-nicaragua.firebaseapp.com",
@@ -1740,924 +911,335 @@ const CONFIG = {
     appId: "1:24988088146:web:d26a207508da055668ec8b"
   }
 };
+
 let noticias = [];
 let categoriaActual = 'Todas';
 let paginaActual = 1;
 let db = null;
-let esUsuarioPremium = false;
 let carouselIndex = 0;
 let carouselInterval = null;
-let _firestoreDoc = null;
-let _firestoreGetDoc = null;
-function escapeHtml(text) {
-  if (text == null) return '';
-  const div = document.createElement('div');
-  div.textContent = text;
-  return div.innerHTML;
-}
-function getGuardadas() {
-  try {
-    return JSON.parse(localStorage.getItem('noticias_guardadas') || '[]');
-  } catch {
-    return [];
-  }
-}
-function estaGuardada(id) {
-  return getGuardadas().includes(id);
-}
-function checkPremiumStatus() {
-  const validUntil = localStorage.getItem('premium_valid_until');
-  if (validUntil && new Date(validUntil) > new Date()) {
-    esUsuarioPremium = true;
-    document.body.classList.add('premium-user');
-  }
-}
+
+// UTILIDADES
 const utils = {
   formatDate: (fecha) => {
-    if (!fecha) return "Fecha no disponible";
+    if (!fecha) return "Hace un momento";
     try {
-      let d;
-      if (fecha.toDate) d = fecha.toDate();
-      else if (fecha instanceof Date) d = fecha;
-      else if (typeof fecha === 'object' && fecha.seconds) d = new Date(fecha.seconds * 1000);
-      else d = new Date(fecha);
-      const ahora = new Date();
-      const diff = Math.floor((ahora - d) / 1000);
+      let d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+      const diff = Math.floor((new Date() - d) / 1000);
       if (diff < 60) return 'Hace un momento';
       if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
       if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
-      if (diff < 172800) return 'Ayer';
-      return d.toLocaleDateString('es-NI', {day:'numeric', month:'short', year:'numeric'});
-    } catch(e) {
-      return "Fecha no disponible";
-    }
+      return d.toLocaleDateString('es-NI', {day:'numeric', month:'short'});
+    } catch(e) { return "Hace un momento"; }
   },
-  getFallbackImage: (categoria) => {
-    const fallbacks = {
-      'Sucesos': 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
-      'Nacionales': 'https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=800&q=80',
-      'Internacionales': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80',
-      'Deportes': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80',
-      'Tecnología': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
-      'Cultura': 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80',
-      'Economía': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
-      'Espectáculos': 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80',
-      'Premium': 'https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=800&q=80'
-    };
-    return fallbacks[categoria] || fallbacks['Sucesos'];
-  },
+  
   sanitizeImage: (url, categoria) => {
-    if (!url || /scontent|fbcdn\.net|facebook\.com\/photo/i.test(url)) {
-      return utils.getFallbackImage(categoria);
-    }
-    if (url.includes('unsplash.com') && !url.includes('fm=webp')) {
-      return url + (url.includes('?') ? '&' : '?') + 'fm=webp&q=75';
+    if (!url || url.includes('facebook') || url.includes('fbcdn')) {
+      const fallbacks = {
+        'Sucesos': 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
+        'Deportes': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80',
+        'Internacionales': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80',
+        'Tecnología': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+        'Nacionales': 'https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=800&q=80'
+      };
+      return fallbacks[categoria] || fallbacks['Sucesos'];
     }
     return url;
   },
-  capitalize: (str) => {
-    if (!str) return '';
-    return str.charAt(0).toUpperCase() + str.slice(1);
+  
+  escapeHtml: (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
   }
 };
+
+// INICIALIZACIÓN
 function init() {
-  window.addEventListener('load', () => setTimeout(initFirebase, 100));
-  checkPremiumStatus();
   initReloj();
-  initClima();
+  initFirebase();
   initEventListeners();
-  initAds();
-  initStickyCTA();
-  initCarousel();
-  initIndicadores();
-  initBusqueda();
-}
-async function obtenerTasaDolarNIO() {
-  const sources = [
-    'https://api.exchangerate-api.com/v4/latest/USD',
-    'https://open.er-api.com/v6/latest/USD',
-    'https://api.frankfurter.app/latest?from=USD&to=NIO'
-  ];
-
-  for (const url of sources) {
-    try {
-      const resp = await fetch(url, { cache: 'no-store', mode: 'cors' });
-      if (!resp.ok) continue;
-      const data = await resp.json();
-      if (data?.rates?.NIO) return Number(data.rates.NIO).toFixed(4);
-      const key = Object.keys(data?.rates || {}).find(k => k.toUpperCase() === 'NIO');
-      if (key) return Number(data.rates[key]).toFixed(4);
-    } catch (error) {
-      continue;
-    }
-  }
-  return null;
+  
+  // Mostrar CTA sticky después de 10 segundos
+  setTimeout(() => {
+    document.getElementById('premiumSticky')?.classList.add('visible');
+  }, 10000);
 }
 
-async function getIndicadoresConfig() {
-  try {
-    if (!db || !_firestoreDoc || !_firestoreGetDoc) return null;
-    const ref = _firestoreDoc(db, 'config', 'indicadores');
-    const snapshot = await _firestoreGetDoc(ref);
-    return snapshot.exists() ? snapshot.data() : null;
-  } catch (e) {
-    return null;
-  }
-}
-
-async function initIndicadores() {
-  const defaultValues = {dolar:'36.62', regular:'47.84', super:'49.03', diesel:'43.21'};
-
-  const actualizar = async () => {
-    const hora = new Date().toLocaleTimeString('es-NI', {hour:'2-digit', minute:'2-digit'});
-    let dolar = null;
-
-    let fuelValues = null;
-  try {
-      dolar = await obtenerTasaDolarNIO();
-      if (!dolar) throw new Error('No rate');
-      const cfg = await getIndicadoresConfig();
-      if (cfg?.gasolina) {
-        fuelValues = {
-          regular: cfg.gasolina.regular ?? defaultValues.regular,
-          super: cfg.gasolina.super ?? defaultValues.super,
-          diesel: cfg.gasolina.diesel ?? defaultValues.diesel,
-        };
-      }
-    } catch (e) {
-      const saved = JSON.parse(localStorage.getItem('indicadoresEconomicos') || 'null');
-      dolar = (saved && saved.dolar) ? saved.dolar : defaultValues.dolar;
-      if (saved && saved.regular && saved.super && saved.diesel) {
-        fuelValues = {regular: saved.regular, super: saved.super, diesel: saved.diesel};
-      } else {
-        fuelValues = defaultValues;
-      }
-    }
-
-    const finalFuel = fuelValues || defaultValues;
-
-    document.getElementById('ind-dolar').textContent = `C$ ${dolar}`;
-    document.getElementById('ind-regular').textContent = `C$ ${finalFuel.regular}`;
-    document.getElementById('ind-super').textContent = `C$ ${finalFuel.super}`;
-    document.getElementById('ind-diesel').textContent = `C$ ${finalFuel.diesel}`;
-    document.getElementById('ind-last-updated').textContent = hora;
-
-    localStorage.setItem('indicadoresEconomicos', JSON.stringify({dolar, ...finalFuel, updated: hora}));
+function initReloj() {
+  const update = () => {
+    const now = new Date();
+    document.getElementById('currentTime').textContent = 
+      now.toLocaleTimeString('es-NI', {hour: '2-digit', minute:'2-digit'});
   };
-
-  await actualizar();
-  setInterval(actualizar, 1000 * 60 * 5); // cada 5 minutos (mayor frecuencia para noticias recientes)
+  update();
+  setInterval(update, 60000);
 }
+
+// FIREBASE OPTIMIZADO
 function initFirebase() {
   import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js')
     .then(({ initializeApp }) => {
       return import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
-        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit, doc, getDoc }) => {
+        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit }) => {
           const app = initializeApp(CONFIG.FIREBASE_CONFIG);
           db = initializeFirestore(app, { localCache: memoryLocalCache() });
-          _firestoreDoc = doc;
-          _firestoreGetDoc = getDoc;
-          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(100));
+          
+          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(50));
           onSnapshot(q, (snapshot) => {
             if (!snapshot.empty) {
               noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
               document.getElementById('skeletonContainer').style.display = 'none';
               document.getElementById('newsGrid').style.display = 'flex';
-              renderizarNoticias();
-              renderizarCarrusel();
-              renderizarSidebar();
-              actualizarContadorVisitas();
+              renderizarTodo();
             }
           });
         });
     })
-    .catch(err => {
-      console.log('Firebase no disponible');
-      document.getElementById('skeletonContainer').style.display = 'none';
-      document.getElementById('emptyState').style.display = 'block';
+    .catch(() => {
+      document.getElementById('skeletonContainer').innerHTML = 
+        '<p style="text-align:center;color:#64748b;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:8px 16px;border-radius:6px;margin-top:10px;cursor:pointer;">Recargar</button></p>';
     });
 }
-function initCarousel() {
+
+// RENDERIZADO
+function renderizarTodo() {
+  renderizarCarrusel();
+  renderizarNoticias();
+  renderizarTrending();
+}
+
+function renderizarCarrusel() {
+  const slides = noticias.slice(0, 5);
+  if (!slides.length) return;
+  
+  const inner = document.getElementById('carouselInner');
+  const indicators = document.getElementById('carouselIndicators');
+  
+  inner.innerHTML = slides.map((n, i) => {
+    const img = utils.sanitizeImage(n.imagen, n.categoria);
+    const titulo = utils.escapeHtml(n.titulo || '');
+    return `
+      <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
+        <img src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}">
+        <div class="carousel-caption-custom">
+          <span class="carousel-badge">${n.categoria || 'Noticias'}</span>
+          <h3>${titulo}</h3>
+        </div>
+      </a>
+    `;
+  }).join('');
+  
+  indicators.innerHTML = slides.map((_, i) => 
+    `<button class="indicator ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></button>`
+  ).join('');
+  
   startCarousel();
-  const carousel = document.getElementById('carouselNoticias');
-  if (carousel) {
-    let touchStartX = 0;
-    carousel.addEventListener('touchstart', e => {
-      touchStartX = e.changedTouches[0].screenX;
-      stopCarousel();
-    }, { passive: true });
-    carousel.addEventListener('touchend', e => {
-      const diff = touchStartX - e.changedTouches[0].screenX;
-      if (diff > 50) nextSlide();
-      if (diff < -50) prevSlide();
-      startCarousel();
-    }, { passive: true });
-    carousel.addEventListener('mouseenter', stopCarousel);
-    carousel.addEventListener('mouseleave', startCarousel);
-  }
 }
-function startCarousel() {
-  carouselInterval = setInterval(() => {
-    nextSlide();
-  }, 5000);
-}
-function stopCarousel() {
-  clearInterval(carouselInterval);
-}
-function nextSlide() {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  items[carouselIndex].classList.remove('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.remove('active');
-  carouselIndex = (carouselIndex + 1) % items.length;
-  items[carouselIndex].classList.add('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.add('active');
-}
-function prevSlide() {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  items[carouselIndex].classList.remove('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.remove('active');
-  carouselIndex = (carouselIndex - 1 + items.length) % items.length;
-  items[carouselIndex].classList.add('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.add('active');
-}
-function goToSlide(index) {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  items[carouselIndex].classList.remove('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.remove('active');
-  carouselIndex = index;
-  items[carouselIndex].classList.add('active');
-  if (indicators[carouselIndex]) indicators[carouselIndex].classList.add('active');
-}
+
 function renderizarNoticias() {
   const grid = document.getElementById('newsGrid');
   let filtradas = categoriaActual === 'Todas' 
     ? noticias 
     : noticias.filter(n => n.categoria === categoriaActual);
-  if (categoriaActual === 'Premium') {
-    filtradas = noticias.filter(n => n.premium === true);
-  }
-  const iconos = {
-    'Todas': '📰', 'Sucesos': '🚨', 'Nacionales': '🏠', 'Deportes': '⚽',
-    'Internacionales': '🌍', 'Tecnología': '💻', 'Cultura': '🎭', 'Premium': '👑'
-  };
-  const titulo = categoriaActual === 'Todas' 
-    ? 'Últimas Noticias' 
-    : `${iconos[categoriaActual] || '📰'} ${categoriaActual}`;
-  document.getElementById('sectionTitle').innerHTML = 
-    `${titulo} <span style="font-size:14px;color:#64748B;font-weight:500;margin-left:8px;">(${filtradas.length})</span>`;
+  
   if (!filtradas.length) {
-    grid.innerHTML = '<div style="text-align:center;padding:40px;color:#64748B;"><div style="font-size:48px;margin-bottom:16px;">📭</div><p>No hay noticias en esta categoría</p></div>';
-    document.getElementById('loadMoreContainer').style.display = 'none';
+    grid.innerHTML = '<p style="text-align:center;color:#64748b;padding:40px;">No hay noticias en esta categoría</p>';
     return;
   }
+
   const visibles = filtradas.slice(0, CONFIG.NOTICIAS_POR_PAGINA * paginaActual);
-  const ahora = new Date();
+  
   const cards = visibles.map((n, idx) => {
     const img = utils.sanitizeImage(n.imagen, n.categoria);
-    const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-    const resumenTexto = n.resumen || n.contenido || '';
-    const resumen = escapeHtml(resumenTexto);
-    const palabras = resumenTexto.split(/\s+/).length;
-    const tiempoLectura = Math.max(1, Math.ceil(palabras / 200));
-    let esNueva = false;
-    try {
-      let fechaNoticia;
-      if (n.fecha && n.fecha.toDate) fechaNoticia = n.fecha.toDate();
-      else if (n.fecha instanceof Date) fechaNoticia = n.fecha;
-      else if (typeof n.fecha === 'object' && n.fecha.seconds) fechaNoticia = new Date(n.fecha.seconds * 1000);
-      if (fechaNoticia) {
-        const diff = ahora - fechaNoticia;
-        esNueva = diff < 24 * 60 * 60 * 1000;
-      }
-    } catch(e) {}
-    const fechaRelativa = utils.formatDate(n.fecha);
-    const badgePremium = n.premium 
-      ? '<div class="premium-badge-inline" style="position:absolute;top:10px;right:10px;z-index:10;"><i class="fas fa-crown"></i> Premium</div>' 
-      : '';
-    const esGuardada = estaGuardada(n.id);
-    const bookmarkIcon = esGuardada ? '🔴' : '🔖';
-    const bookmarkOpacity = esGuardada ? '1' : '0.5';
+    const titulo = utils.escapeHtml(n.titulo || '');
+    const resumen = utils.escapeHtml((n.resumen || '').substring(0, 150));
+    const fecha = utils.formatDate(n.fecha);
+    
     if (idx === 0 && categoriaActual === 'Todas' && paginaActual === 1) {
-      const url = getNoticiaUrl(n);
-      return `<a href="${url}" class="breaking-card" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')">
-        ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
-        ${badgePremium}
-        <div class="card-image"><img src="${img}" alt="${titulo}" loading="eager" width="800" height="450"><div class="watermark">© Nicaragua Informate</div></div>
-        <div class="breaking-body">
-          <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
-          <span class="tag" style="color:${getCategoryColor(n.categoria)};margin-bottom:8px;">${escapeHtml((n.categoria || '').toUpperCase())}</span>
-          <h2>${titulo}</h2>
-          <p>${resumen.substring(0, 200)}...</p>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#6b7280;margin-top:12px;">
-            <div>
-              <span><i class="far fa-clock"></i> ${fechaRelativa}</span>
-              <span style="margin-left:12px;"><i class="fas fa-book-reader"></i> ${tiempoLectura} min</span>
+      return `
+        <a href="noticia.html?id=${n.id}" class="breaking-card">
+          <div class="card-image">
+            <img src="${img}" alt="${titulo}" loading="eager">
+          </div>
+          <div class="breaking-body">
+            <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
+            <h2>${titulo}</h2>
+            <p>${resumen}...</p>
+            <div class="breaking-meta">
+              <span><i class="far fa-clock"></i> ${fecha}</span>
+              <span><i class="fas fa-arrow-right"></i> Leer más</span>
             </div>
-            <span style="color:#3B82F6;font-weight:700;">Leer más <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </a>
+      `;
+    }
+    
+    return `
+      <a href="noticia.html?id=${n.id}" class="news-card">
+        <div class="card-image-wrapper">
+          <img src="${img}" alt="${titulo}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <span class="tag">${n.categoria || 'General'}</span>
+          <h3>${titulo}</h3>
+          <p class="news-excerpt">${resumen}...</p>
+          <div class="card-footer">
+            <span><i class="far fa-clock"></i> ${fecha}</span>
+            <span class="read-more">Leer más <i class="fas fa-arrow-right"></i></span>
           </div>
         </div>
-      </a>`;
-    }
-    const url = getNoticiaUrl(n);
-    return `<a href="${url}" class="news-card" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')">
-      ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
-      ${badgePremium}
-      <div class="card-image-wrapper"><img src="${img}" alt="${titulo}" loading="lazy" decoding="async" width="400" height="225" style="aspect-ratio:16/9;"><div class="watermark">© Nicaragua Informate</div></div>
-      <div class="card-body">
-        <span class="tag" style="color:${getCategoryColor(n.categoria)}">${escapeHtml((n.categoria || '').toUpperCase())}</span>
-        <h3>${titulo}</h3>
-        <p class="news-excerpt">${resumen.substring(0, 150)}...</p>
-        <div class="card-footer">
-          <div>
-            <span><i class="far fa-clock"></i> ${fechaRelativa}</span>
-            <span style="margin-left:12px;"><i class="fas fa-book-reader"></i> ${tiempoLectura} min</span>
-          </div>
-          <span style="color:#3B82F6;font-weight:600;">Leer <i class="fas fa-arrow-right"></i></span>
-        </div>
-        <div class="share-mini" onclick="event.stopPropagation()">
-          <button onclick="compartirNoticia('facebook', '${escapeHtml(n.id)}')" title="Facebook"><i class="fab fa-facebook-f"></i></button>
-          <button onclick="compartirNoticia('twitter', '${escapeHtml(n.id)}')" title="Twitter"><i class="fab fa-twitter"></i></button>
-          <button onclick="compartirNoticia('whatsapp', '${escapeHtml(n.id)}')" title="WhatsApp"><i class="fab fa-whatsapp"></i></button>
-          <button onclick="guardarParaDespues('${escapeHtml(n.id)}', this)" title="Guardar" style="margin-left:auto;opacity:${bookmarkOpacity}">${bookmarkIcon}</button>
-        </div>
-      </div>
-    </a>`;
+      </a>
+    `;
   });
-  const adHTML = `<div style="margin:16px 0;min-height:90px;background:#f8fafc;border-radius:8px;border:1px solid #e2e8f0;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;"><span style="position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:9px;color:#94a3b8;text-transform:uppercase;">Publicidad</span><ins class="adsbygoogle" style="display:block;width:100%;min-height:90px;" data-ad-client="ca-pub-4115203339551838" data-ad-slot="4727039722" data-ad-format="auto" data-full-width-responsive="true"></ins></div>`;
-  const resultado = [];
-  cards.forEach((card, i) => {
-    resultado.push(card);
-    if ((i + 1) % 3 === 0 && i < cards.length - 1) {
-      resultado.push(adHTML);
-    }
-  });
-  grid.innerHTML = resultado.join('');
-  setTimeout(() => {
-    grid.querySelectorAll('.adsbygoogle:not([data-adsbygoogle-status])').forEach(() => {
-      try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
-    });
-  }, 300);
+  
+  grid.innerHTML = cards.join('');
+  
   const hayMas = filtradas.length > CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
   document.getElementById('loadMoreContainer').style.display = hayMas ? 'block' : 'none';
-  if (hayMas) {
-    const restantes = filtradas.length - CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
-    document.getElementById('contadorRestantes').textContent = restantes + ' más';
-  }
 }
-function renderizarCarrusel() {
-  const slides = noticias.filter(n => !n.premium).slice(0, 5);
-  if (!slides.length) return;
-  const inner = document.getElementById('carouselInner');
-  const indicators = document.getElementById('carouselIndicators');
-  inner.innerHTML = slides.map((n, i) => {
-    const img = utils.sanitizeImage(n.imagen, n.categoria);
-    const color = getCategoryColor(n.categoria);
-    const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-    const url = getNoticiaUrl(n);
-    return `<a href="${url}" class="carousel-item-custom ${i === 0 ? 'active' : ''}" data-noticia-id="${n.id}" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="cursor:pointer;text-decoration:none;">
-      <img src="${img}" alt="${titulo}">
-      <div class="carousel-caption-custom">
-        <span class="carousel-badge" style="background:${color}">${escapeHtml((n.categoria || '').toUpperCase())}</span>
-        <h3>${titulo}</h3>
-      </div>
-    </a>`;
-  }).join('');
-  indicators.innerHTML = slides.map((_, i) => 
-    `<button class="indicator ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})" aria-label="Slide ${i+1}"></button>`
-  ).join('');
-  carouselIndex = 0;
-}
-function renderizarSidebar() {
-  const top = noticias.filter(n => !n.premium).slice(0, 5);
-  document.getElementById('trendingContainer').innerHTML = top.map((n, i) => {
-    const fechaRelativa = utils.formatDate(n.fecha);
-    const url = getNoticiaUrl(n);
-    return `<a href="${url}" class="trending-item" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="text-decoration:none;display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-color);cursor:pointer;">
+
+function renderizarTrending() {
+  const top = noticias.slice(0, 5);
+  document.getElementById('trendingContainer').innerHTML = top.map((n, i) => `
+    <div class="trending-item" onclick="location.href='noticia.html?id=${n.id}'">
       <div class="trending-number">${String(i + 1).padStart(2, '0')}</div>
       <div>
-        <div class="trending-title">${escapeHtml(utils.capitalize(n.titulo || ''))}</div>
-        <div class="trending-meta"><i class="far fa-clock"></i> ${fechaRelativa}</div>
+        <div class="trending-title">${utils.escapeHtml(n.titulo || '')}</div>
+        <div class="trending-meta">${utils.formatDate(n.fecha)}</div>
       </div>
-    </a>`;
-  }).join('');
-  document.getElementById('popularContainer').innerHTML = top.map(n => {
-    const img = utils.sanitizeImage(n.imagen, n.categoria);
-    const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-    const url = getNoticiaUrl(n);
-    return `<a href="${url}" class="popular-item" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="text-decoration:none;">
-      <img src="${img}" loading="lazy">
-      <div>
-        <div class="popular-item-title">${titulo.length > 60 ? titulo.substring(0, 57) + '...' : titulo}</div>
-        <div class="popular-item-cat">${escapeHtml(n.categoria || '')}</div>
-      </div>
-    </a>`;
-  }).join('');
+    </div>
+  `).join('');
 }
-function getCategoryColor(cat) {
-  const colors = {
-    'Sucesos': '#DC2626', 'Deportes': '#10B981', 'Internacionales': '#7C3AED',
-    'Tecnología': '#0284C7', 'Nacionales': '#EA580C', 'Cultura': '#9333EA',
-    'Economía': '#D97706', 'Espectáculos': '#DB2777', 'Premium': '#F59E0B'
-  };
-  return colors[cat] || '#3B82F6';
+
+// CARRUSEL CONTROLES
+function startCarousel() {
+  clearInterval(carouselInterval);
+  carouselInterval = setInterval(nextSlide, 6000);
 }
-function actualizarContadorVisitas() {
-  const total = noticias.reduce((sum, n) => sum + (parseInt(n.vistas) || 0), 0);
-  const fmt = total >= 1000 ? (total / 1000).toFixed(1) + 'K+' : total.toString();
-  document.getElementById('visitCount').textContent = fmt;
+
+function nextSlide() {
+  const items = document.querySelectorAll('.carousel-item-custom');
+  const indicators = document.querySelectorAll('.indicator');
+  if (!items.length) return;
+  
+  items[carouselIndex].classList.remove('active');
+  indicators[carouselIndex]?.classList.remove('active');
+  
+  carouselIndex = (carouselIndex + 1) % items.length;
+  
+  items[carouselIndex].classList.add('active');
+  indicators[carouselIndex]?.classList.add('active');
 }
+
+function prevSlide() {
+  const items = document.querySelectorAll('.carousel-item-custom');
+  const indicators = document.querySelectorAll('.indicator');
+  if (!items.length) return;
+  
+  items[carouselIndex].classList.remove('active');
+  indicators[carouselIndex]?.classList.remove('active');
+  
+  carouselIndex = (carouselIndex - 1 + items.length) % items.length;
+  
+  items[carouselIndex].classList.add('active');
+  indicators[carouselIndex]?.classList.add('active');
+}
+
+function goToSlide(index) {
+  const items = document.querySelectorAll('.carousel-item-custom');
+  const indicators = document.querySelectorAll('.indicator');
+  if (!items.length) return;
+  
+  items[carouselIndex].classList.remove('active');
+  indicators[carouselIndex]?.classList.remove('active');
+  
+  carouselIndex = index;
+  
+  items[carouselIndex].classList.add('active');
+  indicators[carouselIndex]?.classList.add('active');
+  
+  clearInterval(carouselInterval);
+  startCarousel();
+}
+
+// EVENTOS
 function cambiarCategoria(cat) {
   categoriaActual = cat;
   paginaActual = 1;
+  
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.cat === cat);
   });
-  document.getElementById('carouselSection').style.display = cat === 'Todas' ? 'block' : 'none';
-  gtag('event', 'category_change', {
-    'event_category': 'engagement',
-    'event_label': cat
-  });
+  
+  document.getElementById('sectionTitle').textContent = 
+    cat === 'Todas' ? '📰 Últimas Noticias' : cat;
+  
+  document.querySelector('.carousel-section').style.display = 
+    cat === 'Todas' ? 'block' : 'none';
+  
   renderizarNoticias();
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
-function getNoticiaUrl(n) {
-  // Usar siempre noticia.html con query params - más confiable con Vercel static
-  return `/noticia.html?id=${n.id}${n.slug ? '&slug=' + encodeURIComponent(n.slug) : ''}`;
-}
-function abrirNoticia(id, event) {
-  const n = noticias.find(x => x.id === id);
-  if (!n) {
-    // Si no está en memoria aún, navegar directamente
-    window.location.href = `/noticia.html?id=${id}`;
-    return;
-  }
-  gtag('event', 'article_open', {
-    'event_category': 'engagement',
-    'event_label': n.categoria,
-    'value': n.premium ? 1 : 0
-  });
-  if (n.premium && !esUsuarioPremium) {
-    mostrarPremium();
-    return;
-  }
-  // Navegar a la página de la noticia
-  window.location.href = getNoticiaUrl(n);
-}
-function cerrarModal() {
-  document.getElementById('newsModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function mostrarPremium() {
-  document.getElementById('premiumModal').classList.add('active');
-  document.body.style.overflow = 'hidden';
-  gtag('event', 'premium_modal_open', {
-    'event_category': 'monetization',
-    'event_label': 'premium_cta'
-  });
-}
-function cerrarPremiumModal() {
-  document.getElementById('premiumModal').classList.remove('active');
-  document.body.style.overflow = '';
-}
-function pagarPayPal(plan) {
-  const planId = plan === 'anual' ? 'P-ANNUAL_PLAN_ID' : 'P-MONTHLY_PLAN_ID';
-  const planLabel = plan === 'anual' ? 'plan_anual' : 'plan_mensual';
 
-  gtag('event', 'premium_click', {event_category: 'monetization', event_label: planLabel});
-
-  // Render PayPal Smart Button
-  paypal.Buttons({
-    createSubscription: (data, actions) => {
-      return actions.subscription.create({
-        'plan_id': planId
-      });
-    },
-    onApprove: (data, actions) => {
-      guardarSuscripcion(data.subscriptionID, plan);
-      alert('¡Suscripción activada! Recarga la página.');
-      document.getElementById('premiumModal').classList.remove('active');
-      document.body.style.overflow = '';
-    },
-    onError: (err) => {
-      console.error('PayPal error:', err);
-      alert('Ocurrió un error con la suscripción PayPal. Intenta de nuevo.');
-    }
-  }).render('#paypal-button-container');
-}
-
-async function guardarSuscripcion(subscriptionId, plan) {
-  try {
-    if (!db) return;
-    const now = new Date();
-    const validUntil = new Date(now);
-    validUntil.setMonth(validUntil.getMonth() + (plan === 'anual' ? 12 : 1));
-
-    const data = {
-      subscriptionId,
-      plan,
-      createdAt: now,
-      validUntil,
-      status: 'active'
-    };
-
-    const { doc, setDoc } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js').then(m => ({
-      doc: m.doc,
-      setDoc: m.setDoc
-    }));
-
-    await setDoc(doc(db, 'suscripciones', subscriptionId), data);
-    localStorage.setItem('premium_valid_until', validUntil.toISOString());
-    esUsuarioPremium = true;
-  } catch (e) {
-    console.error('Error guardando suscripción en Firestore:', e);
-  }
-}
 function cargarMas() {
   paginaActual++;
   renderizarNoticias();
-  gtag('event', 'load_more', {
-    'event_category': 'engagement',
-    'event_label': 'page_' + paginaActual
+}
+
+function initEventListeners() {
+  // Navegación
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => cambiarCategoria(btn.dataset.cat));
   });
-}
-function compartirNoticia(plataforma, noticiaId) {
-  const n = noticias.find(x => x.id === noticiaId);
-  if (!n) return;
-  const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-  const url = n.slug ? (`${window.location.origin}/noticia/` + n.slug) : (`${window.location.origin}/noticia.html?id=` + n.id);
-  gtag('event', 'share', {
-    'method': plataforma,
-    'content_type': 'article',
-    'item_id': noticiaId
-  });
-  switch(plataforma) {
-    case 'facebook':
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-      break;
-    case 'twitter':
-      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(titulo)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
-      break;
-    case 'whatsapp':
-      const resumenWA = (n.resumen || n.contenido || '').substring(0, 300);
-      const ultimoPuntoWA = resumenWA.lastIndexOf('.');
-      const resumenCortoWA = ultimoPuntoWA > 80 ? resumenWA.substring(0, ultimoPuntoWA + 1) : resumenWA;
-      window.open(`https://wa.me/?text=${encodeURIComponent(titulo + '\n\n' + resumenCortoWA + '\n\n📲 Más detalles: ' + url)}`, '_blank');
-      break;
-  }
-}
-function shareFacebook() {
-  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-  gtag('event', 'share', {method: 'facebook'});
-}
-function shareTwitter() {
-  const text = encodeURIComponent(document.getElementById('modalTitle').textContent + ' - Nicaragua Informate');
-  window.open(`https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-  gtag('event', 'share', {method: 'twitter'});
-}
-function shareWhatsApp() {
-  const n = window._noticiaModal;
-  const titulo = n ? escapeHtml(utils.capitalize(n.titulo || '')) : document.getElementById('modalTitle').textContent;
-  const url = n?.slug ? `${window.location.origin}/noticia/${n.slug}` : window.location.href;
-  const resumenCompleto = n ? (n.resumen || n.contenido || '') : '';
-  let resumen = resumenCompleto.substring(0, 300);
-  const ultimoPunto = resumen.lastIndexOf('.');
-  if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
-  const text = encodeURIComponent(`${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`);
-  window.open(`https://wa.me/?text=${text}`, '_blank');
-  gtag('event', 'share', {method: 'whatsapp'});
-}
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(() => {
-    showToast('¡Enlace copiado!');
-    gtag('event', 'share', {method: 'copy_link'});
-  });
-}
-function sharePage() {
-  if (navigator.share) {
-    navigator.share({
-      title: 'Nicaragua Informate',
-      text: 'Noticias de Nicaragua al momento',
-      url: window.location.href
-    });
-    gtag('event', 'share', {method: 'native'});
-  } else {
-    shareFacebook();
-  }
-}
-const radioAudio = document.getElementById('radioAudio');
-let radioActiva = false;
-let radioReintento = null;
-
-function actualizarRadioTexto() {
-  const sel = document.getElementById('radioSelect');
-  const texto = sel.value ? `Estación: ${sel.options[sel.selectedIndex].text}` : 'Estación: ninguna';
-  document.getElementById('radioCurrentStation').textContent = texto;
-}
-
-function iniciarRadio() {
-  const sel = document.getElementById('radioSelect');
-  if (!sel.value) {
-    alert('Selecciona una emisora antes de reproducir.');
-    return;
-  }
-  if (radioReintento) {
-    clearTimeout(radioReintento);
-    radioReintento = null;
-  }
-
-  radioAudio.preload = 'auto';
-  radioAudio.src = sel.value;
-  radioAudio.load();
-  radioAudio.play().then(() => {
-    radioActiva = true;
-    document.getElementById('radioIcon').className = 'fas fa-pause';
-    actualizarRadioTexto();
-    document.getElementById('radioLatencyInfo').textContent = 'Reproduciendo en vivo (con latencia de stream). Si ves retraso, prueba otra emisora.';
-    gtag('event', 'radio_play', {
-      event_category: 'radio',
-      event_label: sel.options[sel.selectedIndex].text
-    });
-  }).catch((err) => {
-    console.log('Error de reproducción, reintentando... ', err);
-    document.getElementById('radioLatencyInfo').textContent = 'Error de conexión. Reintentando...';
-    scheduleReintento();
-  });
-}
-
-function detenerRadio() {
-  if (radioReintento) {
-    clearTimeout(radioReintento);
-    radioReintento = null;
-  }
-  radioAudio.pause();
-  radioActiva = false;
-  document.getElementById('radioIcon').className = 'fas fa-play';
-  gtag('event', 'radio_stop', {event_category: 'radio'});
-}
-
-function toggleRadio() {
-  if (radioActiva) {
-    detenerRadio();
-  } else {
-    iniciarRadio();
-  }
-}
-
-function scheduleReintento() {
-  if (radioReintento) return;
-  radioReintento = setTimeout(() => {
-    radioReintento = null;
-    if (!navigator.onLine) {
-      scheduleReintento();
-      return;
-    }
-    if (radioActiva || document.getElementById('radioSelect').value) {
-      iniciarRadio();
-    }
-  }, 5000);
-}
-
-const lowLatencyStreams = {
-  'https://stream.zenolive.com/axr92qawesmtv': 'https://stream.zeno.fm/axr92qawesmtv',
-  'https://online.radionicaragua.com.ni/stream.mp3': 'https://radionicaragua.stream.publica.io/radio.mp3',
-  'https://edge..listen2myradio.com/live.mp3?type=.mp3': 'https://stream.zeno.fm/7f7pj2jtpazuv',
-  'https://stream.zeno.fm/53gyb6d8gs0uv': 'https://edge.zeno.fm/s2b2cd7m9duvv',
-  'https://stream.zeno.fm/h0x2jp7nrtzuv': 'https://edge.zeno.fm/jk873y07k7quv',
-  'https://stream.zeno.fm/vtxcp1k7c7quv': 'https://edge.zeno.fm/xf4b2b18v8quv'
-};
-
-function activarModoBajaLatencia() {
-  const sel = document.getElementById('radioSelect');
-  if (!sel.value) {
-    alert('Selecciona primero una emisora antes de activar el modo baja latencia.');
-    return;
-  }
-
-  const lowLat = lowLatencyStreams[sel.value];
-  if (!lowLat) {
-    document.getElementById('radioLatencyInfo').textContent = 'No hay stream de baja latencia disponible para esta emisora.';
-    return;
-  }
-
-  sel.value = lowLat;
-  document.getElementById('radioLatencyInfo').textContent = 'Modo baja latencia activo. Reproduciendo estación más rápida...';
-  if (radioActiva) {
-    iniciarRadio();
-  } else {
-    iniciarRadio();
-  }
-}
-
-function cambiarRadio() {
-  const sel = document.getElementById('radioSelect');
-  actualizarRadioTexto();
-  if (!sel.value) {
-    detenerRadio();
-    return;
-  }
-  if (radioActiva) {
-    iniciarRadio();
-  }
-}
-
-radioAudio.addEventListener('error', () => {
-  console.log('audio error - reintentando señal');
-  scheduleReintento();
-});
-
-radioAudio.addEventListener('stalled', () => {
-  console.log('audio stalled - reintentando');
-  scheduleReintento();
-});
-
-window.addEventListener('online', () => {
-  console.log('online event - reintentando radio');
-  if (!radioActiva && document.getElementById('radioSelect').value) {
-    iniciarRadio();
-  }
-});
-
-window.addEventListener('offline', () => {
-  console.log('offline event - pausa temporal');
-  if (radioActiva) {
-    radioAudio.pause();
-  }
-});
-function suscribirNewsletter(e) {
-  e.preventDefault();
-  const email = e.target.querySelector('input[type="email"]').value;
-  alert('¡Gracias por suscribirte! Revisa tu correo para confirmar.');
-  gtag('event', 'newsletter_signup', {
-    event_category: 'conversion',
-    event_label: 'sidebar_form'
-  });
-  e.target.reset();
-}
-function guardarParaDespues(id, btn) {
-  let guardadas = getGuardadas();
-  const index = guardadas.indexOf(id);
-  if (index > -1) {
-    guardadas.splice(index, 1);
-    btn.innerHTML = '🔖';
-    btn.style.opacity = '0.5';
-    showToast('Eliminado de guardados');
-  } else {
-    guardadas.push(id);
-    btn.innerHTML = '🔴';
-    btn.style.opacity = '1';
-    showToast('📖 Guardado para leer después');
-  }
-  localStorage.setItem('noticias_guardadas', JSON.stringify(guardadas));
-}
-function showToast(message) {
-  let toast = document.getElementById('toast');
-  toast.textContent = message;
-  toast.style.transform = 'translateX(-50%) translateY(0)';
-  setTimeout(() => {
-    toast.style.transform = 'translateX(-50%) translateY(-100px)';
-  }, 3000);
-}
-function initReloj() {
-  function actualizar() {
-    const ahora = new Date();
-    document.getElementById('hora').textContent = ahora.toLocaleTimeString('es-NI', { 
-      hour: '2-digit', 
-      minute: '2-digit' 
-    });
-  }
-  actualizar();
-  setInterval(actualizar, 1000);
-}
-function initClima() {
-  const ciudades = ['Managua: 32°C', 'León: 35°C', 'Granada: 31°C'];
-  let idx = 0;
-  document.getElementById('clima').textContent = '🌤️ ' + ciudades[0];
-  setInterval(() => {
-    idx = (idx + 1) % ciudades.length;
-    document.getElementById('clima').textContent = '🌤️ ' + ciudades[idx];
-  }, 5000);
-}
-function initBusqueda() {
+  
+  // Búsqueda
   const input = document.getElementById('searchInput');
   const resultados = document.getElementById('searchResults');
-  if (!input || !resultados) return;
+  
   let debounceTimer;
-  input.addEventListener('input', (e) => {
+  input?.addEventListener('input', (e) => {
     clearTimeout(debounceTimer);
     const query = e.target.value.toLowerCase().trim();
+    
     if (!query) {
       resultados.style.display = 'none';
       return;
     }
+    
     debounceTimer = setTimeout(() => {
       const matches = noticias.filter(n => 
-        (n.titulo || '').toLowerCase().includes(query) ||
-        (n.resumen || '').toLowerCase().includes(query)
+        (n.titulo || '').toLowerCase().includes(query)
       ).slice(0, 5);
+      
       if (!matches.length) {
-        resultados.innerHTML = '<div style="padding:16px;color:#64748B;text-align:center;">Sin resultados</div>';
+        resultados.innerHTML = '<div style="padding:16px;color:#64748b;">Sin resultados</div>';
       } else {
-        resultados.innerHTML = matches.map(n => {
-          const url = getNoticiaUrl(n);
-          return `
-          <a href="${url}" onclick="this.parentElement.style.display='none'; document.getElementById('searchInput').value='';" 
-             style="display:block;padding:12px 16px;border-bottom:1px solid var(--border-color);cursor:pointer;transition:background 0.2s;text-decoration:none;"
-             onmouseover="this.style.background='var(--surface-light)'" 
-             onmouseout="this.style.background='white'">
-            <div style="font-weight:600;font-size:13px;color:var(--text-primary);">${escapeHtml(n.titulo)}</div>
-            <div style="font-size:11px;color:var(--text-secondary);text-transform:uppercase;">${escapeHtml(n.categoria)}</div>
+        resultados.innerHTML = matches.map(n => `
+          <a href="noticia.html?id=${n.id}" style="display:block;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;" 
+             onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+            <div style="font-weight:600;font-size:13px;color:var(--text-primary);">${utils.escapeHtml(n.titulo)}</div>
+            <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">${n.categoria}</div>
           </a>
-        `}).join('');
+        `).join('');
       }
       resultados.style.display = 'block';
-    }, 300);
+    }, 200);
   });
+  
   document.addEventListener('click', (e) => {
-    if (!input.contains(e.target) && !resultados.contains(e.target)) {
+    if (!input?.contains(e.target) && !resultados?.contains(e.target)) {
       resultados.style.display = 'none';
     }
   });
 }
-function initEventListeners() {
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.addEventListener('click', () => cambiarCategoria(btn.dataset.cat));
-  });
-  window.addEventListener('scroll', () => {
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 400);
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      cerrarModal();
-      cerrarPremiumModal();
-    }
-  });
-  const radioPlayer = document.getElementById('radioPlayer');
-  const radioFloatBtn = document.getElementById('radioFloatBtn');
-  const observer = new MutationObserver(() => {
-    radioFloatBtn.classList.toggle('hidden', radioPlayer.classList.contains('active'));
-  });
-  observer.observe(radioPlayer, { attributes: true, attributeFilter: ['class'] });
-}
-function initAds() {
-  // 1. Verificar si hay bloqueador
-  if (window.canRunAds === undefined) {
-    console.log('AdBlock detectado - mostrando mensaje alternativo');
-    document.querySelectorAll('.ad-slot').forEach(slot => {
-      slot.innerHTML = `
-        <div style="padding:20px;text-align:center;background:#f8fafc;">
-          <p>📢 Apoya nuestro periodismo</p>
-          <button onclick="mostrarPremium()" style="padding:8px 16px;background:var(--premium-gold);color:white;border:none;border-radius:6px;cursor:pointer;">
-            Ver suscripción Premium
-          </button>
-        </div>`;
-    });
-    return;
-  }
 
-  // 2. Cargar anuncios solo cuando son visibles (Lazy loading)
-  const adSlots = document.querySelectorAll('.adsbygoogle');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !entry.target.getAttribute('data-ad-loaded')) {
-        try {
-          (adsbygoogle = window.adsbygoogle || []).push({});
-          entry.target.setAttribute('data-ad-slot', generateUniqueSlotId()); // IDs únicos
-          entry.target.setAttribute('data-ad-loaded', 'true');
-        } catch(e) {
-          console.error('Error cargando anuncio:', e);
-        }
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { rootMargin: '100px' });
-
-  adSlots.forEach(slot => observer.observe(slot));
+function suscribirNewsletter(e) {
+  e.preventDefault();
+  alert('¡Gracias por suscribirte! Pronto recibirás nuestras actualizaciones.');
+  e.target.reset();
 }
 
-// Generar IDs únicos para cada slot
-function generateUniqueSlotId() {
-  return 'slot-' + Math.random().toString(36).substr(2, 9);
-}
-function initStickyCTA() {
-  setTimeout(() => {
-    document.getElementById('stickyCta').classList.add('visible');
-  }, 10000);
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    const stickyCta = document.getElementById('stickyCta');
-    if (currentScroll > lastScroll && currentScroll > 500) {
-      stickyCta.classList.remove('visible');
-    }
-    lastScroll = currentScroll;
-  });
-}
 document.addEventListener('DOMContentLoaded', init);
 </script>
 </body>

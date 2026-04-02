@@ -337,10 +337,10 @@ body.dark-theme .skeleton-card {
 }
 .carousel-custom {
   position: relative;
-  border-radius: 16px;
+  border-radius: 8px;
   overflow: hidden;
   background: var(--brand-primary);
-  height: 450px;
+  height: 480px;
   box-shadow: var(--shadow-lg);
 }
 .carousel-inner-custom {
@@ -348,7 +348,7 @@ body.dark-theme .skeleton-card {
   position: relative;
 }
 
-/* REPARACIÓN TOTAL DEL CARRUSEL */
+/* DISEÑO PROFESIONAL - ESTILO ELITE */
 .carousel-item-custom {
   position: absolute;
   inset: 0;
@@ -356,21 +356,23 @@ body.dark-theme .skeleton-card {
   transition: opacity 0.6s ease;
   display: flex !important;
   flex-direction: column !important;
-  height: 450px !important;
-  background-color: #000;
-  overflow: hidden;
+  height: 480px !important;
+  background-color: #000 !important;
+  border-radius: 8px;
+  overflow: hidden !important;
+  border: 1px solid #333;
   text-decoration: none;
   color: inherit;
-  border-radius: 16px;
 }
 .carousel-item-custom.active { opacity: 1; }
 
-/* Imagen con altura FIJA en píxeles */
+/* Imagen con espacio generoso */
 .carousel-item-custom img {
   width: 100% !important;
-  height: 250px !important;
+  height: 280px !important;
   object-fit: cover !important;
-  object-position: center 20% !important;
+  object-position: center 15% !important;
+  border-bottom: 4px solid #e31e24;
   display: block !important;
   transition: transform 0.6s ease;
 }
@@ -408,41 +410,37 @@ body.dark-theme .skeleton-card {
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
-/* Texto con altura FIJA en píxeles */
+/* Área de texto con fondo oscuro profundo */
 .carousel-caption-custom {
   height: 200px !important;
   background: #1a1a1a !important;
-  padding: 15px 20px !important;
+  padding: 20px 25px !important;
+  position: relative !important;
   display: flex !important;
   flex-direction: column !important;
   justify-content: flex-start !important;
-  border-top: 3px solid #e31e24;
   color: white;
   z-index: 10;
 }
 .carousel-badge {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
+  color: #e31e24;
   font-size: 11px;
   font-weight: 800;
   text-transform: uppercase;
-  margin-bottom: 12px;
+  margin-bottom: 8px;
+  display: block;
   letter-spacing: 0.8px;
-  background: var(--brand-accent);
-  z-index: 10;
-  width: fit-content;
 }
-/* Letra GRANDE en el Titular */
+/* Tipografía de impacto */
 .carousel-caption-custom h3 {
-  font-size: 1.6rem !important;
+  font-family: 'Playfair Display', serif !important;
+  font-size: 1.8rem !important;
   line-height: 1.2 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
   margin: 0 !important;
-  color: #fff !important;
-  font-weight: 800 !important;
-  font-family: 'Playfair Display', serif;
+  letter-spacing: -0.3px;
   text-transform: uppercase;
-  letter-spacing: -0.5px;
 }
 .carousel-controls {
   position: absolute;
@@ -1083,17 +1081,17 @@ body.dark-theme .skeleton-card {
 @media (max-width: 640px) {
   .topbar-content { flex-direction: column; gap: 12px; }
   .search-wrapper { width: 100%; }
-  .carousel-custom { height: 400px !important; }
-  .carousel-item-custom { height: 400px !important; }
+  .carousel-custom { height: 420px !important; }
+  .carousel-item-custom { height: 420px !important; }
   .carousel-item-custom img {
-    height: 220px !important;
+    height: 240px !important;
   }
   .carousel-caption-custom { 
     height: 180px !important;
-    padding: 12px 15px !important;
+    padding: 15px 18px !important;
   }
   .carousel-caption-custom h3 { 
-    font-size: 1.3rem !important;
+    font-size: 1.4rem !important;
     line-height: 1.2;
   }
   .news-card { grid-template-columns: 1fr; }

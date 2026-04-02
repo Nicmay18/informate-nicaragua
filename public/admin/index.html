@@ -1244,7 +1244,7 @@
     // ==========================================
     const CONFIG = {
       SITE_URL: 'https://nicaraguainformate.com',
-      API_BASE: 'https://informate-nicaragua.vercel.app'
+      API_BASE: 'https://nicaraguainformate.com'
     };
 
     // ==========================================
@@ -1399,7 +1399,7 @@
         // Fallback temporal para desarrollo
         console.warn('API auth no disponible, usando fallback:', err.message);
         
-        // TEMPORAL: Validación local (eliminar cuando API funcione)
+        // TEMPORAL: Validación local
         if (username === 'admin@nicaraguainformate.com' && password === 'NicaInfo2026#') {
           document.getElementById('loginScreen').style.display = 'none';
           document.getElementById('dashboard').classList.add('active');
@@ -1669,16 +1669,14 @@
         showToast('success', 'IA lista', 'Noticia redactada correctamente');
 
       } catch (err) {
-        status.textContent = '❌ Error';
+        status.textContent = '❌ ' + err.message;
         status.style.color = '#f87171';
-        showToast('error', 'Error IA', err.message);
+        showToast('error', 'Error IA', err.message, 8000);
         
-        // Plantilla fallback
-        if (confirm('¿Usar plantilla manual?')) {
-          const plantilla = `Managua, Nicaragua. ${new Date().toLocaleDateString('es-NI', {day:'numeric', month:'long', year:'numeric'})} — ${titulo}\n\n[Desarrollo de la noticia]\n\n[Contexto adicional]\n\n[Conclusión]`;
-          document.getElementById('contenido').value = plantilla;
-          contarPalabras();
-        }
+        // Plantilla fallback automática sin confirm
+        const plantilla = `Managua, Nicaragua. ${new Date().toLocaleDateString('es-NI', {day:'numeric', month:'long', year:'numeric'})} — ${titulo}\n\n[Desarrollo de la noticia]\n\n[Contexto adicional]\n\n[Conclusión]`;
+        document.getElementById('contenido').value = plantilla;
+        contarPalabras();
       } finally {
         btn.disabled = false;
         setTimeout(() => {
@@ -1942,9 +1940,10 @@
       const postsRedes = noticias.filter(n => n.publicadoEn && (n.publicadoEn.telegram || n.publicadoEn.facebook1 || n.publicadoEn.facebook2)).length;
       document.getElementById('statRedes').textContent = postsRedes;
       
-      ['Sucesos', 'Nacionales', 'Cultura', 'Espectaculos', 'Deportes', 'Tecnologia', 'Internacionales'].forEach(cat => {
+      ['Sucesos', 'Nacionales', 'Cultura', 'Espectáculos', 'Deportes', 'Tecnología', 'Internacionales'].forEach(cat => {
         const count = noticias.filter(n => n?.categoria === cat).length;
-        const el = document.getElementById('count' + cat);
+        const key = cat.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z]/g, '');
+        const el = document.getElementById('count' + key);
         if (el) el.textContent = `${count} noticias`;
       });
       
@@ -2216,7 +2215,7 @@
     // ==========================================
     function mostrarFormatoWhatsApp(noticia) {
       const url = noticia.slug
-        ? `${CONFIG.SITE_URL}/noticia/${noticia.slug}`
+        ? `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}&slug=${encodeURIComponent(noticia.slug)}`
         : `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
 
       const titulo = (noticia.titulo || '').trim();

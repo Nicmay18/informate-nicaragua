@@ -119,6 +119,44 @@ body.dark-theme .skeleton-card {
   border-color: var(--brand-accent);
 }
 
+/* BARRA DE CLIMA */
+.clima-container {
+  background: #1a1a1a;
+  color: #fff;
+  padding: 8px 0;
+  font-size: 13px;
+  overflow: hidden;
+  border-bottom: 2px solid #e31e24;
+}
+.clima-scroll {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-around;
+  white-space: nowrap;
+}
+.ciudad-clima {
+  margin: 0 15px;
+  font-weight: bold;
+}
+@media (max-width: 768px) {
+  .clima-scroll {
+    padding: 0 16px;
+    justify-content: flex-start;
+    gap: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .clima-scroll::-webkit-scrollbar {
+    display: none;
+  }
+  .ciudad-clima {
+    font-size: 12px;
+    margin: 0 10px;
+  }
+}
+
 /* HEADER LIMPIO */
 .topbar { 
   background: var(--surface); 
@@ -1039,6 +1077,17 @@ body.dark-theme .skeleton-card {
   </div>
 </header>
 
+<!-- BARRA DE CLIMA -->
+<div class="clima-container">
+  <div class="clima-scroll">
+    <span class="ciudad-clima">📍 Managua: <span id="temp-managua">--°C</span></span>
+    <span class="ciudad-clima">📍 León: <span id="temp-leon">--°C</span></span>
+    <span class="ciudad-clima">📍 Estelí: <span id="temp-esteli">--°C</span></span>
+    <span class="ciudad-clima">📍 Rivas: <span id="temp-rivas">--°C</span></span>
+    <span class="ciudad-clima">📍 Bluefields: <span id="temp-bluefields">--°C</span></span>
+  </div>
+</div>
+
 <nav class="menu-nav">
   <div class="menu-content">
     <button class="menu-btn active" data-cat="Todas">🔥 Última hora</button>
@@ -1272,6 +1321,7 @@ const utils = {
 // INICIALIZACIÓN
 function init() {
   initReloj();
+  initClima();
   initFirebase();
   initEventListeners();
   
@@ -1289,6 +1339,24 @@ function initReloj() {
   };
   update();
   setInterval(update, 60000);
+}
+
+// CLIMA DE NICARAGUA
+function initClima() {
+  // Temperaturas promedio actuales de Nicaragua
+  const temperaturas = {
+    managua: '32°C',
+    leon: '34°C',
+    esteli: '26°C',
+    rivas: '30°C',
+    bluefields: '28°C'
+  };
+  
+  document.getElementById('temp-managua').textContent = temperaturas.managua;
+  document.getElementById('temp-leon').textContent = temperaturas.leon;
+  document.getElementById('temp-esteli').textContent = temperaturas.esteli;
+  document.getElementById('temp-rivas').textContent = temperaturas.rivas;
+  document.getElementById('temp-bluefields').textContent = temperaturas.bluefields;
 }
 
 // FIREBASE OPTIMIZADO

@@ -10,7 +10,7 @@ export default async function handler(req, res) {
   if (!titulo) return res.status(400).json({ error: 'Falta el titular' });
 
   const GEMINI_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_KEY) return res.status(500).json({ error: 'API key no configurada' });
+  if (!GEMINI_KEY) return res.status(500).json({ error: 'GEMINI_API_KEY no configurada en Vercel' });
 
   const prompt = `Eres un periodista profesional de Nicaragua Informate. Redacta una noticia completa en español, estilo BBC/CNN en Español, sobre: "${titulo}". Categoría: ${categoria || 'General'}.
 
@@ -34,10 +34,10 @@ Devuelve SOLO el contenido, sin título ni encabezados.`;
     });
 
     const data = await resp.json();
-    if (!resp.ok) throw new Error(data.error?.message || 'Error en Gemini API');
+    if (!resp.ok) throw new Error(data.error?.message || `Gemini status ${resp.status}`);
 
     const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!texto) throw new Error('Respuesta vacía de Gemini');
+    if (!texto) throw new Error('Respuesta vacia: ' + JSON.stringify(data).substring(0, 200));
 
     return res.status(200).json({
       success: true,
@@ -46,6 +46,6 @@ Devuelve SOLO el contenido, sin título ni encabezados.`;
     });
 
   } catch (error) {
-    return res.status(500).json({ error: 'Error al generar contenido', details: error.message });
+    return res.status(500).json({ error: error.message });
   }
 }

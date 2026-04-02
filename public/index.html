@@ -871,31 +871,33 @@ body.dark-theme .skeleton-card {
 
 /* FOOTER - Estilos inline en el HTML */
 
-/* REPRODUCTOR DE RADIO FLOTANTE */
+/* REPRODUCTOR DE RADIO FLOTANTE - MEJORADO */
 .radio-player {
   position: fixed;
   bottom: 80px;
   right: 20px;
-  background: var(--brand-primary);
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
   color: white;
   padding: 16px 20px;
   border-radius: 50px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
   z-index: 999;
   display: flex;
   align-items: center;
   gap: 12px;
   transition: all 0.3s;
   cursor: pointer;
-  min-width: 200px;
+  min-width: 240px;
+  border: 2px solid rgba(255,255,255,0.1);
 }
 .radio-player:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  border-color: rgba(255,255,255,0.2);
 }
 .radio-icon {
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   background: var(--brand-accent);
   border-radius: 50%;
   display: flex;
@@ -903,16 +905,38 @@ body.dark-theme .skeleton-card {
   justify-content: center;
   font-size: 18px;
   flex-shrink: 0;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+}
+.radio-icon:hover {
+  transform: scale(1.1);
+  background: #b91c1c;
 }
 .radio-icon.playing {
   animation: pulse 2s infinite;
+  background: #10b981;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
+}
+.radio-icon.loading {
+  animation: spin 1s linear infinite;
 }
 @keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.8);
+  }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 .radio-info {
   flex: 1;
+  min-width: 0;
 }
 .radio-station {
   font-size: 14px;
@@ -929,14 +953,21 @@ body.dark-theme .skeleton-card {
   outline: none;
   margin-bottom: 2px;
   width: 100%;
+  padding: 2px 0;
+}
+#radioSelector:hover {
+  opacity: 0.9;
 }
 #radioSelector option {
   background: var(--brand-primary);
   color: white;
+  padding: 8px;
 }
 .radio-status {
   font-size: 11px;
-  opacity: 0.8;
+  opacity: 0.9;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
 /* RESPONSIVE */
@@ -946,6 +977,22 @@ body.dark-theme .skeleton-card {
     right: 10px;
     left: 10px;
     min-width: auto;
+    border-radius: 16px;
+    padding: 12px 16px;
+  }
+  .radio-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  #radioSelector {
+    font-size: 13px;
+  }
+  .radio-status {
+    font-size: 10px;
+  }
+}
+
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .main-wrapper { grid-template-columns: 1fr; }
@@ -1082,18 +1129,18 @@ body.dark-theme .skeleton-card {
   <button class="close-sticky" onclick="cerrarCta()" aria-label="Cerrar">✕</button>
 </div>
 
-<!-- REPRODUCTOR DE RADIO FLOTANTE -->
+<!-- REPRODUCTOR DE RADIO FLOTANTE - 5 RADIOS PRINCIPALES -->
 <div class="radio-player" id="radioPlayer">
   <div class="radio-icon" id="radioIcon">
     <i class="fas fa-play"></i>
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://s5.mexside.net:7048/stream">Radio Ya</option>
-      <option value="https://stream.radiojar.com/8wqtdg30k8quv">La Primerísima</option>
-      <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">Viva FM</option>
-      <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">La Pachanguera</option>
-      <option value="https://stream.zeno.fm/nqhxqhx2gg0uv">Futura Radio</option>
+      <option value="https://s5.mexside.net:7048/stream">🔴 Radio Ya 99.1 FM</option>
+      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima</option>
+      <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
+      <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
+      <option value="https://stream.zeno.fm/nqhxqhx2gg0uv">⚡ Futura Radio 91.3</option>
     </select>
     <div class="radio-status" id="radioStatus">Click para reproducir</div>
   </div>
@@ -1537,6 +1584,7 @@ function cerrarCta() {
 const radioPlayer = {
   audio: null,
   isPlaying: false,
+  isLoading: false,
   
   init() {
     const icon = document.getElementById('radioIcon');
@@ -1555,7 +1603,7 @@ const radioPlayer = {
       selector.addEventListener('change', () => {
         if (this.isPlaying) {
           this.stop();
-          setTimeout(() => this.play(), 100);
+          setTimeout(() => this.play(), 200);
         }
       });
       
@@ -1567,6 +1615,8 @@ const radioPlayer = {
   },
   
   toggle() {
+    if (this.isLoading) return;
+    
     if (this.isPlaying) {
       this.pause();
     } else {
@@ -1581,10 +1631,47 @@ const radioPlayer = {
     // Detener audio anterior si existe
     this.stop();
     
+    // Mostrar estado de carga
+    this.isLoading = true;
+    this.updateStatus('Conectando...');
+    const icon = document.getElementById('radioIcon');
+    if (icon) {
+      icon.classList.add('loading');
+      icon.innerHTML = '<i class="fas fa-spinner"></i>';
+    }
+    
     // Crear nuevo audio
     this.audio = new Audio(streamUrl);
     this.audio.volume = 0.7;
     this.audio.preload = 'none';
+    
+    // Eventos del audio
+    this.audio.addEventListener('loadstart', () => {
+      this.updateStatus('Cargando...');
+    });
+    
+    this.audio.addEventListener('canplay', () => {
+      this.isLoading = false;
+      this.isPlaying = true;
+      this.updateUI();
+    });
+    
+    this.audio.addEventListener('error', (e) => {
+      console.error('Error en el stream:', e);
+      this.isLoading = false;
+      this.isPlaying = false;
+      this.updateStatus('Error - Intenta otra radio');
+      if (icon) {
+        icon.classList.remove('loading', 'playing');
+        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+      }
+      setTimeout(() => {
+        if (!this.isPlaying) {
+          icon.innerHTML = '<i class="fas fa-play"></i>';
+          this.updateStatus('Click para reproducir');
+        }
+      }, 3000);
+    });
     
     // Intentar reproducir
     const playPromise = this.audio.play();
@@ -1592,13 +1679,19 @@ const radioPlayer = {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
+          this.isLoading = false;
           this.isPlaying = true;
           this.updateUI();
         })
         .catch(err => {
-          console.error('Error reproduciendo radio:', err);
-          this.updateStatus('Error al reproducir');
+          console.error('Error reproduciendo:', err);
+          this.isLoading = false;
           this.isPlaying = false;
+          this.updateStatus('Click para reproducir');
+          if (icon) {
+            icon.classList.remove('loading');
+            icon.innerHTML = '<i class="fas fa-play"></i>';
+          }
         });
     }
   },
@@ -1608,6 +1701,7 @@ const radioPlayer = {
       this.audio.pause();
     }
     this.isPlaying = false;
+    this.isLoading = false;
     this.updateUI();
   },
   
@@ -1618,24 +1712,24 @@ const radioPlayer = {
       this.audio = null;
     }
     this.isPlaying = false;
+    this.isLoading = false;
   },
   
   updateUI() {
     const icon = document.getElementById('radioIcon');
-    const status = document.getElementById('radioStatus');
     
     if (icon) {
+      icon.classList.remove('loading');
+      
       if (this.isPlaying) {
         icon.classList.add('playing');
         icon.innerHTML = '<i class="fas fa-pause"></i>';
+        this.updateStatus('🔴 En vivo');
       } else {
         icon.classList.remove('playing');
         icon.innerHTML = '<i class="fas fa-play"></i>';
+        this.updateStatus('Click para reproducir');
       }
-    }
-    
-    if (status) {
-      status.textContent = this.isPlaying ? 'En vivo' : 'Click para reproducir';
     }
   },
   

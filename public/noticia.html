@@ -610,8 +610,12 @@
 </div>
 
 <script type="module">
+  console.log('Script iniciado');
+  console.log('Script iniciado');
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { initializeFirestore, memoryLocalCache, collection, doc, getDoc, getDocs, query, orderBy, limit, where, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  console.log('Módulos Firebase importados');
 
   const app = initializeApp({
     apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
@@ -622,9 +626,13 @@
     appId: "1:24988088146:web:d26a207508da055668ec8b"
   });
   
+  console.log('Firebase inicializado');
+  
   const db = initializeFirestore(app, { localCache: memoryLocalCache() });
   const urlParams = new URLSearchParams(window.location.search);
   const id = urlParams.get('id');
+
+  console.log('Firestore inicializado, ID de noticia:', id);
 
   // Categorías para clases CSS
   const categoryClasses = {
@@ -637,30 +645,40 @@
   };
 
   async function loadArticle() {
+    console.log('loadArticle iniciado, ID:', id);
+    
     if (!id) {
+      console.error('No hay ID en la URL');
       showError();
       return;
     }
 
     try {
+      console.log('Obteniendo documento de Firestore...');
       const docRef = doc(db, 'noticias', id);
       const docSnap = await getDoc(docRef);
       
+      console.log('Documento obtenido:', docSnap.exists());
+      
       if (!docSnap.exists()) {
+        console.error('Documento no existe');
         showError();
         return;
       }
 
       const data = { id: docSnap.id, ...docSnap.data() };
+      console.log('Datos de la noticia:', data);
       
       // Incrementar vistas (no bloqueante)
-      updateDoc(docRef, { vistas: increment(1) }).catch(() => {});
+      updateDoc(docRef, { vistas: increment(1) }).catch((err) => {
+        console.warn('Error incrementando vistas:', err);
+      });
       
       renderArticle(data);
       loadRelated(data.categoria, data.id);
       
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error cargando noticia:", error);
       showError();
     }
   }
@@ -895,7 +913,15 @@
   }
 
   // Cargar
-  loadArticle();
+  (async () => {
+    console.log('Llamando a loadArticle...');
+    try {
+      await loadArticle();
+    } catch (error) {
+      console.error('Error en loadArticle:', error);
+      showError();
+    }
+  })();
   
   // Inicializar radio player
   const radioPlayer = new RadioPlayer();

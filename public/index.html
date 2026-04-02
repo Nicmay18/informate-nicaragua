@@ -17,10 +17,6 @@
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#003366">
 
-<!-- AdSense Script -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
-        crossorigin="anonymous"></script>
-
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://nicaraguainformate.com/">
@@ -1295,7 +1291,7 @@ function initFirebase() {
           const app = initializeApp(CONFIG.FIREBASE_CONFIG);
           db = initializeFirestore(app, { localCache: memoryLocalCache() });
           
-          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(50));
+          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(20));
           onSnapshot(q, (snapshot) => {
             if (!snapshot.empty) {
               noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -1703,5 +1699,9 @@ if ('serviceWorker' in navigator) {
   });
 }
 </script>
+
+<!-- AdSense Script movido al final para no bloquear renderizado -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
+        crossorigin="anonymous"></script>
 </body>
 </html>

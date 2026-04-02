@@ -6,22 +6,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="page-title">Cargando... | Nicaragua Informate</title>
   <meta name="description" id="meta-desc" content="Noticias de Nicaragua">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+  <link rel="apple-touch-icon" href="/logo.png">
+  <meta name="apple-mobile-web-app-title" content="Informate NI">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#003366">
+  
+  <!-- AdSense Script -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
+          crossorigin="anonymous"></script>
+  
+  <!-- Open Graph / Facebook -->
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Nicaragua Informate">
+  <meta property="og:url" content="">
   <meta id="og-title" property="og:title" content="">
   <meta id="og-desc" property="og:description" content="">
   <meta id="og-image" property="og:image" content="">
   
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:site" content="@NicaraguaInfo">
+  <meta id="twitter-title" property="twitter:title" content="">
+  <meta id="twitter-desc" property="twitter:description" content="">
+  <meta id="twitter-image" property="twitter:image" content="">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/anuncios.css">
   
   <style>
     :root {
       --brand-primary: #1e293b;
       --brand-accent: #dc2626;
       --brand-secondary: #2563eb;
-      --text-primary: #0f172a;
+      --text-primary: #1a1a1a;
       --text-secondary: #475569;
       --text-muted: #64748b;
       --border: #e2e8f0;
@@ -123,11 +148,11 @@
     h1.article-title {
       font-family: var(--font-serif);
       font-size: 2.5rem;
-      font-weight: 900;
+      font-weight: 700;
       line-height: 1.2;
+      letter-spacing: -0.5px;
       color: var(--text-primary);
       margin-bottom: 24px;
-      letter-spacing: -0.02em;
     }
     
     /* META INFO */
@@ -160,10 +185,36 @@
       width: 100%;
       height: auto;
       max-height: 500px;
+      aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
+      background-color: #f0f0f0; /* Color de espera */
       object-fit: cover;
       border-radius: 12px;
       margin-bottom: 40px;
       box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+      position: relative;
+    }
+    
+    /* Contenedor con marca de agua */
+    .hero-image-wrapper {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 40px;
+    }
+    
+    /* Marca de agua en imagen principal */
+    .hero-image-wrapper::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 80px;
+      height: 80px;
+      background: url('/logo.png') no-repeat center;
+      background-size: contain;
+      opacity: 0.7;
+      z-index: 10;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
     }
     
     /* CONTENIDO */
@@ -267,11 +318,15 @@
       margin-top: 60px;
       padding-top: 40px;
       border-top: 2px solid var(--border);
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
     }
     .related-title {
       font-family: var(--font-serif);
       font-size: 24px;
       font-weight: 700;
+      letter-spacing: -0.5px;
       margin-bottom: 24px;
       display: flex;
       align-items: center;
@@ -296,10 +351,22 @@
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
       border-color: var(--brand-accent);
     }
-    .related-card img {
+    .rel-img-wrapper {
       width: 100%;
       height: 160px;
+      overflow: hidden;
+      background: #f0f0f0;
+    }
+    .rel-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 16 / 9;
+      background-color: #f0f0f0;
       object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .related-card:hover .rel-img-wrapper img {
+      transform: scale(1.05);
     }
     .related-card-body {
       padding: 16px;
@@ -308,6 +375,7 @@
       font-size: 15px;
       font-weight: 700;
       line-height: 1.4;
+      letter-spacing: -0.3px;
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -390,6 +458,65 @@
       .article-content p:first-child::first-letter {
         font-size: 2.5em;
       }
+      .radio-player {
+        bottom: 70px;
+        right: 10px;
+        left: 10px;
+        min-width: auto;
+      }
+    }
+    
+    /* REPRODUCTOR DE RADIO FLOTANTE */
+    .radio-player {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: var(--brand-primary);
+      color: white;
+      padding: 16px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      transition: all 0.3s;
+      cursor: pointer;
+      min-width: 200px;
+    }
+    .radio-player:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+    }
+    .radio-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--brand-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .radio-icon.playing {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    .radio-info {
+      flex: 1;
+    }
+    .radio-station {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .radio-status {
+      font-size: 11px;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -398,7 +525,7 @@
 <header class="header">
   <div class="header-inner">
     <a href="/" class="header-logo">
-      <img src="/logo.png" alt="Logo" onerror="this.style.display='none'">
+      <img src="/logo.png" alt="Logo" loading="eager" decoding="async" onerror="this.style.display='none'">
       <span>Nicaragua Informate</span>
     </a>
     <a href="/" class="back-btn">
@@ -430,7 +557,7 @@
       <span><i class="far fa-eye"></i> <span id="views">0</span> lecturas</span>
     </div>
 
-    <img class="hero-image" id="heroImage" src="" alt="" style="display:none;">
+    <img class="hero-image" id="heroImage" src="" alt="" loading="eager" decoding="async" style="display:none;">
     
     <div class="article-content" id="content"></div>
 
@@ -470,6 +597,17 @@
     <a href="/contacto.html">Contacto</a>
   </p>
 </footer>
+
+<!-- REPRODUCTOR DE RADIO FLOTANTE -->
+<div class="radio-player" id="radioPlayer">
+  <div class="radio-icon" id="radioIcon">
+    <i class="fas fa-broadcast-tower"></i>
+  </div>
+  <div class="radio-info">
+    <div class="radio-station">Radio Nicaragua</div>
+    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+  </div>
+</div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -533,13 +671,20 @@
     
     // Título y meta
     const titulo = n.titulo || 'Sin título';
+    const url = `https://nicaraguainformate.com/noticia.html?id=${n.id}`;
+    
     document.title = `${titulo} | Nicaragua Informate`;
     document.getElementById('page-title').textContent = document.title;
     document.getElementById('title').textContent = titulo;
     
-    // Actualizar OG tags
+    // Actualizar OG tags con URLs absolutas
     document.getElementById('og-title').content = titulo;
     document.getElementById('og-desc').content = n.resumen?.substring(0, 160) || '';
+    document.querySelector('meta[property="og:url"]').content = url;
+    
+    // Twitter tags
+    document.getElementById('twitter-title').content = titulo;
+    document.getElementById('twitter-desc').content = n.resumen?.substring(0, 160) || '';
     
     // Categoría
     const cat = n.categoria || 'Noticias';
@@ -560,13 +705,23 @@
     document.getElementById('readTime').textContent = Math.max(1, Math.ceil(palabras / 200));
     document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
     
-    // Imagen
+    // Imagen con URL absoluta
     if (n.imagen && !n.imagen.includes('facebook')) {
       const img = document.getElementById('heroImage');
-      img.src = n.imagen;
+      const imgUrl = n.imagen.startsWith('http') ? n.imagen : `https://nicaraguainformate.com${n.imagen}`;
+      
+      img.src = imgUrl;
       img.alt = titulo;
       img.style.display = 'block';
-      document.getElementById('og-image').content = n.imagen;
+      
+      // OG y Twitter images con URL absoluta
+      document.getElementById('og-image').content = imgUrl;
+      document.getElementById('twitter-image').content = imgUrl;
+    } else {
+      // Imagen por defecto
+      const defaultImg = 'https://nicaraguainformate.com/logo.png';
+      document.getElementById('og-image').content = defaultImg;
+      document.getElementById('twitter-image').content = defaultImg;
     }
     
     // Contenido (formatear párrafos)
@@ -585,40 +740,42 @@
   }
 
   async function loadRelated(categoria, excludeId) {
+    const grid = document.getElementById('relatedGrid');
     try {
-      // Buscar por categoría
-      let q = query(
-        collection(db, 'noticias'), 
-        where('categoria', '==', categoria),
-        orderBy('fecha', 'desc'),
-        limit(4)
-      );
+      const ref = collection(db, 'noticias');
       
-      let snapshot = await getDocs(q);
-      let relacionadas = snapshot.docs
+      // 1. Intentar buscar por misma categoría
+      let q = query(ref, where('categoria', '==', categoria), limit(5));
+      let snap = await getDocs(q);
+      let rel = snap.docs
         .map(d => ({id: d.id, ...d.data()}))
         .filter(n => n.id !== excludeId);
       
-      // Si no hay suficientes, buscar recientes
-      if (relacionadas.length < 3) {
-        q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(6));
-        snapshot = await getDocs(q);
-        const extras = snapshot.docs
+      // 2. Si no hay suficientes, rellenar con las más recientes (Backup)
+      if (rel.length < 3) {
+        const q2 = query(ref, orderBy('fecha', 'desc'), limit(6));
+        const snap2 = await getDocs(q2);
+        const recientes = snap2.docs
           .map(d => ({id: d.id, ...d.data()}))
-          .filter(n => n.id !== excludeId && !relacionadas.find(r => r.id === n.id));
-        relacionadas = [...relacionadas, ...extras].slice(0, 3);
+          .filter(n => n.id !== excludeId);
+        
+        // Combinar y eliminar duplicados
+        rel = [...new Map([...rel, ...recientes].map(item => [item.id, item])).values()].slice(0, 4);
       }
       
-      if (relacionadas.length === 0) return;
+      if (rel.length === 0) return;
       
+      // 3. Renderizado limpio
       document.getElementById('relatedSection').style.display = 'block';
-      document.getElementById('relatedGrid').innerHTML = relacionadas.map(n => {
+      grid.innerHTML = rel.map(n => {
         const img = n.imagen && !n.imagen.includes('facebook') 
           ? n.imagen 
           : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60';
         return `
           <a href="noticia.html?id=${n.id}" class="related-card">
-            <img src="${img}" alt="" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60'">
+            <div class="rel-img-wrapper">
+              <img src="${img}" loading="lazy" decoding="async" alt="${escapeHtml(n.titulo || '')}" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60'">
+            </div>
             <div class="related-card-body">
               <h4>${escapeHtml(n.titulo || '')}</h4>
               <span>${n.categoria || 'Noticias'}</span>
@@ -627,8 +784,8 @@
         `;
       }).join('');
       
-    } catch (e) {
-      console.error("Error cargando relacionadas:", e);
+    } catch (error) {
+      console.error("Error cargando relacionadas:", error);
     }
   }
 
@@ -650,9 +807,131 @@
       alert('Enlace copiado al portapapeles');
     });
   };
+  
+  // REPRODUCTOR DE RADIO PERSISTENTE
+  class RadioPlayer {
+    constructor() {
+      this.audio = null;
+      this.isPlaying = false;
+      this.stations = {
+        'Radio Nicaragua': 'https://stream.zeno.fm/your-radio-stream-url'
+      };
+      this.currentStation = 'Radio Nicaragua';
+      this.init();
+    }
+
+    init() {
+      const savedState = localStorage.getItem('radioState');
+      if (savedState) {
+        const state = JSON.parse(savedState);
+        this.isPlaying = state.isPlaying;
+        this.currentStation = state.station || this.currentStation;
+        
+        if (this.isPlaying) {
+          this.play();
+        }
+      }
+
+      const player = document.getElementById('radioPlayer');
+      player.addEventListener('click', () => this.toggle());
+
+      window.addEventListener('beforeunload', () => this.saveState());
+    }
+
+    toggle() {
+      if (this.isPlaying) {
+        this.pause();
+      } else {
+        this.play();
+      }
+    }
+
+    play() {
+      if (!this.audio) {
+        this.audio = new Audio(this.stations[this.currentStation]);
+        this.audio.volume = 0.7;
+      }
+
+      this.audio.play().then(() => {
+        this.isPlaying = true;
+        this.updateUI();
+        this.saveState();
+      }).catch(err => {
+        console.error('Error reproduciendo radio:', err);
+        document.getElementById('radioStatus').textContent = 'Error al reproducir';
+      });
+    }
+
+    pause() {
+      if (this.audio) {
+        this.audio.pause();
+      }
+      this.isPlaying = false;
+      this.updateUI();
+      this.saveState();
+    }
+
+    updateUI() {
+      const icon = document.getElementById('radioIcon');
+      const status = document.getElementById('radioStatus');
+      
+      if (this.isPlaying) {
+        icon.classList.add('playing');
+        icon.innerHTML = '<i class="fas fa-pause"></i>';
+        status.textContent = 'En vivo';
+      } else {
+        icon.classList.remove('playing');
+        icon.innerHTML = '<i class="fas fa-play"></i>';
+        status.textContent = 'Click para reproducir';
+      }
+    }
+
+    saveState() {
+      localStorage.setItem('radioState', JSON.stringify({
+        isPlaying: this.isPlaying,
+        station: this.currentStation
+      }));
+    }
+  }
 
   // Cargar
   loadArticle();
+  
+  // Inicializar radio player
+  const radioPlayer = new RadioPlayer();
+  
+  // Detectar cuando el lector llega al 80% del artículo y mostrar relacionadas con animación
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+  
+  // Observar la sección de relacionadas cuando se cargue
+  setTimeout(() => {
+    const relatedSection = document.getElementById('relatedSection');
+    if (relatedSection) {
+      observer.observe(relatedSection);
+    }
+  }, 1000);
+  
+  // Registrar Service Worker para PWA
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registrado'))
+        .catch(err => console.log('SW error:', err));
+    });
+  }
+  
+  // Sistema de Anuncios Inteligentes
+  const script = document.createElement('script');
+  script.src = '/js/ads/implementacion-segura.js';
+  script.defer = true;
+  document.body.appendChild(script);
 </script>
 </body>
 </html>

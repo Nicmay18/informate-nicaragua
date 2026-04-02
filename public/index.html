@@ -6,9 +6,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
+<link rel="apple-touch-icon" href="/logo.png">
+<meta name="apple-mobile-web-app-title" content="Informate NI">
+
+<!-- PWA Manifest -->
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#003366">
+
+<!-- AdSense Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
+        crossorigin="anonymous"></script>
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://nicaraguainformate.com/">
+<meta property="og:title" content="Nicaragua Informate - Noticias de Nicaragua al Instante">
+<meta property="og:description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales.">
+<meta property="og:image" content="https://nicaraguainformate.com/logo.png">
+<meta property="og:site_name" content="Nicaragua Informate">
+
+<!-- Twitter -->
+<meta property="twitter:card" content="summary_large_image">
+<meta property="twitter:url" content="https://nicaraguainformate.com/">
+<meta property="twitter:title" content="Nicaragua Informate - Noticias de Nicaragua al Instante">
+<meta property="twitter:description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales.">
+<meta property="twitter:image" content="https://nicaraguainformate.com/logo.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="/css/anuncios.css">
 <style>
 :root {
   --brand-primary: #1e293b;
@@ -16,7 +47,7 @@
   --brand-secondary: #2563eb;
   --surface: #ffffff;
   --surface-alt: #f8fafc;
-  --text-primary: #0f172a;
+  --text-primary: #1a1a1a;
   --text-secondary: #64748b;
   --border: #e2e8f0;
   --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
@@ -33,6 +64,47 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* DARK MODE */
+body.dark-theme {
+  --surface: #1a1a1a;
+  --surface-alt: #0f0f0f;
+  --text-primary: #e5e5e5;
+  --text-secondary: #a0a0a0;
+  --border: #333;
+  --brand-primary: #2a2a2a;
+}
+body.dark-theme .topbar,
+body.dark-theme .news-card,
+body.dark-theme .sidebar-box,
+body.dark-theme .breaking-card {
+  background: var(--surface);
+  border-color: var(--border);
+}
+body.dark-theme .skeleton-card {
+  background: #1a1a1a;
+}
+
+/* BOTÓN DARK MODE */
+.dark-mode-toggle {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 18px;
+}
+.dark-mode-toggle:hover {
+  background: var(--brand-accent);
+  color: white;
+  border-color: var(--brand-accent);
 }
 
 /* HEADER LIMPIO */
@@ -191,6 +263,8 @@ body {
   height: 100%;
   position: relative;
 }
+
+/* Contenedor de la imagen en el carrusel */
 .carousel-item-custom {
   position: absolute;
   inset: 0;
@@ -199,24 +273,62 @@ body {
   display: block;
   text-decoration: none;
   color: inherit;
+  aspect-ratio: 16 / 9;
+  background: #eee;
+  overflow: hidden;
+  border-radius: 16px;
 }
 .carousel-item-custom.active { opacity: 1; }
-.carousel-item-custom img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Esto arregla las imágenes */
-  object-position: center 20%;
-  transition: transform 8s ease;
-}
-.carousel-item-custom:hover img { transform: scale(1.05); }
-.carousel-caption-custom {
+
+/* El degradado para que resalten las letras blancas */
+.carousel-item-custom::after {
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
-  padding: 40px;
-  color: #fff;
+  width: 100%;
+  height: 60%; /* Cubre más de la mitad para suavizar el texto */
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  z-index: 1;
+}
+
+/* La Marca de Agua fija (No necesitas editar la foto, el código la pone) */
+.carousel-item-custom::before,
+.breaking-card .card-image::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 80px;
+  height: 80px;
+  background: url('/logo.png') no-repeat center;
+  background-size: contain;
+  opacity: 0.8;
+  z-index: 10;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+}
+.carousel-item-custom img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
+  object-fit: cover; /* No más imágenes estiradas */
+  object-position: center 20%;
+  opacity: 0.85;
+  transition: transform 8s ease, opacity 0.5s;
+}
+.carousel-item-custom:hover img { 
+  transform: scale(1.03); 
+  opacity: 1;
+}
+/* Tipografía Grande sobre la imagen */
+.carousel-caption-custom {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  color: white;
+  z-index: 5;
+  padding: 0;
 }
 .carousel-badge {
   display: inline-block;
@@ -228,15 +340,18 @@ body {
   margin-bottom: 12px;
   letter-spacing: 0.8px;
   background: var(--brand-accent);
+  z-index: 5;
 }
 .carousel-caption-custom h3 {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 1.2;
+  font-family: 'Inter', var(--font-sans);
+  font-size: 2rem;
+  font-weight: 800; /* Letra extra gruesa */
+  line-height: 1.1;
+  letter-spacing: -0.5px;
   margin: 0;
   max-width: 700px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+  text-transform: uppercase; /* Para más impacto */
 }
 .carousel-controls {
   position: absolute;
@@ -305,6 +420,7 @@ body {
   font-family: var(--font-serif);
   font-size: 24px;
   font-weight: 700;
+  letter-spacing: -0.5px;
   margin: 0 0 24px;
   padding-bottom: 12px;
   border-bottom: 3px solid var(--brand-accent);
@@ -336,10 +452,23 @@ body {
   min-height: 320px;
   overflow: hidden;
   position: relative;
+  background-color: #f0f0f0;
+}
+/* Degradado en noticia destacada */
+.breaking-card .card-image::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  z-index: 1;
 }
 .breaking-card .card-image img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
   object-fit: cover;
   transition: transform 0.6s;
 }
@@ -369,7 +498,8 @@ body {
   font-family: var(--font-serif);
   font-size: 28px;
   font-weight: 700;
-  line-height: 1.3;
+  line-height: 1.4;
+  letter-spacing: -0.5px;
   margin-bottom: 12px;
   color: var(--text-primary);
 }
@@ -401,25 +531,31 @@ body {
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--border);
+  border-bottom: 3px solid transparent;
   cursor: pointer;
   transition: all 0.3s;
   text-decoration: none;
   color: inherit;
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
 }
 .news-card:hover {
-  border-color: var(--brand-accent);
-  box-shadow: var(--shadow);
+  border-bottom-color: var(--brand-primary);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
 }
 .card-image-wrapper {
   aspect-ratio: 16/10;
   overflow: hidden;
   border-radius: 8px;
-  background: var(--surface-alt);
+  background: #f0f0f0; /* Color de espera */
 }
-.card-image-wrapper img {
+.card-image-wrapper img,
+.card-img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 9; /* Reserva el espacio exacto aunque la foto no haya cargado */
   object-fit: cover;
+  background: #f0f0f0;
   transition: transform 0.4s;
 }
 .news-card:hover .card-image-wrapper img { transform: scale(1.05); }
@@ -444,7 +580,8 @@ body {
   font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.6;
+  letter-spacing: -0.5px;
   color: var(--text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -454,7 +591,7 @@ body {
 .news-excerpt {
   font-size: 14px;
   color: var(--text-secondary);
-  line-height: 1.5;
+  line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -531,6 +668,7 @@ body {
 .trending-title {
   font-size: 14px;
   font-weight: 600;
+  letter-spacing: -0.3px;
   color: var(--text-primary);
   line-height: 1.4;
   display: -webkit-box;
@@ -586,79 +724,112 @@ body {
 /* CTA SUSCRIPCIÓN ÚNICO SUTIL */
 .premium-sticky {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: white;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background: var(--brand-primary);
+  color: white;
   padding: 16px 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-  border: 1px solid var(--border);
-  max-width: 320px;
-  z-index: 100;
-  transform: translateY(150%);
-  transition: transform 0.4s;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: bottom 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
-.premium-sticky.visible { transform: translateY(0); }
+.premium-sticky.visible { bottom: 0; }
 .premium-sticky h5 {
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin: 0;
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.premium-sticky p {
-  font-size: 13px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-}
 .premium-sticky button {
-  width: 100%;
-  padding: 10px;
+  padding: 10px 20px;
   background: var(--brand-accent);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   font-weight: 700;
   cursor: pointer;
   font-size: 13px;
+  transition: all 0.2s;
+}
+.premium-sticky button:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
 }
 .close-sticky {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   background: none;
   border: none;
-  color: var(--text-secondary);
+  color: white;
   cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
+  font-size: 20px;
+  padding: 4px 8px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.close-sticky:hover {
+  opacity: 1;
 }
 
 /* SKELETON */
 .skeleton {
-  background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  border-radius: 4px;
   background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
+  animation: 1.5s shine linear infinite;
 }
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
+@keyframes shine {
+  to { background-position-x: -200%; }
 }
-.skeleton-card {
+.skeleton-card { 
+  width: 100%; 
+  height: 300px; 
+  margin-bottom: 20px;
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 20px;
   padding: 20px;
   background: white;
   border-radius: 12px;
-  margin-bottom: 20px;
   border: 1px solid var(--border);
 }
-.skeleton-image { width: 100%; aspect-ratio: 16/10; }
-.skeleton-text { height: 16px; margin-bottom: 8px; }
-.skeleton-text.short { width: 60%; }
+.skeleton-img { 
+  width: 100%; 
+  height: 180px;
+  aspect-ratio: 16/10; 
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+  border-radius: 8px;
+}
+.skeleton-title { 
+  height: 24px; 
+  width: 80%;
+  margin-bottom: 12px; 
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+  border-radius: 4px;
+}
+.skeleton-text { 
+  height: 16px; 
+  margin-bottom: 8px; 
+  background: #eee;
+  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+  background-size: 200% 100%;
+  animation: 1.5s shine linear infinite;
+  border-radius: 4px;
+}
+.skeleton-text:last-child { width: 60%; }
 
 /* LOAD MORE */
 .load-more-container { 
@@ -741,6 +912,131 @@ body {
   text-align: center;
 }
 
+/* REPRODUCTOR DE RADIO FLOTANTE */
+.radio-player {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  background: var(--brand-primary);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 50px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.3s;
+  cursor: pointer;
+  min-width: 200px;
+}
+.radio-player:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.4);
+}
+.radio-player.expanded {
+  border-radius: 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 280px;
+}
+.radio-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--brand-accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.radio-icon.playing {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+.radio-info {
+  flex: 1;
+}
+.radio-station {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+.radio-status {
+  font-size: 11px;
+  opacity: 0.8;
+}
+.radio-controls {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  width: 100%;
+}
+.radio-btn {
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+  flex: 1;
+}
+.radio-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+.radio-btn.active {
+  background: var(--brand-accent);
+}
+.radio-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  opacity: 0.6;
+  font-size: 16px;
+  padding: 4px;
+}
+.radio-close:hover {
+  opacity: 1;
+}
+.radio-volume {
+  width: 100%;
+  margin-top: 8px;
+}
+.radio-volume input {
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255,255,255,0.3);
+  outline: none;
+  -webkit-appearance: none;
+}
+.radio-volume input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .radio-player {
+    bottom: 70px;
+    right: 10px;
+    left: 10px;
+    min-width: auto;
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .main-wrapper { grid-template-columns: 1fr; }
@@ -769,13 +1065,16 @@ body {
 <header class="topbar">
   <div class="topbar-content">
     <a href="/" class="logo">
-      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
+      <img src="/logo.png" alt="Nicaragua Informate" loading="eager" decoding="async" onerror="this.style.display='none'">
       <div>
         <div class="logo-title">Nicaragua Informate</div>
         <div class="logo-subtitle">Tu fuente de noticias confiable</div>
       </div>
     </a>
     <div class="header-meta">
+      <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Cambiar tema" title="Modo oscuro/claro">
+        <i class="fas fa-moon" id="themeIcon"></i>
+      </button>
       <div class="search-wrapper">
         <input type="text" id="searchInput" placeholder="Buscar noticias..." autocomplete="off">
         <i class="fas fa-search search-icon"></i>
@@ -817,20 +1116,28 @@ body {
     
     <div id="skeletonContainer">
       <div class="skeleton-card">
-        <div class="skeleton skeleton-image"></div>
+        <div class="skeleton-img"></div>
         <div>
-          <div class="skeleton skeleton-text" style="width: 30%; margin-bottom: 16px;"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text short"></div>
+          <div class="skeleton-title"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
         </div>
       </div>
       <div class="skeleton-card">
-        <div class="skeleton skeleton-image"></div>
+        <div class="skeleton-img"></div>
         <div>
-          <div class="skeleton skeleton-text" style="width: 30%; margin-bottom: 16px;"></div>
-          <div class="skeleton skeleton-text"></div>
-          <div class="skeleton skeleton-text"></div>
+          <div class="skeleton-title"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+        </div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-img"></div>
+        <div>
+          <div class="skeleton-title"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
         </div>
       </div>
     </div>
@@ -861,12 +1168,22 @@ body {
   </aside>
 </div>
 
-<!-- ÚNICO CTA STICKY SUTIL -->
+<!-- STICKY CTA BOTTOM (No invasivo) -->
 <div class="premium-sticky" id="premiumSticky">
-  <button class="close-sticky" onclick="this.parentElement.remove()"><i class="fas fa-times"></i></button>
-  <h5>⭐ Nicaragua Informate Premium</h5>
-  <p>Accede a contenido exclusivo sin anuncios.</p>
-  <button onclick="window.location.href='#premium'">Ver planes</button>
+  <h5>⭐ Únete a nuestra comunidad para recibir las últimas noticias</h5>
+  <button onclick="window.location.href='#premium'">Suscribirme</button>
+  <button class="close-sticky" onclick="cerrarCta()" aria-label="Cerrar">✕</button>
+</div>
+
+<!-- REPRODUCTOR DE RADIO FLOTANTE -->
+<div class="radio-player" id="radioPlayer">
+  <div class="radio-icon" id="radioIcon">
+    <i class="fas fa-broadcast-tower"></i>
+  </div>
+  <div class="radio-info">
+    <div class="radio-station">Radio Nicaragua</div>
+    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+  </div>
 </div>
 
 <footer class="footer">
@@ -1021,7 +1338,7 @@ function renderizarCarrusel() {
     const titulo = utils.escapeHtml(n.titulo || '');
     return `
       <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
-        <img src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}">
+        <img class="card-img" src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}" decoding="async">
         <div class="carousel-caption-custom">
           <span class="carousel-badge">${n.categoria || 'Noticias'}</span>
           <h3>${titulo}</h3>
@@ -1060,7 +1377,7 @@ function renderizarNoticias() {
       return `
         <a href="noticia.html?id=${n.id}" class="breaking-card">
           <div class="card-image">
-            <img src="${img}" alt="${titulo}" loading="eager">
+            <img class="card-img" src="${img}" alt="${titulo}" loading="eager" decoding="async">
           </div>
           <div class="breaking-body">
             <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
@@ -1078,7 +1395,7 @@ function renderizarNoticias() {
     return `
       <a href="noticia.html?id=${n.id}" class="news-card">
         <div class="card-image-wrapper">
-          <img src="${img}" alt="${titulo}" loading="lazy">
+          <img class="card-img" src="${img}" alt="${titulo}" loading="lazy" decoding="async">
         </div>
         <div class="card-body">
           <span class="tag">${n.categoria || 'General'}</span>
@@ -1240,7 +1557,162 @@ function suscribirNewsletter(e) {
   e.target.reset();
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// Cerrar CTA sticky
+function cerrarCta() {
+  const cta = document.getElementById('premiumSticky');
+  cta.style.display = 'none';
+  localStorage.setItem('ctaClosed', 'true');
+}
+
+// REPRODUCTOR DE RADIO PERSISTENTE
+class RadioPlayer {
+  constructor() {
+    this.audio = null;
+    this.isPlaying = false;
+    this.stations = {
+      'Radio Nicaragua': 'https://stream.zeno.fm/your-radio-stream-url', // Reemplazar con URL real
+      'Radio Corporación': 'https://stream.example.com/radio2',
+      'Radio Ya': 'https://stream.example.com/radio3'
+    };
+    this.currentStation = 'Radio Nicaragua';
+    this.init();
+  }
+
+  init() {
+    // Recuperar estado de localStorage
+    const savedState = localStorage.getItem('radioState');
+    if (savedState) {
+      const state = JSON.parse(savedState);
+      this.isPlaying = state.isPlaying;
+      this.currentStation = state.station || this.currentStation;
+      
+      if (this.isPlaying) {
+        this.play();
+      }
+    }
+
+    // Event listeners
+    const player = document.getElementById('radioPlayer');
+    player.addEventListener('click', (e) => {
+      if (e.target.closest('.radio-close')) return;
+      this.toggle();
+    });
+
+    // Guardar estado antes de salir
+    window.addEventListener('beforeunload', () => {
+      this.saveState();
+    });
+  }
+
+  toggle() {
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  }
+
+  play() {
+    if (!this.audio) {
+      this.audio = new Audio(this.stations[this.currentStation]);
+      this.audio.volume = 0.7;
+    }
+
+    this.audio.play().then(() => {
+      this.isPlaying = true;
+      this.updateUI();
+      this.saveState();
+    }).catch(err => {
+      console.error('Error reproduciendo radio:', err);
+      document.getElementById('radioStatus').textContent = 'Error al reproducir';
+    });
+  }
+
+  pause() {
+    if (this.audio) {
+      this.audio.pause();
+    }
+    this.isPlaying = false;
+    this.updateUI();
+    this.saveState();
+  }
+
+  updateUI() {
+    const icon = document.getElementById('radioIcon');
+    const status = document.getElementById('radioStatus');
+    
+    if (this.isPlaying) {
+      icon.classList.add('playing');
+      icon.innerHTML = '<i class="fas fa-pause"></i>';
+      status.textContent = 'En vivo';
+    } else {
+      icon.classList.remove('playing');
+      icon.innerHTML = '<i class="fas fa-play"></i>';
+      status.textContent = 'Click para reproducir';
+    }
+  }
+
+  saveState() {
+    localStorage.setItem('radioState', JSON.stringify({
+      isPlaying: this.isPlaying,
+      station: this.currentStation
+    }));
+  }
+}
+
+// Inicializar radio player
+let radioPlayer;
+
+// DARK MODE
+function toggleDarkMode() {
+  document.body.classList.toggle('dark-theme');
+  const isDark = document.body.classList.contains('dark-theme');
+  const icon = document.getElementById('themeIcon');
+  
+  // Cambiar icono
+  icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+  
+  // Guardar preferencia
+  localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+}
+
+// Cargar preferencia de dark mode
+function loadDarkModePreference() {
+  const darkMode = localStorage.getItem('darkMode');
+  if (darkMode === 'enabled') {
+    document.body.classList.add('dark-theme');
+    document.getElementById('themeIcon').className = 'fas fa-sun';
+  }
+  
+  // Mostrar CTA sticky después de 10 segundos si no se cerró antes
+  const ctaClosed = localStorage.getItem('ctaClosed');
+  if (!ctaClosed) {
+    setTimeout(() => {
+      document.getElementById('premiumSticky')?.classList.add('visible');
+    }, 10000);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadDarkModePreference();
+  radioPlayer = new RadioPlayer();
+  init();
+});
+
+// Registrar Service Worker para PWA
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(reg => console.log('SW registrado'))
+      .catch(err => console.log('SW error:', err));
+  });
+}
+
+// Sistema de Anuncios Inteligentes
+const script = document.createElement('script');
+script.src = '/js/ads/implementacion-segura.js';
+script.defer = true;
+document.body.appendChild(script);
 </script>
 </body>
 </html>

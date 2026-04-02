@@ -1,27 +1,24 @@
 {
-  "routes": [
-    {
-      "src": "/ads.txt",
-      "headers": {
-        "Content-Type": "text/plain; charset=utf-8"
-      }
-    },
-    {
-      "src": "/robots.txt",
-      "dest": "/public/robots.txt",
-      "headers": {
-        "Content-Type": "text/plain; charset=utf-8"
-      }
-    }
-  ],
   "rewrites": [
     { "source": "/rss.xml", "destination": "/api/rss" },
     { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/admin", "destination": "/public/admin/index.html" },
     { "source": "/admin/", "destination": "/public/admin/index.html" },
-    { "source": "/:path*", "destination": "/public/:path*" }
+    { "source": "/((?!ads\\.txt$|robots\\.txt$).*)", "destination": "/public/$1" }
   ],
   "headers": [
+    {
+      "source": "/ads.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" }
+      ]
+    },
     {
       "source": "/api/(.*)",
       "headers": [

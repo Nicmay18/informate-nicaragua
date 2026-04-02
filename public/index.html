@@ -354,11 +354,11 @@ body.dark-theme .skeleton-card {
   inset: 0;
   opacity: 0;
   transition: opacity 0.6s ease;
-  display: block;
+  display: flex;
+  flex-direction: column;
   text-decoration: none;
   color: inherit;
-  aspect-ratio: 16 / 9;
-  background: #eee;
+  background: #000;
   overflow: hidden;
   border-radius: 16px;
 }
@@ -371,8 +371,8 @@ body.dark-theme .skeleton-card {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60%; /* Cubre más de la mitad para suavizar el texto */
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  height: 40%;
+  background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, transparent 100%);
   z-index: 1;
 }
 
@@ -394,9 +394,8 @@ body.dark-theme .skeleton-card {
 .carousel-item-custom img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
-  object-fit: cover; /* No más imágenes estiradas */
-  object-position: center 20%;
+  object-fit: cover;
+  object-position: center top;
   opacity: 0.85;
   transition: transform 8s ease, opacity 0.5s;
 }
@@ -546,15 +545,15 @@ body.dark-theme .skeleton-card {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 60%;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+  height: 50%;
+  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
   z-index: 1;
 }
 .breaking-card .card-image img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
   object-fit: cover;
+  object-position: center top;
   transition: transform 0.6s;
 }
 .breaking-card:hover .card-image img { transform: scale(1.05); }
@@ -632,14 +631,14 @@ body.dark-theme .skeleton-card {
   aspect-ratio: 16/10;
   overflow: hidden;
   border-radius: 8px;
-  background: #f0f0f0; /* Color de espera */
+  background: #f0f0f0;
 }
 .card-image-wrapper img,
 .card-img {
   width: 100%;
   height: 100%;
-  aspect-ratio: 16 / 9;
   object-fit: cover;
+  object-position: center top;
   background: #f0f0f0;
   transition: transform 0.4s;
   content-visibility: auto;

@@ -1238,8 +1238,8 @@ body.dark-theme .skeleton-card {
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya 99.1 FM</option>
-      <option value="https://p.miraenlinea.com:8108/stream">📻 La Primerísima</option>
+      <option value="https://s5.mexside.net:7048/stream">🔴 Radio Ya 99.1 FM</option>
+      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima</option>
       <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
       <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
       <option value="https://stream.futurafm.com.ni/live">⚡ Futura Radio 91.3</option>
@@ -1703,31 +1703,44 @@ const radioPlayer = {
   isLoading: false,
   
   init() {
+    console.log('🎵 Inicializando reproductor de radio...');
     const icon = document.getElementById('radioIcon');
     const selector = document.getElementById('radioSelector');
     
-    // Click en el icono para play/pause
-    if (icon) {
-      icon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.toggle();
-      });
+    if (!icon) {
+      console.error('❌ No se encontró el elemento radioIcon');
+      return;
     }
     
-    // Cambio de radio - reiniciar stream
-    if (selector) {
-      selector.addEventListener('change', () => {
-        if (this.isPlaying) {
-          this.stop();
-          setTimeout(() => this.play(), 200);
-        }
-      });
-      
-      // Evitar que el click en el selector active play/pause
-      selector.addEventListener('click', (e) => {
-        e.stopPropagation();
-      });
+    if (!selector) {
+      console.error('❌ No se encontró el elemento radioSelector');
+      return;
     }
+    
+    console.log('✅ Elementos encontrados, configurando event listeners...');
+    
+    // Click en el icono para play/pause
+    icon.addEventListener('click', (e) => {
+      console.log('🎵 Click en icono de radio');
+      e.stopPropagation();
+      this.toggle();
+    });
+    
+    // Cambio de radio - reiniciar stream
+    selector.addEventListener('change', () => {
+      console.log('🔄 Cambio de emisora:', selector.value);
+      if (this.isPlaying) {
+        this.stop();
+        setTimeout(() => this.play(), 200);
+      }
+    });
+    
+    // Evitar que el click en el selector active play/pause
+    selector.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+    
+    console.log('✅ Reproductor de radio inicializado correctamente');
   },
   
   toggle() {
@@ -1742,7 +1755,9 @@ const radioPlayer = {
   
   play() {
     const selector = document.getElementById('radioSelector');
-    const streamUrl = selector?.value || 'https://stream.ecmdigital.net:8010/radioya';
+    const streamUrl = selector?.value || 'https://s5.mexside.net:7048/stream';
+    
+    console.log('▶️ Intentando reproducir:', streamUrl);
     
     // Detener audio anterior si existe
     this.stop();
@@ -1763,17 +1778,20 @@ const radioPlayer = {
     
     // Eventos del audio
     this.audio.addEventListener('loadstart', () => {
+      console.log('📡 Cargando stream...');
       this.updateStatus('Cargando...');
     });
     
     this.audio.addEventListener('canplay', () => {
+      console.log('✅ Stream listo para reproducir');
       this.isLoading = false;
       this.isPlaying = true;
       this.updateUI();
     });
     
     this.audio.addEventListener('error', (e) => {
-      console.error('Error en el stream:', e);
+      console.error('❌ Error en el stream:', e);
+      console.error('URL problemática:', streamUrl);
       this.isLoading = false;
       this.isPlaying = false;
       this.updateStatus('Error - Intenta otra radio');
@@ -1795,12 +1813,14 @@ const radioPlayer = {
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
+          console.log('✅ Reproduciendo correctamente');
           this.isLoading = false;
           this.isPlaying = true;
           this.updateUI();
         })
         .catch(err => {
-          console.error('Error reproduciendo:', err);
+          console.error('❌ Error reproduciendo:', err);
+          console.error('Posibles causas: 1) URL HTTP en sitio HTTPS, 2) Autoplay bloqueado, 3) Stream no disponible');
           this.isLoading = false;
           this.isPlaying = false;
           this.updateStatus('Click para reproducir');

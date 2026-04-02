@@ -327,6 +327,10 @@ body.dark-theme .skeleton-card {
   color: white;
 }
 
+/* ============================================================
+   REDISEÑO ELITE: NICARAGUA INFORMATE (WEB + MÓVIL)
+   ============================================================ */
+
 /* CARRUSEL OPTIMIZADO - IMÁGENES PROFESIONALES */
 .carousel-section { 
   margin-bottom: 32px;
@@ -337,10 +341,9 @@ body.dark-theme .skeleton-card {
 }
 .carousel-custom {
   position: relative;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
   background: var(--brand-primary);
-  height: 480px;
   box-shadow: var(--shadow-lg);
 }
 .carousel-inner-custom {
@@ -348,37 +351,16 @@ body.dark-theme .skeleton-card {
   position: relative;
 }
 
-/* DISEÑO PROFESIONAL - ESTILO ELITE */
+/* Base común para todos los tamaños */
 .carousel-item-custom {
   position: absolute;
   inset: 0;
   opacity: 0;
   transition: opacity 0.6s ease;
-  display: flex !important;
-  flex-direction: column !important;
-  height: 480px !important;
-  background-color: #000 !important;
-  border-radius: 8px;
-  overflow: hidden !important;
-  border: 1px solid #333;
   text-decoration: none;
   color: inherit;
 }
 .carousel-item-custom.active { opacity: 1; }
-
-/* Imagen con espacio generoso */
-.carousel-item-custom img {
-  width: 100% !important;
-  height: 280px !important;
-  object-fit: cover !important;
-  object-position: center 15% !important;
-  border-bottom: 4px solid #e31e24;
-  display: block !important;
-  transition: transform 0.6s ease;
-}
-.carousel-item-custom:hover img { 
-  transform: scale(1.05); 
-}
 
 /* Marca de agua en la imagen */
 .carousel-item-custom::before {
@@ -410,18 +392,6 @@ body.dark-theme .skeleton-card {
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
-/* Área de texto con fondo oscuro profundo */
-.carousel-caption-custom {
-  height: 200px !important;
-  background: #1a1a1a !important;
-  padding: 20px 25px !important;
-  position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: flex-start !important;
-  color: white;
-  z-index: 10;
-}
 .carousel-badge {
   color: #e31e24;
   font-size: 11px;
@@ -431,16 +401,112 @@ body.dark-theme .skeleton-card {
   display: block;
   letter-spacing: 0.8px;
 }
-/* Tipografía de impacto */
-.carousel-caption-custom h3 {
-  font-family: 'Playfair Display', serif !important;
-  font-size: 1.8rem !important;
-  line-height: 1.2 !important;
-  color: #ffffff !important;
-  font-weight: 700 !important;
-  margin: 0 !important;
-  letter-spacing: -0.3px;
-  text-transform: uppercase;
+
+/* --- CONFIGURACIÓN PARA WEB (PC / LAPTOP) --- */
+@media (min-width: 992px) {
+  .carousel-custom {
+    height: 500px;
+  }
+  
+  .carousel-item-custom {
+    display: grid !important;
+    grid-template-columns: 65% 35% !important; /* Imagen grande a la izq, texto a la der */
+    height: 500px !important;
+    background: #000 !important;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #333;
+  }
+  
+  .carousel-item-custom img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important; /* Llena el espacio sin deformar */
+    object-position: center 20%;
+    display: block !important;
+    transition: transform 0.6s ease;
+  }
+  
+  .carousel-item-custom:hover img { 
+    transform: scale(1.05); 
+  }
+  
+  .carousel-caption-custom {
+    position: relative !important;
+    background: #1a1a1a !important; /* Fondo oscuro sólido profesional */
+    padding: 40px 30px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    text-align: left !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    color: white;
+    z-index: 10;
+  }
+  
+  .carousel-caption-custom h3 {
+    font-family: 'Playfair Display', serif !important;
+    font-size: 2.2rem !important;
+    line-height: 1.1 !important;
+    font-weight: 800 !important;
+    color: #fff !important;
+    margin: 0 !important;
+    letter-spacing: -0.3px;
+  }
+}
+
+/* --- CONFIGURACIÓN PARA MÓVIL (EL CAMBIO QUE URGE) --- */
+@media (max-width: 991px) {
+  .carousel-custom {
+    height: auto;
+  }
+  
+  .carousel-item-custom {
+    display: flex !important;
+    flex-direction: column !important; /* Imagen arriba, Texto abajo */
+    height: auto !important;
+    background: #fff !important;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    overflow: hidden;
+  }
+  
+  .carousel-item-custom img {
+    width: 100% !important;
+    height: 280px !important; /* Altura fija para que no se estire */
+    object-fit: cover !important; /* CORTA LOS LADOS, NO ESTIRA LA CARA */
+    object-position: center 20%;
+    border-bottom: 4px solid #e31e24;
+    display: block !important;
+  }
+  
+  .carousel-caption-custom {
+    position: relative !important;
+    background: #fff !important; /* Texto sobre blanco se ve más caro y limpio */
+    padding: 20px 15px !important;
+    color: #1a1a1a !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    z-index: 10;
+  }
+  
+  .carousel-caption-custom h3 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 1.6rem !important;
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
+    color: #1a1a1a !important;
+    margin: 0 !important;
+  }
+  
+  .carousel-badge {
+    color: #e31e24;
+  }
 }
 .carousel-controls {
   position: absolute;
@@ -1081,19 +1147,6 @@ body.dark-theme .skeleton-card {
 @media (max-width: 640px) {
   .topbar-content { flex-direction: column; gap: 12px; }
   .search-wrapper { width: 100%; }
-  .carousel-custom { height: 420px !important; }
-  .carousel-item-custom { height: 420px !important; }
-  .carousel-item-custom img {
-    height: 240px !important;
-  }
-  .carousel-caption-custom { 
-    height: 180px !important;
-    padding: 15px 18px !important;
-  }
-  .carousel-caption-custom h3 { 
-    font-size: 1.4rem !important;
-    line-height: 1.2;
-  }
   .news-card { grid-template-columns: 1fr; }
   .card-image-wrapper { aspect-ratio: 16/9; }
   .breaking-body h2 { font-size: 22px; }
@@ -1238,8 +1291,8 @@ body.dark-theme .skeleton-card {
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://s5.mexside.net:7048/stream">🔴 Radio Ya 99.1 FM</option>
-      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima</option>
+      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima (Recomendada)</option>
+      <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya 99.1 FM</option>
       <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
       <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
       <option value="https://stream.futurafm.com.ni/live">⚡ Futura Radio 91.3</option>
@@ -1777,80 +1830,118 @@ const radioPlayer = {
   
   play() {
     const selector = document.getElementById('radioSelector');
-    const streamUrl = selector?.value || 'https://s5.mexside.net:7048/stream';
+    let streamUrl = selector?.value || 'https://stream.radiojar.com/8wqtdg30k8quv';
+    
+    // TRUCO DE INGENIERÍA: Evitar que el navegador use una sesión vieja/caída
+    streamUrl = streamUrl + (streamUrl.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
     
     console.log('▶️ Intentando reproducir:', streamUrl);
     
-    // Detener audio anterior si existe
-    this.stop();
+    // Detener audio anterior si existe - LIMPIEZA TOTAL
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = ""; // Limpieza total de memoria
+      this.audio.load();
+      this.audio = null;
+    }
     
     // Mostrar estado de carga
     this.isLoading = true;
-    this.updateStatus('Conectando...');
+    this.updateStatus('Conectando al servidor...');
     const icon = document.getElementById('radioIcon');
     if (icon) {
       icon.classList.add('loading');
       icon.innerHTML = '<i class="fas fa-spinner"></i>';
     }
     
-    // Crear nuevo audio
-    this.audio = new Audio(streamUrl);
-    this.audio.volume = 0.7;
-    this.audio.preload = 'none';
-    
-    // Eventos del audio
-    this.audio.addEventListener('loadstart', () => {
-      console.log('📡 Cargando stream...');
-      this.updateStatus('Cargando...');
-    });
-    
-    this.audio.addEventListener('canplay', () => {
-      console.log('✅ Stream listo para reproducir');
-      this.isLoading = false;
-      this.isPlaying = true;
-      this.updateUI();
-    });
-    
-    this.audio.addEventListener('error', (e) => {
-      console.error('❌ Error en el stream:', e);
-      console.error('URL problemática:', streamUrl);
+    try {
+      // Crear nuevo audio con configuración robusta
+      this.audio = new Audio();
+      this.audio.src = streamUrl;
+      this.audio.preload = 'none'; // Evita bloqueos por carga previa
+      this.audio.crossOrigin = 'anonymous'; // Necesario para servidores externos
+      this.audio.volume = 0.8;
+      
+      // EVENTO CLAVE: Si el servidor tarda en responder
+      this.audio.addEventListener('stalled', () => {
+        console.log('⚠️ El servidor está tardando en enviar datos...');
+        this.updateStatus('Conectando...');
+      });
+      
+      this.audio.addEventListener('loadstart', () => {
+        console.log('📡 Cargando stream...');
+        this.updateStatus('Cargando...');
+      });
+      
+      this.audio.addEventListener('canplay', () => {
+        console.log('✅ Stream listo para reproducir');
+        this.isLoading = false;
+        this.isPlaying = true;
+        this.updateUI();
+      });
+      
+      this.audio.addEventListener('playing', () => {
+        console.log('🎶 Audio fluyendo correctamente');
+        this.updateStatus('🔴 EN VIVO');
+        this.isLoading = false;
+        this.isPlaying = true;
+        this.updateUI();
+      });
+      
+      this.audio.addEventListener('error', (e) => {
+        const errCode = this.audio.error ? this.audio.error.code : 'Desconocido';
+        console.error('❌ ERROR TÉCNICO: Código ' + errCode);
+        if (errCode == 4) {
+          console.error('👉 Posible causa: El servidor de la radio está caído o la URL cambió.');
+        }
+        console.error('URL problemática:', streamUrl);
+        this.isLoading = false;
+        this.isPlaying = false;
+        this.updateStatus('❌ Error de conexión');
+        if (icon) {
+          icon.classList.remove('loading', 'playing');
+          icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        }
+        setTimeout(() => {
+          if (!this.isPlaying) {
+            icon.innerHTML = '<i class="fas fa-play"></i>';
+            this.updateStatus('Click para reproducir');
+          }
+        }, 3000);
+      });
+      
+      // Ejecutar reproducción
+      const playPromise = this.audio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log('✅ Reproducción autorizada por el navegador');
+            this.isLoading = false;
+            this.isPlaying = true;
+            this.updateUI();
+          })
+          .catch(err => {
+            console.error('❌ Bloqueo de Autoplay:', err.message);
+            console.error('👉 Debes interactuar con la página primero.');
+            this.isLoading = false;
+            this.isPlaying = false;
+            this.updateStatus('❌ Haz clic de nuevo');
+            if (icon) {
+              icon.classList.remove('loading');
+              icon.innerHTML = '<i class="fas fa-play"></i>';
+            }
+          });
+      }
+    } catch (err) {
+      console.error('❌ Error crítico:', err.message);
       this.isLoading = false;
       this.isPlaying = false;
-      this.updateStatus('Error - Intenta otra radio');
+      this.updateStatus('❌ Error crítico');
       if (icon) {
-        icon.classList.remove('loading', 'playing');
-        icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+        icon.classList.remove('loading');
+        icon.innerHTML = '<i class="fas fa-play"></i>';
       }
-      setTimeout(() => {
-        if (!this.isPlaying) {
-          icon.innerHTML = '<i class="fas fa-play"></i>';
-          this.updateStatus('Click para reproducir');
-        }
-      }, 3000);
-    });
-    
-    // Intentar reproducir
-    const playPromise = this.audio.play();
-    
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          console.log('✅ Reproduciendo correctamente');
-          this.isLoading = false;
-          this.isPlaying = true;
-          this.updateUI();
-        })
-        .catch(err => {
-          console.error('❌ Error reproduciendo:', err);
-          console.error('Posibles causas: 1) URL HTTP en sitio HTTPS, 2) Autoplay bloqueado, 3) Stream no disponible');
-          this.isLoading = false;
-          this.isPlaying = false;
-          this.updateStatus('Click para reproducir');
-          if (icon) {
-            icon.classList.remove('loading');
-            icon.innerHTML = '<i class="fas fa-play"></i>';
-          }
-        });
     }
   },
   

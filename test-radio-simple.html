@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Radio Simple</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 40px;
+  background: #1a1a1a;
+  color: white;
+}
+.radio-test {
+  max-width: 400px;
+  margin: 0 auto;
+  background: #2a2a2a;
+  padding: 30px;
+  border-radius: 12px;
+}
+button {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #e31e24;
+  color: white;
+  font-weight: bold;
+}
+button:hover {
+  background: #b91c1c;
+}
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: #333;
+  color: white;
+}
+.status {
+  padding: 15px;
+  margin: 15px 0;
+  background: #333;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+}
+.log {
+  background: #000;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 12px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+</style>
+</head>
+<body>
+
+<div class="radio-test">
+  <h1 style="text-align: center;">🎵 Test Radio Nicaragua</h1>
+  
+  <select id="radioSelect">
+    <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima (Más Estable)</option>
+    <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya (Puerto 8010)</option>
+    <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
+    <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">� La Pachanguera</option>
+  </select>
+  
+  <button id="playBtn">▶️ REPRODUCIR</button>
+  <button id="stopBtn">⏹️ DETENER</button>
+  
+  <div class="status" id="status">Selecciona una radio y presiona REPRODUCIR</div>
+  
+  <div class="log" id="log"></div>
+</div>
+
+<script>
+let audio = null;
+
+function log(msg) {
+  const logDiv = document.getElementById('log');
+  const time = new Date().toLocaleTimeString();
+  logDiv.innerHTML += `[${time}] ${msg}<br>`;
+  logDiv.scrollTop = logDiv.scrollHeight;
+  console.log(msg);
+}
+
+function updateStatus(msg) {
+  document.getElementById('status').textContent = msg;
+  log(msg);
+}
+
+document.getElementById('playBtn').addEventListener('click', function() {
+  const url = document.getElementById('radioSelect').value;
+  
+  // TRUCO DE INGENIERÍA: Evitar caché del navegador
+  const urlWithCache = url + (url.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
+  
+  log('🎵 Botón REPRODUCIR presionado');
+  log('📡 URL seleccionada: ' + url);
+  
+  // Detener audio anterior - LIMPIEZA TOTAL
+  if (audio) {
+    audio.pause();
+    audio.src = "";
+    audio.load();
+    audio = null;
+    log('⏹️ Audio anterior detenido y limpiado');
+  }
+  
+  updateStatus('Conectando al servidor...');
+  
+  try {
+    audio = new Audio();
+    audio.src = urlWithCache;
+    audio.preload = 'none';
+    audio.crossOrigin = 'anonymous';
+    audio.volume = 0.7;
+    
+    audio.addEventListener('loadstart', () => {
+      log('📥 Iniciando carga del stream...');
+      updateStatus('Cargando stream...');
+    });
+    
+    audio.addEventListener('canplay', () => {
+      log('✅ Stream listo para reproducir');
+      updateStatus('🔴 Reproduciendo');
+    });
+    
+    audio.addEventListener('playing', () => {
+      log('🎶 Audio reproduciéndose');
+      updateStatus('🔴 EN VIVO');
+    });
+    
+    audio.addEventListener('error', (e) => {
+      log('❌ ERROR: ' + (e.message || 'Error desconocido'));
+      log('❌ Código de error: ' + (audio.error ? audio.error.code : 'N/A'));
+      updateStatus('❌ Error - Intenta otra radio');
+    });
+    
+    log('▶️ Intentando reproducir...');
+    audio.play()
+      .then(() => {
+        log('✅ Reproducción iniciada exitosamente');
+        updateStatus('🔴 REPRODUCIENDO');
+      })
+      .catch(err => {
+        log('❌ Error al reproducir: ' + err.message);
+        updateStatus('❌ Error: ' + err.message);
+      });
+      
+  } catch (err) {
+    log('❌ Error crítico: ' + err.message);
+    updateStatus('❌ Error crítico');
+  }
+});
+
+document.getElementById('stopBtn').addEventListener('click', function() {
+  log('⏹️ Botón DETENER presionado');
+  if (audio) {
+    audio.pause();
+    audio = null;
+    updateStatus('⏹️ Detenido');
+    log('✅ Audio detenido correctamente');
+  } else {
+    log('⚠️ No hay audio reproduciéndose');
+  }
+});
+
+log('✅ Página cargada - Sistema listo');
+log('📱 Navegador: ' + navigator.userAgent.split(' ').pop());
+log('🔒 Protocolo: ' + window.location.protocol);
+</script>
+
+</body>
+</html>

@@ -119,41 +119,75 @@ body.dark-theme .skeleton-card {
   border-color: var(--brand-accent);
 }
 
-/* BARRA DE CLIMA */
+/* BARRA DE CLIMA Y ECONOMÍA */
 .clima-container {
-  background: #1a1a1a;
-  color: #fff;
-  padding: 8px 0;
-  font-size: 13px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 6px 0;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
+  color: #444;
   overflow: hidden;
-  border-bottom: 2px solid #e31e24;
 }
 .clima-scroll {
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
   white-space: nowrap;
 }
-.ciudad-clima {
-  margin: 0 15px;
-  font-weight: bold;
+.clima-ticker {
+  display: flex;
+  gap: 0;
+}
+.economia-ticker {
+  display: flex;
+  gap: 0;
+}
+.item-clima,
+.economia-ticker span {
+  margin-right: 20px;
+  border-right: 1px solid #ddd;
+  padding-right: 15px;
+  font-weight: 500;
+}
+.item-clima:last-child,
+.economia-ticker span:last-child {
+  border-right: none;
+  margin-right: 0;
+}
+.economia-ticker strong {
+  color: #d32f2f;
+  font-weight: 700;
 }
 @media (max-width: 768px) {
+  .clima-container {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+  .clima-container::-webkit-scrollbar {
+    display: none;
+  }
   .clima-scroll {
     padding: 0 16px;
     justify-content: flex-start;
-    gap: 20px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    display: block !important;
   }
-  .clima-scroll::-webkit-scrollbar {
-    display: none;
+  .clima-ticker {
+    display: inline-block;
   }
-  .ciudad-clima {
-    font-size: 12px;
-    margin: 0 10px;
+  .economia-ticker {
+    display: inline-block !important;
+    margin-left: 20px;
+  }
+  .item-clima,
+  .economia-ticker span {
+    font-size: 11px;
+    margin-right: 15px;
+    padding-right: 12px;
   }
 }
 
@@ -1077,14 +1111,19 @@ body.dark-theme .skeleton-card {
   </div>
 </header>
 
-<!-- BARRA DE CLIMA -->
+<!-- BARRA DE CLIMA Y ECONOMÍA -->
 <div class="clima-container">
   <div class="clima-scroll">
-    <span class="ciudad-clima">📍 Managua: <span id="temp-managua">--°C</span></span>
-    <span class="ciudad-clima">📍 León: <span id="temp-leon">--°C</span></span>
-    <span class="ciudad-clima">📍 Estelí: <span id="temp-esteli">--°C</span></span>
-    <span class="ciudad-clima">📍 Rivas: <span id="temp-rivas">--°C</span></span>
-    <span class="ciudad-clima">📍 Bluefields: <span id="temp-bluefields">--°C</span></span>
+    <div class="clima-ticker">
+      <span class="item-clima">📍 Managua: <span id="temp-managua">32°C</span></span>
+      <span class="item-clima">📍 León: <span id="temp-leon">34°C</span></span>
+      <span class="item-clima">📍 Estelí: <span id="temp-esteli">26°C</span></span>
+    </div>
+    <div class="economia-ticker">
+      <span>💵 USD: <strong>C$36.6243</strong></span>
+      <span>⛽ Súper: <strong>C$49.03</strong></span>
+      <span>🚜 Diesel: <strong>C$43.21</strong></span>
+    </div>
   </div>
 </div>
 
@@ -1343,20 +1382,16 @@ function initReloj() {
 
 // CLIMA DE NICARAGUA
 function initClima() {
-  // Temperaturas promedio actuales de Nicaragua
+  // Temperaturas promedio actuales de Nicaragua (3 ciudades principales)
   const temperaturas = {
     managua: '32°C',
     leon: '34°C',
-    esteli: '26°C',
-    rivas: '30°C',
-    bluefields: '28°C'
+    esteli: '26°C'
   };
   
   document.getElementById('temp-managua').textContent = temperaturas.managua;
   document.getElementById('temp-leon').textContent = temperaturas.leon;
   document.getElementById('temp-esteli').textContent = temperaturas.esteli;
-  document.getElementById('temp-rivas').textContent = temperaturas.rivas;
-  document.getElementById('temp-bluefields').textContent = temperaturas.bluefields;
 }
 
 // FIREBASE OPTIMIZADO

@@ -348,7 +348,7 @@ body.dark-theme .skeleton-card {
   position: relative;
 }
 
-/* Limpieza total del Carrusel */
+/* REPARACIÓN TOTAL DEL CARRUSEL */
 .carousel-item-custom {
   position: absolute;
   inset: 0;
@@ -357,20 +357,21 @@ body.dark-theme .skeleton-card {
   display: flex !important;
   flex-direction: column !important;
   height: 450px !important;
+  background-color: #000;
   overflow: hidden;
   text-decoration: none;
   color: inherit;
-  background: #000;
   border-radius: 16px;
 }
 .carousel-item-custom.active { opacity: 1; }
 
-/* Imagen arriba - 55% */
+/* Imagen con altura FIJA en píxeles */
 .carousel-item-custom img {
-  height: 55% !important;
   width: 100% !important;
+  height: 250px !important;
   object-fit: cover !important;
-  object-position: center top !important;
+  object-position: center 20% !important;
+  display: block !important;
   transition: transform 0.6s ease;
 }
 .carousel-item-custom:hover img { 
@@ -407,15 +408,15 @@ body.dark-theme .skeleton-card {
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
-/* Texto abajo - 45% */
+/* Texto con altura FIJA en píxeles */
 .carousel-caption-custom {
-  height: 45% !important;
+  height: 200px !important;
   background: #1a1a1a !important;
-  position: relative !important;
-  padding: 20px !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  padding: 15px 20px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  border-top: 3px solid #e31e24;
   color: white;
   z-index: 10;
 }
@@ -434,11 +435,11 @@ body.dark-theme .skeleton-card {
 }
 /* Letra GRANDE en el Titular */
 .carousel-caption-custom h3 {
-  font-size: 2.2rem !important;
-  line-height: 1.1;
-  font-weight: 800;
-  color: #ffffff !important;
-  margin: 0;
+  font-size: 1.6rem !important;
+  line-height: 1.2 !important;
+  margin: 0 !important;
+  color: #fff !important;
+  font-weight: 800 !important;
   font-family: 'Playfair Display', serif;
   text-transform: uppercase;
   letter-spacing: -0.5px;
@@ -1082,13 +1083,17 @@ body.dark-theme .skeleton-card {
 @media (max-width: 640px) {
   .topbar-content { flex-direction: column; gap: 12px; }
   .search-wrapper { width: 100%; }
-  .carousel-custom { height: 400px; }
+  .carousel-custom { height: 400px !important; }
   .carousel-item-custom { height: 400px !important; }
+  .carousel-item-custom img {
+    height: 220px !important;
+  }
   .carousel-caption-custom { 
-    padding: 15px !important;
+    height: 180px !important;
+    padding: 12px 15px !important;
   }
   .carousel-caption-custom h3 { 
-    font-size: 1.4rem !important;
+    font-size: 1.3rem !important;
     line-height: 1.2;
   }
   .news-card { grid-template-columns: 1fr; }

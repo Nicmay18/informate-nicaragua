@@ -6,9 +6,8 @@
   max-width: 100% !important;
   margin: 0 auto !important;
   overflow: hidden !important;
-  aspect-ratio: 16 / 9 !important;
   background: #1e293b !important;
-  max-height: 300px !important;
+  height: 300px !important;
 }
 
 .carousel-inner-custom {
@@ -188,63 +187,18 @@
 /* Responsive */
 @media (max-width: 768px) {
   .carousel-custom {
-    max-height: 250px !important;
-  }
-
-  .carousel-caption-custom {
-    padding: 1.5rem 1rem !important;
-  }
-
-  .carousel-caption-custom h3 {
-    font-size: 1.25rem !important;
-  }
-
-  .carousel-btn {
-    width: 2.5rem !important;
-    height: 2.5rem !important;
-  }
-
-  .carousel-meta {
-    gap: 1rem !important;
-    font-size: 0.75rem !important;
+    height: 220px !important;
   }
 }
 
 @media (max-width: 480px) {
   .carousel-custom {
-    max-height: 200px !important;
-  }
-
-  .carousel-caption-custom {
-    padding: 1rem !important;
-  }
-
-  .carousel-caption-custom h3 {
-    font-size: 1rem !important;
-  }
-
-  .carousel-caption-custom p {
-    display: none !important;
-  }
-
-  .carousel-btn {
-    width: 2rem !important;
-    height: 2rem !important;
-    opacity: 0.7 !important;
-  }
-
-  .carousel-indicators-custom {
-    bottom: 0.5rem !important;
-  }
-
-  .indicator {
-    width: 0.5rem !important;
-    height: 0.5rem !important;
+    height: 180px !important;
   }
 }
 
 @media (min-width: 1024px) {
   .carousel-custom {
-    max-height: 380px !important;
+    height: 350px !important;
   }
 }

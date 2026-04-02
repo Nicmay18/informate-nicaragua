@@ -23,29 +23,35 @@ Requisitos:
 
 Devuelve SOLO el contenido, sin título ni encabezados.`;
 
-  try {
-    const resp = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{ parts: [{ text: prompt }] }],
-        generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-      })
-    });
+  // Intentar modelos en orden hasta que uno funcione
+  const modelos = [
+    'gemini-1.5-flash',
+    'gemini-1.5-pro', 
+    'gemini-pro',
+    'gemini-1.0-pro'
+  ];
 
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.error?.message || `Gemini status ${resp.status}`);
+  let ultimoError = '';
+  for (const modelo of modelos) {
+    try {
+      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${GEMINI_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: prompt }] }],
+          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
+        })
+      });
 
-    const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-    if (!texto) throw new Error('Respuesta vacia: ' + JSON.stringify(data).substring(0, 200));
+      const data = await resp.json();
+      if (!resp.ok) { ultimoError = data.error?.message || `status ${resp.status}`; continue; }
 
-    return res.status(200).json({
-      success: true,
-      contenido: texto.trim(),
-      tokens: data.usageMetadata?.totalTokenCount
-    });
+      const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (!texto) { ultimoError = 'Respuesta vacia'; continue; }
 
-  } catch (error) {
-    return res.status(500).json({ error: error.message });
+      return res.status(200).json({ success: true, contenido: texto.trim(), modelo });
+    } catch(e) { ultimoError = e.message; }
   }
+
+  return res.status(500).json({ error: 'Ningún modelo disponible: ' + ultimoError });
 }

@@ -340,9 +340,18 @@
 
   async function cargarRelacionadas(categoria, excluirId) {
     try {
-      const q = query(collection(db, 'noticias'), where('categoria','==',categoria), orderBy('fecha','desc'), limit(4));
+      // Buscar noticias de la misma categoría
+      const q = query(collection(db, 'noticias'), where('categoria','==',categoria), orderBy('fecha','desc'), limit(10));
       const snap = await getDocs(q);
-      const rel = snap.docs.map(d => ({id:d.id,...d.data()})).filter(n => n.id !== excluirId).slice(0,3);
+      let rel = snap.docs.map(d => ({id:d.id,...d.data()})).filter(n => n.id !== excluirId).slice(0,4);
+      
+      // Si no hay suficientes, buscar de cualquier categoría
+      if (rel.length < 3) {
+        const q2 = query(collection(db, 'noticias'), orderBy('fecha','desc'), limit(20));
+        const snap2 = await getDocs(q2);
+        rel = snap2.docs.map(d => ({id:d.id,...d.data()})).filter(n => n.id !== excluirId).slice(0,4);
+      }
+      
       if (!rel.length) return;
       document.getElementById('relatedSection').style.display = 'block';
       document.getElementById('relatedGrid').innerHTML = rel.map(n => {
@@ -353,7 +362,7 @@
           <div class="related-card-body"><h4>${n.titulo}</h4><span>${fecha.toLocaleDateString('es-NI')}</span></div>
         </a>`;
       }).join('');
-    } catch(e) {}
+    } catch(e) { console.error('Error cargando relacionadas:', e); }
   }
 
   window.copiarLink = function() {

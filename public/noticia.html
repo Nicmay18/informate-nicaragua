@@ -8,7 +8,7 @@
     <!-- Optimización de carga de fuentes -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome con media print trick (carga más rápida) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -22,123 +22,146 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
     
     <style>
-        :root { --rojo: #d0021b; --azul: #003366; --negro: #1a1a1a; --gris-suave: #f8f9fa; }
-        body { font-family: 'Inter', sans-serif; margin: 0; color: var(--negro); line-height: 1.6; }
+        :root { --rojo: #e31e24; --azul: #003366; --negro: #1a1a1a; --gris-suave: #f8f9fa; }
+        body { font-family: 'Roboto', sans-serif; margin: 0; color: var(--negro); line-height: 1.6; background: #ffffff; }
 
         /* Barra de progreso de lectura */
         .progress-container { position: fixed; top: 0; z-index: 2000; width: 100%; height: 4px; background: transparent; }
         .progress-bar { height: 4px; background: var(--rojo); width: 0%; transition: width 0.1s; }
 
-        /* Cabecera de Impacto (Estilo TV) */
-        .news-header-hero { 
-            position: relative; 
-            width: 100%; 
-            height: 70vh; 
-            min-height: 400px; 
-            background: #000; 
-            overflow: hidden; 
-        }
-        
-        /* Marca de agua con texto estilo TN8 */
-        .news-header-hero::after {
-            content: "informate nicaragua";
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-family: 'Inter', sans-serif;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.7);
-            text-transform: lowercase;
-            letter-spacing: -1px;
-            z-index: 100;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
-            pointer-events: none;
-            line-height: 1;
-        }
-        
-        .hero-img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-            object-position: center top;
-            opacity: 0.85;
-            content-visibility: auto;
-        }
-        
-        /* Placeholder mientras carga la imagen */
-        .hero-img[data-src] {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Contenedor de la Noticia */
+        .noticia-profesional {
+            background: #ffffff;
+            max-width: 100%;
+            margin: 0 auto;
         }
 
-        .hero-overlay {
-            position: absolute; 
-            bottom: 0; 
-            left: 0; 
-            width: 100%; 
-            height: 70%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, rgba(0,0,0,0.4) 50%, transparent);
-            display: flex; 
-            align-items: flex-end; 
-            padding: 40px 5%; 
-            box-sizing: border-box;
+        /* Imagen estilo Carrusel (Sin recortes que tapen la cara) */
+        .header-imagen-full {
+            width: 100%;
+            max-height: 70vh;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .header-imagen-full img {
+            width: 100%;
+            height: auto;
+            max-height: 70vh;
+            object-fit: contain;
+            display: block;
         }
 
-        /* Botón Volver */
-        .navigation-top {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 150;
+        /* El Titular "En Grande" y Profesional */
+        .cuerpo-titular {
+            padding: 30px 20px;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .btn-back {
+
+        .categoria-tag {
+            color: var(--rojo);
+            font-weight: bold;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .titular-grande {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            line-height: 1.1;
+            color: #121212;
+            font-weight: 800;
+            margin: 15px 0;
+            letter-spacing: -0.5px;
+        }
+
+        .meta-info {
+            font-family: 'Roboto', sans-serif;
+            color: #757575;
+            font-size: 15px;
+            margin-top: 15px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .meta-info strong {
+            color: #333;
+        }
+
+        /* Botón Volver Minimalista */
+        .navigation-footer {
+            padding: 0 20px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .btn-regresar {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             padding: 10px 20px;
-            background: var(--rojo);
-            color: white !important;
+            color: var(--azul);
+            background: transparent;
+            border: 2px solid var(--azul);
             text-decoration: none;
-            border-radius: 5px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 16px;
+            border-radius: 5px;
             transition: all 0.3s;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-        }
-        .btn-back:hover {
-            background: #b3171b;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            transform: translateY(-2px);
         }
 
-        .hero-content { max-width: 900px; color: white; }
-        .badge-cat { 
-            background: var(--rojo); color: white; padding: 5px 12px; 
-            font-weight: 800; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 15px; display: inline-block;
-        }
-        h1.main-title { 
-            font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3.5rem); 
-            line-height: 1.1; margin: 0; text-transform: uppercase;
+        .btn-regresar:hover {
+            background: var(--azul);
+            color: white;
         }
 
         /* Cuerpo de la Noticia */
-        .container-reading { max-width: 800px; margin: 40px auto; padding: 0 20px; }
-        .meta-info { 
-            display: flex; gap: 20px; color: #666; font-size: 0.9rem; 
-            border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 30px; 
+        .container-reading { 
+            max-width: 800px; 
+            margin: 40px auto; 
+            padding: 0 20px; 
         }
 
-        #news-content { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #333; line-height: 1.9; }
-        #news-content p { margin-bottom: 1.8rem; }
+        #news-content { 
+            font-family: 'Merriweather', serif; 
+            font-size: 1.2rem; 
+            color: #333; 
+            line-height: 1.9; 
+        }
+        
+        #news-content p { 
+            margin-bottom: 1.8rem; 
+        }
 
         /* Noticias Relacionadas Pro */
         .related-section { background: var(--gris-suave); padding: 60px 20px; margin-top: 60px; }
         .related-grid { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            gap: 25px; max-width: 1100px; margin: 0 auto; 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 25px; 
+            max-width: 1100px; 
+            margin: 0 auto; 
         }
-        .related-card { text-decoration: none; color: inherit; background: white; transition: 0.3s; }
-        .related-card:hover { transform: translateY(-5px); }
+        .related-card { 
+            text-decoration: none; 
+            color: inherit; 
+            background: white; 
+            transition: 0.3s; 
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .related-card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
         .related-card img { 
             width: 100%; 
             aspect-ratio: 16/9; 
@@ -146,21 +169,54 @@
             background: #f0f0f0;
             content-visibility: auto;
         }
-        .related-card h4 { padding: 15px; margin: 0; font-size: 1rem; line-height: 1.4; }
+        .related-card h4 { 
+            padding: 15px; 
+            margin: 0; 
+            font-size: 1rem; 
+            line-height: 1.4; 
+        }
 
         /* Publicidad Adaptativa */
-        .ad-container { margin: 40px 0; text-align: center; background: #fafafa; border: 1px solid #eee; min-height: 250px; display: flex; align-items: center; justify-content: center; }
+        .ad-container { 
+            margin: 40px 0; 
+            text-align: center; 
+            background: #fafafa; 
+            border: 1px solid #eee; 
+            min-height: 250px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+        }
 
-        @media (max-width: 768px) {
-            .news-header-hero { height: 50vh; min-height: 300px; }
-            h1.main-title { font-size: 1.8rem; }
-            .btn-back {
-                padding: 8px 16px;
-                font-size: 13px;
+        /* Ajuste para celulares */
+        @media screen and (max-width: 768px) {
+            .header-imagen-full {
+                max-height: 50vh;
             }
-            .navigation-top {
-                top: 15px;
-                left: 15px;
+            
+            .header-imagen-full img {
+                max-height: 50vh;
+            }
+            
+            .titular-grande {
+                font-size: 28px;
+            }
+            
+            .cuerpo-titular {
+                padding: 20px 15px;
+            }
+            
+            .meta-info {
+                font-size: 14px;
+            }
+            
+            .btn-regresar {
+                font-size: 14px;
+                padding: 8px 16px;
+            }
+            
+            #news-content {
+                font-size: 1.1rem;
             }
         }
     </style>
@@ -169,30 +225,30 @@
 
     <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
-    <article>
-        <header class="news-header-hero">
-            <div class="navigation-top">
-                <a href="index.html" class="btn-back">
-                    <i class="fas fa-arrow-left"></i> Volver a Inicio
-                </a>
+    <article class="noticia-profesional">
+        <div class="header-imagen-full">
+            <img id="main-img" src="" alt="" loading="eager" decoding="async" fetchpriority="high" width="1200" height="800">
+        </div>
+
+        <div class="cuerpo-titular">
+            <span id="category" class="categoria-tag">SUCESOS</span>
+            <h1 id="title" class="titular-grande">Cargando noticia...</h1>
+            <div class="meta-info">
+                <span>Por <strong>Redacción</strong></span> | 
+                <span id="date">--/--/--</span> | 
+                <span><i class="far fa-eye"></i> <span id="views">0</span> vistas</span>
             </div>
-            <img id="main-img" src="" class="hero-img" alt="" loading="eager" decoding="async" fetchpriority="high" width="1200" height="675" style="width:100%; height:auto; object-fit:cover;">
-            <div class="hero-overlay">
-                <div class="hero-content">
-                    <span id="category" class="badge-cat">Sucesos</span>
-                    <h1 id="title" class="main-title">Cargando noticia...</h1>
-                </div>
-            </div>
-        </header>
+        </div>
+
+        <div class="navigation-footer">
+            <a href="index.html" class="btn-regresar">
+                <i class="fas fa-arrow-left"></i> Volver a la Portada
+            </a>
+        </div>
 
         <div class="container-reading">
-            <div class="meta-info">
-                <span><i class="far fa-calendar-alt"></i> <span id="date">--/--/--</span></span>
-                <span><i class="far fa-user"></i> Por Redacción</span>
-                <span><i class="far fa-eye"></i> <span id="views"></span> vistas</span>
-            </div>
-
             <div id="news-content">
+            </div>
                 </div>
 
             <div class="ad-slot-pro" style="min-height: 280px; margin: 20px 0; background: #fafafa; text-align: center;">

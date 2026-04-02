@@ -2043,7 +2043,7 @@ function renderizarNoticias() {
     const bookmarkIcon = esGuardada ? '🔴' : '🔖';
     const bookmarkOpacity = esGuardada ? '1' : '0.5';
     if (idx === 0 && categoriaActual === 'Todas' && paginaActual === 1) {
-      const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+      const url = getNoticiaUrl(n);
       return `<a href="${url}" class="breaking-card" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')">
         ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
         ${badgePremium}
@@ -2063,7 +2063,7 @@ function renderizarNoticias() {
         </div>
       </a>`;
     }
-    const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+    const url = getNoticiaUrl(n);
     return `<a href="${url}" class="news-card" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')">
       ${esNueva ? '<div class="news-badge-new">NUEVO</div>' : ''}
       ${badgePremium}
@@ -2118,7 +2118,7 @@ function renderizarCarrusel() {
     const img = utils.sanitizeImage(n.imagen, n.categoria);
     const color = getCategoryColor(n.categoria);
     const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-    const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+    const url = getNoticiaUrl(n);
     return `<a href="${url}" class="carousel-item-custom ${i === 0 ? 'active' : ''}" data-noticia-id="${n.id}" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="cursor:pointer;text-decoration:none;">
       <img src="${img}" alt="${titulo}">
       <div class="carousel-caption-custom">
@@ -2136,7 +2136,7 @@ function renderizarSidebar() {
   const top = noticias.filter(n => !n.premium).slice(0, 5);
   document.getElementById('trendingContainer').innerHTML = top.map((n, i) => {
     const fechaRelativa = utils.formatDate(n.fecha);
-    const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+    const url = getNoticiaUrl(n);
     return `<a href="${url}" class="trending-item" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="text-decoration:none;display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid var(--border-color);cursor:pointer;">
       <div class="trending-number">${String(i + 1).padStart(2, '0')}</div>
       <div>
@@ -2148,7 +2148,7 @@ function renderizarSidebar() {
   document.getElementById('popularContainer').innerHTML = top.map(n => {
     const img = utils.sanitizeImage(n.imagen, n.categoria);
     const titulo = escapeHtml(utils.capitalize(n.titulo || ''));
-    const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+    const url = getNoticiaUrl(n);
     return `<a href="${url}" class="popular-item" onclick="event.preventDefault();abrirNoticia('${escapeHtml(n.id)}')" style="text-decoration:none;">
       <img src="${img}" loading="lazy">
       <div>
@@ -2663,7 +2663,7 @@ function initBusqueda() {
         resultados.innerHTML = '<div style="padding:16px;color:#64748B;text-align:center;">Sin resultados</div>';
       } else {
         resultados.innerHTML = matches.map(n => {
-          const url = n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+          const url = getNoticiaUrl(n);
           return `
           <a href="${url}" onclick="this.parentElement.style.display='none'; document.getElementById('searchInput').value='';" 
              style="display:block;padding:12px 16px;border-bottom:1px solid var(--border-color);cursor:pointer;transition:background 0.2s;text-decoration:none;"

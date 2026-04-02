@@ -236,45 +236,60 @@
                     const n = docSnap.data();
                     console.log('Datos de la noticia:', n);
                     
-                    // 1. Títulos y Meta
-                    document.title = n.titulo + " | Nicaragua Informate";
-                    document.getElementById('title').innerText = n.titulo;
-                    document.getElementById('category').innerText = n.categoria;
+                    // ESTO ES LO QUE AGREGA LOS DATOS AL HTML:
+                    if(document.getElementById('title')) {
+                        document.getElementById('title').innerText = n.titulo;
+                        document.title = n.titulo + " | Nicaragua Informate";
+                    }
                     
-                    // 2. Imagen Principal (Aquí es donde ocurre la magia TN8)
-                    const mainImg = document.getElementById('main-img');
-                    mainImg.src = n.imagen || 'https://nicaraguainformate.com/logo.png';
-                    mainImg.alt = n.titulo;
+                    if(document.getElementById('category')) {
+                        document.getElementById('category').innerText = n.categoria;
+                    }
                     
-                    // 3. Fecha (Formateo profesional)
-                    const fecha = n.fecha?.toDate ? n.fecha.toDate() : new Date();
-                    document.getElementById('date').innerText = fecha.toLocaleDateString('es-NI', {
-                        day: '2-digit', 
-                        month: 'long', 
-                        year: 'numeric'
-                    });
+                    if(document.getElementById('main-img')) {
+                        document.getElementById('main-img').src = n.imagen || 'https://nicaraguainformate.com/logo.png';
+                        document.getElementById('main-img').alt = n.titulo;
+                    }
                     
-                    // 4. Vistas
-                    document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
+                    // Formatear fecha
+                    if(document.getElementById('date')) {
+                        const f = n.fecha?.toDate ? n.fecha.toDate() : new Date();
+                        document.getElementById('date').innerText = f.toLocaleDateString('es-NI', { 
+                            day: '2-digit', 
+                            month: 'long', 
+                            year: 'numeric' 
+                        });
+                    }
+                    
+                    // Vistas
+                    if(document.getElementById('views')) {
+                        document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
+                    }
                     
                     // Incrementar vistas
                     updateDoc(docRef, { vistas: increment(1) }).catch(() => {});
                     
-                    // 5. Contenido (Limpiar y mostrar)
-                    // Si el contenido viene con saltos de línea, los convertimos a párrafos
-                    const contenidoLimpio = n.contenido.replace(/\n/g, '<br><br>');
-                    document.getElementById('news-content').innerHTML = contenidoLimpio;
+                    // El contenido de la noticia
+                    if(document.getElementById('news-content')) {
+                        // Convertimos los saltos de línea en párrafos reales para que se vea pro
+                        document.getElementById('news-content').innerHTML = n.contenido
+                            .split('\n')
+                            .filter(p => p.trim())
+                            .map(p => `<p>${p}</p>`)
+                            .join('');
+                    }
                     
-                    // 6. Cargar Relacionadas (Sin que el usuario lo note)
+                    // Ejecutar las relacionadas después de cargar la principal
                     cargarNoticiasRelacionadas(n.categoria, id);
                     
                 } else {
-                    console.error('Documento no existe');
-                    window.location.href = 'index.html'; // Si no existe, vuelve al inicio
+                    console.log("No existe la noticia");
+                    alert('Noticia no encontrada');
+                    window.location.href = '/';
                 }
                 
-            } catch (error) {
-                console.error("Error cargando noticia:", error);
+            } catch (e) {
+                console.error("Error al agregar datos:", e);
                 alert('Error al cargar la noticia');
             }
         }

@@ -1,0 +1,36 @@
+{
+  "name": "Nicaragua Informate - Noticias al Instante",
+  "short_name": "NI Informate",
+  "description": "Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0F172A",
+  "theme_color": "#DC2626",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "es",
+  "dir": "ltr",
+  "categories": ["news", "magazines"],
+  "icons": [
+    {"src": "/logo.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable any"},
+    {"src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable any"}
+  ],
+  "shortcuts": [
+    {
+      "name": "Última Hora",
+      "short_name": "Última Hora",
+      "description": "Ver noticias de última hora",
+      "url": "/?categoria=Todas",
+      "icons": [{"src": "/logo.png", "sizes": "96x96"}]
+    },
+    {
+      "name": "Sucesos",
+      "short_name": "Sucesos",
+      "description": "Noticias de sucesos en Nicaragua",
+      "url": "/?categoria=Sucesos",
+      "icons": [{"src": "/logo.png", "sizes": "96x96"}]
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false
+}

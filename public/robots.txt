@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /admin.html
+
+Sitemap: https://nicaraguainformate.com/api/sitemap
+Sitemap: https://nicaraguainformate.com/rss.xml

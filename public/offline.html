@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sin conexión - Nicaragua Informate</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, sans-serif; background: #F8FAFC; color: #0F172A; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; }
+    .icon { font-size: 64px; margin-bottom: 24px; }
+    h1 { font-size: 24px; margin-bottom: 12px; }
+    p { color: #64748B; margin-bottom: 24px; max-width: 400px; line-height: 1.6; }
+    .box { background: white; border-radius: 12px; padding: 24px; max-width: 500px; width: 100%; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+    .box h3 { font-size: 16px; margin-bottom: 16px; }
+    ul { list-style: none; }
+    ul li { padding: 12px; border-bottom: 1px solid #E2E8F0; cursor: pointer; border-radius: 8px; transition: background 0.2s; }
+    ul li:hover { background: #F8FAFC; }
+    ul li:last-child { border-bottom: none; }
+    .btn { background: #DC2626; color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 16px; }
+    .online-msg { margin-top: 16px; font-size: 14px; color: #10B981; display: none; }
+    .online-msg.show { display: block; }
+  </style>
+</head>
+<body>
+  <div class="icon">📡</div>
+  <h1>Sin conexión a Internet</h1>
+  <p>Puedes seguir leyendo las noticias guardadas anteriormente.</p>
+  <div class="box">
+    <h3>📰 Noticias disponibles offline</h3>
+    <ul id="lista"><li>Cargando...</li></ul>
+  </div>
+  <button class="btn" onclick="reintentar()">🔄 Reconectar</button>
+  <div class="online-msg" id="msg">✅ Conexión restablecida. Redirigiendo...</div>
+  <script>
+    async function mostrarCache() {
+      const lista = document.getElementById('lista');
+      if (!('caches' in window)) { lista.innerHTML = '<li>Sin artículos guardados.</li>'; return; }
+      try {
+        const cache = await caches.open('api-v2');
+        const keys = await cache.keys();
+        if (!keys.length) { lista.innerHTML = '<li>Visita el sitio con conexión para guardar noticias.</li>'; return; }
+        lista.innerHTML = keys.slice(0, 5).map(() => `<li onclick="location.href='/'">Noticia guardada - ${new Date().toLocaleDateString('es-NI')}</li>`).join('');
+      } catch(e) { lista.innerHTML = '<li>Error al cargar artículos.</li>'; }
+    }
+    function reintentar() {
+      if (navigator.onLine) { document.getElementById('msg').classList.add('show'); setTimeout(() => location.href = '/', 1500); }
+      else alert('Aún sin conexión. Intenta más tarde.');
+    }
+    window.addEventListener('online', () => { document.getElementById('msg').classList.add('show'); setTimeout(() => location.href = '/', 2000); });
+    mostrarCache();
+  </script>
+</body>
+</html>

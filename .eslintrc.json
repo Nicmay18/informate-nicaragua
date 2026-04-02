@@ -1,0 +1,31 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "jest": true,
+    "serviceworker": true
+  },
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "globals": {
+    "gtag": "readonly",
+    "clients": "readonly",
+    "window": "readonly",
+    "document": "readonly"
+  },
+  "rules": {
+    "no-unused-vars": ["warn", {"argsIgnorePattern": "^_"}],
+    "no-console": "off",
+    "semi": ["error", "always"],
+    "quotes": "off",
+    "no-undef": "warn",
+    "no-empty": "warn",
+    "no-constant-condition": "warn"
+  }
+}

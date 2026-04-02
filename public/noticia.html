@@ -750,11 +750,11 @@
       .join('');
     
     // Botones compartir
-    const url = encodeURIComponent(window.location.href);
+    const urlEncoded = encodeURIComponent(window.location.href);
     const text = encodeURIComponent(titulo);
-    document.getElementById('btn-wa').href = `https://wa.me/?text=${text}%20${url}`;
-    document.getElementById('btn-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-    document.getElementById('btn-tw').href = `https://twitter.com/intent/tweet?text=${text}&url=${url}`;
+    document.getElementById('btn-wa').href = `https://wa.me/?text=${text}%20${urlEncoded}`;
+    document.getElementById('btn-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}`;
+    document.getElementById('btn-tw').href = `https://twitter.com/intent/tweet?text=${text}&url=${urlEncoded}`;
   }
 
   async function loadRelated(categoria, excludeId) {

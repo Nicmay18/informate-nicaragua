@@ -1,963 +1,271 @@
-<!-- noticia.html - VERSIÓN OPTIMIZADA -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="page-title">Cargando... | Nicaragua Informate</title>
-  <meta name="description" id="meta-desc" content="Noticias de Nicaragua">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
-  <link rel="apple-touch-icon" href="/logo.png">
-  <meta name="apple-mobile-web-app-title" content="Informate NI">
-  
-  <!-- PWA Manifest -->
-  <link rel="manifest" href="/manifest.json">
-  <meta name="theme-color" content="#003366">
-  
-  <!-- AdSense Script -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
-          crossorigin="anonymous"></script>
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="article">
-  <meta property="og:site_name" content="Nicaragua Informate">
-  <meta property="og:url" content="">
-  <meta id="og-title" property="og:title" content="">
-  <meta id="og-desc" property="og:description" content="">
-  <meta id="og-image" property="og:image" content="">
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image">
-  <meta property="twitter:site" content="@NicaraguaInfo">
-  <meta id="twitter-title" property="twitter:title" content="">
-  <meta id="twitter-desc" property="twitter:description" content="">
-  <meta id="twitter-image" property="twitter:image" content="">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/anuncios.css">
-  
-  <style>
-    :root {
-      --brand-primary: #1e293b;
-      --brand-accent: #dc2626;
-      --brand-secondary: #2563eb;
-      --text-primary: #1a1a1a;
-      --text-secondary: #475569;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --surface: #ffffff;
-      --surface-alt: #f8fafc;
-      --font-serif: 'Merriweather', Georgia, serif;
-      --font-sans: 'Inter', system-ui, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="meta-title">Cargando Noticia... | Nicaragua Informate</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: var(--font-sans);
-      background: var(--surface);
-      color: var(--text-primary);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-    
-    /* HEADER */
-    .header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 16px 24px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-    .header-inner {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .header-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: var(--text-primary);
-    }
-    .header-logo img {
-      width: 40px;
-      height: 40px;
-      border-radius: 8px;
-      object-fit: cover;
-    }
-    .header-logo span {
-      font-family: var(--font-serif);
-      font-size: 20px;
-      font-weight: 900;
-    }
-    .back-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 8px;
-      transition: all 0.2s;
-    }
-    .back-btn:hover {
-      background: var(--surface-alt);
-      color: var(--text-primary);
-    }
-    
-    /* ARTICLE LAYOUT */
-    .article-container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 40px 24px;
-    }
-    
-    /* CATEGORÍA */
-    .category-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 20px;
-    }
-    .cat-sucesos { background: #fee2e2; color: #dc2626; }
-    .cat-nacionales { background: #ffedd5; color: #ea580c; }
-    .cat-deportes { background: #d1fae5; color: #059669; }
-    .cat-internacionales { background: #cffafe; color: #0891b2; }
-    .cat-tecnologia { background: #dbeafe; color: #2563eb; }
-    .cat-cultura { background: #f3e8ff; color: #9333ea; }
-    
-    /* TÍTULO */
-    h1.article-title {
-      font-family: var(--font-serif);
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.2;
-      letter-spacing: -0.5px;
-      color: var(--text-primary);
-      margin-bottom: 24px;
-    }
-    
-    /* META INFO */
-    .article-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      align-items: center;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 32px;
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-    .article-meta span {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .author-badge {
-      background: var(--surface-alt);
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      color: var(--text-secondary);
-    }
-    
-    /* IMAGEN PRINCIPAL */
-    .hero-image {
-      width: 100%;
-      height: auto;
-      max-height: 500px;
-      aspect-ratio: 16 / 9; /* Esto reserva el hueco antes de que cargue la foto */
-      background-color: #f0f0f0; /* Color de espera */
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 40px;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-      position: relative;
-    }
-    
-    /* Contenedor con marca de agua */
-    .hero-image-wrapper {
-      position: relative;
-      overflow: hidden;
-      border-radius: 12px;
-      margin-bottom: 40px;
-    }
-    
-    /* Marca de agua en imagen principal */
-    .hero-image-wrapper::before {
-      content: "";
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      width: 80px;
-      height: 80px;
-      background: url('/logo.png') no-repeat center;
-      background-size: contain;
-      opacity: 0.7;
-      z-index: 10;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-    }
-    
-    /* CONTENIDO */
-    .article-content {
-      font-size: 18px;
-      line-height: 1.8;
-      color: var(--text-primary);
-    }
-    .article-content p {
-      margin-bottom: 24px;
-    }
-    .article-content p:first-child::first-letter {
-      font-size: 3.5em;
-      float: left;
-      line-height: 0.8;
-      margin-right: 8px;
-      margin-top: 4px;
-      font-weight: 900;
-      color: var(--brand-accent);
-    }
-    
-    /* COMPARTIR SUTIL */
-    .share-section {
-      margin: 48px 0;
-      padding: 24px;
-      background: var(--surface-alt);
-      border-radius: 12px;
-      text-align: center;
-    }
-    .share-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 16px;
-    }
-    .share-buttons {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .share-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.2s;
-      border: none;
-      cursor: pointer;
-    }
-    .share-btn:hover { transform: translateY(-2px); }
-    .share-wa { background: #25d366; color: white; }
-    .share-fb { background: #1877f2; color: white; }
-    .share-tw { background: #0f1419; color: white; }
-    .share-copy { background: white; color: var(--text-primary); border: 1px solid var(--border); }
-    
-    /* CTA DONACIÓN ÚNICO - AL FINAL Y SUTIL */
-    .donation-section {
-      margin: 48px 0;
-      padding: 32px;
-      background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-      border-radius: 16px;
-      text-align: center;
-      border: 1px solid #fecaca;
-    }
-    .donation-section h3 {
-      font-family: var(--font-serif);
-      font-size: 20px;
-      margin-bottom: 8px;
-      color: var(--brand-accent);
-    }
-    .donation-section p {
-      color: var(--text-secondary);
-      margin-bottom: 20px;
-      font-size: 15px;
-    }
-    .donation-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: var(--brand-accent);
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.2s;
-    }
-    .donation-btn:hover {
-      background: #b91c1c;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    }
-    
-    /* NOTICIAS RELACIONADAS */
-    .related-section {
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 2px solid var(--border);
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 0.6s ease;
-    }
-    .related-title {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      font-weight: 700;
-      letter-spacing: -0.5px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .related-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-    .related-card {
-      background: var(--surface);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      text-decoration: none;
-      color: inherit;
-      transition: all 0.3s;
-    }
-    .related-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-      border-color: var(--brand-accent);
-    }
-    .rel-img-wrapper {
-      width: 100%;
-      height: 160px;
-      overflow: hidden;
-      background: #f0f0f0;
-    }
-    .rel-img-wrapper img {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: 16 / 9;
-      background-color: #f0f0f0;
-      object-fit: cover;
-      transition: transform 0.3s;
-    }
-    .related-card:hover .rel-img-wrapper img {
-      transform: scale(1.05);
-    }
-    .related-card-body {
-      padding: 16px;
-    }
-    .related-card h4 {
-      font-size: 15px;
-      font-weight: 700;
-      line-height: 1.4;
-      letter-spacing: -0.3px;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-    .related-card span {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 8px;
-      display: block;
-    }
-    
-    /* LOADING */
-    .loading {
-      text-align: center;
-      padding: 100px 20px;
-    }
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid var(--border);
-      border-top-color: var(--brand-accent);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin: 0 auto 20px;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    
-    /* ERROR */
-    .error {
-      text-align: center;
-      padding: 100px 20px;
-      max-width: 500px;
-      margin: 0 auto;
-    }
-    .error h2 {
-      font-family: var(--font-serif);
-      font-size: 24px;
-      margin-bottom: 12px;
-    }
-    .error p {
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      background: var(--brand-accent);
-      color: white;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 600;
-    }
-    
-    /* FOOTER SIMPLE */
-    footer {
-      background: var(--surface-alt);
-      border-top: 1px solid var(--border);
-      padding: 40px 24px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-top: 80px;
-    }
-    footer a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      margin: 0 12px;
-    }
-    footer a:hover { color: var(--brand-accent); }
-    
-    /* RESPONSIVE */
-    @media (max-width: 768px) {
-      h1.article-title { font-size: 1.75rem; }
-      .article-container { padding: 24px 20px; }
-      .related-grid { grid-template-columns: 1fr; }
-      .article-content { font-size: 16px; }
-      .article-content p:first-child::first-letter {
-        font-size: 2.5em;
-      }
-      .radio-player {
-        bottom: 70px;
-        right: 10px;
-        left: 10px;
-        min-width: auto;
-      }
-    }
-    
-    /* REPRODUCTOR DE RADIO FLOTANTE */
-    .radio-player {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      background: var(--brand-primary);
-      color: white;
-      padding: 16px 20px;
-      border-radius: 50px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-      z-index: 999;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      transition: all 0.3s;
-      cursor: pointer;
-      min-width: 200px;
-    }
-    .radio-player:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 25px rgba(0,0,0,0.4);
-    }
-    .radio-icon {
-      width: 40px;
-      height: 40px;
-      background: var(--brand-accent);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
-    .radio-icon.playing {
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-    .radio-info {
-      flex: 1;
-    }
-    .radio-station {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-    .radio-status {
-      font-size: 11px;
-      opacity: 0.8;
-    }
-  </style>
+    <style>
+        :root { --rojo: #d0021b; --azul: #003366; --negro: #1a1a1a; --gris-suave: #f8f9fa; }
+        body { font-family: 'Inter', sans-serif; margin: 0; color: var(--negro); line-height: 1.6; }
+
+        /* Barra de progreso de lectura */
+        .progress-container { position: fixed; top: 0; z-index: 2000; width: 100%; height: 4px; background: transparent; }
+        .progress-bar { height: 4px; background: var(--rojo); width: 0%; transition: width 0.1s; }
+
+        /* Cabecera de Impacto (Estilo TV) */
+        .news-header-hero { position: relative; width: 100%; height: 70vh; min-height: 400px; background: #000; overflow: hidden; }
+        
+        /* Marca de agua con texto estilo TN8 */
+        .news-header-hero::after {
+            content: "informate nicaragua";
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.7);
+            text-transform: lowercase;
+            letter-spacing: -1px;
+            z-index: 100;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            line-height: 1;
+        }
+        
+        .hero-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+
+        .hero-overlay {
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 70%;
+            background: linear-gradient(to top, rgba(0,0,0,1) 10%, transparent);
+            display: flex; align-items: flex-end; padding: 40px 5%; box-sizing: border-box;
+        }
+
+        .hero-content { max-width: 900px; color: white; }
+        .badge-cat { 
+            background: var(--rojo); color: white; padding: 5px 12px; 
+            font-weight: 800; text-transform: uppercase; font-size: 0.8rem; margin-bottom: 15px; display: inline-block;
+        }
+        h1.main-title { 
+            font-family: 'Inter', sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3.5rem); 
+            line-height: 1.1; margin: 0; text-transform: uppercase;
+        }
+
+        /* Cuerpo de la Noticia */
+        .container-reading { max-width: 800px; margin: 40px auto; padding: 0 20px; }
+        .meta-info { 
+            display: flex; gap: 20px; color: #666; font-size: 0.9rem; 
+            border-bottom: 1px solid #eee; padding-bottom: 20px; margin-bottom: 30px; 
+        }
+
+        #news-content { font-family: 'Merriweather', serif; font-size: 1.2rem; color: #333; line-height: 1.9; }
+        #news-content p { margin-bottom: 1.8rem; }
+
+        /* Noticias Relacionadas Pro */
+        .related-section { background: var(--gris-suave); padding: 60px 20px; margin-top: 60px; }
+        .related-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 25px; max-width: 1100px; margin: 0 auto; 
+        }
+        .related-card { text-decoration: none; color: inherit; background: white; transition: 0.3s; }
+        .related-card:hover { transform: translateY(-5px); }
+        .related-card img { width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+        .related-card h4 { padding: 15px; margin: 0; font-size: 1rem; line-height: 1.4; }
+
+        /* Publicidad Adaptativa */
+        .ad-container { margin: 40px 0; text-align: center; background: #fafafa; border: 1px solid #eee; min-height: 250px; display: flex; align-items: center; justify-content: center; }
+
+        @media (max-width: 768px) {
+            .news-header-hero { height: 50vh; }
+            h1.main-title { font-size: 1.8rem; }
+        }
+    </style>
 </head>
 <body>
 
-<header class="header">
-  <div class="header-inner">
-    <a href="/" class="header-logo">
-      <img src="/logo.png" alt="Logo" loading="eager" decoding="async" onerror="this.style.display='none'">
-      <span>Nicaragua Informate</span>
-    </a>
-    <a href="/" class="back-btn">
-      <i class="fas fa-arrow-left"></i> Volver al inicio
-    </a>
-  </div>
-</header>
+    <div class="progress-container"><div class="progress-bar" id="myBar"></div></div>
 
-<div class="article-container">
-  <div class="loading" id="loading">
-    <div class="spinner"></div>
-    <p style="color: var(--text-muted);">Cargando noticia...</p>
-  </div>
-
-  <div class="error" id="error" style="display:none;">
-    <h2>Noticia no encontrada</h2>
-    <p>La noticia que buscas no está disponible o fue eliminada.</p>
-    <a href="/" class="btn-primary"><i class="fas fa-home"></i> Ir al inicio</a>
-  </div>
-
-  <article id="article" style="display:none;">
-    <span class="category-tag" id="category">Noticias</span>
-    <h1 class="article-title" id="title">Cargando...</h1>
-    
-    <div class="article-meta">
-      <span class="author-badge"><i class="far fa-user"></i> Keyling Rivera</span>
-      <span><i class="far fa-calendar"></i> <span id="date">--</span></span>
-      <span><i class="far fa-clock"></i> <span id="readTime">1</span> min de lectura</span>
-      <span><i class="far fa-eye"></i> <span id="views">0</span> lecturas</span>
-    </div>
-
-    <img class="hero-image" id="heroImage" src="" alt="" loading="eager" decoding="async" style="display:none;">
-    
-    <div class="article-content" id="content"></div>
-
-    <!-- Compartir sutil -->
-    <div class="share-section">
-      <p class="share-title">¿Te pareció importante esta información? Compártela</p>
-      <div class="share-buttons">
-        <a href="#" class="share-btn share-wa" id="btn-wa"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="#" class="share-btn share-fb" id="btn-fb"><i class="fab fa-facebook-f"></i> Facebook</a>
-        <a href="#" class="share-btn share-tw" id="btn-tw"><i class="fab fa-twitter"></i> Twitter</a>
-        <button class="share-btn share-copy" onclick="copyLink()"><i class="fas fa-link"></i> Copiar link</button>
-      </div>
-    </div>
-
-    <!-- Donación única y sutil al final -->
-    <div class="donation-section">
-      <h3>🤝 Apoya el periodismo independiente</h3>
-      <p>Tu contribución nos permite seguir informando sin barreras. Si valoras nuestro trabajo, considera apoyarnos.</p>
-      <a href="https://www.paypal.me/NicaraguaInformate" target="_blank" class="donation-btn">
-        <i class="fab fa-paypal"></i> Hacer una donación
-      </a>
-    </div>
-
-    <!-- Noticias relacionadas -->
-    <div class="related-section" id="relatedSection" style="display:none;">
-      <h3 class="related-title"><i class="fas fa-newspaper" style="color: var(--brand-accent);"></i> Noticias relacionadas</h3>
-      <div class="related-grid" id="relatedGrid"></div>
-    </div>
-  </article>
-</div>
-
-<footer>
-  <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
-  <p style="margin-top: 10px;">
-    <a href="/">Inicio</a>
-    <a href="/privacidad.html">Privacidad</a>
-    <a href="/contacto.html">Contacto</a>
-  </p>
-</footer>
-
-<!-- REPRODUCTOR DE RADIO FLOTANTE -->
-<div class="radio-player" id="radioPlayer">
-  <div class="radio-icon" id="radioIcon">
-    <i class="fas fa-broadcast-tower"></i>
-  </div>
-  <div class="radio-info">
-    <div class="radio-station">Radio Nicaragua</div>
-    <div class="radio-status" id="radioStatus">Click para reproducir</div>
-  </div>
-</div>
-
-<script type="module">
-  console.log('Script iniciado');
-  console.log('Script iniciado');
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { initializeFirestore, memoryLocalCache, collection, doc, getDoc, getDocs, query, orderBy, limit, where, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  console.log('Módulos Firebase importados');
-
-  const app = initializeApp({
-    apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
-    authDomain: "informate-instant-nicaragua.firebaseapp.com",
-    projectId: "informate-instant-nicaragua",
-    storageBucket: "informate-instant-nicaragua.firebasestorage.app",
-    messagingSenderId: "24988088146",
-    appId: "1:24988088146:web:d26a207508da055668ec8b"
-  });
-  
-  console.log('Firebase inicializado');
-  
-  const db = initializeFirestore(app, { localCache: memoryLocalCache() });
-  const urlParams = new URLSearchParams(window.location.search);
-  const id = urlParams.get('id');
-
-  console.log('Firestore inicializado, ID de noticia:', id);
-
-  // Categorías para clases CSS
-  const categoryClasses = {
-    'Sucesos': 'cat-sucesos',
-    'Nacionales': 'cat-nacionales',
-    'Deportes': 'cat-deportes',
-    'Internacionales': 'cat-internacionales',
-    'Tecnología': 'cat-tecnologia',
-    'Cultura': 'cat-cultura'
-  };
-
-  async function loadArticle() {
-    console.log('loadArticle iniciado, ID:', id);
-    
-    if (!id) {
-      console.error('No hay ID en la URL');
-      showError();
-      return;
-    }
-
-    try {
-      console.log('Obteniendo documento de Firestore...');
-      const docRef = doc(db, 'noticias', id);
-      const docSnap = await getDoc(docRef);
-      
-      console.log('Documento obtenido:', docSnap.exists());
-      
-      if (!docSnap.exists()) {
-        console.error('Documento no existe');
-        showError();
-        return;
-      }
-
-      const data = { id: docSnap.id, ...docSnap.data() };
-      console.log('Datos de la noticia:', data);
-      
-      // Incrementar vistas (no bloqueante)
-      updateDoc(docRef, { vistas: increment(1) }).catch((err) => {
-        console.warn('Error incrementando vistas:', err);
-      });
-      
-      renderArticle(data);
-      loadRelated(data.categoria, data.id);
-      
-    } catch (error) {
-      console.error("Error cargando noticia:", error);
-      showError();
-    }
-  }
-
-  function renderArticle(n) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('article').style.display = 'block';
-    
-    // Título y meta
-    const titulo = n.titulo || 'Sin título';
-    const url = `https://nicaraguainformate.com/noticia.html?id=${n.id}`;
-    
-    document.title = `${titulo} | Nicaragua Informate`;
-    document.getElementById('page-title').textContent = document.title;
-    document.getElementById('title').textContent = titulo;
-    
-    // Actualizar OG tags con URLs absolutas
-    document.getElementById('og-title').content = titulo;
-    document.getElementById('og-desc').content = n.resumen?.substring(0, 160) || '';
-    document.querySelector('meta[property="og:url"]').content = url;
-    
-    // Twitter tags
-    document.getElementById('twitter-title').content = titulo;
-    document.getElementById('twitter-desc').content = n.resumen?.substring(0, 160) || '';
-    
-    // Categoría
-    const cat = n.categoria || 'Noticias';
-    const catEl = document.getElementById('category');
-    catEl.textContent = cat;
-    catEl.className = `category-tag ${categoryClasses[cat] || 'cat-nacionales'}`;
-    
-    // Fecha
-    let fecha = new Date();
-    if (n.fecha?.toDate) fecha = n.fecha.toDate();
-    else if (n.fecha?.seconds) fecha = new Date(n.fecha.seconds * 1000);
-    document.getElementById('date').textContent = fecha.toLocaleDateString('es-NI', {
-      day: 'numeric', month: 'long', year: 'numeric'
-    });
-    
-    // Vistas y tiempo lectura
-    const palabras = (n.contenido || '').split(/\s+/).length;
-    document.getElementById('readTime').textContent = Math.max(1, Math.ceil(palabras / 200));
-    document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
-    
-    // Imagen con URL absoluta
-    if (n.imagen && !n.imagen.includes('facebook')) {
-      const img = document.getElementById('heroImage');
-      const imgUrl = n.imagen.startsWith('http') ? n.imagen : `https://nicaraguainformate.com${n.imagen}`;
-      
-      img.src = imgUrl;
-      img.alt = titulo;
-      img.style.display = 'block';
-      
-      // OG y Twitter images con URL absoluta
-      document.getElementById('og-image').content = imgUrl;
-      document.getElementById('twitter-image').content = imgUrl;
-    } else {
-      // Imagen por defecto
-      const defaultImg = 'https://nicaraguainformate.com/logo.png';
-      document.getElementById('og-image').content = defaultImg;
-      document.getElementById('twitter-image').content = defaultImg;
-    }
-    
-    // Contenido (formatear párrafos)
-    const contenido = n.contenido || n.resumen || '';
-    const parrafos = contenido.split('\n').filter(p => p.trim());
-    document.getElementById('content').innerHTML = parrafos
-      .map(p => `<p>${escapeHtml(p)}</p>`)
-      .join('');
-    
-    // Botones compartir
-    const urlEncoded = encodeURIComponent(window.location.href);
-    const text = encodeURIComponent(titulo);
-    document.getElementById('btn-wa').href = `https://wa.me/?text=${text}%20${urlEncoded}`;
-    document.getElementById('btn-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${urlEncoded}`;
-    document.getElementById('btn-tw').href = `https://twitter.com/intent/tweet?text=${text}&url=${urlEncoded}`;
-  }
-
-  async function loadRelated(categoria, excludeId) {
-    const grid = document.getElementById('relatedGrid');
-    try {
-      const ref = collection(db, 'noticias');
-      
-      // 1. Intentar buscar por misma categoría
-      let q = query(ref, where('categoria', '==', categoria), limit(5));
-      let snap = await getDocs(q);
-      let rel = snap.docs
-        .map(d => ({id: d.id, ...d.data()}))
-        .filter(n => n.id !== excludeId);
-      
-      // 2. Si no hay suficientes, rellenar con las más recientes (Backup)
-      if (rel.length < 3) {
-        const q2 = query(ref, orderBy('fecha', 'desc'), limit(6));
-        const snap2 = await getDocs(q2);
-        const recientes = snap2.docs
-          .map(d => ({id: d.id, ...d.data()}))
-          .filter(n => n.id !== excludeId);
-        
-        // Combinar y eliminar duplicados
-        rel = [...new Map([...rel, ...recientes].map(item => [item.id, item])).values()].slice(0, 4);
-      }
-      
-      if (rel.length === 0) return;
-      
-      // 3. Renderizado limpio
-      document.getElementById('relatedSection').style.display = 'block';
-      grid.innerHTML = rel.map(n => {
-        const img = n.imagen && !n.imagen.includes('facebook') 
-          ? n.imagen 
-          : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60';
-        return `
-          <a href="noticia.html?id=${n.id}" class="related-card">
-            <div class="rel-img-wrapper">
-              <img src="${img}" loading="lazy" decoding="async" alt="${escapeHtml(n.titulo || '')}" onerror="this.src='https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60'">
+    <article>
+        <header class="news-header-hero">
+            <img id="main-img" src="" class="hero-img" alt="">
+            <div class="hero-overlay">
+                <div class="hero-content">
+                    <span id="category" class="badge-cat">Sucesos</span>
+                    <h1 id="title" class="main-title">Cargando noticia...</h1>
+                </div>
             </div>
-            <div class="related-card-body">
-              <h4>${escapeHtml(n.titulo || '')}</h4>
-              <span>${n.categoria || 'Noticias'}</span>
+        </header>
+
+        <div class="container-reading">
+            <div class="meta-info">
+                <span><i class="far fa-calendar-alt"></i> <span id="date">--/--/--</span></span>
+                <span><i class="far fa-user"></i> Por Redacción</span>
+                <span><i class="far fa-eye"></i> <span id="views"></span> vistas</span>
             </div>
-          </a>
-        `;
-      }).join('');
-      
-    } catch (error) {
-      console.error("Error cargando relacionadas:", error);
-    }
-  }
 
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
+            <div id="news-content">
+                </div>
 
-  function showError() {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('error').style.display = 'block';
-    document.title = 'Noticia no encontrada | Nicaragua Informate';
-  }
+            <div class="ad-container">
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXX" data-ad-slot="XXXXX" data-ad-format="auto"></ins>
+            </div>
+        </div>
+    </article>
 
-  // Global functions
-  window.copyLink = function() {
-    navigator.clipboard.writeText(window.location.href).then(() => {
-      alert('Enlace copiado al portapapeles');
-    });
-  };
-  
-  // REPRODUCTOR DE RADIO PERSISTENTE
-  class RadioPlayer {
-    constructor() {
-      this.audio = null;
-      this.isPlaying = false;
-      this.stations = {
-        'Radio Nicaragua': 'https://stream.zeno.fm/your-radio-stream-url'
-      };
-      this.currentStation = 'Radio Nicaragua';
-      this.init();
-    }
+    <section class="related-section" id="relatedSection" style="display:none;">
+        <div style="max-width: 1100px; margin: 0 auto 30px;">
+            <h3 style="font-family: 'Inter'; text-transform: uppercase; border-left: 4px solid var(--rojo); padding-left: 15px;">También te puede interesar</h3>
+        </div>
+        <div class="related-grid" id="relatedGrid"></div>
+    </section>
 
-    init() {
-      const savedState = localStorage.getItem('radioState');
-      if (savedState) {
-        const state = JSON.parse(savedState);
-        this.isPlaying = state.isPlaying;
-        this.currentStation = state.station || this.currentStation;
-        
-        if (this.isPlaying) {
-          this.play();
+    <script type="module">
+        // Importar Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { initializeFirestore, memoryLocalCache, collection, doc, getDoc, getDocs, query, orderBy, limit, where, updateDoc, increment } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        // Configuración Firebase
+        const app = initializeApp({
+            apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+            authDomain: "informate-instant-nicaragua.firebaseapp.com",
+            projectId: "informate-instant-nicaragua",
+            storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+            messagingSenderId: "24988088146",
+            appId: "1:24988088146:web:d26a207508da055668ec8b"
+        });
+
+        const db = initializeFirestore(app, { localCache: memoryLocalCache() });
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
+
+        // Cargar noticia
+        async function loadArticle() {
+            console.log('loadArticle iniciado, ID:', id);
+            
+            if (!id) {
+                alert('No se encontró el ID de la noticia');
+                window.location.href = '/';
+                return;
+            }
+
+            const docRef = doc(db, "noticias", id);
+            
+            try {
+                const docSnap = await getDoc(docRef);
+                
+                if (docSnap.exists()) {
+                    const n = docSnap.data();
+                    console.log('Datos de la noticia:', n);
+                    
+                    // 1. Títulos y Meta
+                    document.title = n.titulo + " | Nicaragua Informate";
+                    document.getElementById('title').innerText = n.titulo;
+                    document.getElementById('category').innerText = n.categoria;
+                    
+                    // 2. Imagen Principal (Aquí es donde ocurre la magia TN8)
+                    const mainImg = document.getElementById('main-img');
+                    mainImg.src = n.imagen || 'https://nicaraguainformate.com/logo.png';
+                    mainImg.alt = n.titulo;
+                    
+                    // 3. Fecha (Formateo profesional)
+                    const fecha = n.fecha?.toDate ? n.fecha.toDate() : new Date();
+                    document.getElementById('date').innerText = fecha.toLocaleDateString('es-NI', {
+                        day: '2-digit', 
+                        month: 'long', 
+                        year: 'numeric'
+                    });
+                    
+                    // 4. Vistas
+                    document.getElementById('views').textContent = ((n.vistas || 0) + 1).toLocaleString();
+                    
+                    // Incrementar vistas
+                    updateDoc(docRef, { vistas: increment(1) }).catch(() => {});
+                    
+                    // 5. Contenido (Limpiar y mostrar)
+                    // Si el contenido viene con saltos de línea, los convertimos a párrafos
+                    const contenidoLimpio = n.contenido.replace(/\n/g, '<br><br>');
+                    document.getElementById('news-content').innerHTML = contenidoLimpio;
+                    
+                    // 6. Cargar Relacionadas (Sin que el usuario lo note)
+                    cargarNoticiasRelacionadas(n.categoria, id);
+                    
+                } else {
+                    console.error('Documento no existe');
+                    window.location.href = 'index.html'; // Si no existe, vuelve al inicio
+                }
+                
+            } catch (error) {
+                console.error("Error cargando noticia:", error);
+                alert('Error al cargar la noticia');
+            }
         }
-      }
 
-      const player = document.getElementById('radioPlayer');
-      player.addEventListener('click', () => this.toggle());
+        async function cargarNoticiasRelacionadas(categoria, excludeId) {
+            try {
+                const ref = collection(db, 'noticias');
+                let q = query(ref, where('categoria', '==', categoria), limit(5));
+                let snap = await getDocs(q);
+                let rel = snap.docs
+                    .map(d => ({ id: d.id, ...d.data() }))
+                    .filter(n => n.id !== excludeId);
 
-      window.addEventListener('beforeunload', () => this.saveState());
-    }
+                if (rel.length < 3) {
+                    const q2 = query(ref, orderBy('fecha', 'desc'), limit(6));
+                    const snap2 = await getDocs(q2);
+                    const recientes = snap2.docs
+                        .map(d => ({ id: d.id, ...d.data() }))
+                        .filter(n => n.id !== excludeId);
+                    rel = [...new Map([...rel, ...recientes].map(item => [item.id, item])).values()].slice(0, 4);
+                }
 
-    toggle() {
-      if (this.isPlaying) {
-        this.pause();
-      } else {
-        this.play();
-      }
-    }
+                if (rel.length === 0) return;
 
-    play() {
-      if (!this.audio) {
-        this.audio = new Audio(this.stations[this.currentStation]);
-        this.audio.volume = 0.7;
-      }
+                document.getElementById('relatedSection').style.display = 'block';
+                document.getElementById('relatedGrid').innerHTML = rel.map(n => {
+                    const img = n.imagen && !n.imagen.includes('facebook')
+                        ? n.imagen
+                        : 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=60';
+                    return `
+                        <a href="noticia.html?id=${n.id}" class="related-card">
+                            <img src="${img}" loading="lazy" alt="${escapeHtml(n.titulo || '')}">
+                            <h4>${escapeHtml(n.titulo || '')}</h4>
+                        </a>
+                    `;
+                }).join('');
 
-      this.audio.play().then(() => {
-        this.isPlaying = true;
-        this.updateUI();
-        this.saveState();
-      }).catch(err => {
-        console.error('Error reproduciendo radio:', err);
-        document.getElementById('radioStatus').textContent = 'Error al reproducir';
-      });
-    }
+            } catch (error) {
+                console.error("Error cargando relacionadas:", error);
+            }
+        }
 
-    pause() {
-      if (this.audio) {
-        this.audio.pause();
-      }
-      this.isPlaying = false;
-      this.updateUI();
-      this.saveState();
-    }
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
 
-    updateUI() {
-      const icon = document.getElementById('radioIcon');
-      const status = document.getElementById('radioStatus');
-      
-      if (this.isPlaying) {
-        icon.classList.add('playing');
-        icon.innerHTML = '<i class="fas fa-pause"></i>';
-        status.textContent = 'En vivo';
-      } else {
-        icon.classList.remove('playing');
-        icon.innerHTML = '<i class="fas fa-play"></i>';
-        status.textContent = 'Click para reproducir';
-      }
-    }
+        // Cargar
+        loadArticle();
 
-    saveState() {
-      localStorage.setItem('radioState', JSON.stringify({
-        isPlaying: this.isPlaying,
-        station: this.currentStation
-      }));
-    }
-  }
-
-  // Cargar
-  (async () => {
-    console.log('Llamando a loadArticle...');
-    try {
-      await loadArticle();
-    } catch (error) {
-      console.error('Error en loadArticle:', error);
-      showError();
-    }
-  })();
-  
-  // Inicializar radio player
-  const radioPlayer = new RadioPlayer();
-  
-  // Detectar cuando el lector llega al 80% del artículo y mostrar relacionadas con animación
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-  
-  // Observar la sección de relacionadas cuando se cargue
-  setTimeout(() => {
-    const relatedSection = document.getElementById('relatedSection');
-    if (relatedSection) {
-      observer.observe(relatedSection);
-    }
-  }, 1000);
-  
-  // Registrar Service Worker para PWA
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(reg => console.log('SW registrado'))
-        .catch(err => console.log('SW error:', err));
-    });
-  }
-  
-  // Sistema de Anuncios Inteligentes
-  const script = document.createElement('script');
-  script.src = '/js/ads/implementacion-segura.js';
-  script.defer = true;
-  document.body.appendChild(script);
-</script>
+        // Registrar Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
+    
+    <script>
+        // Lógica de barra de progreso
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        };
+    </script>
 </body>
 </html>

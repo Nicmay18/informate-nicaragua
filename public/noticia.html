@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="meta-title">Cargando Noticia... | Nicaragua Informate</title>
+    
+    <!-- AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
+            crossorigin="anonymous"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -110,7 +115,12 @@
                 </div>
 
             <div class="ad-container">
-                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXX" data-ad-slot="XXXXX" data-ad-format="auto"></ins>
+                <ins class="adsbygoogle" 
+                     style="display:block" 
+                     data-ad-client="ca-pub-4115203339551838" 
+                     data-ad-slot="auto" 
+                     data-ad-format="auto"
+                     data-full-width-responsive="true"></ins>
             </div>
         </div>
     </article>
@@ -281,6 +291,16 @@
                     
                     // Ejecutar las relacionadas después de cargar la principal
                     cargarNoticiasRelacionadas(n.categoria, id);
+                    
+                    // RECIÉN AQUÍ inicializa los anuncios después de que todo esté cargado
+                    setTimeout(() => {
+                        try {
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                            console.log('Anuncios de AdSense inicializados');
+                        } catch (e) {
+                            console.error('Error inicializando AdSense:', e);
+                        }
+                    }, 1000);
                     
                 } else {
                     console.log("No existe la noticia");

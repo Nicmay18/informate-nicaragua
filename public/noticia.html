@@ -338,14 +338,16 @@
             return div.innerHTML;
         }
 
-        // Cargar
-        // Espera a que el DOM esté listo antes de pedir los datos
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('DOM cargado, iniciando carga de noticia...');
-            if (id) {
-                loadArticle();
+        // Aseguramos que nada se ejecute hasta que el navegador esté listo
+        window.addEventListener('load', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const noticiaId = urlParams.get('id');
+            
+            if (noticiaId) {
+                console.log("Cargando noticia ID:", noticiaId);
+                await loadArticle();
             } else {
-                console.error('No se encontró ID en la URL');
+                console.warn("No se encontró ID en la URL");
                 alert('No se encontró el ID de la noticia');
                 window.location.href = '/';
             }

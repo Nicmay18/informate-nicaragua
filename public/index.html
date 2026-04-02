@@ -1347,7 +1347,7 @@ function renderizarCarrusel() {
     const fetchPriority = i === 0 ? 'fetchpriority="high"' : '';
     return `
       <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
-        <img class="card-img" src="${img}" alt="${titulo}" loading="${loadingAttr}" decoding="async" ${fetchPriority} width="1200" height="675">
+        <img class="card-img" src="${img}" alt="${titulo}" loading="${loadingAttr}" decoding="async" ${fetchPriority} width="1200" height="675" style="width:100%; height:auto; object-fit:cover;">
         <div class="carousel-caption-custom">
           <span class="carousel-badge">${n.categoria || 'Noticias'}</span>
           <h3>${titulo}</h3>
@@ -1386,7 +1386,7 @@ function renderizarNoticias() {
       return `
         <a href="noticia.html?id=${n.id}" class="breaking-card">
           <div class="card-image">
-            <img class="card-img" src="${img}" alt="${titulo}" loading="eager" decoding="async" fetchpriority="high" width="1200" height="675">
+            <img class="card-img" src="${img}" alt="${titulo}" loading="eager" decoding="async" fetchpriority="high" width="1200" height="675" style="width:100%; height:auto; object-fit:cover;">
           </div>
           <div class="breaking-body">
             <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
@@ -1404,7 +1404,7 @@ function renderizarNoticias() {
     return `
       <a href="noticia.html?id=${n.id}" class="news-card">
         <div class="card-image-wrapper">
-          <img class="card-img" src="${img}" alt="${titulo}" loading="lazy" decoding="async" width="280" height="175">
+          <img class="card-img" src="${img}" alt="${titulo}" loading="lazy" decoding="async" width="280" height="175" style="width:100%; height:auto; object-fit:cover; border-radius:8px;">
         </div>
         <div class="card-body">
           <span class="tag">${n.categoria || 'General'}</span>

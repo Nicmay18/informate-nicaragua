@@ -9,8 +9,8 @@ export default async function handler(req, res) {
   const { titulo, categoria, palabras = 400 } = req.body;
   if (!titulo) return res.status(400).json({ error: 'Falta el titular' });
 
-  const GEMINI_KEY = process.env.GEMINI_API_KEY;
-  if (!GEMINI_KEY) return res.status(500).json({ error: 'GEMINI_API_KEY no configurada en Vercel' });
+  const GROQ_KEY = process.env.GROQ_API_KEY;
+  if (!GROQ_KEY) return res.status(500).json({ error: 'GROQ_API_KEY no configurada en Vercel' });
 
   const prompt = `Eres un periodista profesional de Nicaragua Informate. Redacta una noticia completa en español, estilo BBC/CNN en Español, sobre: "${titulo}". Categoría: ${categoria || 'General'}.
 
@@ -23,35 +23,30 @@ Requisitos:
 
 Devuelve SOLO el contenido, sin título ni encabezados.`;
 
-  // Intentar modelos en orden hasta que uno funcione
-  const modelos = [
-    'gemini-1.5-flash',
-    'gemini-1.5-pro', 
-    'gemini-pro',
-    'gemini-1.0-pro'
-  ];
+  try {
+    const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${GROQ_KEY}`
+      },
+      body: JSON.stringify({
+        model: 'llama3-8b-8192',
+        messages: [{ role: 'user', content: prompt }],
+        temperature: 0.7,
+        max_tokens: 1024
+      })
+    });
 
-  let ultimoError = '';
-  for (const modelo of modelos) {
-    try {
-      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${GEMINI_KEY}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.7, maxOutputTokens: 1024 }
-        })
-      });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.error?.message || `Groq status ${resp.status}`);
 
-      const data = await resp.json();
-      if (!resp.ok) { ultimoError = data.error?.message || `status ${resp.status}`; continue; }
+    const texto = data?.choices?.[0]?.message?.content;
+    if (!texto) throw new Error('Respuesta vacia de Groq');
 
-      const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      if (!texto) { ultimoError = 'Respuesta vacia'; continue; }
+    return res.status(200).json({ success: true, contenido: texto.trim() });
 
-      return res.status(200).json({ success: true, contenido: texto.trim(), modelo });
-    } catch(e) { ultimoError = e.message; }
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
   }
-
-  return res.status(500).json({ error: 'Ningún modelo disponible: ' + ultimoError });
 }

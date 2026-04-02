@@ -1533,39 +1533,36 @@ function cerrarCta() {
   localStorage.setItem('ctaClosed', 'true');
 }
 
-// REPRODUCTOR DE RADIO CON SELECTOR
-let radioPlayer = {
+// REPRODUCTOR DE RADIO CON SELECTOR - 5 RADIOS PRINCIPALES
+const radioPlayer = {
   audio: null,
   isPlaying: false,
   
   init() {
-    const player = document.getElementById('radioPlayer');
+    const icon = document.getElementById('radioIcon');
     const selector = document.getElementById('radioSelector');
     
-    if (player) {
-      // Click en el icono para play/pause
-      const icon = document.getElementById('radioIcon');
-      if (icon) {
-        icon.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.toggle();
-        });
-      }
+    // Click en el icono para play/pause
+    if (icon) {
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggle();
+      });
+    }
+    
+    // Cambio de radio - reiniciar stream
+    if (selector) {
+      selector.addEventListener('change', () => {
+        if (this.isPlaying) {
+          this.stop();
+          setTimeout(() => this.play(), 100);
+        }
+      });
       
-      // Cambio de radio
-      if (selector) {
-        selector.addEventListener('change', () => {
-          if (this.isPlaying) {
-            this.pause();
-            this.play();
-          }
-        });
-        
-        // Evitar que el click en el selector active play/pause
-        selector.addEventListener('click', (e) => {
-          e.stopPropagation();
-        });
-      }
+      // Evitar que el click en el selector active play/pause
+      selector.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
     }
   },
   
@@ -1579,27 +1576,31 @@ let radioPlayer = {
   
   play() {
     const selector = document.getElementById('radioSelector');
-    const streamUrl = selector ? selector.value : 'https://s5.mexside.net:7048/stream';
+    const streamUrl = selector?.value || 'https://s5.mexside.net:7048/stream';
     
-    // Si hay audio anterior, detenerlo
-    if (this.audio) {
-      this.audio.pause();
-      this.audio = null;
-    }
+    // Detener audio anterior si existe
+    this.stop();
     
+    // Crear nuevo audio
     this.audio = new Audio(streamUrl);
     this.audio.volume = 0.7;
+    this.audio.preload = 'none';
     
-    this.audio.play()
-      .then(() => {
-        this.isPlaying = true;
-        this.updateUI();
-      })
-      .catch(err => {
-        console.error('Error reproduciendo radio:', err);
-        const status = document.getElementById('radioStatus');
-        if (status) status.textContent = 'Error al reproducir';
-      });
+    // Intentar reproducir
+    const playPromise = this.audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          this.isPlaying = true;
+          this.updateUI();
+        })
+        .catch(err => {
+          console.error('Error reproduciendo radio:', err);
+          this.updateStatus('Error al reproducir');
+          this.isPlaying = false;
+        });
+    }
   },
   
   pause() {
@@ -1610,21 +1611,37 @@ let radioPlayer = {
     this.updateUI();
   },
   
+  stop() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio = null;
+    }
+    this.isPlaying = false;
+  },
+  
   updateUI() {
     const icon = document.getElementById('radioIcon');
     const status = document.getElementById('radioStatus');
     
-    if (icon && status) {
+    if (icon) {
       if (this.isPlaying) {
         icon.classList.add('playing');
         icon.innerHTML = '<i class="fas fa-pause"></i>';
-        status.textContent = 'En vivo';
       } else {
         icon.classList.remove('playing');
         icon.innerHTML = '<i class="fas fa-play"></i>';
-        status.textContent = 'Click para reproducir';
       }
     }
+    
+    if (status) {
+      status.textContent = this.isPlaying ? 'En vivo' : 'Click para reproducir';
+    }
+  },
+  
+  updateStatus(text) {
+    const status = document.getElementById('radioStatus');
+    if (status) status.textContent = text;
   }
 };
 

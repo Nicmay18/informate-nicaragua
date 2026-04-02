@@ -124,7 +124,7 @@ body,
   width: 100%;
   height: 100%;
   object-fit: cover !important;
-  object-position: center 20% !important; /* Foco en la parte superior (rostros) */
+  object-position: center 35% !important; /* Mostrar más de la cara */
   filter: none !important; /* ELIMINAR cualquier blur o grayscale */
   transition: transform 0.3s ease !important;
 }

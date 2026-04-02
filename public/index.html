@@ -2186,7 +2186,8 @@ function cambiarCategoria(cat) {
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 function getNoticiaUrl(n) {
-  return n.slug ? `/noticia/${n.slug}` : `/noticia.html?id=${n.id}`;
+  // Usar siempre noticia.html con query params - más confiable con Vercel static
+  return `/noticia.html?id=${n.id}${n.slug ? '&slug=' + encodeURIComponent(n.slug) : ''}`;
 }
 function abrirNoticia(id, event) {
   const n = noticias.find(x => x.id === id);

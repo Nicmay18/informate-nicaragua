@@ -866,6 +866,24 @@
     }
 
     .image-preview-container.active { display: block; }
+    
+    .watermark-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(227, 30, 36, 0.95);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+    }
 
     .image-preview {
       width: 100%;
@@ -1760,18 +1778,40 @@
               </div>
 
               <div class="form-group">
-                <label class="form-label">Imagen Destacada <span class="required">*</span></label>
+                <label class="form-label">GridArt de Impacto (Collage Automático) <span class="required">*</span>
+                  <span style="color:var(--info);font-size:12px;margin-left:8px;">(Grid de 2 imágenes y Marca de Agua aplicados automáticamente)</span>
+                </label>
                 
-                <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
-                  <div class="upload-icon">
-                    <i class="fas fa-cloud-upload-alt"></i>
+                <div class="form-row" style="gap:16px;">
+                  <div class="upload-zone" id="uploadZone1" onclick="document.getElementById('fileInput1').click()" style="padding:20px;height:120px;">
+                    <div class="upload-icon" style="font-size:18px;">
+                      <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="upload-text" style="font-size:13px;" id="uploadText1">Subir Imagen 1 (Impacto)</div>
+                    <input type="file" id="fileInput1" hidden accept="image/*" onchange="handleDualFileSelect(event, 1)">
                   </div>
-                  <div class="upload-text">Arrastra una imagen o haz clic para subir</div>
-                  <div class="upload-subtext">PNG, JPG hasta 5MB. También puedes pegar una URL</div>
-                  <input type="file" id="fileInput" hidden accept="image/*" onchange="handleFileSelect(event)">
+                  
+                  <div class="upload-zone" id="uploadZone2" onclick="document.getElementById('fileInput2').click()" style="padding:20px;height:120px;">
+                    <div class="upload-icon" style="font-size:18px;">
+                      <i class="fas fa-portrait"></i>
+                    </div>
+                    <div class="upload-text" style="font-size:13px;" id="uploadText2">Subir Imagen 2 (Contexto)</div>
+                    <input type="file" id="fileInput2" hidden accept="image/*" onchange="handleDualFileSelect(event, 2)">
+                  </div>
+                </div>
+                
+                <div class="form-group" style="margin-top:16px;">
+                  <label class="form-label" style="font-size:13px;">Estilo del Grid</label>
+                  <select class="form-select" id="gridStyle" onchange="actualizarDualPreview()" style="font-size:13px;padding:8px;">
+                    <option value="split-v">División Vertical con Cinta Roja</option>
+                    <option value="picture-in-picture">Imagen en Esquina (PiP)</option>
+                  </select>
                 </div>
 
                 <div class="image-preview-container" id="imagePreviewContainer">
+                  <div class="watermark-badge">
+                    <i class="fas fa-shield-alt"></i> PROTEGIDO POR GRIDART PRO
+                  </div>
                   <img id="preview" class="image-preview" src="" alt="Preview">
                   <div class="image-preview-overlay">
                     <button type="button" class="btn btn-danger btn-sm" onclick="clearImage()">
@@ -2346,6 +2386,126 @@
     function handleFileSelect(e) {
       const files = e.target.files;
       if (files.length) handleFiles(files);
+    }
+    
+    // ============================================
+    // MOTOR GRIDART PRO: Combina 2 imágenes en 1
+    // ============================================
+    
+    // Motor GridArt: Combina 2 imágenes en 1
+    async function handleDualFileSelect(e, index) {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      // Estado local para guardar las dos imágenes
+      window.dualImages = window.dualImages || { img1: null, img2: null };
+      
+      // Convertir el archivo a base64 temporal
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        window.dualImages[`img${index}`] = ev.target.result;
+        document.getElementById(`uploadText${index}`).textContent = '✅ Imagen ' + index + ' cargada';
+        actualizarDualPreview(); // Llama al generador del Grid
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    // Generador del Collage Final
+    async function actualizarDualPreview() {
+      const img1Data = window.dualImages?.img1;
+      const img2Data = window.dualImages?.img2;
+      const style = document.getElementById('gridStyle').value;
+      
+      if (!img1Data || !img2Data) return; // Espera a tener las dos
+      
+      showToast('Generando GridArt...', 'info');
+      
+      try {
+        const [img1, img2] = await Promise.all([
+          cargarImagen(img1Data),
+          cargarImagen(img2Data)
+        ]);
+        
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Dimensiones del collage final (16:9 profesional)
+        canvas.width = 1200;
+        canvas.height = 675;
+        
+        if (style === 'split-v') {
+          // Diseño 1: División Vertical
+          ctx.drawImage(img1, 0, 0, 600, 675);
+          ctx.drawImage(img2, 600, 0, 600, 675);
+          
+          // Cinta roja divisoria
+          ctx.fillStyle = '#e31e24';
+          ctx.fillRect(598, 0, 4, 675);
+        } else if (style === 'picture-in-picture') {
+          // Diseño 2: Imagen en esquina
+          ctx.drawImage(img1, 0, 0, 1200, 675);
+          
+          // Borde blanco para la imagen pequeña
+          ctx.fillStyle = 'white';
+          ctx.fillRect(895, 470, 310, 210);
+          
+          // Imagen pequeña con sombra
+          ctx.shadowColor = 'rgba(0,0,0,0.5)';
+          ctx.shadowBlur = 15;
+          ctx.shadowOffsetX = 0;
+          ctx.shadowOffsetY = 5;
+          ctx.drawImage(img2, 900, 475, 300, 200);
+          ctx.shadowColor = 'transparent';
+        }
+        
+        // Aplicar marca de agua del logo
+        await aplicarMarcaDeAguaLogo(ctx, 1200, 675);
+        
+        const collageFinal = canvas.toDataURL('image/jpeg', 0.92);
+        document.getElementById('preview').src = collageFinal;
+        document.getElementById('imagePreviewContainer').classList.add('active');
+        document.getElementById('imagenUrl').value = collageFinal;
+        
+        showToast('GridArt Generado', 'success');
+      } catch (err) {
+        showToast('Error GridArt: ' + err.message, 'error');
+      }
+    }
+    
+    // Promesa auxiliar para cargar imágenes
+    function cargarImagen(src) {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error('No se pudo cargar la imagen'));
+        img.src = src;
+      });
+    }
+    
+    // Aplicar marca de agua del logo
+    async function aplicarMarcaDeAguaLogo(ctx, width, height) {
+      try {
+        const logo = await cargarImagen('/logo.png');
+        
+        // Tamaño del logo (10% del ancho)
+        const logoSize = width * 0.1;
+        const x = width - logoSize - 20;
+        const y = 20;
+        
+        // Sombra para el logo
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 10;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
+        
+        // Dibujar logo con opacidad
+        ctx.globalAlpha = 0.85;
+        ctx.drawImage(logo, x, y, logoSize, logoSize);
+        ctx.globalAlpha = 1.0;
+        ctx.shadowColor = 'transparent';
+      } catch (err) {
+        console.warn('No se pudo cargar el logo para marca de agua');
+      }
     }
 
     function handleFiles(files) {

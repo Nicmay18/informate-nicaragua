@@ -10,13 +10,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome con carga diferida -->
-    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <!-- Font Awesome con media print trick (carga más rápida) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
     
     <!-- Firebase Compat (versión más ligera) con defer -->
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
     <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
+    
+    <!-- AdSense con async (no bloquea) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
     
     <style>
         :root { --rojo: #d0021b; --azul: #003366; --negro: #1a1a1a; --gris-suave: #f8f9fa; }
@@ -423,9 +426,5 @@
             document.getElementById("myBar").style.width = scrolled + "%";
         };
     </script>
-    
-    <!-- AdSense Script movido al final para no bloquear renderizado -->
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838"
-            crossorigin="anonymous"></script>
 </body>
 </html>

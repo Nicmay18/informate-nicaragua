@@ -1745,7 +1745,18 @@
 
               <div class="form-group">
                 <label class="form-label">Contenido <span class="required">*</span></label>
+                <div style="display: flex; gap: 8px; margin-bottom: 8px;">
+                  <button type="button" class="btn btn-secondary btn-sm" onclick="generarConIA()" id="btnGenerarIA">
+                    <i class="fas fa-magic"></i> Generar con IA Profesional
+                  </button>
+                  <button type="button" class="btn btn-ghost btn-sm" onclick="mostrarAyudaIA()">
+                    <i class="fas fa-info-circle"></i> ¿Cómo funciona?
+                  </button>
+                </div>
                 <textarea class="form-textarea" id="contenido" placeholder="Escribe el contenido completo de la noticia aquí. Puedes usar formato markdown básico..." required></textarea>
+                <div class="form-hint">
+                  <i class="fas fa-lightbulb"></i> Tip: Pega datos crudos y usa "Generar con IA" para obtener una noticia profesional estilo BBC/CNN
+                </div>
               </div>
 
               <div class="form-group">
@@ -3125,6 +3136,172 @@ Devuelve SOLO el contenido de la noticia, sin título, sin encabezados.`;
         setTimeout(() => status.textContent = '', 3000);
       }
     };
+
+    // SISTEMA DE IA PROFESIONAL - Estilo BBC/CNN
+    const PROMPT_PROFESIONAL = `Eres un editor jefe de la BBC/CNN. Redacta una noticia profesional completa.
+
+REGLAS ESTRICTAS:
+1. Precisión Geográfica de Nicaragua:
+   - Pacífico: Managua, León, Chinandega, Masaya, Granada, Carazo, Rivas
+   - Norte: Estelí, Madriz, Nueva Segovia, Jinotega, Matagalpa
+   - Central: Boaco, Chontales, Río San Juan
+   - Caribe: RACCN (Puerto Cabezas), RACCS (Bluefields)
+
+2. Estilo: Pirámide invertida (lo más importante primero)
+3. Tono: Formal, objetivo, sin sensacionalismo
+4. Estructura completa requerida
+
+FORMATO DE RESPUESTA (EXACTO):
+---TITULO---
+[Título imponente en mayúsculas, máximo 80 caracteres]
+
+---CATEGORIA---
+[UNA de estas: Sucesos, Nacionales, Deportes, Internacionales, Tecnología, Cultura, Economía]
+
+---RESUMEN---
+[Entradilla de 1-2 líneas, máximo 150 caracteres]
+
+---CONTENIDO---
+[Cuerpo completo: 3-4 párrafos, máximo 400 palabras, estilo profesional]`;
+
+    const MAPA_NICARAGUA = {
+      "Pacífico": ["Managua", "León", "Chinandega", "Masaya", "Granada", "Carazo", "Rivas"],
+      "Norte": ["Estelí", "Madriz", "Nueva Segovia", "Jinotega", "Matagalpa"],
+      "Central": ["Boaco", "Chontales", "Río San Juan"],
+      "Caribe": ["RACCN (Puerto Cabezas)", "RACCS (Bluefields)"]
+    };
+
+    async function generarConIA() {
+      const rawData = document.getElementById('contenido').value.trim();
+      
+      if (!rawData) {
+        showToast('Por favor, pega primero los datos crudos de la noticia', 'warning');
+        return;
+      }
+
+      const btn = document.getElementById('btnGenerarIA');
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generando noticia completa...';
+      btn.disabled = true;
+
+      try {
+        const promptFinal = `${PROMPT_PROFESIONAL}
+
+Datos de la noticia:
+${rawData}
+
+Genera la noticia completa siguiendo EXACTAMENTE el formato indicado.`;
+
+        const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: promptFinal }] }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 1000
+            }
+          })
+        });
+
+        const data = await resp.json();
+        const texto = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!texto) throw new Error('No se obtuvo respuesta de Gemini');
+
+        // Parsear la respuesta
+        const partes = texto.split('---');
+        let titulo = '', categoria = '', resumen = '', contenido = '';
+
+        for (let i = 0; i < partes.length; i++) {
+          const parte = partes[i].trim();
+          if (parte.startsWith('TITULO')) {
+            titulo = partes[i + 1]?.trim() || '';
+          } else if (parte.startsWith('CATEGORIA')) {
+            categoria = partes[i + 1]?.trim() || '';
+          } else if (parte.startsWith('RESUMEN')) {
+            resumen = partes[i + 1]?.trim() || '';
+          } else if (parte.startsWith('CONTENIDO')) {
+            contenido = partes[i + 1]?.trim() || '';
+          }
+        }
+
+        // Llenar los campos automáticamente
+        if (titulo) {
+          document.getElementById('titulo').value = titulo;
+        }
+        
+        if (categoria) {
+          const selectCategoria = document.getElementById('categoria');
+          // Buscar la categoría en el select
+          for (let option of selectCategoria.options) {
+            if (option.value.toLowerCase() === categoria.toLowerCase()) {
+              selectCategoria.value = option.value;
+              break;
+            }
+          }
+        }
+        
+        if (resumen) {
+          document.getElementById('resumen').value = resumen;
+        }
+        
+        if (contenido) {
+          document.getElementById('contenido').value = contenido;
+        }
+
+        showToast('✅ Noticia completa generada: Título, Categoría, Resumen y Contenido', 'success');
+
+      } catch (err) {
+        showToast('Error con IA: ' + err.message, 'error');
+        console.error(err);
+      } finally {
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+      }
+    }
+
+    function mostrarAyudaIA() {
+      const ayuda = `
+📝 GENERADOR AUTOMÁTICO DE NOTICIAS PROFESIONALES
+
+✨ LA IA GENERA TODO AUTOMÁTICAMENTE:
+   ✓ Título imponente
+   ✓ Categoría sugerida
+   ✓ Resumen/entradilla
+   ✓ Contenido completo
+
+🎯 CÓMO USAR:
+
+1. Pega los datos crudos en el campo de contenido
+   (puede ser texto sin formato, notas, capturas, etc.)
+
+2. Click en "Generar con IA Profesional"
+
+3. La IA llenará TODOS los campos automáticamente:
+   • Título profesional
+   • Categoría correcta
+   • Resumen atractivo
+   • Contenido estilo BBC/CNN
+
+4. Solo revisa y publica
+
+📌 EJEMPLO:
+Datos crudos:
+"accidente carretera vieja a leon, motociclista muere, choque con camion, hora 3pm"
+
+LA IA GENERA:
+• Título: "MOTOCICLISTA MUERE EN VIOLENTO CHOQUE EN CARRETERA VIEJA A LEÓN"
+• Categoría: Sucesos
+• Resumen: "Un motociclista perdió la vida este martes tras colisionar con un camión..."
+• Contenido: [3-4 párrafos profesionales]
+
+🌍 GEOGRAFÍA CORRECTA:
+La IA conoce la ubicación exacta de todos los departamentos de Nicaragua.
+      `;
+      
+      alert(ayuda.trim());
+    }
   </script>
 </body>
 </html>

@@ -6,30 +6,36 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { titulo, categoria, palabras = 400 } = req.body;
+  const { titulo, categoria, palabras = 400, notas } = req.body;
   if (!titulo) return res.status(400).json({ error: 'Falta el titular' });
 
   const GROQ_KEY = process.env.GROQ_API_KEY;
   if (!GROQ_KEY) return res.status(500).json({ error: 'GROQ_API_KEY no configurada en Vercel' });
 
-  const prompt = `Eres un redactor de noticias para Nicaragua Informate. Redacta una noticia breve y precisa sobre: "${titulo}". Categoría: ${categoria || 'General'}.
+  const prompt = notas
+    ? `Eres un redactor de BBC News Mundo. Tienes este titular: "${titulo}" y estas notas/información:
 
-Sigue EXACTAMENTE este formato y estilo:
+---
+${notas}
+---
 
-EJEMPLO DE REFERENCIA:
-"San Marcos, Nicaragua. – Un motociclista de 68 años resultó lesionado tras ser embestido por un cabezal en el sector conocido como 'Las Tres Cruces', en el departamento de Carazo. La víctima fue impactada por el vehículo pesado mientras este descendía por una pendiente. Testigos indicaron que el cabezal habría perdido el control, presuntamente por fallas en el sistema de frenos. El hecho generó momentos de tensión entre quienes se encontraban en la zona. Equipos de emergencia acudieron al lugar para atender al lesionado, mientras autoridades iniciaron las investigaciones para determinar las causas del accidente."
-
-REGLAS:
-- Empieza con el lugar en Nicaragua y un guión: "Managua, Nicaragua. –" o el lugar específico
-- Párrafo 1: qué pasó, quién, dónde (datos concretos)
-- Párrafo 2: cómo ocurrió, detalles del hecho
-- Párrafo 3: reacción, testigos o contexto
-- Párrafo 4: autoridades, investigación o estado actual
-- Sin adornos, sin opiniones, sin sensacionalismo
+Redacta una noticia profesional en español usando los datos de las notas. Estilo BBC News Mundo:
+- Lead impactante con el hecho más importante
+- Incluye citas textuales cuando las haya en las notas (entre comillas)
+- Contexto histórico o de fondo cuando sea relevante
+- Datos precisos: nombres completos, cifras, lugares exactos
+- Párrafos cortos y fluidos
+- Conectores narrativos naturales
 - Máximo ${palabras} palabras
-- Nombres y datos específicos cuando aplique
+- Devuelve SOLO el contenido, sin título ni subtítulos`
+    : `Eres un redactor de BBC News Mundo. Redacta una noticia profesional en español sobre: "${titulo}". Categoría: ${categoria || 'General'}.
 
-Devuelve SOLO el contenido, sin título.`;
+- Lead con el hecho más importante
+- Contexto y antecedentes relevantes
+- Usa solo los datos del titular, sin inventar nombres ni lugares específicos
+- Párrafos cortos y fluidos
+- Máximo ${palabras} palabras
+- Devuelve SOLO el contenido, sin título`;
 
   try {
     const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {

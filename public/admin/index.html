@@ -782,11 +782,14 @@
                 <div class="form-group">
                   <label class="form-label">Título <span class="required">*</span></label>
                   <input type="text" class="form-input" id="titulo" placeholder="Ej: Avances en infraestructura nacional" required>
-                  <div style="margin-top:10px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-                    <button type="button" onclick="redactarConIA()" id="btnIA" style="padding:10px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
-                      <i class="fas fa-magic"></i> Redactar con IA (Gemini)
-                    </button>
-                    <span id="iaStatus" style="font-size:13px;color:#94a3b8;"></span>
+                  <div style="margin-top:10px;">
+                    <textarea id="notasBorrador" class="form-textarea" placeholder="Pega aquí tu nota desordenada, datos sueltos o borrador... La IA lo redactará profesionalmente. (Opcional — si lo dejas vacío usa solo el título)" style="min-height:100px;margin-bottom:10px;font-size:13px;color:#94a3b8;"></textarea>
+                    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                      <button type="button" onclick="redactarConIA()" id="btnIA" style="padding:10px 20px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;border:none;border-radius:8px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:14px;">
+                        <i class="fas fa-magic"></i> Redactar con IA
+                      </button>
+                      <span id="iaStatus" style="font-size:13px;color:#94a3b8;"></span>
+                    </div>
                   </div>
                 </div>
                 
@@ -1617,6 +1620,7 @@
     window.redactarConIA = async function() {
       const titulo = document.getElementById('titulo').value.trim();
       const categoria = document.getElementById('categoria').value;
+      const notas = document.getElementById('notasBorrador').value.trim();
       
       if (!titulo) {
         showToast('warning', 'Falta titular', 'Escribe el titular primero');
@@ -1634,7 +1638,7 @@
         const resp = await fetch(`${CONFIG.API_BASE}/api/gemini`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ titulo, categoria: categoria || 'General', palabras: 400 })
+          body: JSON.stringify({ titulo, categoria: categoria || 'General', palabras: 400, notas })
         });
 
         const data = await resp.json();
@@ -1655,6 +1659,7 @@
         status.textContent = '✅ Listo';
         status.style.color = '#34d399';
         showToast('success', 'IA lista', 'Noticia redactada correctamente');
+        document.getElementById('notasBorrador').value = '';
 
       } catch (err) {
         status.textContent = '❌ ' + err.message;
@@ -2202,30 +2207,41 @@
     // WHATSAPP
     // ==========================================
     function mostrarFormatoWhatsApp(noticia) {
-      const url = noticia.slug
-        ? `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}&slug=${encodeURIComponent(noticia.slug)}`
-        : `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
-
+      const url = `${CONFIG.SITE_URL}/noticia.html?id=${noticia.id}`;
+      const emoji = {
+        'Sucesos': '🚨', 'Nacionales': '🇳🇮', 'Economía': '💰', 'Cultura': '🎨',
+        'Espectáculos': '⭐', 'Deportes': '⚽', 'Tecnología': '💻', 'Internacionales': '🌍'
+      };
+      const cat = noticia.categoria || 'Noticias';
+      const icono = emoji[cat] || '📰';
       const titulo = (noticia.titulo || '').trim();
-      const resumen = (noticia.resumen || noticia.contenido || '').substring(0, 250);
+      const resumenCompleto = noticia.resumen || noticia.contenido || '';
+      let resumen = resumenCompleto.substring(0, 300);
       const ultimoPunto = resumen.lastIndexOf('.');
-      const resumenCorto = ultimoPunto > 80 ? resumen.substring(0, ultimoPunto + 1) : resumen;
+      if (ultimoPunto > 80) resumen = resumen.substring(0, ultimoPunto + 1);
 
-      const texto = `🚨 ${(noticia.categoria || 'NOTICIAS').toUpperCase()}\n\n${titulo}\n\n${resumenCorto}\n\n📲 Más detalles: ${url}`;
+      const texto = `${icono} ${titulo}\n\n${resumen}\n\n📲 Más detalles: ${url}`;
+      const waUrl = `https://wa.me/?text=${encodeURIComponent(texto)}`;
 
       const modal = document.createElement('div');
       modal.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;';
       modal.innerHTML = `
         <div style="background:#1e293b;border-radius:16px;padding:28px;max-width:560px;width:100%;border:1px solid rgba(255,255,255,0.1);">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-            <h3 style="color:#25D366;font-size:18px;"><i class="fab fa-whatsapp"></i> Formato WhatsApp</h3>
+            <h3 style="color:#25D366;font-size:18px;"><i class="fab fa-whatsapp"></i> Compartir en WhatsApp</h3>
             <button onclick="this.closest('div[style*=fixed]').remove()" style="background:transparent;border:none;color:#94a3b8;font-size:22px;cursor:pointer;">✕</button>
           </div>
-          <textarea id="waTexto" style="width:100%;height:200px;background:#0f172a;color:#e2e8f0;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;font-size:14px;line-height:1.6;resize:none;font-family:inherit;">${texto}</textarea>
-          <button onclick="navigator.clipboard.writeText(document.getElementById('waTexto').value).then(()=>{this.textContent='✅ Copiado!';setTimeout(()=>this.textContent='📋 Copiar texto',2000)})" 
-            style="width:100%;margin-top:14px;padding:14px;background:#25D366;color:white;border:none;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;">
-            📋 Copiar texto
-          </button>
+          <textarea id="waTexto" style="width:100%;height:180px;background:#0f172a;color:#e2e8f0;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:14px;font-size:14px;line-height:1.6;resize:none;font-family:inherit;">${texto}</textarea>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;">
+            <button onclick="navigator.clipboard.writeText(document.getElementById('waTexto').value).then(()=>{this.textContent='✅ Copiado!';setTimeout(()=>this.textContent='📋 Copiar',2000)})" 
+              style="padding:14px;background:#334155;color:white;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;">
+              📋 Copiar
+            </button>
+            <a href="${waUrl}" target="_blank"
+              style="padding:14px;background:#25D366;color:white;border:none;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;">
+              <i class="fab fa-whatsapp"></i> Enviar
+            </a>
+          </div>
         </div>
       `;
       document.body.appendChild(modal);

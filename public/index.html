@@ -339,7 +339,7 @@ body.dark-theme .skeleton-card {
   left: 20px;
   right: 20px;
   color: white;
-  z-index: 5;
+  z-index: 10;
   padding: 0;
 }
 .carousel-badge {
@@ -352,18 +352,19 @@ body.dark-theme .skeleton-card {
   margin-bottom: 12px;
   letter-spacing: 0.8px;
   background: var(--brand-accent);
-  z-index: 5;
+  z-index: 10;
 }
 .carousel-caption-custom h3 {
   font-family: 'Inter', var(--font-sans);
   font-size: 2rem;
-  font-weight: 800; /* Letra extra gruesa */
+  font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.5px;
   margin: 0;
   max-width: 700px;
   text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-  text-transform: uppercase; /* Para más impacto */
+  text-transform: uppercase;
+  color: white;
 }
 .carousel-controls {
   position: absolute;
@@ -892,12 +893,6 @@ body.dark-theme .skeleton-card {
   transform: translateY(-2px);
   box-shadow: 0 6px 25px rgba(0,0,0,0.4);
 }
-.radio-player.expanded {
-  border-radius: 16px;
-  flex-direction: column;
-  align-items: flex-start;
-  min-width: 280px;
-}
 .radio-icon {
   width: 40px;
   height: 40px;
@@ -924,68 +919,24 @@ body.dark-theme .skeleton-card {
   font-weight: 700;
   margin-bottom: 2px;
 }
+#radioSelector {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  margin-bottom: 2px;
+  width: 100%;
+}
+#radioSelector option {
+  background: var(--brand-primary);
+  color: white;
+}
 .radio-status {
   font-size: 11px;
   opacity: 0.8;
-}
-.radio-controls {
-  display: flex;
-  gap: 8px;
-  margin-top: 12px;
-  width: 100%;
-}
-.radio-btn {
-  background: rgba(255,255,255,0.2);
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 12px;
-  font-weight: 600;
-  transition: all 0.2s;
-  flex: 1;
-}
-.radio-btn:hover {
-  background: rgba(255,255,255,0.3);
-}
-.radio-btn.active {
-  background: var(--brand-accent);
-}
-.radio-close {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  opacity: 0.6;
-  font-size: 16px;
-  padding: 4px;
-}
-.radio-close:hover {
-  opacity: 1;
-}
-.radio-volume {
-  width: 100%;
-  margin-top: 8px;
-}
-.radio-volume input {
-  width: 100%;
-  height: 4px;
-  border-radius: 2px;
-  background: rgba(255,255,255,0.3);
-  outline: none;
-  -webkit-appearance: none;
-}
-.radio-volume input::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: white;
-  cursor: pointer;
 }
 
 /* RESPONSIVE */
@@ -1134,10 +1085,16 @@ body.dark-theme .skeleton-card {
 <!-- REPRODUCTOR DE RADIO FLOTANTE -->
 <div class="radio-player" id="radioPlayer">
   <div class="radio-icon" id="radioIcon">
-    <i class="fas fa-broadcast-tower"></i>
+    <i class="fas fa-play"></i>
   </div>
   <div class="radio-info">
-    <div class="radio-station">Radio Nicaragua</div>
+    <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
+      <option value="https://s5.mexside.net:7048/stream">Radio Ya</option>
+      <option value="https://stream.radiojar.com/8wqtdg30k8quv">La Primerísima</option>
+      <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">Viva FM</option>
+      <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">La Pachanguera</option>
+      <option value="https://stream.zeno.fm/nqhxqhx2gg0uv">Futura Radio</option>
+    </select>
     <div class="radio-status" id="radioStatus">Click para reproducir</div>
   </div>
 </div>
@@ -1576,104 +1533,100 @@ function cerrarCta() {
   localStorage.setItem('ctaClosed', 'true');
 }
 
-// REPRODUCTOR DE RADIO PERSISTENTE
-class RadioPlayer {
-  constructor() {
-    this.audio = null;
-    this.isPlaying = false;
-    this.stations = {
-      'Radio Nicaragua': 'https://stream.zeno.fm/your-radio-stream-url', // Reemplazar con URL real
-      'Radio Corporación': 'https://stream.example.com/radio2',
-      'Radio Ya': 'https://stream.example.com/radio3'
-    };
-    this.currentStation = 'Radio Nicaragua';
-    this.init();
-  }
-
+// REPRODUCTOR DE RADIO CON SELECTOR
+let radioPlayer = {
+  audio: null,
+  isPlaying: false,
+  
   init() {
-    // Recuperar estado de localStorage
-    const savedState = localStorage.getItem('radioState');
-    if (savedState) {
-      const state = JSON.parse(savedState);
-      this.isPlaying = state.isPlaying;
-      this.currentStation = state.station || this.currentStation;
+    const player = document.getElementById('radioPlayer');
+    const selector = document.getElementById('radioSelector');
+    
+    if (player) {
+      // Click en el icono para play/pause
+      const icon = document.getElementById('radioIcon');
+      if (icon) {
+        icon.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.toggle();
+        });
+      }
       
-      if (this.isPlaying) {
-        this.play();
+      // Cambio de radio
+      if (selector) {
+        selector.addEventListener('change', () => {
+          if (this.isPlaying) {
+            this.pause();
+            this.play();
+          }
+        });
+        
+        // Evitar que el click en el selector active play/pause
+        selector.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
       }
     }
-
-    // Event listeners
-    const player = document.getElementById('radioPlayer');
-    player.addEventListener('click', (e) => {
-      if (e.target.closest('.radio-close')) return;
-      this.toggle();
-    });
-
-    // Guardar estado antes de salir
-    window.addEventListener('beforeunload', () => {
-      this.saveState();
-    });
-  }
-
+  },
+  
   toggle() {
     if (this.isPlaying) {
       this.pause();
     } else {
       this.play();
     }
-  }
-
+  },
+  
   play() {
-    if (!this.audio) {
-      this.audio = new Audio(this.stations[this.currentStation]);
-      this.audio.volume = 0.7;
+    const selector = document.getElementById('radioSelector');
+    const streamUrl = selector ? selector.value : 'https://s5.mexside.net:7048/stream';
+    
+    // Si hay audio anterior, detenerlo
+    if (this.audio) {
+      this.audio.pause();
+      this.audio = null;
     }
-
-    this.audio.play().then(() => {
-      this.isPlaying = true;
-      this.updateUI();
-      this.saveState();
-    }).catch(err => {
-      console.error('Error reproduciendo radio:', err);
-      document.getElementById('radioStatus').textContent = 'Error al reproducir';
-    });
-  }
-
+    
+    this.audio = new Audio(streamUrl);
+    this.audio.volume = 0.7;
+    
+    this.audio.play()
+      .then(() => {
+        this.isPlaying = true;
+        this.updateUI();
+      })
+      .catch(err => {
+        console.error('Error reproduciendo radio:', err);
+        const status = document.getElementById('radioStatus');
+        if (status) status.textContent = 'Error al reproducir';
+      });
+  },
+  
   pause() {
     if (this.audio) {
       this.audio.pause();
     }
     this.isPlaying = false;
     this.updateUI();
-    this.saveState();
-  }
-
+  },
+  
   updateUI() {
     const icon = document.getElementById('radioIcon');
     const status = document.getElementById('radioStatus');
     
-    if (this.isPlaying) {
-      icon.classList.add('playing');
-      icon.innerHTML = '<i class="fas fa-pause"></i>';
-      status.textContent = 'En vivo';
-    } else {
-      icon.classList.remove('playing');
-      icon.innerHTML = '<i class="fas fa-play"></i>';
-      status.textContent = 'Click para reproducir';
+    if (icon && status) {
+      if (this.isPlaying) {
+        icon.classList.add('playing');
+        icon.innerHTML = '<i class="fas fa-pause"></i>';
+        status.textContent = 'En vivo';
+      } else {
+        icon.classList.remove('playing');
+        icon.innerHTML = '<i class="fas fa-play"></i>';
+        status.textContent = 'Click para reproducir';
+      }
     }
   }
-
-  saveState() {
-    localStorage.setItem('radioState', JSON.stringify({
-      isPlaying: this.isPlaying,
-      station: this.currentStation
-    }));
-  }
-}
-
-// Inicializar radio player
-let radioPlayer;
+};
 
 // DARK MODE
 function toggleDarkMode() {
@@ -1707,7 +1660,7 @@ function loadDarkModePreference() {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadDarkModePreference();
-  radioPlayer = new RadioPlayer();
+  radioPlayer.init();
   init();
 });
 

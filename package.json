@@ -11,7 +11,8 @@
     "lint:fix": "eslint \"src/**/*.js\" \"public/js/**/*.js\" \"api/**/*.js\" \"functions/**/*.js\" \"*.js\" --fix",
     "test": "jest --coverage",
     "check-images": "node check-images-size.js",
-    "optimize-images": "node optimize-images-advanced.js"
+    "optimize-images": "node optimize-images-advanced.js",
+    "compress-150kb": "node compress-images-150kb.js"
   },
   "keywords": [
     "noticias",

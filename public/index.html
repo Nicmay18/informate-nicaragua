@@ -1199,7 +1199,7 @@ body.dark-theme .skeleton-card {
   </div>
 </footer>
 
-<script>
+<script defer>
 // CONFIGURACIÓN OPTIMIZADA
 const CONFIG = {
   NOTICIAS_POR_PAGINA: 10,
@@ -1236,14 +1236,8 @@ const utils = {
   
   sanitizeImage: (url, categoria) => {
     if (!url || url.includes('facebook') || url.includes('fbcdn')) {
-      const fallbacks = {
-        'Sucesos': 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
-        'Deportes': 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&q=80',
-        'Internacionales': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80',
-        'Tecnología': 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
-        'Nacionales': 'https://images.unsplash.com/photo-1569025690938-a00729c9e1f9?w=800&q=80'
-      };
-      return fallbacks[categoria] || fallbacks['Sucesos'];
+      // Usar logo local en lugar de Unsplash (más ligero)
+      return '/logo.png';
     }
     // Optimizar URLs de Firebase Storage
     if (url.includes('firebasestorage.googleapis.com')) {

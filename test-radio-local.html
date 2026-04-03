@@ -3,234 +3,449 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Test Radio Nicaragua - DIAGNÓSTICO</title>
+<title>Radio Nicaragua - En Vivo</title>
 <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
 body {
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background: #1a1a1a;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   color: white;
-  max-width: 600px;
-  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
 }
-h1 { color: #e31e24; text-align: center; }
-.radio-box {
-  background: #2a2a2a;
-  padding: 30px;
-  border-radius: 12px;
-  margin: 20px 0;
-}
-button {
+.radio-container {
   width: 100%;
-  padding: 15px;
-  margin: 10px 0;
-  font-size: 16px;
+  max-width: 420px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.1);
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+}
+.radio-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.radio-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.radio-header p {
+  color: #94a3b8;
+  font-size: 14px;
+}
+.station-select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.1);
+  background: rgba(0,0,0,0.3);
+  color: white;
+  font-size: 15px;
+  margin-bottom: 20px;
   cursor: pointer;
+  transition: all 0.2s;
+}
+.station-select:hover, .station-select:focus {
+  border-color: #f59e0b;
+  outline: none;
+}
+.station-select option {
+  background: #1e293b;
+  color: white;
+  padding: 10px;
+}
+.visualizer {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: 24px;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.visualizer.active { opacity: 1; }
+.bar {
+  width: 4px;
+  background: linear-gradient(to top, #f59e0b, #ef4444);
+  border-radius: 2px;
+  animation: bounce 0.5s ease-in-out infinite alternate;
+}
+.bar:nth-child(1) { height: 20%; animation-delay: 0s; }
+.bar:nth-child(2) { height: 40%; animation-delay: 0.1s; }
+.bar:nth-child(3) { height: 60%; animation-delay: 0.2s; }
+.bar:nth-child(4) { height: 80%; animation-delay: 0.3s; }
+.bar:nth-child(5) { height: 60%; animation-delay: 0.4s; }
+.bar:nth-child(6) { height: 40%; animation-delay: 0.5s; }
+.bar:nth-child(7) { height: 20%; animation-delay: 0.6s; }
+@keyframes bounce {
+  to { height: 100%; }
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.btn {
+  flex: 1;
+  padding: 16px;
   border: none;
-  border-radius: 8px;
-  font-weight: bold;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 .btn-play {
-  background: #10b981;
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: white;
+}
+.btn-play:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(16,185,129,0.4);
 }
 .btn-stop {
-  background: #ef4444;
+  background: rgba(255,255,255,0.1);
   color: white;
+  border: 1px solid rgba(255,255,255,0.2);
 }
-select {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  font-size: 14px;
-  border-radius: 8px;
-  border: 2px solid #444;
-  background: #333;
-  color: white;
+.btn-stop:hover:not(:disabled) {
+  background: rgba(255,255,255,0.2);
 }
-.status {
-  padding: 15px;
-  margin: 15px 0;
-  background: #333;
-  border-radius: 8px;
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.status-card {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 16px;
   text-align: center;
-  font-weight: bold;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.status-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 14px;
+}
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #64748b;
+  transition: all 0.3s;
+}
+.status-dot.live {
+  background: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239,68,68,0.3);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.status-text {
+  color: #94a3b8;
+  font-size: 13px;
+  margin-top: 8px;
+}
+.volume-control {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.volume-control i {
+  color: #64748b;
   font-size: 18px;
 }
-.log {
-  background: #000;
-  padding: 15px;
-  margin: 15px 0;
-  border-radius: 8px;
-  font-family: monospace;
-  font-size: 12px;
-  max-height: 300px;
-  overflow-y: auto;
-  border: 2px solid #333;
+input[type="range"] {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.1);
+  outline: none;
+  -webkit-appearance: none;
 }
-.info {
-  background: #1e40af;
-  padding: 15px;
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #f59e0b;
+  cursor: pointer;
+}
+.error-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100px);
+  background: #ef4444;
+  color: white;
+  padding: 12px 24px;
   border-radius: 8px;
-  margin: 20px 0;
-  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 1000;
+}
+.error-toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
 }
 </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<h1>🎵 TEST RADIO NICARAGUA</h1>
+<div class="radio-container">
+  <div class="radio-header">
+    <h1><i class="fas fa-broadcast-tower"></i> Radio Nicaragua</h1>
+    <p>Emisoras en vivo desde tu navegador</p>
+  </div>
 
-<div class="info">
-  <strong>📋 INSTRUCCIONES:</strong><br>
-  1. Selecciona una radio<br>
-  2. Presiona REPRODUCIR<br>
-  3. Observa los logs abajo<br>
-  4. Si no funciona, copia TODOS los logs y envíalos
-</div>
-
-<div class="radio-box">
-  <h3 style="margin-top:0;">Selecciona Emisora:</h3>
-  <select id="radioSelect">
-    <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima (MÁS ESTABLE)</option>
-    <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya (Puerto 8010)</option>
-    <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
-    <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
-    <option value="https://stream.futurafm.com.ni/live">⚡ Futura Radio</option>
+  <select class="station-select" id="stationSelect">
+    <option value="" disabled selected>Selecciona una emisora...</option>
+    <option value="https://stream.zeno.fm/53gyb6d8gs0uv">📻 La Primerísima</option>
+    <option value="https://stream.zeno.fm/axr92qawesmtv">🎵 Radio Ya 99.1 FM</option>
+    <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">🎶 Futura 91.3 FM</option>
+    <option value="https://stream.zeno.fm/vtxcp1k7c7quv">📡 Radio ABC</option>
+    <option value="https://online.radionicaragua.com.ni/stream.mp3">🇳🇮 Radio Nicaragua</option>
   </select>
-  
-  <button class="btn-play" id="playBtn">▶️ REPRODUCIR</button>
-  <button class="btn-stop" id="stopBtn">⏹️ DETENER</button>
-  
-  <div class="status" id="status">Listo para reproducir</div>
+
+  <div class="visualizer" id="visualizer">
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+    <div class="bar"></div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-play" id="playBtn" disabled>
+      <i class="fas fa-play"></i> Reproducir
+    </button>
+    <button class="btn btn-stop" id="stopBtn" disabled>
+      <i class="fas fa-stop"></i> Detener
+    </button>
+  </div>
+
+  <div class="status-card">
+    <div class="status-indicator">
+      <span class="status-dot" id="statusDot"></span>
+      <span id="statusText">Selecciona una emisora</span>
+    </div>
+    <div class="status-text" id="statusSub">Elige una radio para comenzar</div>
+  </div>
+
+  <div class="volume-control">
+    <i class="fas fa-volume-down"></i>
+    <input type="range" id="volume" min="0" max="100" value="70">
+    <i class="fas fa-volume-up"></i>
+  </div>
 </div>
 
-<h3>📊 LOGS DEL SISTEMA:</h3>
-<div class="log" id="log"></div>
+<div class="error-toast" id="errorToast"></div>
 
 <script>
-let audio = null;
-
-function log(msg) {
-  const logDiv = document.getElementById('log');
-  const time = new Date().toLocaleTimeString();
-  logDiv.innerHTML += `[${time}] ${msg}<br>`;
-  logDiv.scrollTop = logDiv.scrollHeight;
-  console.log(msg);
-}
-
-function updateStatus(msg) {
-  document.getElementById('status').textContent = msg;
-  document.getElementById('status').style.background = 
-    msg.includes('❌') ? '#ef4444' : 
-    msg.includes('🔴') ? '#10b981' : '#333';
-}
-
-document.getElementById('playBtn').addEventListener('click', function() {
-  const select = document.getElementById('radioSelect');
-  let url = select.value;
-  
-  // TRUCO: Evitar caché del navegador
-  url = url + (url.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
-  
-  log('🎵 Botón REPRODUCIR presionado');
-  log('📡 URL seleccionada: ' + select.options[select.selectedIndex].text);
-  log('🔗 URL completa: ' + url);
-  
-  // Detener audio anterior - LIMPIEZA TOTAL
-  if (audio) {
-    audio.pause();
-    audio.src = "";
-    audio.load();
-    audio = null;
-    log('⏹️ Audio anterior detenido y limpiado');
+class RadioPlayer {
+  constructor() {
+    this.audio = null;
+    this.isPlaying = false;
+    this.currentStation = null;
+    this.retryCount = 0;
+    this.maxRetries = 3;
+    
+    this.elements = {
+      select: document.getElementById('stationSelect'),
+      playBtn: document.getElementById('playBtn'),
+      stopBtn: document.getElementById('stopBtn'),
+      visualizer: document.getElementById('visualizer'),
+      statusDot: document.getElementById('statusDot'),
+      statusText: document.getElementById('statusText'),
+      statusSub: document.getElementById('statusSub'),
+      volume: document.getElementById('volume'),
+      errorToast: document.getElementById('errorToast')
+    };
+    
+    this.init();
   }
   
-  updateStatus('Conectando al servidor...');
+  init() {
+    this.elements.select.addEventListener('change', (e) => this.selectStation(e));
+    this.elements.playBtn.addEventListener('click', () => this.play());
+    this.elements.stopBtn.addEventListener('click', () => this.stop());
+    this.elements.volume.addEventListener('input', (e) => this.setVolume(e.target.value));
+    
+    // Habilitar botón cuando se selecciona emisora
+    this.elements.select.addEventListener('change', () => {
+      if (this.elements.select.value) {
+        this.elements.playBtn.disabled = false;
+      }
+    });
+  }
   
-  try {
-    audio = new Audio();
-    audio.src = url;
-    audio.preload = 'none';
-    audio.crossOrigin = 'anonymous';
-    audio.volume = 0.8;
-    
-    log('✅ Objeto Audio creado');
-    log('🔧 Configuración: preload=none, crossOrigin=anonymous, volume=0.8');
-    
-    audio.addEventListener('loadstart', () => {
-      log('📥 Iniciando carga del stream...');
-      updateStatus('Cargando stream...');
-    });
-    
-    audio.addEventListener('canplay', () => {
-      log('✅ Stream listo para reproducir');
-      updateStatus('🔴 Reproduciendo');
-    });
-    
-    audio.addEventListener('playing', () => {
-      log('🎶 Audio reproduciéndose correctamente');
-      updateStatus('🔴 EN VIVO');
-    });
-    
-    audio.addEventListener('stalled', () => {
-      log('⚠️ El servidor está tardando en enviar datos...');
-      updateStatus('Conectando...');
-    });
-    
-    audio.addEventListener('error', (e) => {
-      const errCode = audio.error ? audio.error.code : 'Desconocido';
-      const errMsg = audio.error ? audio.error.message : 'Sin mensaje';
-      log('❌ ERROR TÉCNICO: Código ' + errCode);
-      log('❌ Mensaje: ' + errMsg);
-      
-      if (errCode == 1) log('👉 MEDIA_ERR_ABORTED: Reproducción abortada');
-      if (errCode == 2) log('👉 MEDIA_ERR_NETWORK: Error de red');
-      if (errCode == 3) log('👉 MEDIA_ERR_DECODE: Error al decodificar');
-      if (errCode == 4) log('👉 MEDIA_ERR_SRC_NOT_SUPPORTED: Formato no soportado o servidor caído');
-      
-      updateStatus('❌ Error de conexión');
-    });
-    
-    log('▶️ Intentando reproducir...');
-    const playPromise = audio.play();
-    
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          log('✅ Reproducción autorizada por el navegador');
-          updateStatus('🔴 REPRODUCIENDO');
-        })
-        .catch(error => {
-          log('❌ Bloqueo de Autoplay: ' + error.message);
-          log('👉 Solución: Haz clic de nuevo en REPRODUCIR');
-          updateStatus('❌ Haz clic de nuevo');
-        });
+  selectStation(e) {
+    this.currentStation = e.target.value;
+    this.updateStatus('listo', 'Emisora seleccionada', 'Presiona reproducir para escuchar');
+    this.retryCount = 0;
+  }
+  
+  async play() {
+    if (!this.currentStation) {
+      this.showError('Selecciona una emisora primero');
+      return;
     }
+    
+    // Si ya está reproduciendo, detener primero
+    if (this.isPlaying) {
+      this.stop();
+      await new Promise(r => setTimeout(r, 300));
+    }
+    
+    this.elements.playBtn.disabled = true;
+    this.updateStatus('cargando', 'Conectando...', 'Estableciendo conexión con el servidor');
+    
+    try {
+      // Crear nuevo objeto Audio (limpio)
+      this.audio = new Audio();
       
-  } catch (err) {
-    log('❌ Error crítico: ' + err.message);
-    updateStatus('❌ Error crítico');
+      // Configuración óptima para streaming
+      this.audio.src = this.currentStation;
+      this.audio.crossOrigin = 'anonymous';
+      this.audio.preload = 'metadata';
+      this.audio.volume = this.elements.volume.value / 100;
+      
+      // Eventos
+      this.audio.addEventListener('canplay', () => this.onCanPlay());
+      this.audio.addEventListener('playing', () => this.onPlaying());
+      this.audio.addEventListener('error', (e) => this.onError(e));
+      this.audio.addEventListener('stalled', () => this.onStalled());
+      this.audio.addEventListener('waiting', () => this.onWaiting());
+      
+      // Intentar reproducir
+      await this.audio.play();
+      
+    } catch (err) {
+      this.onError(err);
+    }
   }
-});
-
-document.getElementById('stopBtn').addEventListener('click', function() {
-  log('⏹️ Botón DETENER presionado');
-  if (audio) {
-    audio.pause();
-    audio.src = "";
-    audio = null;
-    updateStatus('⏹️ Detenido');
-    log('✅ Audio detenido correctamente');
-  } else {
-    log('⚠️ No hay audio reproduciéndose');
+  
+  onCanPlay() {
+    console.log('Stream listo');
   }
-});
+  
+  onPlaying() {
+    this.isPlaying = true;
+    this.elements.playBtn.disabled = false;
+    this.elements.stopBtn.disabled = false;
+    this.elements.visualizer.classList.add('active');
+    this.updateStatus('live', '🔴 EN VIVO', 'Reproduciendo ' + this.getStationName());
+    this.retryCount = 0;
+  }
+  
+  onError(e) {
+    console.error('Error de audio:', e);
+    this.elements.playBtn.disabled = false;
+    
+    if (this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      this.updateStatus('error', 'Reintentando...', `Intento ${this.retryCount} de ${this.maxRetries}`);
+      setTimeout(() => this.play(), 2000);
+    } else {
+      this.updateStatus('error', 'Error de conexión', 'No se pudo conectar. Intenta otra emisora.');
+      this.showError('Error al reproducir. La emisora puede estar fuera de servicio.');
+      this.cleanup();
+    }
+  }
+  
+  onStalled() {
+    this.updateStatus('cargando', 'Buffering...', 'Recuperando señal');
+  }
+  
+  onWaiting() {
+    this.updateStatus('cargando', 'Cargando...', 'Esperando datos');
+  }
+  
+  stop() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio.load();
+      this.cleanup();
+    }
+    
+    this.isPlaying = false;
+    this.elements.visualizer.classList.remove('active');
+    this.elements.playBtn.disabled = false;
+    this.elements.stopBtn.disabled = true;
+    this.updateStatus('detenido', 'Detenido', 'Selecciona una emisora para continuar');
+  }
+  
+  cleanup() {
+    if (this.audio) {
+      this.audio.removeEventListener('canplay', this.onCanPlay);
+      this.audio.removeEventListener('playing', this.onPlaying);
+      this.audio.removeEventListener('error', this.onError);
+      this.audio = null;
+    }
+  }
+  
+  setVolume(value) {
+    if (this.audio) {
+      this.audio.volume = value / 100;
+    }
+  }
+  
+  updateStatus(state, text, subtext) {
+    const states = {
+      listo: { dot: '', text: '#64748b' },
+      cargando: { dot: 'pulse', text: '#f59e0b' },
+      live: { dot: 'live', text: '#10b981' },
+      error: { dot: '', text: '#ef4444' },
+      detenido: { dot: '', text: '#64748b' }
+    };
+    
+    const config = states[state] || states.detenido;
+    
+    this.elements.statusDot.className = 'status-dot ' + config.dot;
+    this.elements.statusText.textContent = text;
+    this.elements.statusText.style.color = config.text;
+    this.elements.statusSub.textContent = subtext;
+  }
+  
+  getStationName() {
+    const select = this.elements.select;
+    return select.options[select.selectedIndex].text.split(' ').slice(1).join(' ');
+  }
+  
+  showError(msg) {
+    const toast = this.elements.errorToast;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+}
 
-log('✅ Página cargada - Sistema listo');
-log('📱 Navegador: ' + navigator.userAgent);
-log('🔒 Protocolo: ' + window.location.protocol);
-log('🌐 Ubicación: ' + window.location.href);
+// Inicializar
+const player = new RadioPlayer();
 </script>
 
 </body>

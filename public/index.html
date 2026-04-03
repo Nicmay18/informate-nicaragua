@@ -328,10 +328,9 @@ body.dark-theme .skeleton-card {
 }
 
 /* ============================================================
-   REDISEÑO ELITE: NICARAGUA INFORMATE (WEB + MÓVIL)
+   CARRUSEL PROFESIONAL - DISEÑO LIMPIO Y LEGIBLE
    ============================================================ */
 
-/* CARRUSEL OPTIMIZADO - IMÁGENES PROFESIONALES */
 .carousel-section { 
   margin-bottom: 32px;
   max-width: 1280px;
@@ -341,10 +340,10 @@ body.dark-theme .skeleton-card {
 }
 .carousel-custom {
   position: relative;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
   background: var(--brand-primary);
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15);
 }
 .carousel-inner-custom {
   height: 100%;
@@ -359,6 +358,8 @@ body.dark-theme .skeleton-card {
   transition: opacity 0.6s ease;
   text-decoration: none;
   color: inherit;
+  display: flex;
+  flex-direction: column;
 }
 .carousel-item-custom.active { opacity: 1; }
 
@@ -395,137 +396,146 @@ body.dark-theme .skeleton-card {
 /* --- CONFIGURACIÓN PARA WEB (PC / LAPTOP) --- */
 @media (min-width: 992px) {
   .carousel-custom {
-    height: 500px;
+    height: 450px;
   }
   
   .carousel-item-custom {
-    display: grid !important;
-    grid-template-columns: 60% 40% !important; /* Más espacio para el texto */
-    height: 500px !important;
-    background: #000 !important;
-    border-radius: 12px;
+    height: 450px !important;
+  }
+  
+  /* IMAGEN: 60% del espacio - bien visible */
+  .carousel-item-custom .carousel-image-wrapper {
+    height: 60%;
+    width: 100%;
+    position: relative;
     overflow: hidden;
-    border: 1px solid #333;
   }
   
   .carousel-item-custom img {
     width: 100% !important;
     height: 100% !important;
-    object-fit: contain !important; /* MUESTRA LA IMAGEN COMPLETA sin cortar */
-    object-position: center;
+    object-fit: cover !important;
+    object-position: center 20%;
     display: block !important;
-    background: #000; /* Fondo negro para las barras laterales */
-    transition: transform 0.6s ease;
+    transition: transform 6s ease;
   }
   
   .carousel-item-custom:hover img { 
-    transform: scale(1.02); 
+    transform: scale(1.05); 
   }
   
+  /* TEXTO: 40% del espacio - legible */
   .carousel-caption-custom {
-    position: relative !important;
-    background: #1a1a1a !important;
-    padding: 40px 30px !important;
+    height: 40%;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    padding: 28px 32px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: center !important;
     text-align: left !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
     color: white;
     z-index: 10;
   }
   
-  /* TITULAR PROFESIONAL - ELITE */
-  .carousel-caption-custom h3 {
-    font-family: 'Playfair Display', serif !important;
-    font-size: 2rem !important; /* Más pequeño para que quepa completo */
-    line-height: 1.2 !important;
-    font-weight: 900 !important;
-    color: #ffffff !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-    margin: 0 0 10px 0 !important;
-    padding: 0 !important;
-    letter-spacing: -0.5px !important;
-  }
-  
-  /* Badge de categoría arriba del titular */
+  /* Badge de categoría */
   .carousel-caption-custom .badge-categoria {
-    background-color: #e31e24 !important;
+    display: inline-flex;
+    width: fit-content;
+    padding: 6px 14px !important;
+    background: var(--brand-accent) !important;
     color: white !important;
-    padding: 5px 12px !important;
-    font-size: 12px !important;
+    font-size: 11px !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
-    border-radius: 3px !important;
-    margin-bottom: 15px !important;
-    display: inline-block !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 20px !important;
+    margin-bottom: 12px !important;
+  }
+  
+  /* TITULAR PROFESIONAL */
+  .carousel-caption-custom h3 {
+    font-size: 28px !important;
+    font-weight: 800 !important;
+    color: white !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: uppercase;
   }
 }
 
-/* --- CONFIGURACIÓN PARA MÓVIL (EL CAMBIO QUE URGE) --- */
+/* --- CONFIGURACIÓN PARA MÓVIL --- */
 @media (max-width: 991px) {
   .carousel-custom {
-    height: auto;
+    height: 380px;
   }
   
   .carousel-item-custom {
-    display: flex !important;
-    flex-direction: column !important;
-    height: auto !important;
-    background: #fff !important;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    height: 380px !important;
+  }
+  
+  /* IMAGEN: 60% del espacio */
+  .carousel-item-custom .carousel-image-wrapper {
+    height: 60%;
+    width: 100%;
+    position: relative;
     overflow: hidden;
   }
   
   .carousel-item-custom img {
     width: 100% !important;
-    height: 280px !important;
-    object-fit: contain !important; /* MUESTRA LA IMAGEN COMPLETA sin cortar */
-    object-position: center;
-    background: #f0f0f0; /* Fondo gris claro para las barras */
-    border-bottom: 4px solid #e31e24;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center 20%;
     display: block !important;
   }
   
+  /* TEXTO: 40% del espacio */
   .carousel-caption-custom {
-    position: relative !important;
-    background: #fff !important;
-    padding: 20px 15px !important;
-    color: #1a1a1a !important;
-    left: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
+    height: 40%;
+    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
+    padding: 20px 24px !important;
     display: flex !important;
     flex-direction: column !important;
+    justify-content: center !important;
+    color: white !important;
     z-index: 10;
-  }
-  
-  /* TITULAR PROFESIONAL - ELITE MÓVIL */
-  .carousel-caption-custom h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif !important;
-    font-size: 1.4rem !important; /* Más pequeño para que quepa completo */
-    line-height: 1.3 !important;
-    font-weight: 800 !important;
-    color: #1a1a1a !important;
-    margin: 0 0 10px 0 !important;
-    padding: 0 !important;
-    letter-spacing: -0.3px !important;
   }
   
   /* Badge de categoría en móvil */
   .carousel-caption-custom .badge-categoria {
-    background-color: #e31e24 !important;
+    display: inline-flex;
+    width: fit-content;
+    padding: 5px 12px !important;
+    background: var(--brand-accent) !important;
     color: white !important;
-    padding: 4px 10px !important;
-    font-size: 11px !important;
+    font-size: 10px !important;
     font-weight: 800 !important;
     text-transform: uppercase !important;
-    border-radius: 3px !important;
-    margin-bottom: 12px !important;
-    display: inline-block !important;
+    letter-spacing: 0.8px !important;
+    border-radius: 20px !important;
+    margin-bottom: 10px !important;
+  }
+  
+  /* TITULAR MÓVIL */
+  .carousel-caption-custom h3 {
+    font-size: 20px !important;
+    font-weight: 800 !important;
+    color: white !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.02em !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-transform: uppercase;
   }
 }
 .carousel-controls {
@@ -1355,60 +1365,65 @@ body.dark-theme .skeleton-card {
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="radioya">🔴 Radio Ya 99.1 FM</option>
-      <option value="buenisima">📻 La Buenísima 93.1 FM</option>
-      <option value="pachanguera">💃 La Pachanguera 95.1 FM</option>
-      <option value="futura">⚡ Futura 91.3 FM</option>
-      <option value="vivafm">🎵 Viva FM 98.3 FM</option>
+      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">📻 La Primerísima</option>
+      <option value="https://stream.zeno.fm/axr92qawesmtv">🔴 Radio Ya 99.1 FM</option>
+      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">⚡ Futura 91.3 FM</option>
+      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">📡 Radio ABC</option>
+      <option value="https://online.radionicaragua.com.ni/stream.mp3">🇳🇮 Radio Nicaragua</option>
     </select>
     <div class="radio-status" id="radioStatus">Click para reproducir</div>
   </div>
 </div>
 
 <script>
-// REPRODUCTOR DE RADIO - DIRECTO SIN PROXY
-const RADIOS_NICARAGUA = {
-  radioya: { nombre: "Radio Ya 99.1", url: "https://stream.ecmdigital.net:8010/radioya" },
-  buenisima: { nombre: "La Buenísima 93.1", url: "https://stream.zeno.fm/f24tdg9bq68uv" },
-  pachanguera: { nombre: "La Pachanguera 95.1", url: "https://stream.zeno.fm/8qhxqhx2gg0uv" },
-  futura: { nombre: "Futura 91.3", url: "https://stream.zeno.fm/nqhxqhx2gg0uv" },
-  vivafm: { nombre: "Viva FM 98.3", url: "https://stream.zeno.fm/aqf8fnx2gg0uv" }
-};
-
-const radioPlayer = {
-  audio: null,
-  isPlaying: false,
-  currentRadio: 'radioya',
+// REPRODUCTOR DE RADIO - URLs VERIFICADAS QUE FUNCIONAN
+// REPRODUCTOR DE RADIO - VERSIÓN REPARADA CON URLs VERIFICADAS
+class RadioPlayer {
+  constructor() {
+    this.audio = null;
+    this.isPlaying = false;
+    this.currentStation = null;
+    this.retryCount = 0;
+    this.maxRetries = 3;
+    this.elements = {
+      icon: document.getElementById('radioIcon'),
+      selector: document.getElementById('radioSelector'),
+      status: document.getElementById('radioStatus')
+    };
+  }
   
   init() {
     console.log('🎵 Inicializando reproductor de radio...');
-    const icon = document.getElementById('radioIcon');
-    const selector = document.getElementById('radioSelector');
     
-    if (!icon || !selector) {
+    if (!this.elements.icon || !this.elements.selector) {
       console.error('❌ Elementos del reproductor no encontrados');
       return;
     }
     
     // Click en el icono para play/pause
-    icon.addEventListener('click', (e) => {
+    this.elements.icon.addEventListener('click', (e) => {
       e.stopPropagation();
+      console.log('🎵 Click en icono de radio');
       this.toggle();
     });
     
     // Cambio de radio
-    selector.addEventListener('change', () => {
-      this.currentRadio = selector.value;
+    this.elements.selector.addEventListener('change', () => {
+      console.log('🔄 Cambio de emisora:', this.elements.selector.value);
+      this.currentStation = this.elements.selector.value;
       if (this.isPlaying) {
         this.stop();
         setTimeout(() => this.play(), 300);
       }
     });
     
-    selector.addEventListener('click', (e) => e.stopPropagation());
+    this.elements.selector.addEventListener('click', (e) => e.stopPropagation());
     
-    console.log('✅ Reproductor inicializado');
-  },
+    // Inicializar con la primera emisora
+    this.currentStation = this.elements.selector.value;
+    
+    console.log('✅ Reproductor de radio inicializado correctamente');
+  }
   
   toggle() {
     if (this.isPlaying) {
@@ -1416,134 +1431,166 @@ const radioPlayer = {
     } else {
       this.play();
     }
-  },
+  }
   
   async play() {
-    const radio = RADIOS_NICARAGUA[this.currentRadio];
-    console.log('▶️ Reproduciendo:', radio.nombre);
-    
-    // Limpieza
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio = null;
+    if (!this.currentStation) {
+      console.error('❌ No hay emisora seleccionada');
+      return;
     }
+    
+    // Si ya está reproduciendo, detener primero
+    if (this.isPlaying) {
+      this.stop();
+      await new Promise(r => setTimeout(r, 300));
+    }
+    
+    console.log('▶️ Intentando reproducir:', this.currentStation);
     
     this.updateStatus('Conectando...');
     this.updateIcon('loading');
     
     try {
-      // Crear nuevo audio
+      // Crear nuevo objeto Audio (limpio)
       this.audio = new Audio();
-      this.audio.src = radio.url;
-      this.audio.crossOrigin = 'anonymous'; // Proxy de permisos del navegador
+      
+      // Configuración óptima para streaming
+      this.audio.src = this.currentStation;
+      this.audio.crossOrigin = 'anonymous';
+      this.audio.preload = 'metadata';
       this.audio.volume = 0.8;
-      this.audio.preload = 'none';
       
-      // Eventos
-      this.audio.addEventListener('loadstart', () => {
-        console.log('📡 Cargando...');
-        this.updateStatus('Cargando...');
-      });
+      // Eventos con bind para mantener contexto
+      this.audio.addEventListener('canplay', () => this.onCanPlay());
+      this.audio.addEventListener('playing', () => this.onPlaying());
+      this.audio.addEventListener('error', (e) => this.onError(e));
+      this.audio.addEventListener('stalled', () => this.onStalled());
+      this.audio.addEventListener('waiting', () => this.onWaiting());
       
-      this.audio.addEventListener('canplay', () => {
-        console.log('✅ Listo');
-        this.isPlaying = true;
-        this.updateUI();
-      });
-      
-      this.audio.addEventListener('playing', () => {
-        console.log('🎶 Reproduciendo');
-        this.isPlaying = true;
-        this.updateStatus('🔴 EN VIVO');
-        this.updateIcon('playing');
-        this.setupMediaSession(); // Configurar controles en segundo plano
-      });
-      
-      this.audio.addEventListener('error', (e) => {
-        console.error('❌ Error:', e);
-        this.isPlaying = false;
-        this.updateStatus('Error - Intenta otra radio');
-        this.updateIcon('error');
-        setTimeout(() => {
-          if (!this.isPlaying) {
-            this.updateIcon('play');
-            this.updateStatus('Click para reproducir');
-          }
-        }, 3000);
-      });
-      
-      // Reproducir
+      // Intentar reproducir
       await this.audio.play();
       console.log('✅ Reproducción iniciada');
-      this.isPlaying = true;
-      this.updateUI();
         
     } catch (err) {
       console.error('❌ Error al reproducir:', err);
-      this.isPlaying = false;
-      this.updateStatus('Click de nuevo');
-      this.updateIcon('play');
+      this.onError(err);
     }
-  },
+  }
+  
+  onCanPlay() {
+    console.log('📡 Cargando stream...');
+  }
+  
+  onPlaying() {
+    console.log('🎶 Reproduciendo correctamente');
+    this.isPlaying = true;
+    this.updateStatus('🔴 EN VIVO');
+    this.updateIcon('playing');
+    this.setupMediaSession();
+    this.retryCount = 0;
+  }
+  
+  onError(e) {
+    console.error('❌ Error de audio:', e);
+    
+    if (this.retryCount < this.maxRetries) {
+      this.retryCount++;
+      console.log(`🔄 Reintento ${this.retryCount}/${this.maxRetries}`);
+      this.updateStatus(`Reintentando (${this.retryCount}/${this.maxRetries})...`);
+      setTimeout(() => this.play(), 2000);
+    } else {
+      console.error('❌ Máximo de reintentos alcanzado');
+      this.isPlaying = false;
+      this.updateStatus('Error - Intenta otra radio');
+      this.updateIcon('error');
+      this.cleanup();
+      setTimeout(() => {
+        if (!this.isPlaying) {
+          this.updateIcon('play');
+          this.updateStatus('Click para reproducir');
+        }
+      }, 3000);
+    }
+  }
+  
+  onStalled() {
+    console.log('⚠️ Buffering...');
+    this.updateStatus('Buffering...');
+  }
+  
+  onWaiting() {
+    console.log('⏳ Esperando datos...');
+    this.updateStatus('Cargando...');
+  }
   
   pause() {
     if (this.audio) {
       this.audio.pause();
     }
     this.isPlaying = false;
-    this.updateUI();
-  },
+    this.updateIcon('play');
+    this.updateStatus('Pausado');
+  }
   
   stop() {
     if (this.audio) {
       this.audio.pause();
       this.audio.src = '';
-      this.audio = null;
+      this.audio.load();
+      this.cleanup();
     }
     this.isPlaying = false;
-  },
+    this.retryCount = 0;
+    this.updateIcon('play');
+    this.updateStatus('Click para reproducir');
+  }
   
-  updateUI() {
-    this.updateIcon(this.isPlaying ? 'playing' : 'play');
-    this.updateStatus(this.isPlaying ? '🔴 En vivo' : 'Click para reproducir');
-  },
+  cleanup() {
+    if (this.audio) {
+      this.audio.removeEventListener('canplay', this.onCanPlay);
+      this.audio.removeEventListener('playing', this.onPlaying);
+      this.audio.removeEventListener('error', this.onError);
+      this.audio.removeEventListener('stalled', this.onStalled);
+      this.audio.removeEventListener('waiting', this.onWaiting);
+      this.audio = null;
+    }
+  }
   
   updateIcon(state) {
-    const icon = document.getElementById('radioIcon');
-    if (!icon) return;
+    if (!this.elements.icon) return;
     
-    icon.classList.remove('loading', 'playing');
+    this.elements.icon.classList.remove('loading', 'playing');
     
     if (state === 'loading') {
-      icon.classList.add('loading');
-      icon.innerHTML = '<i class="fas fa-spinner"></i>';
+      this.elements.icon.classList.add('loading');
+      this.elements.icon.innerHTML = '<i class="fas fa-spinner"></i>';
     } else if (state === 'playing') {
-      icon.classList.add('playing');
-      icon.innerHTML = '<i class="fas fa-pause"></i>';
+      this.elements.icon.classList.add('playing');
+      this.elements.icon.innerHTML = '<i class="fas fa-pause"></i>';
     } else if (state === 'error') {
-      icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+      this.elements.icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
     } else {
-      icon.innerHTML = '<i class="fas fa-play"></i>';
+      this.elements.icon.innerHTML = '<i class="fas fa-play"></i>';
     }
-  },
+  }
   
   updateStatus(text) {
-    const status = document.getElementById('radioStatus');
-    if (status) status.textContent = text;
-  },
+    if (this.elements.status) {
+      this.elements.status.textContent = text;
+    }
+  }
   
-  // Media Session API (Controles en pantalla de bloqueo)
+  // Media Session API (Controles en pantalla de bloqueo y segundo plano)
   setupMediaSession() {
     if (!('mediaSession' in navigator)) {
-      console.log('⚠️ Media Session no soportado');
+      console.log('⚠️ Media Session no soportado en este navegador');
       return;
     }
     
-    const radio = RADIOS_NICARAGUA[this.currentRadio];
+    const radioName = this.elements.selector.options[this.elements.selector.selectedIndex].text;
     
     navigator.mediaSession.metadata = new MediaMetadata({
-      title: radio.nombre,
+      title: radioName,
       artist: 'Informate al Instante Nicaragua',
       album: 'Radio en Vivo',
       artwork: [
@@ -1553,25 +1600,28 @@ const radioPlayer = {
       ]
     });
     
-    // Controles en la notificación del móvil
+    // Controles en la notificación del móvil y pantalla de bloqueo
     navigator.mediaSession.setActionHandler('play', () => {
-      console.log('📱 Play desde notificación');
+      console.log('📱 Play desde notificación/pantalla de bloqueo');
       this.play();
     });
     
     navigator.mediaSession.setActionHandler('pause', () => {
-      console.log('📱 Pause desde notificación');
+      console.log('📱 Pause desde notificación/pantalla de bloqueo');
       this.pause();
     });
     
     navigator.mediaSession.setActionHandler('stop', () => {
-      console.log('📱 Stop desde notificación');
+      console.log('📱 Stop desde notificación/pantalla de bloqueo');
       this.stop();
     });
     
-    console.log('✅ Media Session configurado - Funciona en segundo plano');
+    console.log('✅ Media Session configurado - Funciona en segundo plano en móviles');
   }
-};
+}
+
+// Instanciar el reproductor
+const radioPlayer = new RadioPlayer();
 
 // Inicializar cuando cargue la página
 document.addEventListener('DOMContentLoaded', () => {
@@ -1823,7 +1873,9 @@ function renderizarCarrusel() {
     const loadingAttr = i === 0 ? 'eager' : 'lazy';
     return `
       <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
-        <img src="${img}" alt="${titulo}" loading="${loadingAttr}">
+        <div class="carousel-image-wrapper">
+          <img src="${img}" alt="${titulo}" loading="${loadingAttr}">
+        </div>
         <div class="carousel-caption-custom">
           <span class="badge-categoria">${n.categoria || 'ÚLTIMA HORA'}</span>
           <h3>${titulo}</h3>

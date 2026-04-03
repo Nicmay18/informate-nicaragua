@@ -1104,7 +1104,7 @@ body {
 </header>
 
 <!-- ============================================================
-     BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
+     BARRA DE CLIMA CON LAS 5 CIUDADES PRINCIPALES
      ============================================================ -->
 <div class="clima-bar" id="climaBar">
   <div class="clima-scroll" id="climaScroll">
@@ -1323,24 +1323,14 @@ let carouselIndex = 0;
 let carouselInterval = null;
 
 // ============================================================
-// CLIMA DE TODAS LAS CIUDADES DE NICARAGUA
+// CLIMA DE LAS 5 CIUDADES PRINCIPALES DE NICARAGUA
 // ============================================================
 const ciudadesNicaragua = [
   { nombre: 'Managua', temp: 32, icono: 'fa-sun' },
   { nombre: 'León', temp: 34, icono: 'fa-sun' },
   { nombre: 'Granada', temp: 33, icono: 'fa-sun' },
   { nombre: 'Masaya', temp: 31, icono: 'fa-cloud-sun' },
-  { nombre: 'Rivas', temp: 30, icono: 'fa-sun' },
-  { nombre: 'Estelí', temp: 26, icono: 'fa-cloud' },
-  { nombre: 'Chinandega', temp: 35, icono: 'fa-sun' },
-  { nombre: 'Jinotega', temp: 24, icono: 'fa-cloud' },
-  { nombre: 'Matagalpa', temp: 25, icono: 'fa-cloud' },
-  { nombre: 'Bluefields', temp: 29, icono: 'fa-cloud-rain' },
-  { nombre: 'Puerto Cabezas', temp: 28, icono: 'fa-cloud-rain' },
-  { nombre: 'Juigalpa', temp: 32, icono: 'fa-sun' },
-  { nombre: 'Boaco', temp: 30, icono: 'fa-cloud-sun' },
-  { nombre: 'Somoto', temp: 27, icono: 'fa-cloud' },
-  { nombre: 'Ocotal', temp: 28, icono: 'fa-sun' }
+  { nombre: 'Estelí', temp: 26, icono: 'fa-cloud' }
 ];
 
 function initClima() {

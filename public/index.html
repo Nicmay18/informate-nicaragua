@@ -1304,22 +1304,236 @@ body.dark-theme .skeleton-card {
   <button class="close-sticky" onclick="cerrarCta()" aria-label="Cerrar">✕</button>
 </div>
 
-<!-- REPRODUCTOR DE RADIO FLOTANTE - 5 RADIOS PRINCIPALES -->
+<!-- REPRODUCTOR DE RADIO FLOTANTE - CON PROXY -->
 <div class="radio-player" id="radioPlayer">
   <div class="radio-icon" id="radioIcon">
     <i class="fas fa-play"></i>
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya</option>
-      <option value="https://stream.zeno.fm/f24tdg9bq68uv">📻 La Buenísima</option>
-      <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
-      <option value="https://stream.zeno.fm/nqhxqhx2gg0uv">⚡ Futura FM</option>
-      <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
+      <option value="radioya">🔴 Radio Ya 99.1 FM</option>
+      <option value="buenisima">📻 La Buenísima 93.1 FM</option>
+      <option value="pachanguera">💃 La Pachanguera 95.1 FM</option>
+      <option value="futura">⚡ Futura 91.3 FM</option>
+      <option value="vivafm">🎵 Viva FM 98.3 FM</option>
     </select>
     <div class="radio-status" id="radioStatus">Click para reproducir</div>
   </div>
 </div>
+
+<script>
+// REPRODUCTOR DE RADIO - DIRECTO SIN PROXY
+const RADIOS_NICARAGUA = {
+  radioya: { nombre: "Radio Ya 99.1", url: "https://stream.ecmdigital.net:8010/radioya" },
+  buenisima: { nombre: "La Buenísima 93.1", url: "https://stream.zeno.fm/f24tdg9bq68uv" },
+  pachanguera: { nombre: "La Pachanguera 95.1", url: "https://stream.zeno.fm/8qhxqhx2gg0uv" },
+  futura: { nombre: "Futura 91.3", url: "https://stream.zeno.fm/nqhxqhx2gg0uv" },
+  vivafm: { nombre: "Viva FM 98.3", url: "https://stream.zeno.fm/aqf8fnx2gg0uv" }
+};
+
+const radioPlayer = {
+  audio: null,
+  isPlaying: false,
+  currentRadio: 'radioya',
+  
+  init() {
+    console.log('🎵 Inicializando reproductor de radio...');
+    const icon = document.getElementById('radioIcon');
+    const selector = document.getElementById('radioSelector');
+    
+    if (!icon || !selector) {
+      console.error('❌ Elementos del reproductor no encontrados');
+      return;
+    }
+    
+    // Click en el icono para play/pause
+    icon.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggle();
+    });
+    
+    // Cambio de radio
+    selector.addEventListener('change', () => {
+      this.currentRadio = selector.value;
+      if (this.isPlaying) {
+        this.stop();
+        setTimeout(() => this.play(), 300);
+      }
+    });
+    
+    selector.addEventListener('click', (e) => e.stopPropagation());
+    
+    console.log('✅ Reproductor inicializado');
+  },
+  
+  toggle() {
+    if (this.isPlaying) {
+      this.pause();
+    } else {
+      this.play();
+    }
+  },
+  
+  async play() {
+    const radio = RADIOS_NICARAGUA[this.currentRadio];
+    console.log('▶️ Reproduciendo:', radio.nombre);
+    
+    // Limpieza
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio = null;
+    }
+    
+    this.updateStatus('Conectando...');
+    this.updateIcon('loading');
+    
+    try {
+      // Crear nuevo audio
+      this.audio = new Audio();
+      this.audio.src = radio.url;
+      this.audio.crossOrigin = 'anonymous'; // Proxy de permisos del navegador
+      this.audio.volume = 0.8;
+      this.audio.preload = 'none';
+      
+      // Eventos
+      this.audio.addEventListener('loadstart', () => {
+        console.log('📡 Cargando...');
+        this.updateStatus('Cargando...');
+      });
+      
+      this.audio.addEventListener('canplay', () => {
+        console.log('✅ Listo');
+        this.isPlaying = true;
+        this.updateUI();
+      });
+      
+      this.audio.addEventListener('playing', () => {
+        console.log('🎶 Reproduciendo');
+        this.isPlaying = true;
+        this.updateStatus('🔴 EN VIVO');
+        this.updateIcon('playing');
+        this.setupMediaSession(); // Configurar controles en segundo plano
+      });
+      
+      this.audio.addEventListener('error', (e) => {
+        console.error('❌ Error:', e);
+        this.isPlaying = false;
+        this.updateStatus('Error - Intenta otra radio');
+        this.updateIcon('error');
+        setTimeout(() => {
+          if (!this.isPlaying) {
+            this.updateIcon('play');
+            this.updateStatus('Click para reproducir');
+          }
+        }, 3000);
+      });
+      
+      // Reproducir
+      await this.audio.play();
+      console.log('✅ Reproducción iniciada');
+      this.isPlaying = true;
+      this.updateUI();
+        
+    } catch (err) {
+      console.error('❌ Error al reproducir:', err);
+      this.isPlaying = false;
+      this.updateStatus('Click de nuevo');
+      this.updateIcon('play');
+    }
+  },
+  
+  pause() {
+    if (this.audio) {
+      this.audio.pause();
+    }
+    this.isPlaying = false;
+    this.updateUI();
+  },
+  
+  stop() {
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio = null;
+    }
+    this.isPlaying = false;
+  },
+  
+  updateUI() {
+    this.updateIcon(this.isPlaying ? 'playing' : 'play');
+    this.updateStatus(this.isPlaying ? '🔴 En vivo' : 'Click para reproducir');
+  },
+  
+  updateIcon(state) {
+    const icon = document.getElementById('radioIcon');
+    if (!icon) return;
+    
+    icon.classList.remove('loading', 'playing');
+    
+    if (state === 'loading') {
+      icon.classList.add('loading');
+      icon.innerHTML = '<i class="fas fa-spinner"></i>';
+    } else if (state === 'playing') {
+      icon.classList.add('playing');
+      icon.innerHTML = '<i class="fas fa-pause"></i>';
+    } else if (state === 'error') {
+      icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
+    } else {
+      icon.innerHTML = '<i class="fas fa-play"></i>';
+    }
+  },
+  
+  updateStatus(text) {
+    const status = document.getElementById('radioStatus');
+    if (status) status.textContent = text;
+  },
+  
+  // Media Session API (Controles en pantalla de bloqueo)
+  setupMediaSession() {
+    if (!('mediaSession' in navigator)) {
+      console.log('⚠️ Media Session no soportado');
+      return;
+    }
+    
+    const radio = RADIOS_NICARAGUA[this.currentRadio];
+    
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: radio.nombre,
+      artist: 'Informate al Instante Nicaragua',
+      album: 'Radio en Vivo',
+      artwork: [
+        { src: 'https://nicaraguainformate.com/logo.png', sizes: '96x96', type: 'image/png' },
+        { src: 'https://nicaraguainformate.com/logo.png', sizes: '192x192', type: 'image/png' },
+        { src: 'https://nicaraguainformate.com/logo.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+    
+    // Controles en la notificación del móvil
+    navigator.mediaSession.setActionHandler('play', () => {
+      console.log('📱 Play desde notificación');
+      this.play();
+    });
+    
+    navigator.mediaSession.setActionHandler('pause', () => {
+      console.log('📱 Pause desde notificación');
+      this.pause();
+    });
+    
+    navigator.mediaSession.setActionHandler('stop', () => {
+      console.log('📱 Stop desde notificación');
+      this.stop();
+    });
+    
+    console.log('✅ Media Session configurado - Funciona en segundo plano');
+  }
+};
+
+// Inicializar cuando cargue la página
+document.addEventListener('DOMContentLoaded', () => {
+  radioPlayer.init();
+});
+</script>
 
 <!-- FOOTER PROFESIONAL ESTILO CNN -->
 <footer style="background: #1a1a1a; color: #999; padding: 40px 20px 20px; font-size: 0.9rem;">
@@ -1791,223 +2005,6 @@ function cerrarCta() {
   localStorage.setItem('ctaClosed', 'true');
 }
 
-// REPRODUCTOR DE RADIO CON SELECTOR - 5 RADIOS PRINCIPALES
-const radioPlayer = {
-  audio: null,
-  isPlaying: false,
-  isLoading: false,
-  
-  init() {
-    console.log('🎵 Inicializando reproductor de radio...');
-    const icon = document.getElementById('radioIcon');
-    const selector = document.getElementById('radioSelector');
-    
-    if (!icon) {
-      console.error('❌ No se encontró el elemento radioIcon');
-      return;
-    }
-    
-    if (!selector) {
-      console.error('❌ No se encontró el elemento radioSelector');
-      return;
-    }
-    
-    console.log('✅ Elementos encontrados, configurando event listeners...');
-    
-    // Click en el icono para play/pause
-    icon.addEventListener('click', (e) => {
-      console.log('🎵 Click en icono de radio');
-      e.stopPropagation();
-      this.toggle();
-    });
-    
-    // Cambio de radio - reiniciar stream
-    selector.addEventListener('change', () => {
-      console.log('🔄 Cambio de emisora:', selector.value);
-      if (this.isPlaying) {
-        this.stop();
-        setTimeout(() => this.play(), 200);
-      }
-    });
-    
-    // Evitar que el click en el selector active play/pause
-    selector.addEventListener('click', (e) => {
-      e.stopPropagation();
-    });
-    
-    console.log('✅ Reproductor de radio inicializado correctamente');
-  },
-  
-  toggle() {
-    if (this.isLoading) return;
-    
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
-    }
-  },
-  
-  play() {
-    const selector = document.getElementById('radioSelector');
-    let streamUrl = selector?.value || 'https://stream.ecmdigital.net:8010/radioya';
-    
-    // TRUCO DE INGENIERÍA: Evitar que el navegador use una sesión vieja/caída
-    streamUrl = streamUrl + (streamUrl.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
-    
-    console.log('▶️ Intentando reproducir:', streamUrl);
-    
-    // Detener audio anterior si existe - LIMPIEZA TOTAL
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = ""; // Limpieza total de memoria
-      this.audio.load();
-      this.audio = null;
-    }
-    
-    // Mostrar estado de carga
-    this.isLoading = true;
-    this.updateStatus('Conectando al servidor...');
-    const icon = document.getElementById('radioIcon');
-    if (icon) {
-      icon.classList.add('loading');
-      icon.innerHTML = '<i class="fas fa-spinner"></i>';
-    }
-    
-    try {
-      // Crear nuevo audio con configuración robusta
-      this.audio = new Audio();
-      this.audio.src = streamUrl;
-      this.audio.preload = 'none'; // Evita bloqueos por carga previa
-      this.audio.crossOrigin = 'anonymous'; // Necesario para servidores externos
-      this.audio.volume = 0.8;
-      
-      // EVENTO CLAVE: Si el servidor tarda en responder
-      this.audio.addEventListener('stalled', () => {
-        console.log('⚠️ El servidor está tardando en enviar datos...');
-        this.updateStatus('Conectando...');
-      });
-      
-      this.audio.addEventListener('loadstart', () => {
-        console.log('📡 Cargando stream...');
-        this.updateStatus('Cargando...');
-      });
-      
-      this.audio.addEventListener('canplay', () => {
-        console.log('✅ Stream listo para reproducir');
-        this.isLoading = false;
-        this.isPlaying = true;
-        this.updateUI();
-      });
-      
-      this.audio.addEventListener('playing', () => {
-        console.log('🎶 Audio fluyendo correctamente');
-        this.updateStatus('🔴 EN VIVO');
-        this.isLoading = false;
-        this.isPlaying = true;
-        this.updateUI();
-      });
-      
-      this.audio.addEventListener('error', (e) => {
-        const errCode = this.audio.error ? this.audio.error.code : 'Desconocido';
-        console.error('❌ ERROR TÉCNICO: Código ' + errCode);
-        if (errCode == 4) {
-          console.error('👉 Posible causa: El servidor de la radio está caído o la URL cambió.');
-        }
-        console.error('URL problemática:', streamUrl);
-        this.isLoading = false;
-        this.isPlaying = false;
-        this.updateStatus('❌ Error de conexión');
-        if (icon) {
-          icon.classList.remove('loading', 'playing');
-          icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-        }
-        setTimeout(() => {
-          if (!this.isPlaying) {
-            icon.innerHTML = '<i class="fas fa-play"></i>';
-            this.updateStatus('Click para reproducir');
-          }
-        }, 3000);
-      });
-      
-      // Ejecutar reproducción
-      const playPromise = this.audio.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('✅ Reproducción autorizada por el navegador');
-            this.isLoading = false;
-            this.isPlaying = true;
-            this.updateUI();
-          })
-          .catch(err => {
-            console.error('❌ Bloqueo de Autoplay:', err.message);
-            console.error('👉 Debes interactuar con la página primero.');
-            this.isLoading = false;
-            this.isPlaying = false;
-            this.updateStatus('❌ Haz clic de nuevo');
-            if (icon) {
-              icon.classList.remove('loading');
-              icon.innerHTML = '<i class="fas fa-play"></i>';
-            }
-          });
-      }
-    } catch (err) {
-      console.error('❌ Error crítico:', err.message);
-      this.isLoading = false;
-      this.isPlaying = false;
-      this.updateStatus('❌ Error crítico');
-      if (icon) {
-        icon.classList.remove('loading');
-        icon.innerHTML = '<i class="fas fa-play"></i>';
-      }
-    }
-  },
-  
-  pause() {
-    if (this.audio) {
-      this.audio.pause();
-    }
-    this.isPlaying = false;
-    this.isLoading = false;
-    this.updateUI();
-  },
-  
-  stop() {
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio = null;
-    }
-    this.isPlaying = false;
-    this.isLoading = false;
-  },
-  
-  updateUI() {
-    const icon = document.getElementById('radioIcon');
-    
-    if (icon) {
-      icon.classList.remove('loading');
-      
-      if (this.isPlaying) {
-        icon.classList.add('playing');
-        icon.innerHTML = '<i class="fas fa-pause"></i>';
-        this.updateStatus('🔴 En vivo');
-      } else {
-        icon.classList.remove('playing');
-        icon.innerHTML = '<i class="fas fa-play"></i>';
-        this.updateStatus('Click para reproducir');
-      }
-    }
-  },
-  
-  updateStatus(text) {
-    const status = document.getElementById('radioStatus');
-    if (status) status.textContent = text;
-  }
-};
-
 // DARK MODE
 function toggleDarkMode() {
   document.body.classList.toggle('dark-theme');
@@ -2040,7 +2037,6 @@ function loadDarkModePreference() {
 
 document.addEventListener('DOMContentLoaded', () => {
   loadDarkModePreference();
-  radioPlayer.init();
   init();
 });
 

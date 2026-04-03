@@ -543,15 +543,15 @@ body {
   background: var(--surface);
   padding: 20px;
   border-radius: 12px;
-  border: 1px solid var(--border);
+  border: none !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
   cursor: pointer;
   transition: all 0.3s;
   text-decoration: none;
   color: inherit;
 }
 .news-card:hover {
-  border-color: var(--brand-accent);
-  box-shadow: var(--shadow);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
 }
 .card-image-wrapper {
   aspect-ratio: 16/10;
@@ -1062,7 +1062,7 @@ body {
 .footer {
   background: #1a1a1a;
   color: #999;
-  padding: 60px 24px 30px;
+  padding: 40px 24px 20px;
   font-size: 14px;
 }
 .footer-content {
@@ -1073,9 +1073,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #333;
-  margin-bottom: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
   flex-wrap: wrap;
   gap: 20px;
 }
@@ -1084,11 +1083,7 @@ body {
   font-family: var(--font-serif);
   font-size: 24px;
   font-weight: 900;
-  margin-bottom: 4px;
-}
-.footer-brand p {
-  color: #666;
-  font-size: 13px;
+  margin: 0;
 }
 .footer-social {
   display: flex;
@@ -1103,41 +1098,12 @@ body {
   color: white;
   transform: translateY(-3px);
 }
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  margin-bottom: 40px;
-}
-.footer-section h4 {
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.footer-links {
-  list-style: none;
-}
-.footer-links li {
-  margin-bottom: 10px;
-}
-.footer-links a {
-  color: #999;
-  text-decoration: none;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-.footer-links a:hover {
-  color: white;
-  padding-left: 4px;
-}
 .footer-bottom {
   text-align: center;
-  padding-top: 30px;
+  padding-top: 20px;
   border-top: 1px solid #333;
   color: #666;
+}
   font-size: 13px;
 }
 
@@ -1370,11 +1336,7 @@ body {
   
   /* FOOTER MÓVIL */
   .footer {
-    padding: 40px 16px 20px;
-  }
-  .footer-grid { 
-    grid-template-columns: 1fr;
-    gap: 32px;
+    padding: 30px 16px 16px;
   }
   .footer-top { 
     flex-direction: column; 
@@ -1561,48 +1523,11 @@ body {
     <div class="footer-top">
       <div class="footer-brand">
         <h3>Nicaragua Informate</h3>
-        <p>Tu fuente confiable de noticias desde 2024</p>
       </div>
       <div class="footer-social">
-        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-    
-    <div class="footer-grid">
-      <div class="footer-section">
-        <h4>Secciones</h4>
-        <ul class="footer-links">
-          <li><a href="/">Última Hora</a></li>
-          <li><a href="/?cat=Sucesos">Sucesos</a></li>
-          <li><a href="/?cat=Nacionales">Nacionales</a></li>
-          <li><a href="/?cat=Deportes">Deportes</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Internacional</h4>
-        <ul class="footer-links">
-          <li><a href="/?cat=Internacionales">Internacionales</a></li>
-          <li><a href="/?cat=Tecnología">Tecnología</a></li>
-          <li><a href="/?cat=Cultura">Cultura</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Legal</h4>
-        <ul class="footer-links">
-          <li><a href="/privacidad.html">Privacidad</a></li>
-          <li><a href="/terminos.html">Términos</a></li>
-          <li><a href="/cookies.html">Cookies</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Contacto</h4>
-        <ul class="footer-links">
-          <li><a href="/contacto.html">Escríbenos</a></li>
-          <li><a href="mailto:info@nicaraguainformate.com">info@nicaraguainformate.com</a></li>
-        </ul>
+        <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
       </div>
     </div>
     

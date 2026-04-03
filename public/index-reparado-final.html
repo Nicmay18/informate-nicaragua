@@ -1,0 +1,1770 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
+<meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+  --brand-primary: #0f172a;
+  --brand-accent: #dc2626;
+  --brand-secondary: #2563eb;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.15);
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: var(--font-sans); 
+  background: var(--surface-alt); 
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.topbar { 
+  background: var(--surface); 
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky; 
+  top: 0; 
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+.topbar-content { 
+  max-width: 1280px; 
+  margin: 0 auto; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+.logo { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  text-decoration: none; 
+  color: var(--text-primary);
+}
+.logo img { 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 8px; 
+  object-fit: cover;
+}
+.logo-title { 
+  font-family: var(--font-serif); 
+  font-size: 24px; 
+  font-weight: 900; 
+  color: var(--brand-primary);
+  letter-spacing: -0.5px;
+}
+.logo-subtitle { 
+  font-size: 12px; 
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.header-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.search-wrapper { 
+  position: relative;
+  width: 280px;
+}
+#searchInput { 
+  background: var(--surface-alt); 
+  border: 1px solid var(--border); 
+  padding: 10px 16px 10px 40px; 
+  border-radius: 9999px; 
+  font-size: 14px; 
+  width: 100%;
+  transition: all 0.2s;
+}
+#searchInput:focus { 
+  background: #fff; 
+  border-color: var(--brand-secondary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+.search-icon { 
+  position: absolute; 
+  left: 14px; 
+  top: 50%; 
+  transform: translateY(-50%); 
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+#searchResults {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: white;
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 100;
+  display: none;
+  border: 1px solid var(--border);
+  padding: 8px 0;
+}
+
+/* ============================================================
+   BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
+   ============================================================ */
+.clima-bar {
+  background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  color: white;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  overflow: hidden;
+  position: relative;
+}
+.clima-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: linear-gradient(90deg, #0f172a, transparent);
+  z-index: 2;
+}
+.clima-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: linear-gradient(270deg, #0f172a, transparent);
+  z-index: 2;
+}
+.clima-scroll {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  white-space: nowrap;
+}
+.clima-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 24px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.clima-item i {
+  color: #fbbf24;
+  font-size: 14px;
+}
+.clima-item .temp {
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 13px;
+}
+.clima-item .city {
+  opacity: 0.9;
+}
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.clima-bar:hover .clima-scroll {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   BARRA ECONÓMICA
+   ============================================================ */
+.econ-bar {
+  background: var(--brand-accent);
+  color: white;
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.econ-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+.econ-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.econ-item strong {
+  color: #fef3c7;
+  font-weight: 800;
+}
+
+/* NAVEGACIÓN */
+.menu-nav { 
+  background: var(--brand-primary); 
+  padding: 0 24px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.menu-nav::-webkit-scrollbar { display: none; }
+.menu-content { 
+  max-width: 1280px; 
+  margin: 0 auto; 
+  display: flex; 
+  gap: 4px; 
+  padding: 4px 0;
+  min-width: max-content;
+}
+.menu-btn { 
+  border: none; 
+  background: transparent; 
+  color: rgba(255,255,255,0.7); 
+  font-size: 13px; 
+  font-weight: 600; 
+  padding: 12px 20px; 
+  cursor: pointer; 
+  border-radius: 6px;
+  transition: all 0.2s;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.menu-btn:hover { 
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+.menu-btn.active { 
+  background: var(--brand-accent);
+  color: white;
+}
+
+/* CARRUSEL */
+.carousel-section { 
+  margin: 24px auto;
+  max-width: 1280px;
+  padding: 0 24px;
+}
+.carousel-container {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--brand-primary);
+  box-shadow: var(--shadow-lg);
+  height: 450px;
+}
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+.carousel-slide {
+  min-width: 100%;
+  height: 100%;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.carousel-image {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.carousel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 8s ease;
+}
+.carousel-slide:hover .carousel-image img {
+  transform: scale(1.05);
+}
+.carousel-content {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.carousel-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 14px;
+  background: var(--brand-accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+.carousel-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: white;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.95);
+  border: none;
+  color: var(--brand-primary);
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+.carousel-btn:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+}
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+.carousel-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.dot.active {
+  background: white;
+  width: 32px;
+  border-radius: 5px;
+}
+
+/* LAYOUT */
+.main-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px 60px;
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 40px;
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--brand-accent);
+  display: inline-block;
+}
+
+/* NOTICIAS */
+.breaking-card {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 0;
+  background: var(--surface);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  margin-bottom: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+}
+.breaking-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.breaking-card .card-image {
+  height: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  position: relative;
+}
+.breaking-card .card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.breaking-card:hover .card-image img { transform: scale(1.05); }
+.breaking-body {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.breaking-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--brand-accent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  width: fit-content;
+  letter-spacing: 0.5px;
+}
+.breaking-body h2 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+  color: var(--text-primary);
+}
+.breaking-body p {
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.breaking-meta {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.news-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.news-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  background: var(--surface);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+  color: inherit;
+}
+.news-card:hover {
+  border-color: var(--brand-accent);
+  box-shadow: var(--shadow);
+}
+.card-image-wrapper {
+  aspect-ratio: 16/10;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--surface-alt);
+}
+.card-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.news-card:hover .card-image-wrapper img { transform: scale(1.05); }
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.tag {
+  display: inline-flex;
+  width: fit-content;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--brand-accent);
+  background: rgba(220, 38, 38, 0.08);
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.news-card h3 {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.news-excerpt {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  padding-top: 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.read-more {
+  color: var(--brand-secondary);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap 0.2s;
+}
+.news-card:hover .read-more { gap: 8px; }
+
+/* SIDEBAR */
+.sidebar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.sidebar-box {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+.sidebar-box h4 {
+  font-size: 14px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.trending-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  color: inherit;
+}
+.trending-item:last-child { border-bottom: none; }
+.trending-item:hover { padding-left: 8px; }
+.trending-number {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--border);
+  min-width: 32px;
+  font-family: Georgia, serif;
+  line-height: 1;
+}
+.trending-item:nth-child(1) .trending-number { color: var(--brand-accent); }
+.trending-item:nth-child(2) .trending-number { color: #f59e0b; }
+.trending-item:nth-child(3) .trending-number { color: #10b981; }
+.trending-title {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+  color: var(--text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.trending-meta {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.newsletter-box {
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+.newsletter-box h4 {
+  color: white;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+.newsletter-box p {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
+.newsletter-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.newsletter-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--brand-accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.newsletter-btn:hover { background: #b91c1c; }
+
+.paypal-box {
+  background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+.paypal-box h4 {
+  color: white;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.paypal-box p {
+  font-size: 13px;
+  opacity: 0.95;
+  margin-bottom: 16px;
+}
+.paypal-btn {
+  width: 100%;
+  padding: 14px;
+  background: white;
+  color: #003087;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.paypal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.paypal-sub {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  text-decoration: none;
+}
+.paypal-sub:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ============================================================
+   REPRODUCTOR DE RADIO FLOTANTE - MEJORADO
+   ============================================================ */
+.radio-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #1e293b 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s;
+}
+.radio-player:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.radio-icon-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--brand-accent);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.radio-icon-btn:hover {
+  transform: scale(1.1);
+  background: #b91c1c;
+}
+.radio-icon-btn.playing {
+  background: #10b981;
+  animation: pulse-radio 2s infinite;
+}
+@keyframes pulse-radio {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+.radio-info {
+  flex: 1;
+  min-width: 0;
+}
+.radio-station-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#radioSelector {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+#radioSelector option {
+  background: #1e293b;
+  color: white;
+}
+.radio-status {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.radio-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  transition: all 0.2s;
+}
+.radio-close:hover {
+  color: white;
+}
+
+/* STICKY CTA */
+.premium-sticky {
+  position: fixed;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+  background: var(--brand-primary);
+  color: white;
+  padding: 16px 24px;
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+  z-index: 1000;
+  transition: bottom 0.5s ease;
+}
+.premium-sticky.visible { bottom: 0; }
+.sticky-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.sticky-text h5 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.sticky-text p {
+  font-size: 13px;
+  opacity: 0.9;
+}
+.sticky-buttons {
+  display: flex;
+  gap: 12px;
+}
+.sticky-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  border: none;
+}
+.sticky-btn.donate {
+  background: #0070ba;
+  color: white;
+}
+.sticky-btn.donate:hover {
+  background: #005ea6;
+  transform: translateY(-2px);
+}
+.sticky-btn.subscribe {
+  background: var(--brand-accent);
+  color: white;
+}
+.sticky-btn.subscribe:hover {
+  background: #b91c1c;
+  transform: translateY(-2px);
+}
+.close-sticky {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 4px;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+.close-sticky:hover { opacity: 1; }
+
+/* SKELETON */
+.skeleton-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+.skeleton-text {
+  height: 16px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.load-more-container { 
+  text-align: center; 
+  padding: 40px 0; 
+}
+.load-more-btn {
+  padding: 14px 32px;
+  background: var(--brand-primary);
+  color: #fff;
+  border: none;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.load-more-btn:hover { 
+  background: var(--brand-accent);
+  transform: translateY(-2px);
+}
+
+/* FOOTER */
+.footer {
+  background: #1a1a1a;
+  color: #999;
+  padding: 60px 24px 30px;
+  font-size: 14px;
+}
+.footer-content {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #333;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-brand h3 {
+  color: white;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.footer-brand p {
+  color: #666;
+  font-size: 13px;
+}
+.footer-social {
+  display: flex;
+  gap: 16px;
+}
+.footer-social a {
+  color: #999;
+  font-size: 20px;
+  transition: all 0.2s;
+}
+.footer-social a:hover {
+  color: white;
+  transform: translateY(-3px);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.footer-section h4 {
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.footer-links {
+  list-style: none;
+}
+.footer-links li {
+  margin-bottom: 10px;
+}
+.footer-links a {
+  color: #999;
+  text-decoration: none;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+.footer-links a:hover {
+  color: white;
+  padding-left: 4px;
+}
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #333;
+  color: #666;
+  font-size: 13px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .main-wrapper { grid-template-columns: 1fr; }
+  .sidebar-right { display: none; }
+  .carousel-slide { grid-template-columns: 1fr; }
+  .carousel-image { height: 60%; }
+  .carousel-content { height: 40%; padding: 24px; }
+  .carousel-title { font-size: 24px; }
+  .breaking-card { grid-template-columns: 1fr; }
+  .news-card { grid-template-columns: 200px 1fr; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .radio-player {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    min-width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar-content { flex-direction: column; gap: 12px; }
+  .search-wrapper { width: 100%; }
+  .carousel-container { height: 400px; }
+  .carousel-title { font-size: 20px; }
+  .news-card { grid-template-columns: 1fr; }
+  .card-image-wrapper { aspect-ratio: 16/9; }
+  .sticky-content { flex-direction: column; text-align: center; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; text-align: center; }
+  .clima-item { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-content">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
+      <div>
+        <div class="logo-title">Nicaragua Informate</div>
+        <div class="logo-subtitle">Tu fuente de noticias confiable</div>
+      </div>
+    </a>
+    <div class="header-meta">
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="Buscar noticias..." autocomplete="off">
+        <i class="fas fa-search search-icon"></i>
+        <div id="searchResults"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
+     ============================================================ -->
+<div class="clima-bar" id="climaBar">
+  <div class="clima-scroll" id="climaScroll">
+    <!-- Se llena dinámicamente con JavaScript -->
+  </div>
+</div>
+
+<div class="econ-bar">
+  <div class="econ-content">
+    <div class="econ-item"><i class="fas fa-dollar-sign"></i> USD: <strong>C$36.62</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Súper: <strong>C$49.03</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Regular: <strong>C$47.84</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Diésel: <strong>C$43.21</strong></div>
+  </div>
+</div>
+
+<nav class="menu-nav">
+  <div class="menu-content">
+    <button class="menu-btn active" data-cat="Todas">🔥 Última hora</button>
+    <button class="menu-btn" data-cat="Sucesos">🚨 Sucesos</button>
+    <button class="menu-btn" data-cat="Nacionales">🏠 Nacionales</button>
+    <button class="menu-btn" data-cat="Deportes">⚽ Deportes</button>
+    <button class="menu-btn" data-cat="Internacionales">🌍 Internacionales</button>
+    <button class="menu-btn" data-cat="Tecnología">💻 Tecnología</button>
+    <button class="menu-btn" data-cat="Cultura">🎭 Cultura</button>
+  </div>
+</nav>
+
+<section class="carousel-section">
+  <div class="carousel-container" id="carousel">
+    <div class="carousel-track" id="carouselTrack"></div>
+    <button class="carousel-btn prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-btn next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    <div class="carousel-dots" id="carouselDots"></div>
+  </div>
+</section>
+
+<div class="main-wrapper">
+  <main class="content-main">
+    <h2 class="section-title" id="sectionTitle">📰 Últimas Noticias</h2>
+    
+    <div id="skeletonContainer">
+      <div class="skeleton-card">
+        <div class="skeleton-img"></div>
+        <div>
+          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text" style="width: 60%;"></div>
+        </div>
+      </div>
+      <div class="skeleton-card">
+        <div class="skeleton-img"></div>
+        <div>
+          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
+          <div class="skeleton-text"></div>
+          <div class="skeleton-text"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-grid" id="newsGrid" style="display: none;"></div>
+    
+    <div class="load-more-container" id="loadMoreContainer" style="display: none;">
+      <button class="load-more-btn" onclick="cargarMas()">
+        Ver más noticias <i class="fas fa-arrow-down"></i>
+      </button>
+    </div>
+  </main>
+
+  <aside class="sidebar-right">
+    <div class="sidebar-box">
+      <h4><i class="fas fa-fire" style="color: var(--brand-accent);"></i> Tendencias</h4>
+      <div id="trendingContainer"></div>
+    </div>
+
+    <div class="newsletter-box">
+      <h4><i class="fas fa-envelope"></i> Newsletter</h4>
+      <p>Recibe las noticias más importantes cada mañana en tu correo.</p>
+      <form onsubmit="suscribirNewsletter(event)">
+        <input type="email" class="newsletter-input" placeholder="tu@email.com" required>
+        <button type="submit" class="newsletter-btn">Suscribirme gratis</button>
+      </form>
+    </div>
+    
+    <div class="paypal-box">
+      <h4><i class="fab fa-paypal"></i> Apóyanos</h4>
+      <p>Tu contribución mantiene este medio independiente</p>
+      <a href="https://paypal.me/NicaraguaInformate" target="_blank" class="paypal-btn">
+        <i class="fab fa-paypal"></i> Donar con PayPal
+      </a>
+      <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="paypal-sub">
+        <i class="fas fa-star"></i> Suscripción $5/mes
+      </a>
+    </div>
+  </aside>
+</div>
+
+<!-- ============================================================
+     REPRODUCTOR DE RADIO FLOTANTE
+     ============================================================ -->
+<div class="radio-player" id="radioPlayer">
+  <button class="radio-icon-btn" id="radioPlayBtn" onclick="toggleRadio()">
+    <i class="fas fa-play" id="radioPlayIcon"></i>
+  </button>
+  <div class="radio-info">
+    <div class="radio-station-name" id="radioStationName">Radio Ya 99.1 FM</div>
+    <select id="radioSelector" onchange="cambiarRadio()">
+      <option value="https://stream.zeno.fm/axr92qawesmtv">Radio Ya 99.1 FM</option>
+      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">La Primerísima</option>
+      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">Futura 91.3 FM</option>
+      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">Radio ABC</option>
+      <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+      <option value="https://stream.zeno.fm/7f7pj2jtpazuv">Radio Sandino</option>
+      <option value="https://stream.zeno.fm/8wqtdg30k8quv">La Pachanguera</option>
+    </select>
+    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+  </div>
+  <button class="radio-close" onclick="cerrarRadio()"><i class="fas fa-times"></i></button>
+</div>
+
+<!-- STICKY CTA -->
+<div class="premium-sticky" id="premiumSticky">
+  <div class="sticky-content">
+    <div class="sticky-text">
+      <h5>⭐ Apoya el periodismo independiente</h5>
+      <p>Tu aporte nos permite seguir informando sin barreras</p>
+    </div>
+    <div class="sticky-buttons">
+      <a href="https://paypal.me/NicaraguaInformate" target="_blank" class="sticky-btn donate">
+        <i class="fab fa-paypal"></i> Donar
+      </a>
+      <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="sticky-btn subscribe">
+        <i class="fas fa-heart"></i> $5/mes
+      </a>
+    </div>
+    <button class="close-sticky" onclick="cerrarSticky()"><i class="fas fa-times"></i></button>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Nicaragua Informate</h3>
+        <p>Tu fuente confiable de noticias desde 2024</p>
+      </div>
+      <div class="footer-social">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+    
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Secciones</h4>
+        <ul class="footer-links">
+          <li><a href="/">Última Hora</a></li>
+          <li><a href="/?cat=Sucesos">Sucesos</a></li>
+          <li><a href="/?cat=Nacionales">Nacionales</a></li>
+          <li><a href="/?cat=Deportes">Deportes</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Internacional</h4>
+        <ul class="footer-links">
+          <li><a href="/?cat=Internacionales">Internacionales</a></li>
+          <li><a href="/?cat=Tecnología">Tecnología</a></li>
+          <li><a href="/?cat=Cultura">Cultura</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacidad.html">Privacidad</a></li>
+          <li><a href="/terminos.html">Términos</a></li>
+          <li><a href="/cookies.html">Cookies</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <ul class="footer-links">
+          <li><a href="/contacto.html">Escríbenos</a></li>
+          <li><a href="mailto:info@nicaraguainformate.com">info@nicaraguainformate.com</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// CONFIGURACIÓN
+const CONFIG = {
+  NOTICIAS_POR_PAGINA: 10,
+  FIREBASE_CONFIG: {
+    apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+    authDomain: "informate-instant-nicaragua.firebaseapp.com",
+    projectId: "informate-instant-nicaragua",
+    storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+    messagingSenderId: "24988088146",
+    appId: "1:24988088146:web:d26a207508da055668ec8b"
+  }
+};
+
+let noticias = [];
+let categoriaActual = 'Todas';
+let paginaActual = 1;
+let db = null;
+let carouselIndex = 0;
+let carouselInterval = null;
+
+// ============================================================
+// CLIMA DE TODAS LAS CIUDADES DE NICARAGUA
+// ============================================================
+const ciudadesNicaragua = [
+  { nombre: 'Managua', temp: 32, icono: 'fa-sun' },
+  { nombre: 'León', temp: 34, icono: 'fa-sun' },
+  { nombre: 'Granada', temp: 33, icono: 'fa-sun' },
+  { nombre: 'Masaya', temp: 31, icono: 'fa-cloud-sun' },
+  { nombre: 'Rivas', temp: 30, icono: 'fa-sun' },
+  { nombre: 'Estelí', temp: 26, icono: 'fa-cloud' },
+  { nombre: 'Chinandega', temp: 35, icono: 'fa-sun' },
+  { nombre: 'Jinotega', temp: 24, icono: 'fa-cloud' },
+  { nombre: 'Matagalpa', temp: 25, icono: 'fa-cloud' },
+  { nombre: 'Bluefields', temp: 29, icono: 'fa-cloud-rain' },
+  { nombre: 'Puerto Cabezas', temp: 28, icono: 'fa-cloud-rain' },
+  { nombre: 'Juigalpa', temp: 32, icono: 'fa-sun' },
+  { nombre: 'Boaco', temp: 30, icono: 'fa-cloud-sun' },
+  { nombre: 'Somoto', temp: 27, icono: 'fa-cloud' },
+  { nombre: 'Ocotal', temp: 28, icono: 'fa-sun' }
+];
+
+function initClima() {
+  const scroll = document.getElementById('climaScroll');
+  let html = '';
+  
+  // Duplicar para efecto infinito
+  [...ciudadesNicaragua, ...ciudadesNicaragua].forEach(ciudad => {
+    html += `
+      <div class="clima-item">
+        <i class="fas ${ciudad.icono}"></i>
+        <span class="city">${ciudad.nombre}:</span>
+        <span class="temp">${ciudad.temp}°C</span>
+      </div>
+    `;
+  });
+  
+  scroll.innerHTML = html;
+  
+  // Actualizar temperaturas simuladas cada 5 minutos
+  setInterval(() => {
+    document.querySelectorAll('.clima-item .temp').forEach(el => {
+      const base = parseInt(el.textContent);
+      const variacion = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
+      el.textContent = (base + variacion) + '°C';
+    });
+  }, 5 * 60 * 1000);
+}
+
+// ============================================================
+// RADIO FLOTANTE
+// ============================================================
+let radioAudio = null;
+let radioPlaying = false;
+
+function toggleRadio() {
+  if (radioPlaying) {
+    pauseRadio();
+  } else {
+    playRadio();
+  }
+}
+
+function playRadio() {
+  const url = document.getElementById('radioSelector').value;
+  const btn = document.getElementById('radioPlayBtn');
+  const icon = document.getElementById('radioPlayIcon');
+  const status = document.getElementById('radioStatus');
+  
+  if (!radioAudio) {
+    radioAudio = new Audio();
+    radioAudio.crossOrigin = 'anonymous';
+  }
+  
+  // Limpiar anterior
+  radioAudio.pause();
+  radioAudio.src = '';
+  
+  radioAudio.src = url;
+  radioAudio.volume = 0.8;
+  
+  status.textContent = 'Conectando...';
+  
+  radioAudio.play()
+    .then(() => {
+      radioPlaying = true;
+      btn.classList.add('playing');
+      icon.className = 'fas fa-pause';
+      status.textContent = '🔴 EN VIVO';
+      
+      // Media Session API para controles en segundo plano
+      if ('mediaSession' in navigator) {
+        const station = document.getElementById('radioSelector').options[document.getElementById('radioSelector').selectedIndex].text;
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: station,
+          artist: 'Nicaragua Informate',
+          artwork: [{ src: '/logo.png', sizes: '512x512', type: 'image/png' }]
+        });
+        navigator.mediaSession.setActionHandler('play', playRadio);
+        navigator.mediaSession.setActionHandler('pause', pauseRadio);
+      }
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      status.textContent = 'Error - Intenta otra emisora';
+      setTimeout(() => {
+        status.textContent = 'Click para reproducir';
+      }, 3000);
+    });
+  
+  // Manejar errores
+  radioAudio.onerror = () => {
+    status.textContent = 'Error de conexión';
+    radioPlaying = false;
+    btn.classList.remove('playing');
+    icon.className = 'fas fa-play';
+  };
+}
+
+function pauseRadio() {
+  if (radioAudio) {
+    radioAudio.pause();
+  }
+  radioPlaying = false;
+  document.getElementById('radioPlayBtn').classList.remove('playing');
+  document.getElementById('radioPlayIcon').className = 'fas fa-play';
+  document.getElementById('radioStatus').textContent = 'Pausado - Click para continuar';
+}
+
+function cambiarRadio() {
+  const select = document.getElementById('radioSelector');
+  document.getElementById('radioStationName').textContent = select.options[select.selectedIndex].text;
+  
+  if (radioPlaying) {
+    playRadio();
+  }
+}
+
+function cerrarRadio() {
+  pauseRadio();
+  document.getElementById('radioPlayer').style.display = 'none';
+  localStorage.setItem('radioClosed', 'true');
+}
+
+// UTILIDADES
+const utils = {
+  formatDate: (fecha) => {
+    if (!fecha) return "Hace un momento";
+    try {
+      let d = fecha.toDate ? fecha.toDate() : new Date(fecha);
+      const diff = Math.floor((new Date() - d) / 1000);
+      if (diff < 60) return 'Hace un momento';
+      if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
+      if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
+      return d.toLocaleDateString('es-NI', {day:'numeric', month:'short'});
+    } catch(e) { return "Hace un momento"; }
+  },
+  
+  sanitizeImage: (url, categoria) => {
+    if (!url || url.includes('facebook') || url.includes('fbcdn')) {
+      return '/logo.png';
+    }
+    return url;
+  },
+  
+  escapeHtml: (text) => {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+};
+
+// INICIALIZACIÓN
+function init() {
+  initClima();
+  initFirebase();
+  initEventListeners();
+  
+  // Restaurar radio si no fue cerrado
+  if (localStorage.getItem('radioClosed') === 'true') {
+    document.getElementById('radioPlayer').style.display = 'none';
+  }
+  
+  // Mostrar sticky después de 10 segundos
+  setTimeout(() => {
+    const sticky = document.getElementById('premiumSticky');
+    if (sticky && !localStorage.getItem('stickyClosed')) {
+      sticky.classList.add('visible');
+    }
+  }, 10000);
+}
+
+// FIREBASE
+function initFirebase() {
+  import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js')
+    .then(({ initializeApp }) => {
+      return import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
+        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit }) => {
+          const app = initializeApp(CONFIG.FIREBASE_CONFIG);
+          db = initializeFirestore(app, { localCache: memoryLocalCache() });
+          
+          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(50));
+          onSnapshot(q, (snapshot) => {
+            if (!snapshot.empty) {
+              noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+              document.getElementById('skeletonContainer').style.display = 'none';
+              document.getElementById('newsGrid').style.display = 'flex';
+              renderizarTodo();
+            }
+          });
+        });
+    })
+    .catch(() => {
+      document.getElementById('skeletonContainer').innerHTML = 
+        '<p style="text-align:center;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">Recargar</button></p>';
+    });
+}
+
+function renderizarTodo() {
+  renderizarCarousel();
+  renderizarNoticias();
+  renderizarTrending();
+}
+
+// CAROUSEL
+function renderizarCarousel() {
+  const slides = noticias.slice(0, 5);
+  if (!slides.length) return;
+  
+  const track = document.getElementById('carouselTrack');
+  const dots = document.getElementById('carouselDots');
+  
+  track.innerHTML = slides.map((n, i) => {
+    const img = utils.sanitizeImage(n.imagen, n.categoria);
+    const titulo = utils.escapeHtml(n.titulo || '');
+    return `
+      <a href="noticia.html?id=${n.id}" class="carousel-slide">
+        <div class="carousel-image">
+          <img src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}">
+        </div>
+        <div class="carousel-content">
+          <span class="carousel-badge">${n.categoria || 'ÚLTIMA HORA'}</span>
+          <h3 class="carousel-title">${titulo}</h3>
+        </div>
+      </a>
+    `;
+  }).join('');
+  
+  dots.innerHTML = slides.map((_, i) => 
+    `<button class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></button>`
+  ).join('');
+  
+  startCarousel();
+}
+
+function startCarousel() {
+  clearInterval(carouselInterval);
+  carouselInterval = setInterval(nextSlide, 6000);
+}
+
+function nextSlide() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  if (!slides.length) return;
+  carouselIndex = (carouselIndex + 1) % slides.length;
+  updateCarousel();
+}
+
+function prevSlide() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  if (!slides.length) return;
+  carouselIndex = (carouselIndex - 1 + slides.length) % slides.length;
+  updateCarousel();
+}
+
+function goToSlide(index) {
+  carouselIndex = index;
+  updateCarousel();
+  clearInterval(carouselInterval);
+  startCarousel();
+}
+
+function updateCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const dots = document.querySelectorAll('.dot');
+  track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === carouselIndex));
+}
+
+// NOTICIAS
+function renderizarNoticias() {
+  const grid = document.getElementById('newsGrid');
+  let filtradas = categoriaActual === 'Todas' 
+    ? noticias 
+    : noticias.filter(n => n.categoria === categoriaActual);
+  
+  if (!filtradas.length) {
+    grid.innerHTML = '<p style="text-align:center;color:#64748b;padding:40px;">No hay noticias en esta categoría</p>';
+    return;
+  }
+
+  const visibles = filtradas.slice(0, CONFIG.NOTICIAS_POR_PAGINA * paginaActual);
+  
+  const cards = visibles.map((n, idx) => {
+    const img = utils.sanitizeImage(n.imagen, n.categoria);
+    const titulo = utils.escapeHtml(n.titulo || '');
+    const resumen = utils.escapeHtml((n.resumen || '').substring(0, 150));
+    const fecha = utils.formatDate(n.fecha);
+    
+    if (idx === 0 && categoriaActual === 'Todas' && paginaActual === 1) {
+      return `
+        <a href="noticia.html?id=${n.id}" class="breaking-card">
+          <div class="card-image">
+            <img src="${img}" alt="${titulo}" loading="eager">
+          </div>
+          <div class="breaking-body">
+            <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
+            <h2>${titulo}</h2>
+            <p>${resumen}...</p>
+            <div class="breaking-meta">
+              <span><i class="far fa-clock"></i> ${fecha}</span>
+              <span><i class="fas fa-arrow-right"></i> Leer más</span>
+            </div>
+          </div>
+        </a>
+      `;
+    }
+    
+    return `
+      <a href="noticia.html?id=${n.id}" class="news-card">
+        <div class="card-image-wrapper">
+          <img src="${img}" alt="${titulo}" loading="lazy">
+        </div>
+        <div class="card-body">
+          <span class="tag">${n.categoria || 'General'}</span>
+          <h3>${titulo}</h3>
+          <p class="news-excerpt">${resumen}...</p>
+          <div class="card-footer">
+            <span><i class="far fa-clock"></i> ${fecha}</span>
+            <span class="read-more">Leer más <i class="fas fa-arrow-right"></i></span>
+          </div>
+        </div>
+      </a>
+    `;
+  });
+  
+  grid.innerHTML = cards.join('');
+  
+  const hayMas = filtradas.length > CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
+  document.getElementById('loadMoreContainer').style.display = hayMas ? 'block' : 'none';
+}
+
+function renderizarTrending() {
+  const top = noticias.slice(0, 5);
+  document.getElementById('trendingContainer').innerHTML = top.map((n, i) => `
+    <div class="trending-item" onclick="location.href='noticia.html?id=${n.id}'">
+      <div class="trending-number">${String(i + 1).padStart(2, '0')}</div>
+      <div>
+        <div class="trending-title">${utils.escapeHtml(n.titulo || '')}</div>
+        <div class="trending-meta">${utils.formatDate(n.fecha)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// EVENTOS
+function cambiarCategoria(cat) {
+  categoriaActual = cat;
+  paginaActual = 1;
+  
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.cat === cat);
+  });
+  
+  document.getElementById('sectionTitle').textContent = 
+    cat === 'Todas' ? '📰 Últimas Noticias' : cat;
+  
+  document.querySelector('.carousel-section').style.display = 
+    cat === 'Todas' ? 'block' : 'none';
+  
+  renderizarNoticias();
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+function cargarMas() {
+  paginaActual++;
+  renderizarNoticias();
+}
+
+function initEventListeners() {
+  document.querySelectorAll('.menu-btn').forEach(btn => {
+    btn.addEventListener('click', () => cambiarCategoria(btn.dataset.cat));
+  });
+  
+  // Búsqueda
+  const input = document.getElementById('searchInput');
+  const resultados = document.getElementById('searchResults');
+  
+  let debounceTimer;
+  input?.addEventListener('input', (e) => {
+    clearTimeout(debounceTimer);
+    const query = e.target.value.toLowerCase().trim();
+    
+    if (!query) {
+      resultados.style.display = 'none';
+      return;
+    }
+    
+    debounceTimer = setTimeout(() => {
+      const matches = noticias.filter(n => 
+        (n.titulo || '').toLowerCase().includes(query)
+      ).slice(0, 5);
+      
+      resultados.innerHTML = matches.length ? matches.map(n => `
+        <a href="noticia.html?id=${n.id}" style="display:block;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;" 
+           onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+          <div style="font-weight:600;font-size:13px;">${utils.escapeHtml(n.titulo)}</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">${n.categoria}</div>
+        </a>
+      `).join('') : '<div style="padding:16px;color:#64748b;">Sin resultados</div>';
+      
+      resultados.style.display = 'block';
+    }, 200);
+  });
+  
+  document.addEventListener('click', (e) => {
+    if (!input?.contains(e.target) && !resultados?.contains(e.target)) {
+      resultados.style.display = 'none';
+    }
+  });
+}
+
+function suscribirNewsletter(e) {
+  e.preventDefault();
+  alert('¡Gracias por suscribirte!');
+  e.target.reset();
+}
+
+function cerrarSticky() {
+  document.getElementById('premiumSticky').classList.remove('visible');
+  localStorage.setItem('stickyClosed', 'true');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>

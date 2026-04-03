@@ -3,6 +3,9 @@
 // INFORMATE AL INSTANTE NICARAGUA
 // ==========================================
 
+// Variable global para el tipo de collage seleccionado
+window.tipoCollageSeleccionado = 'normal';
+
 function crearCollageProfesional(ctx, width, height, opciones = {}) {
   const { 
     conLuto = false,  // Activar cinta de luto

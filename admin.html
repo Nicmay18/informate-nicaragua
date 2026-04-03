@@ -2434,7 +2434,7 @@
       reader.readAsDataURL(file);
     }
     
-    // Generador del Collage Final
+    // Generador del Collage Final con Marco Profesional
     async function actualizarDualPreview() {
       const img1Data = window.dualImages?.img1;
       const img2Data = window.dualImages?.img2;
@@ -2442,7 +2442,7 @@
       
       if (!img1Data || !img2Data) return; // Espera a tener las dos
       
-      showToast('Generando GridArt...', 'info');
+      showToast('Generando GridArt Profesional...', 'info');
       
       try {
         const [img1, img2] = await Promise.all([
@@ -2450,47 +2450,122 @@
           cargarImagen(img2Data)
         ]);
         
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
+        // Canvas para el GridArt (sin marco)
+        const gridCanvas = document.createElement('canvas');
+        const gridCtx = gridCanvas.getContext('2d');
         
-        // Dimensiones del collage final (16:9 profesional)
-        canvas.width = 1200;
-        canvas.height = 675;
+        // Dimensiones del grid (16:9 profesional)
+        gridCanvas.width = 1200;
+        gridCanvas.height = 675;
         
+        // Crear el GridArt según el estilo
         if (style === 'split-v') {
           // Diseño 1: División Vertical
-          ctx.drawImage(img1, 0, 0, 600, 675);
-          ctx.drawImage(img2, 600, 0, 600, 675);
+          gridCtx.drawImage(img1, 0, 0, 600, 675);
+          gridCtx.drawImage(img2, 600, 0, 600, 675);
           
           // Cinta roja divisoria
-          ctx.fillStyle = '#e31e24';
-          ctx.fillRect(598, 0, 4, 675);
+          gridCtx.fillStyle = '#e31e24';
+          gridCtx.fillRect(598, 0, 4, 675);
         } else if (style === 'picture-in-picture') {
           // Diseño 2: Imagen en esquina
-          ctx.drawImage(img1, 0, 0, 1200, 675);
+          gridCtx.drawImage(img1, 0, 0, 1200, 675);
           
           // Borde blanco para la imagen pequeña
-          ctx.fillStyle = 'white';
-          ctx.fillRect(895, 470, 310, 210);
+          gridCtx.fillStyle = 'white';
+          gridCtx.fillRect(895, 470, 310, 210);
           
           // Imagen pequeña con sombra
-          ctx.shadowColor = 'rgba(0,0,0,0.5)';
-          ctx.shadowBlur = 15;
-          ctx.shadowOffsetX = 0;
-          ctx.shadowOffsetY = 5;
-          ctx.drawImage(img2, 900, 475, 300, 200);
-          ctx.shadowColor = 'transparent';
+          gridCtx.shadowColor = 'rgba(0,0,0,0.5)';
+          gridCtx.shadowBlur = 15;
+          gridCtx.shadowOffsetX = 0;
+          gridCtx.shadowOffsetY = 5;
+          gridCtx.drawImage(img2, 900, 475, 300, 200);
+          gridCtx.shadowColor = 'transparent';
         }
         
-        // Aplicar marca de agua del logo
-        await aplicarMarcaDeAguaLogo(ctx, 1200, 675);
+        // Ahora aplicar el marco profesional sobre el GridArt
+        const finalCanvas = document.createElement('canvas');
+        const paddingTotal = Math.min(gridCanvas.width, gridCanvas.height) * 0.08;
+        finalCanvas.width = gridCanvas.width + paddingTotal * 2;
+        finalCanvas.height = gridCanvas.height + paddingTotal * 2;
+        const ctx = finalCanvas.getContext('2d');
         
-        const collageFinal = canvas.toDataURL('image/jpeg', 0.92);
+        // Verificar si es noticia de luto
+        const esLuto = window.tipoCollageSeleccionado === 'luto';
+        
+        // 1. Crear marco profesional
+        const marco = crearCollageProfesional(ctx, finalCanvas.width, finalCanvas.height, {
+          conLuto: esLuto,
+          colorMarco: '#1a1a2e',
+          colorBorde: '#00d4ff'
+        });
+        
+        // 2. Dibujar el GridArt dentro del marco
+        ctx.drawImage(gridCanvas, marco.x, marco.y, marco.width, marco.height);
+        
+        // 3. Si es luto, dibujar cinta
+        if (esLuto) {
+          const lutoX = marco.x + marco.width - marco.esquinaSize * 1.2;
+          const lutoY = marco.y - marco.esquinaSize * 0.3;
+          dibujarCintaLuto(ctx, lutoX, lutoY, marco.esquinaSize);
+        }
+        
+        // 4. Dibujar logo en esquina inferior izquierda
+        const logoSize = Math.min(finalCanvas.width, finalCanvas.height) * 0.18;
+        const logoX = paddingTotal * 0.5;
+        const logoY = finalCanvas.height - logoSize - paddingTotal * 0.5;
+        dibujarLogoEsquina(ctx, logoX, logoY, logoSize);
+        
+        // 5. Fecha en esquina inferior derecha
+        ctx.save();
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.font = `600 ${logoSize * 0.12}px 'Plus Jakarta Sans', Arial, sans-serif`;
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'bottom';
+        
+        const ahora = new Date();
+        const fechaStr = ahora.toLocaleDateString('es-NI', {
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric'
+        });
+        const horaStr = ahora.toLocaleTimeString('es-NI', {
+          hour: '2-digit',
+          minute: '2-digit'
+        });
+        
+        const fechaX = finalCanvas.width - paddingTotal * 0.8;
+        const fechaY = finalCanvas.height - paddingTotal * 0.5;
+        
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
+        
+        ctx.fillText(fechaStr, fechaX, fechaY - logoSize * 0.15);
+        
+        ctx.fillStyle = '#00d4ff';
+        ctx.font = `700 ${logoSize * 0.14}px 'Plus Jakarta Sans', Arial, sans-serif`;
+        ctx.fillText(horaStr, fechaX, fechaY);
+        
+        ctx.restore();
+        
+        // Convertir a JPEG con calidad alta
+        const collageFinal = finalCanvas.toDataURL('image/jpeg', 0.92);
         document.getElementById('preview').src = collageFinal;
         document.getElementById('imagePreviewContainer').classList.add('active');
         document.getElementById('imagenUrl').value = collageFinal;
         
-        showToast('GridArt Generado', 'success');
+        // Actualizar badge
+        const badge = document.querySelector('.watermark-badge');
+        if (badge) {
+          badge.innerHTML = esLuto 
+            ? '<i class="fas fa-ribbon"></i> GRIDART PRO + LUTO' 
+            : '<i class="fas fa-palette"></i> GRIDART PRO';
+        }
+        
+        showToast('GridArt Profesional Generado', 'success');
       } catch (err) {
         showToast('Error GridArt: ' + err.message, 'error');
       }
@@ -2504,32 +2579,6 @@
         img.onerror = () => reject(new Error('No se pudo cargar la imagen'));
         img.src = src;
       });
-    }
-    
-    // Aplicar marca de agua del logo
-    async function aplicarMarcaDeAguaLogo(ctx, width, height) {
-      try {
-        const logo = await cargarImagen('/logo.png');
-        
-        // Tamaño del logo (10% del ancho)
-        const logoSize = width * 0.1;
-        const x = width - logoSize - 20;
-        const y = 20;
-        
-        // Sombra para el logo
-        ctx.shadowColor = 'rgba(0,0,0,0.5)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-        
-        // Dibujar logo con opacidad
-        ctx.globalAlpha = 0.85;
-        ctx.drawImage(logo, x, y, logoSize, logoSize);
-        ctx.globalAlpha = 1.0;
-        ctx.shadowColor = 'transparent';
-      } catch (err) {
-        console.warn('No se pudo cargar el logo para marca de agua');
-      }
     }
 
     function handleFiles(files) {

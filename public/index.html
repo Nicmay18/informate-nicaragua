@@ -1311,11 +1311,11 @@ body.dark-theme .skeleton-card {
   </div>
   <div class="radio-info">
     <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima (Recomendada)</option>
-      <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya 99.1 FM</option>
+      <option value="https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_CORPORACIONAAC.aac">📻 Radio Corporación</option>
       <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
       <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
-      <option value="https://stream.futurafm.com.ni/live">⚡ Futura Radio 91.3</option>
+      <option value="https://stream.zeno.fm/0r0xa792k48uv">🔴 Radio Ya</option>
+      <option value="https://stream.zeno.fm/f24tdg9bq68uv">⚡ Radio Mil</option>
     </select>
     <div class="radio-status" id="radioStatus">Click para reproducir</div>
   </div>
@@ -1850,7 +1850,7 @@ const radioPlayer = {
   
   play() {
     const selector = document.getElementById('radioSelector');
-    let streamUrl = selector?.value || 'https://stream.radiojar.com/8wqtdg30k8quv';
+    let streamUrl = selector?.value || 'https://playerservices.streamtheworld.com/api/livestream-redirect/RADIO_CORPORACIONAAC.aac';
     
     // TRUCO DE INGENIERÍA: Evitar que el navegador use una sesión vieja/caída
     streamUrl = streamUrl + (streamUrl.includes('?') ? '&' : '?') + 'nocache=' + Date.now();

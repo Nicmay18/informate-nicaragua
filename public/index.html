@@ -392,16 +392,6 @@ body.dark-theme .skeleton-card {
   filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
 }
 
-.carousel-badge {
-  color: #e31e24;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-  display: block;
-  letter-spacing: 0.8px;
-}
-
 /* --- CONFIGURACIÓN PARA WEB (PC / LAPTOP) --- */
 @media (min-width: 992px) {
   .carousel-custom {
@@ -446,14 +436,30 @@ body.dark-theme .skeleton-card {
     z-index: 10;
   }
   
+  /* TITULAR PROFESIONAL - ELITE */
   .carousel-caption-custom h3 {
-    font-family: 'Playfair Display', serif !important;
-    font-size: 2.2rem !important;
+    font-family: 'Playfair Display', serif !important; /* Fuente de periódico de lujo */
+    font-size: 2.5rem !important; /* Tamaño GRANDE */
     line-height: 1.1 !important;
+    font-weight: 900 !important; /* Grosor máximo */
+    color: #ffffff !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8); /* Sombra para que se lea sobre cualquier foto */
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    letter-spacing: -1px !important; /* Letras más juntas = más impacto */
+  }
+  
+  /* Badge de categoría arriba del titular */
+  .carousel-caption-custom .badge-categoria {
+    background-color: #e31e24 !important; /* Rojo Nicaragua Informate */
+    color: white !important;
+    padding: 5px 12px !important;
+    font-size: 12px !important;
     font-weight: 800 !important;
-    color: #fff !important;
-    margin: 0 !important;
-    letter-spacing: -0.3px;
+    text-transform: uppercase !important;
+    border-radius: 3px !important;
+    margin-bottom: 15px !important;
+    display: inline-block !important;
   }
 }
 
@@ -495,17 +501,29 @@ body.dark-theme .skeleton-card {
     z-index: 10;
   }
   
+  /* TITULAR PROFESIONAL - ELITE MÓVIL */
   .carousel-caption-custom h3 {
     font-family: 'Plus Jakarta Sans', sans-serif !important;
     font-size: 1.6rem !important;
     line-height: 1.2 !important;
     font-weight: 800 !important;
     color: #1a1a1a !important;
-    margin: 0 !important;
+    margin: 0 0 10px 0 !important;
+    padding: 0 !important;
+    letter-spacing: -0.5px !important;
   }
   
-  .carousel-badge {
-    color: #e31e24;
+  /* Badge de categoría en móvil */
+  .carousel-caption-custom .badge-categoria {
+    background-color: #e31e24 !important;
+    color: white !important;
+    padding: 4px 10px !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    border-radius: 3px !important;
+    margin-bottom: 12px !important;
+    display: inline-block !important;
   }
 }
 .carousel-controls {
@@ -1547,7 +1565,7 @@ function renderizarCarrusel() {
       <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
         <img src="${img}" alt="${titulo}" loading="${loadingAttr}">
         <div class="carousel-caption-custom">
-          <span class="carousel-badge">${n.categoria || 'Noticias'}</span>
+          <span class="badge-categoria">${n.categoria || 'ÚLTIMA HORA'}</span>
           <h3>${titulo}</h3>
         </div>
       </a>

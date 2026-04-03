@@ -1294,13 +1294,57 @@ body.dark-theme .skeleton-card {
         <button type="submit" class="newsletter-btn">Suscribirme gratis</button>
       </form>
     </div>
+    
+    <!-- MONETIZACIÓN PAYPAL -->
+    <div class="sidebar-box" style="background: linear-gradient(135deg, #0070ba 0%, #003087 100%); color: white; text-align: center;">
+      <h4 style="color: white; margin-bottom: 12px;"><i class="fas fa-heart"></i> Apóyanos</h4>
+      <p style="font-size: 13px; opacity: 0.95; margin-bottom: 16px;">Tu apoyo nos ayuda a seguir informando</p>
+      
+      <!-- Botón Donar -->
+      <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-bottom: 10px;">
+        <input type="hidden" name="business" value="TU_EMAIL_PAYPAL@gmail.com" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <button type="submit" style="width: 100%; padding: 12px; background: white; color: #0070ba; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="fab fa-paypal"></i> Hacer una donación
+        </button>
+      </form>
+      
+      <!-- Botón Suscripción -->
+      <form action="https://www.paypal.com/webapps/billing/plans/subscribe" method="post" target="_blank">
+        <input type="hidden" name="plan_id" value="TU_PLAN_ID_AQUI" />
+        <button type="submit" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          <i class="fas fa-star"></i> Suscripción $5/mes
+        </button>
+      </form>
+      
+      <p style="font-size: 11px; opacity: 0.8; margin-top: 12px;">Pago seguro con PayPal</p>
+    </div>
   </aside>
 </div>
 
-<!-- STICKY CTA BOTTOM (No invasivo) -->
+<!-- STICKY CTA BOTTOM - MONETIZACIÓN CON PAYPAL -->
 <div class="premium-sticky" id="premiumSticky">
-  <h5>⭐ Únete a nuestra comunidad para recibir las últimas noticias</h5>
-  <button onclick="window.location.href='#premium'">Suscribirme</button>
+  <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center;">
+    <h5 style="margin: 0;">⭐ Apoya nuestro periodismo independiente</h5>
+    <div style="display: flex; gap: 12px;">
+      <!-- Botón de Donación Única -->
+      <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin: 0;">
+        <input type="hidden" name="business" value="TU_EMAIL_PAYPAL@gmail.com" />
+        <input type="hidden" name="currency_code" value="USD" />
+        <button type="submit" style="padding: 10px 20px; background: #0070ba; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+          <i class="fab fa-paypal"></i> Donar
+        </button>
+      </form>
+      
+      <!-- Botón de Suscripción Mensual -->
+      <form action="https://www.paypal.com/webapps/billing/plans/subscribe" method="post" target="_blank" style="margin: 0;">
+        <input type="hidden" name="plan_id" value="TU_PLAN_ID_AQUI" />
+        <button type="submit" style="padding: 10px 20px; background: var(--brand-accent); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
+          <i class="fas fa-heart"></i> Suscribirme $5/mes
+        </button>
+      </form>
+    </div>
+  </div>
   <button class="close-sticky" onclick="cerrarCta()" aria-label="Cerrar">✕</button>
 </div>
 

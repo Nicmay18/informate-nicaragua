@@ -1,4 +1,3 @@
-<!-- index.html - VERSIÓN OPTIMIZADA -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,54 +6,15 @@
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
 
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/svg+xml" href="/icons/favicon.svg">
-<link rel="apple-touch-icon" href="/logo.png">
-<meta name="apple-mobile-web-app-title" content="Informate NI">
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#003366">
-
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://nicaraguainformate.com/">
-<meta property="og:title" content="Nicaragua Informate - Noticias de Nicaragua al Instante">
-<meta property="og:description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales.">
-<meta property="og:image" content="https://nicaraguainformate.com/logo.png">
-<meta property="og:site_name" content="Nicaragua Informate">
-
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://nicaraguainformate.com/">
-<meta property="twitter:title" content="Nicaragua Informate - Noticias de Nicaragua al Instante">
-<meta property="twitter:description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales.">
-<meta property="twitter:image" content="https://nicaraguainformate.com/logo.png">
-
-<!-- Optimización de carga de fuentes -->
+<!-- Preconnect para performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
-
-<!-- Font Awesome con media print trick (carga más rápida) -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
-
-<!-- CSS de anuncios con carga diferida -->
-<link rel="preload" href="/css/anuncios.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="/css/anuncios.css"></noscript>
-
-<!-- Firebase Compat (versión más ligera) con defer -->
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js" defer></script>
-<script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js" defer></script>
-
-<!-- AdSense con async (no bloquea) -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
 :root {
-  --brand-primary: #1e293b;
+  --brand-primary: #0f172a;
   --brand-accent: #dc2626;
   --brand-secondary: #2563eb;
   --surface: #ffffff;
@@ -63,7 +23,7 @@
   --text-secondary: #64748b;
   --border: #e2e8f0;
   --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.15);
   --font-serif: 'Merriweather', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
 }
@@ -76,122 +36,9 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* DARK MODE */
-body.dark-theme {
-  --surface: #1a1a1a;
-  --surface-alt: #0f0f0f;
-  --text-primary: #e5e5e5;
-  --text-secondary: #a0a0a0;
-  --border: #333;
-  --brand-primary: #2a2a2a;
-}
-body.dark-theme .topbar,
-body.dark-theme .news-card,
-body.dark-theme .sidebar-box,
-body.dark-theme .breaking-card {
-  background: var(--surface);
-  border-color: var(--border);
-}
-body.dark-theme .skeleton-card {
-  background: #1a1a1a;
-}
-
-/* BOTÓN DARK MODE */
-.dark-mode-toggle {
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-size: 18px;
-}
-.dark-mode-toggle:hover {
-  background: var(--brand-accent);
-  color: white;
-  border-color: var(--brand-accent);
-}
-
-/* BARRA DE CLIMA Y ECONOMÍA */
-.clima-container {
-  background-color: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 6px 0;
-  font-size: 12px;
-  font-family: 'Roboto', sans-serif;
-  color: #444;
-  overflow: hidden;
-}
-.clima-scroll {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  white-space: nowrap;
-}
-.clima-ticker {
-  display: flex;
-  gap: 0;
-}
-.economia-ticker {
-  display: flex;
-  gap: 0;
-}
-.item-clima,
-.economia-ticker span {
-  margin-right: 20px;
-  border-right: 1px solid #ddd;
-  padding-right: 15px;
-  font-weight: 500;
-}
-.item-clima:last-child,
-.economia-ticker span:last-child {
-  border-right: none;
-  margin-right: 0;
-}
-.economia-ticker strong {
-  color: #d32f2f;
-  font-weight: 700;
-}
-@media (max-width: 768px) {
-  .clima-container {
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-  }
-  .clima-container::-webkit-scrollbar {
-    display: none;
-  }
-  .clima-scroll {
-    padding: 0 16px;
-    justify-content: flex-start;
-    display: block !important;
-  }
-  .clima-ticker {
-    display: inline-block;
-  }
-  .economia-ticker {
-    display: inline-block !important;
-    margin-left: 20px;
-  }
-  .item-clima,
-  .economia-ticker span {
-    font-size: 11px;
-    margin-right: 15px;
-    padding-right: 12px;
-  }
-}
-
-/* HEADER LIMPIO */
+/* HEADER */
 .topbar { 
   background: var(--surface); 
   border-bottom: 1px solid var(--border);
@@ -220,7 +67,6 @@ body.dark-theme .skeleton-card {
   height: 42px; 
   border-radius: 8px; 
   object-fit: cover;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 .logo-title { 
   font-family: var(--font-serif); 
@@ -240,9 +86,6 @@ body.dark-theme .skeleton-card {
   display: flex;
   align-items: center;
   gap: 20px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 500;
 }
 .search-wrapper { 
   position: relative;
@@ -287,6 +130,32 @@ body.dark-theme .skeleton-card {
   padding: 8px 0;
 }
 
+/* BARRA ECONÓMICA */
+.econ-bar {
+  background: var(--brand-primary);
+  color: white;
+  padding: 8px 24px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.econ-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.econ-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.econ-item strong {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
 /* NAVEGACIÓN */
 .menu-nav { 
   background: var(--brand-primary); 
@@ -327,255 +196,116 @@ body.dark-theme .skeleton-card {
   color: white;
 }
 
-/* ============================================================
-   CARRUSEL PROFESIONAL - DISEÑO LIMPIO Y LEGIBLE
-   ============================================================ */
-
+/* CARRUSEL PROFESIONAL */
 .carousel-section { 
-  margin-bottom: 32px;
+  margin: 24px auto;
   max-width: 1280px;
-  margin-left: auto;
-  margin-right: auto;
   padding: 0 24px;
 }
-.carousel-custom {
+.carousel-container {
   position: relative;
   border-radius: 16px;
   overflow: hidden;
   background: var(--brand-primary);
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.15);
+  box-shadow: var(--shadow-lg);
+  height: 450px;
 }
-.carousel-inner-custom {
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s ease-in-out;
+}
+.carousel-slide {
+  min-width: 100%;
   height: 100%;
   position: relative;
-}
-
-/* Base común para todos los tamaños */
-.carousel-item-custom {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.6s ease;
   text-decoration: none;
   color: inherit;
+  display: grid;
+  grid-template-columns: 60% 40%;
+}
+.carousel-image {
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+}
+.carousel-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 8s ease;
+}
+.carousel-slide:hover .carousel-image img {
+  transform: scale(1.05);
+}
+.carousel-content {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+  padding: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
-.carousel-item-custom.active { opacity: 1; }
-
-/* Marca de agua en la imagen */
-.carousel-item-custom::before {
-  content: "";
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 80px;
-  height: 80px;
-  background: url('/logo.png') no-repeat center;
-  background-size: contain;
-  opacity: 0.8;
-  z-index: 5;
-  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+.carousel-badge {
+  display: inline-flex;
+  width: fit-content;
+  padding: 6px 14px;
+  background: var(--brand-accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-radius: 20px;
+  margin-bottom: 16px;
 }
-
-/* Marca de agua en breaking card */
-.breaking-card .card-image::before {
-  content: "";
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  width: 80px;
-  height: 80px;
-  background: url('/logo.png') no-repeat center;
-  background-size: contain;
-  opacity: 0.8;
-  z-index: 10;
-  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.5));
+.carousel-title {
+  font-family: var(--font-serif);
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: white;
+  letter-spacing: -0.02em;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-
-/* --- CONFIGURACIÓN PARA WEB (PC / LAPTOP) --- */
-@media (min-width: 992px) {
-  .carousel-custom {
-    height: 450px;
-  }
-  
-  .carousel-item-custom {
-    height: 450px !important;
-  }
-  
-  /* IMAGEN: 60% del espacio - bien visible */
-  .carousel-item-custom .carousel-image-wrapper {
-    height: 60%;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .carousel-item-custom img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center 20%;
-    display: block !important;
-    transition: transform 6s ease;
-  }
-  
-  .carousel-item-custom:hover img { 
-    transform: scale(1.05); 
-  }
-  
-  /* TEXTO: 40% del espacio - legible */
-  .carousel-caption-custom {
-    height: 40%;
-    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-    padding: 28px 32px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    text-align: left !important;
-    color: white;
-    z-index: 10;
-  }
-  
-  /* Badge de categoría */
-  .carousel-caption-custom .badge-categoria {
-    display: inline-flex;
-    width: fit-content;
-    padding: 6px 14px !important;
-    background: var(--brand-accent) !important;
-    color: white !important;
-    font-size: 11px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
-    border-radius: 20px !important;
-    margin-bottom: 12px !important;
-  }
-  
-  /* TITULAR PROFESIONAL */
-  .carousel-caption-custom h3 {
-    font-size: 28px !important;
-    font-weight: 800 !important;
-    color: white !important;
-    line-height: 1.25 !important;
-    letter-spacing: -0.02em !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-transform: uppercase;
-  }
-}
-
-/* --- CONFIGURACIÓN PARA MÓVIL --- */
-@media (max-width: 991px) {
-  .carousel-custom {
-    height: 380px;
-  }
-  
-  .carousel-item-custom {
-    height: 380px !important;
-  }
-  
-  /* IMAGEN: 60% del espacio */
-  .carousel-item-custom .carousel-image-wrapper {
-    height: 60%;
-    width: 100%;
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .carousel-item-custom img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    object-position: center 20%;
-    display: block !important;
-  }
-  
-  /* TEXTO: 40% del espacio */
-  .carousel-caption-custom {
-    height: 40%;
-    background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%) !important;
-    padding: 20px 24px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    color: white !important;
-    z-index: 10;
-  }
-  
-  /* Badge de categoría en móvil */
-  .carousel-caption-custom .badge-categoria {
-    display: inline-flex;
-    width: fit-content;
-    padding: 5px 12px !important;
-    background: var(--brand-accent) !important;
-    color: white !important;
-    font-size: 10px !important;
-    font-weight: 800 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 0.8px !important;
-    border-radius: 20px !important;
-    margin-bottom: 10px !important;
-  }
-  
-  /* TITULAR MÓVIL */
-  .carousel-caption-custom h3 {
-    font-size: 20px !important;
-    font-weight: 800 !important;
-    color: white !important;
-    line-height: 1.3 !important;
-    letter-spacing: -0.02em !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-transform: uppercase;
-  }
-}
-.carousel-controls {
+.carousel-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 20px;
-  pointer-events: none;
-}
-.carousel-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
   background: rgba(255,255,255,0.95);
   border: none;
   color: var(--brand-primary);
+  font-size: 18px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
-  pointer-events: all;
   transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 10;
 }
 .carousel-btn:hover {
-  background: #fff;
-  transform: scale(1.1);
+  background: white;
+  transform: translateY(-50%) scale(1.1);
 }
-.carousel-indicators-custom {
+.carousel-btn.prev { left: 20px; }
+.carousel-btn.next { right: 20px; }
+.carousel-dots {
   position: absolute;
   bottom: 20px;
-  right: 40px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   gap: 8px;
+  z-index: 10;
 }
-.indicator {
+.dot {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -584,8 +314,8 @@ body.dark-theme .skeleton-card {
   cursor: pointer;
   transition: all 0.3s;
 }
-.indicator.active {
-  background: #fff;
+.dot.active {
+  background: white;
   width: 32px;
   border-radius: 5px;
 }
@@ -612,7 +342,7 @@ body.dark-theme .skeleton-card {
   display: inline-block;
 }
 
-/* NOTICIA DESTACADA (PRIMERA) */
+/* NOTICIA DESTACADA */
 .breaking-card {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -637,24 +367,11 @@ body.dark-theme .skeleton-card {
   min-height: 320px;
   overflow: hidden;
   position: relative;
-  background-color: #f0f0f0;
-}
-/* Degradado en noticia destacada */
-.breaking-card .card-image::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 100%);
-  z-index: 1;
 }
 .breaking-card .card-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
   transition: transform 0.6s;
 }
 .breaking-card:hover .card-image img { transform: scale(1.05); }
@@ -683,7 +400,7 @@ body.dark-theme .skeleton-card {
   font-family: var(--font-serif);
   font-size: 28px;
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.3;
   letter-spacing: -0.5px;
   margin-bottom: 12px;
   color: var(--text-primary);
@@ -702,7 +419,7 @@ body.dark-theme .skeleton-card {
   font-weight: 500;
 }
 
-/* GRID DE NOTICIAS NORMALES */
+/* GRID NOTICIAS */
 .news-grid {
   display: flex;
   flex-direction: column;
@@ -716,33 +433,26 @@ body.dark-theme .skeleton-card {
   padding: 20px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  border-bottom: 3px solid transparent;
   cursor: pointer;
   transition: all 0.3s;
   text-decoration: none;
   color: inherit;
-  margin-bottom: 2rem;
-  padding-bottom: 1.5rem;
 }
 .news-card:hover {
-  border-bottom-color: var(--brand-primary);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-color: var(--brand-accent);
+  box-shadow: var(--shadow);
 }
 .card-image-wrapper {
   aspect-ratio: 16/10;
   overflow: hidden;
   border-radius: 8px;
-  background: #f0f0f0;
+  background: var(--surface-alt);
 }
-.card-image-wrapper img,
-.card-img {
+.card-image-wrapper img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center top;
-  background: #f0f0f0;
   transition: transform 0.4s;
-  content-visibility: auto;
 }
 .news-card:hover .card-image-wrapper img { transform: scale(1.05); }
 .card-body {
@@ -766,8 +476,8 @@ body.dark-theme .skeleton-card {
   font-family: var(--font-serif);
   font-size: 18px;
   font-weight: 700;
-  line-height: 1.6;
-  letter-spacing: -0.5px;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
   color: var(--text-primary);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -803,7 +513,7 @@ body.dark-theme .skeleton-card {
 }
 .news-card:hover .read-more { gap: 8px; }
 
-/* SIDEBAR LIMPIA - SOLO LO ESENCIAL */
+/* SIDEBAR */
 .sidebar-right {
   display: flex;
   flex-direction: column;
@@ -868,7 +578,7 @@ body.dark-theme .skeleton-card {
   margin-top: 4px;
 }
 
-/* NEWSLETTER SUTIL */
+/* NEWSLETTER */
 .newsletter-box {
   background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
   color: white;
@@ -907,45 +617,128 @@ body.dark-theme .skeleton-card {
 }
 .newsletter-btn:hover { background: #b91c1c; }
 
-/* CTA SUSCRIPCIÓN ÚNICO SUTIL */
+/* PAYPAL SIDEBAR - MÉTODO DE SUSCRIPCIÓN CORREGIDO */
+.paypal-box {
+  background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+}
+.paypal-box h4 {
+  color: white;
+  margin-bottom: 12px;
+  justify-content: center;
+}
+.paypal-box p {
+  font-size: 13px;
+  opacity: 0.95;
+  margin-bottom: 16px;
+}
+.paypal-btn {
+  width: 100%;
+  padding: 14px;
+  background: white;
+  color: #003087;
+  border: none;
+  border-radius: 8px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  text-decoration: none;
+}
+.paypal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.paypal-sub {
+  margin-top: 12px;
+  padding: 12px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  text-decoration: none;
+}
+.paypal-sub:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* STICKY CTA BOTTOM */
 .premium-sticky {
   position: fixed;
   bottom: -100px;
   left: 0;
   right: 0;
-  width: 100%;
   background: var(--brand-primary);
   color: white;
-  padding: 16px 20px;
+  padding: 16px 24px;
   box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
   z-index: 1000;
   transition: bottom 0.5s ease;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
 }
 .premium-sticky.visible { bottom: 0; }
-.premium-sticky h5 {
-  font-size: 14px;
-  font-weight: 700;
-  margin: 0;
+.sticky-content {
+  max-width: 1280px;
+  margin: 0 auto;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
-.premium-sticky button {
-  padding: 10px 20px;
-  background: var(--brand-accent);
-  color: white;
-  border: none;
-  border-radius: 4px;
+.sticky-text h5 {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.sticky-text p {
+  font-size: 13px;
+  opacity: 0.9;
+}
+.sticky-buttons {
+  display: flex;
+  gap: 12px;
+}
+.sticky-btn {
+  padding: 12px 24px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
-  font-size: 13px;
   transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  border: none;
 }
-.premium-sticky button:hover {
+.sticky-btn.donate {
+  background: #0070ba;
+  color: white;
+}
+.sticky-btn.donate:hover {
+  background: #005ea6;
+  transform: translateY(-2px);
+}
+.sticky-btn.subscribe {
+  background: var(--brand-accent);
+  color: white;
+}
+.sticky-btn.subscribe:hover {
   background: #b91c1c;
   transform: translateY(-2px);
 }
@@ -955,67 +748,44 @@ body.dark-theme .skeleton-card {
   color: white;
   cursor: pointer;
   font-size: 20px;
-  padding: 4px 8px;
+  padding: 4px;
   opacity: 0.7;
   transition: opacity 0.2s;
 }
-.close-sticky:hover {
-  opacity: 1;
-}
+.close-sticky:hover { opacity: 1; }
 
 /* SKELETON */
-.skeleton {
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  border-radius: 4px;
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
-}
-@keyframes shine {
-  to { background-position-x: -200%; }
-}
-.skeleton-card { 
-  width: 100%; 
-  height: 300px; 
-  margin-bottom: 20px;
+.skeleton-card {
   display: grid;
   grid-template-columns: 280px 1fr;
   gap: 20px;
   padding: 20px;
   background: white;
   border-radius: 12px;
+  margin-bottom: 20px;
   border: 1px solid var(--border);
 }
-.skeleton-img { 
-  width: 100%; 
-  height: 180px;
-  aspect-ratio: 16/10; 
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+.skeleton-img {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
+  animation: loading 1.5s infinite;
   border-radius: 8px;
 }
-.skeleton-title { 
-  height: 24px; 
-  width: 80%;
-  margin-bottom: 12px; 
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
+.skeleton-text {
+  height: 16px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
+  animation: loading 1.5s infinite;
   border-radius: 4px;
+  margin-bottom: 8px;
 }
-.skeleton-text { 
-  height: 16px; 
-  margin-bottom: 8px; 
-  background: #eee;
-  background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
-  background-size: 200% 100%;
-  animation: 1.5s shine linear infinite;
-  border-radius: 4px;
+.skeleton-text.short { width: 60%; }
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
 }
-.skeleton-text:last-child { width: 60%; }
 
 /* LOAD MORE */
 .load-more-container { 
@@ -1041,145 +811,112 @@ body.dark-theme .skeleton-card {
   transform: translateY(-2px);
 }
 
-/* FOOTER - Estilos inline en el HTML */
-
-/* REPRODUCTOR DE RADIO FLOTANTE - MEJORADO */
-.radio-player {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
+/* FOOTER */
+.footer {
+  background: #1a1a1a;
+  color: #999;
+  padding: 60px 24px 30px;
+  font-size: 14px;
+}
+.footer-content {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.footer-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #333;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.footer-brand h3 {
   color: white;
-  padding: 16px 20px;
-  border-radius: 50px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  z-index: 9999 !important;
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.footer-brand p {
+  color: #666;
+  font-size: 13px;
+}
+.footer-social {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  transition: all 0.3s;
-  cursor: pointer;
-  min-width: 240px;
-  border: 2px solid rgba(255,255,255,0.1);
+  gap: 16px;
 }
-.radio-player:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-  border-color: rgba(255,255,255,0.2);
+.footer-social a {
+  color: #999;
+  font-size: 20px;
+  transition: all 0.2s;
 }
-.radio-icon {
-  width: 44px;
-  height: 44px;
-  background: var(--brand-accent);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  flex-shrink: 0;
-  transition: all 0.3s;
-  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+.footer-social a:hover {
+  color: white;
+  transform: translateY(-3px);
 }
-.radio-icon:hover {
-  transform: scale(1.1);
-  background: #b91c1c;
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-bottom: 40px;
 }
-.radio-icon.playing {
-  animation: pulse 2s infinite;
-  background: #10b981;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
-}
-.radio-icon.loading {
-  animation: spin 1s linear infinite;
-}
-@keyframes pulse {
-  0%, 100% { 
-    transform: scale(1); 
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.6);
-  }
-  50% { 
-    transform: scale(1.05); 
-    box-shadow: 0 4px 20px rgba(16, 185, 129, 0.8);
-  }
-}
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.radio-info {
-  flex: 1;
-  min-width: 0;
-}
-.radio-station {
+.footer-section h4 {
+  color: white;
   font-size: 14px;
   font-weight: 700;
-  margin-bottom: 2px;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
-#radioSelector {
-  background: transparent;
-  border: none;
-  color: white;
-  font-weight: 700;
+.footer-links {
+  list-style: none;
+}
+.footer-links li {
+  margin-bottom: 10px;
+}
+.footer-links a {
+  color: #999;
+  text-decoration: none;
+  transition: all 0.2s;
   font-size: 14px;
-  cursor: pointer;
-  outline: none;
-  margin-bottom: 2px;
-  width: 100%;
-  padding: 2px 0;
 }
-#radioSelector:hover {
-  opacity: 0.9;
-}
-#radioSelector option {
-  background: var(--brand-primary);
+.footer-links a:hover {
   color: white;
-  padding: 8px;
+  padding-left: 4px;
 }
-.radio-status {
-  font-size: 11px;
-  opacity: 0.9;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 640px) {
-  .radio-player {
-    bottom: 70px;
-    right: 10px;
-    left: 10px;
-    min-width: auto;
-    border-radius: 16px;
-    padding: 12px 16px;
-  }
-  .radio-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-  #radioSelector {
-    font-size: 13px;
-  }
-  .radio-status {
-    font-size: 10px;
-  }
+.footer-bottom {
+  text-align: center;
+  padding-top: 30px;
+  border-top: 1px solid #333;
+  color: #666;
+  font-size: 13px;
 }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
   .main-wrapper { grid-template-columns: 1fr; }
-  .sidebar-right { display: none; } /* En móvil, priorizar contenido */
+  .sidebar-right { display: none; }
+  .carousel-slide { grid-template-columns: 1fr; }
+  .carousel-image { height: 60%; }
+  .carousel-content { height: 40%; padding: 24px; }
+  .carousel-title { font-size: 24px; }
   .breaking-card { grid-template-columns: 1fr; }
-  .breaking-card .card-image { min-height: 240px; }
   .news-card { grid-template-columns: 200px 1fr; }
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 640px) {
   .topbar-content { flex-direction: column; gap: 12px; }
   .search-wrapper { width: 100%; }
+  .carousel-container { height: 400px; }
+  .carousel-title { font-size: 20px; }
   .news-card { grid-template-columns: 1fr; }
   .card-image-wrapper { aspect-ratio: 16/9; }
-  .breaking-body h2 { font-size: 22px; }
+  .sticky-content { flex-direction: column; text-align: center; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-top { flex-direction: column; text-align: center; }
 }
 </style>
 </head>
@@ -1188,39 +925,28 @@ body.dark-theme .skeleton-card {
 <header class="topbar">
   <div class="topbar-content">
     <a href="/" class="logo">
-      <img src="/logo.png" alt="Nicaragua Informate" loading="eager" decoding="async" onerror="this.style.display='none'">
+      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
       <div>
         <div class="logo-title">Nicaragua Informate</div>
         <div class="logo-subtitle">Tu fuente de noticias confiable</div>
       </div>
     </a>
     <div class="header-meta">
-      <button class="dark-mode-toggle" onclick="toggleDarkMode()" aria-label="Cambiar tema" title="Modo oscuro/claro">
-        <i class="fas fa-moon" id="themeIcon"></i>
-      </button>
       <div class="search-wrapper">
         <input type="text" id="searchInput" placeholder="Buscar noticias..." autocomplete="off">
         <i class="fas fa-search search-icon"></i>
         <div id="searchResults"></div>
       </div>
-      <span id="currentTime"></span>
     </div>
   </div>
 </header>
 
-<!-- BARRA DE CLIMA Y ECONOMÍA -->
-<div class="clima-container">
-  <div class="clima-scroll">
-    <div class="clima-ticker">
-      <span class="item-clima">📍 Managua: <span id="temp-managua">29°C</span></span>
-      <span class="item-clima">📍 León: <span id="temp-leon">31°C</span></span>
-      <span class="item-clima">📍 Estelí: <span id="temp-esteli">24°C</span></span>
-    </div>
-    <div class="economia-ticker">
-      <span>💵 USD: <strong>C$36.6243</strong></span>
-      <span>⛽ Súper: <strong>C$49.03</strong></span>
-      <span>🚜 Diesel: <strong>C$43.21</strong></span>
-    </div>
+<div class="econ-bar">
+  <div class="econ-content">
+    <div class="econ-item"><i class="fas fa-dollar-sign"></i> USD: <strong>C$36.62</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Súper: <strong>C$49.03</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Regular: <strong>C$47.84</strong></div>
+    <div class="econ-item"><i class="fas fa-gas-pump"></i> Diésel: <strong>C$43.21</strong></div>
   </div>
 </div>
 
@@ -1236,18 +962,16 @@ body.dark-theme .skeleton-card {
   </div>
 </nav>
 
-<div class="carousel-section">
-  <div class="carousel-custom" id="carouselNoticias">
-    <div class="carousel-inner-custom" id="carouselInner">
+<section class="carousel-section">
+  <div class="carousel-container" id="carousel">
+    <div class="carousel-track" id="carouselTrack">
       <!-- Se llena dinámicamente -->
     </div>
-    <div class="carousel-controls">
-      <button class="carousel-btn" onclick="prevSlide()" aria-label="Anterior"><i class="fas fa-chevron-left"></i></button>
-      <button class="carousel-btn" onclick="nextSlide()" aria-label="Siguiente"><i class="fas fa-chevron-right"></i></button>
-    </div>
-    <div class="carousel-indicators-custom" id="carouselIndicators"></div>
+    <button class="carousel-btn prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
+    <button class="carousel-btn next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
+    <div class="carousel-dots" id="carouselDots"></div>
   </div>
-</div>
+</section>
 
 <div class="main-wrapper">
   <main class="content-main">
@@ -1257,24 +981,16 @@ body.dark-theme .skeleton-card {
       <div class="skeleton-card">
         <div class="skeleton-img"></div>
         <div>
-          <div class="skeleton-title"></div>
+          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
           <div class="skeleton-text"></div>
           <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
+          <div class="skeleton-text short"></div>
         </div>
       </div>
       <div class="skeleton-card">
         <div class="skeleton-img"></div>
         <div>
-          <div class="skeleton-title"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
-        </div>
-      </div>
-      <div class="skeleton-card">
-        <div class="skeleton-img"></div>
-        <div>
-          <div class="skeleton-title"></div>
+          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
           <div class="skeleton-text"></div>
           <div class="skeleton-text"></div>
         </div>
@@ -1305,400 +1021,105 @@ body.dark-theme .skeleton-card {
       </form>
     </div>
     
-    <!-- MONETIZACIÓN PAYPAL -->
-    <div class="sidebar-box" style="background: linear-gradient(135deg, #0070ba 0%, #003087 100%); color: white; text-align: center;">
-      <h4 style="color: white; margin-bottom: 12px;"><i class="fas fa-heart"></i> Apóyanos</h4>
-      <p style="font-size: 13px; opacity: 0.95; margin-bottom: 16px;">Tu apoyo nos ayuda a seguir informando</p>
+    <!-- PAYPAL: MÉTODO DE SUSCRIPCIÓN CORREGIDO -->
+    <div class="paypal-box">
+      <h4><i class="fab fa-paypal"></i> Apóyanos</h4>
+      <p>Tu contribución mantiene este medio independiente</p>
       
-      <!-- Botón Donar -->
-      <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin-bottom: 10px;">
-        <input type="hidden" name="business" value="TU_EMAIL_PAYPAL@gmail.com" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <button type="submit" style="width: 100%; padding: 12px; background: white; color: #0070ba; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <i class="fab fa-paypal"></i> Hacer una donación
-        </button>
-      </form>
+      <!-- Botón de Donación -->
+      <a href="https://www.paypal.com/paypalme/TU_USUARIO" target="_blank" class="paypal-btn">
+        <i class="fab fa-paypal"></i> Donar con PayPal
+      </a>
       
-      <!-- Botón Suscripción -->
-      <form action="https://www.paypal.com/webapps/billing/plans/subscribe" method="post" target="_blank">
-        <input type="hidden" name="plan_id" value="TU_PLAN_ID_AQUI" />
-        <button type="submit" style="width: 100%; padding: 12px; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;">
-          <i class="fas fa-star"></i> Suscripción $5/mes
-        </button>
-      </form>
+      <!-- Botón de Suscripción Mensual (PayPal.Me con monto) -->
+      <a href="https://www.paypal.com/paypalme/TU_USUARIO/5" target="_blank" class="paypal-sub">
+        <i class="fas fa-star"></i> Suscripción $5/mes
+      </a>
       
-      <p style="font-size: 11px; opacity: 0.8; margin-top: 12px;">Pago seguro con PayPal</p>
+      <p style="font-size: 11px; opacity: 0.8; margin-top: 12px;">
+        <i class="fas fa-shield-alt"></i> Pago seguro procesado por PayPal
+      </p>
     </div>
   </aside>
 </div>
 
-<!-- STICKY CTA BOTTOM - MONETIZACIÓN CON PAYPAL -->
+<!-- STICKY CTA BOTTOM CON PAYPAL -->
 <div class="premium-sticky" id="premiumSticky">
-  <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center;">
-    <h5 style="margin: 0;">⭐ Apoya nuestro periodismo independiente</h5>
-    <div style="display: flex; gap: 12px;">
-      <!-- Botón de Donación Única -->
-      <form action="https://www.paypal.com/donate" method="post" target="_blank" style="margin: 0;">
-        <input type="hidden" name="business" value="TU_EMAIL_PAYPAL@gmail.com" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <button type="submit" style="padding: 10px 20px; background: #0070ba; color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
-          <i class="fab fa-paypal"></i> Donar
-        </button>
-      </form>
-      
-      <!-- Botón de Suscripción Mensual -->
-      <form action="https://www.paypal.com/webapps/billing/plans/subscribe" method="post" target="_blank" style="margin: 0;">
-        <input type="hidden" name="plan_id" value="TU_PLAN_ID_AQUI" />
-        <button type="submit" style="padding: 10px 20px; background: var(--brand-accent); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 8px; transition: all 0.2s;">
-          <i class="fas fa-heart"></i> Suscribirme $5/mes
-        </button>
-      </form>
+  <div class="sticky-content">
+    <div class="sticky-text">
+      <h5>⭐ Apoya el periodismo independiente</h5>
+      <p>Tu aporte nos permite seguir informando sin barreras</p>
     </div>
-  </div>
-  <button class="close-sticky" onclick="cerrarCta()" aria-label="Cerrar">✕</button>
-</div>
-
-<!-- REPRODUCTOR DE RADIO FLOTANTE - CON PROXY -->
-<div class="radio-player" id="radioPlayer">
-  <div class="radio-icon" id="radioIcon">
-    <i class="fas fa-play"></i>
-  </div>
-  <div class="radio-info">
-    <select id="radioSelector" style="background: transparent; border: none; color: white; font-weight: 700; font-size: 14px; cursor: pointer; outline: none;">
-      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">📻 La Primerísima</option>
-      <option value="https://stream.zeno.fm/axr92qawesmtv">🔴 Radio Ya 99.1 FM</option>
-      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">⚡ Futura 91.3 FM</option>
-      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">📡 Radio ABC</option>
-      <option value="https://online.radionicaragua.com.ni/stream.mp3">🇳🇮 Radio Nicaragua</option>
-    </select>
-    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+    <div class="sticky-buttons">
+      <a href="https://www.paypal.com/paypalme/TU_USUARIO" target="_blank" class="sticky-btn donate">
+        <i class="fab fa-paypal"></i> Donar
+      </a>
+      <a href="https://www.paypal.com/paypalme/TU_USUARIO/5" target="_blank" class="sticky-btn subscribe">
+        <i class="fas fa-heart"></i> $5/mes
+      </a>
+    </div>
+    <button class="close-sticky" onclick="cerrarSticky()"><i class="fas fa-times"></i></button>
   </div>
 </div>
 
-<script>
-// REPRODUCTOR DE RADIO - URLs VERIFICADAS QUE FUNCIONAN
-// REPRODUCTOR DE RADIO - VERSIÓN REPARADA CON URLs VERIFICADAS
-class RadioPlayer {
-  constructor() {
-    this.audio = null;
-    this.isPlaying = false;
-    this.currentStation = null;
-    this.retryCount = 0;
-    this.maxRetries = 3;
-    this.elements = {
-      icon: document.getElementById('radioIcon'),
-      selector: document.getElementById('radioSelector'),
-      status: document.getElementById('radioStatus')
-    };
-  }
-  
-  init() {
-    console.log('🎵 Inicializando reproductor de radio...');
-    
-    if (!this.elements.icon || !this.elements.selector) {
-      console.error('❌ Elementos del reproductor no encontrados');
-      return;
-    }
-    
-    // Click en el icono para play/pause
-    this.elements.icon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      console.log('🎵 Click en icono de radio');
-      this.toggle();
-    });
-    
-    // Cambio de radio
-    this.elements.selector.addEventListener('change', () => {
-      console.log('🔄 Cambio de emisora:', this.elements.selector.value);
-      this.currentStation = this.elements.selector.value;
-      if (this.isPlaying) {
-        this.stop();
-        setTimeout(() => this.play(), 300);
-      }
-    });
-    
-    this.elements.selector.addEventListener('click', (e) => e.stopPropagation());
-    
-    // Inicializar con la primera emisora
-    this.currentStation = this.elements.selector.value;
-    
-    console.log('✅ Reproductor de radio inicializado correctamente');
-  }
-  
-  toggle() {
-    if (this.isPlaying) {
-      this.pause();
-    } else {
-      this.play();
-    }
-  }
-  
-  async play() {
-    if (!this.currentStation) {
-      console.error('❌ No hay emisora seleccionada');
-      return;
-    }
-    
-    // Si ya está reproduciendo, detener primero
-    if (this.isPlaying) {
-      this.stop();
-      await new Promise(r => setTimeout(r, 300));
-    }
-    
-    console.log('▶️ Intentando reproducir:', this.currentStation);
-    
-    this.updateStatus('Conectando...');
-    this.updateIcon('loading');
-    
-    try {
-      // Crear nuevo objeto Audio (limpio)
-      this.audio = new Audio();
-      
-      // Configuración óptima para streaming
-      this.audio.src = this.currentStation;
-      this.audio.crossOrigin = 'anonymous';
-      this.audio.preload = 'metadata';
-      this.audio.volume = 0.8;
-      
-      // Eventos con bind para mantener contexto
-      this.audio.addEventListener('canplay', () => this.onCanPlay());
-      this.audio.addEventListener('playing', () => this.onPlaying());
-      this.audio.addEventListener('error', (e) => this.onError(e));
-      this.audio.addEventListener('stalled', () => this.onStalled());
-      this.audio.addEventListener('waiting', () => this.onWaiting());
-      
-      // Intentar reproducir
-      await this.audio.play();
-      console.log('✅ Reproducción iniciada');
-        
-    } catch (err) {
-      console.error('❌ Error al reproducir:', err);
-      this.onError(err);
-    }
-  }
-  
-  onCanPlay() {
-    console.log('📡 Cargando stream...');
-  }
-  
-  onPlaying() {
-    console.log('🎶 Reproduciendo correctamente');
-    this.isPlaying = true;
-    this.updateStatus('🔴 EN VIVO');
-    this.updateIcon('playing');
-    this.setupMediaSession();
-    this.retryCount = 0;
-  }
-  
-  onError(e) {
-    console.error('❌ Error de audio:', e);
-    
-    if (this.retryCount < this.maxRetries) {
-      this.retryCount++;
-      console.log(`🔄 Reintento ${this.retryCount}/${this.maxRetries}`);
-      this.updateStatus(`Reintentando (${this.retryCount}/${this.maxRetries})...`);
-      setTimeout(() => this.play(), 2000);
-    } else {
-      console.error('❌ Máximo de reintentos alcanzado');
-      this.isPlaying = false;
-      this.updateStatus('Error - Intenta otra radio');
-      this.updateIcon('error');
-      this.cleanup();
-      setTimeout(() => {
-        if (!this.isPlaying) {
-          this.updateIcon('play');
-          this.updateStatus('Click para reproducir');
-        }
-      }, 3000);
-    }
-  }
-  
-  onStalled() {
-    console.log('⚠️ Buffering...');
-    this.updateStatus('Buffering...');
-  }
-  
-  onWaiting() {
-    console.log('⏳ Esperando datos...');
-    this.updateStatus('Cargando...');
-  }
-  
-  pause() {
-    if (this.audio) {
-      this.audio.pause();
-    }
-    this.isPlaying = false;
-    this.updateIcon('play');
-    this.updateStatus('Pausado');
-  }
-  
-  stop() {
-    if (this.audio) {
-      this.audio.pause();
-      this.audio.src = '';
-      this.audio.load();
-      this.cleanup();
-    }
-    this.isPlaying = false;
-    this.retryCount = 0;
-    this.updateIcon('play');
-    this.updateStatus('Click para reproducir');
-  }
-  
-  cleanup() {
-    if (this.audio) {
-      this.audio.removeEventListener('canplay', this.onCanPlay);
-      this.audio.removeEventListener('playing', this.onPlaying);
-      this.audio.removeEventListener('error', this.onError);
-      this.audio.removeEventListener('stalled', this.onStalled);
-      this.audio.removeEventListener('waiting', this.onWaiting);
-      this.audio = null;
-    }
-  }
-  
-  updateIcon(state) {
-    if (!this.elements.icon) return;
-    
-    this.elements.icon.classList.remove('loading', 'playing');
-    
-    if (state === 'loading') {
-      this.elements.icon.classList.add('loading');
-      this.elements.icon.innerHTML = '<i class="fas fa-spinner"></i>';
-    } else if (state === 'playing') {
-      this.elements.icon.classList.add('playing');
-      this.elements.icon.innerHTML = '<i class="fas fa-pause"></i>';
-    } else if (state === 'error') {
-      this.elements.icon.innerHTML = '<i class="fas fa-exclamation-triangle"></i>';
-    } else {
-      this.elements.icon.innerHTML = '<i class="fas fa-play"></i>';
-    }
-  }
-  
-  updateStatus(text) {
-    if (this.elements.status) {
-      this.elements.status.textContent = text;
-    }
-  }
-  
-  // Media Session API (Controles en pantalla de bloqueo y segundo plano)
-  setupMediaSession() {
-    if (!('mediaSession' in navigator)) {
-      console.log('⚠️ Media Session no soportado en este navegador');
-      return;
-    }
-    
-    const radioName = this.elements.selector.options[this.elements.selector.selectedIndex].text;
-    
-    navigator.mediaSession.metadata = new MediaMetadata({
-      title: radioName,
-      artist: 'Informate al Instante Nicaragua',
-      album: 'Radio en Vivo',
-      artwork: [
-        { src: 'https://nicaraguainformate.com/logo.png', sizes: '96x96', type: 'image/png' },
-        { src: 'https://nicaraguainformate.com/logo.png', sizes: '192x192', type: 'image/png' },
-        { src: 'https://nicaraguainformate.com/logo.png', sizes: '512x512', type: 'image/png' }
-      ]
-    });
-    
-    // Controles en la notificación del móvil y pantalla de bloqueo
-    navigator.mediaSession.setActionHandler('play', () => {
-      console.log('📱 Play desde notificación/pantalla de bloqueo');
-      this.play();
-    });
-    
-    navigator.mediaSession.setActionHandler('pause', () => {
-      console.log('📱 Pause desde notificación/pantalla de bloqueo');
-      this.pause();
-    });
-    
-    navigator.mediaSession.setActionHandler('stop', () => {
-      console.log('📱 Stop desde notificación/pantalla de bloqueo');
-      this.stop();
-    });
-    
-    console.log('✅ Media Session configurado - Funciona en segundo plano en móviles');
-  }
-}
-
-// Instanciar el reproductor
-const radioPlayer = new RadioPlayer();
-
-// Inicializar cuando cargue la página
-document.addEventListener('DOMContentLoaded', () => {
-  radioPlayer.init();
-});
-</script>
-
-<!-- FOOTER PROFESIONAL ESTILO CNN -->
-<footer style="background: #1a1a1a; color: #999; padding: 40px 20px 20px; font-size: 0.9rem;">
-  <div style="max-width: 1200px; margin: 0 auto;">
-    <!-- Logo y Redes Sociales -->
-    <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 30px; border-bottom: 1px solid #333; flex-wrap: wrap; gap: 20px;">
-      <div>
-        <h3 style="color: white; font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.5rem; margin: 0;">
-          Nicaragua Informate
-        </h3>
-        <p style="margin: 5px 0 0; font-size: 0.85rem;">Tu fuente confiable de noticias</p>
+<footer class="footer">
+  <div class="footer-content">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <h3>Nicaragua Informate</h3>
+        <p>Tu fuente confiable de noticias desde 2024</p>
       </div>
-      <div style="display: flex; gap: 15px; align-items: center;">
-        <span style="color: #ccc; font-size: 0.9rem;">Síguenos:</span>
-        <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" style="color: #999; font-size: 1.3rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'" title="Facebook">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" style="color: #999; font-size: 1.3rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'" title="Canal de WhatsApp">
-          <i class="fab fa-whatsapp"></i>
-        </a>
-        <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" style="color: #999; font-size: 1.3rem; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'" title="Canal de Telegram">
-          <i class="fab fa-telegram"></i>
-        </a>
+      <div class="footer-social">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
       </div>
     </div>
-
-    <!-- Links del Footer -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; padding: 30px 0; border-bottom: 1px solid #333;">
-      <div>
-        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Secciones</h4>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          <li style="margin-bottom: 10px;"><a href="/" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Inicio</a></li>
-          <li style="margin-bottom: 10px;"><a href="/?cat=Sucesos" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Sucesos</a></li>
-          <li style="margin-bottom: 10px;"><a href="/?cat=Deportes" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Deportes</a></li>
-          <li style="margin-bottom: 10px;"><a href="/?cat=Internacionales" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Internacionales</a></li>
+    
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Secciones</h4>
+        <ul class="footer-links">
+          <li><a href="/">Última Hora</a></li>
+          <li><a href="/?cat=Sucesos">Sucesos</a></li>
+          <li><a href="/?cat=Nacionales">Nacionales</a></li>
+          <li><a href="/?cat=Deportes">Deportes</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Acerca de</h4>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          <li style="margin-bottom: 10px;"><a href="/nosotros.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Nosotros</a></li>
-          <li style="margin-bottom: 10px;"><a href="/contacto.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Contacto</a></li>
+      <div class="footer-section">
+        <h4>Internacional</h4>
+        <ul class="footer-links">
+          <li><a href="/?cat=Internacionales">Internacionales</a></li>
+          <li><a href="/?cat=Tecnología">Tecnología</a></li>
+          <li><a href="/?cat=Cultura">Cultura</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Legal</h4>
-        <ul style="list-style: none; padding: 0; margin: 0;">
-          <li style="margin-bottom: 10px;"><a href="/privacidad.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Privacidad</a></li>
-          <li style="margin-bottom: 10px;"><a href="/terminos.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Términos de uso</a></li>
-          <li style="margin-bottom: 10px;"><a href="/cookies.html" style="color: #999; text-decoration: none; transition: 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#999'">Cookies</a></li>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul class="footer-links">
+          <li><a href="/privacidad.html">Privacidad</a></li>
+          <li><a href="/terminos.html">Términos</a></li>
+          <li><a href="/cookies.html">Cookies</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="color: white; font-size: 0.95rem; margin-bottom: 15px; font-weight: 700;">Newsletter</h4>
-        <p style="margin-bottom: 15px; font-size: 0.85rem; line-height: 1.5;">Recibe las noticias más importantes en tu correo</p>
-        <form style="display: flex; gap: 5px;" onsubmit="suscribirNewsletter(event)">
-          <input type="email" placeholder="tu@email.com" required style="flex: 1; padding: 10px; border: 1px solid #333; background: #2a2a2a; color: white; border-radius: 4px; font-size: 0.85rem;">
-          <button type="submit" style="padding: 10px 20px; background: var(--rojo); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.85rem;">Enviar</button>
-        </form>
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <ul class="footer-links">
+          <li><a href="/contacto.html">Escríbenos</a></li>
+          <li><a href="mailto:info@nicaraguainformate.com">info@nicaraguainformate.com</a></li>
+        </ul>
       </div>
     </div>
-
-    <!-- Copyright -->
-    <div style="padding-top: 20px; text-align: center; font-size: 0.8rem;">
-      <p style="margin: 0;">© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
+    
+    <div class="footer-bottom">
+      <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
     </div>
   </div>
 </footer>
 
-<script defer>
-// CONFIGURACIÓN OPTIMIZADA
+<script>
+// CONFIGURACIÓN
 const CONFIG = {
   NOTICIAS_POR_PAGINA: 10,
   FIREBASE_CONFIG: {
@@ -1734,13 +1155,7 @@ const utils = {
   
   sanitizeImage: (url, categoria) => {
     if (!url || url.includes('facebook') || url.includes('fbcdn')) {
-      // Usar logo local en lugar de Unsplash (más ligero)
       return '/logo.png';
-    }
-    // Optimizar URLs de Firebase Storage
-    if (url.includes('firebasestorage.googleapis.com')) {
-      const separator = url.includes('?') ? '&' : '?';
-      return url + separator + 'alt=media';
     }
     return url;
   },
@@ -1754,143 +1169,119 @@ const utils = {
 
 // INICIALIZACIÓN
 function init() {
-  initReloj();
-  initClima();
   initFirebase();
   initEventListeners();
   
-  // Mostrar CTA sticky después de 10 segundos
+  // Mostrar sticky después de 8 segundos
   setTimeout(() => {
-    document.getElementById('premiumSticky')?.classList.add('visible');
-  }, 10000);
-}
-
-function initReloj() {
-  const update = () => {
-    const now = new Date();
-    document.getElementById('currentTime').textContent = 
-      now.toLocaleTimeString('es-NI', {hour: '2-digit', minute:'2-digit'});
-  };
-  update();
-  setInterval(update, 60000);
-}
-
-// CLIMA DE NICARAGUA
-function initClima() {
-  // Clima automático desde API
-  async function actualizarClimaAutomatico() {
-    try {
-      // API gratuita de OpenWeatherMap (sin necesidad de key para básico)
-      const ciudades = [
-        { nombre: 'Managua', id: 'temp-managua', lat: 12.1364, lon: -86.2514 },
-        { nombre: 'León', id: 'temp-leon', lat: 12.4333, lon: -86.8833 },
-        { nombre: 'Estelí', id: 'temp-esteli', lat: 13.0833, lon: -86.3667 }
-      ];
-      
-      for (const ciudad of ciudades) {
-        try {
-          // Usar wttr.in que no requiere API key
-          const response = await fetch(`https://wttr.in/${ciudad.nombre},Nicaragua?format=j1`);
-          const data = await response.json();
-          
-          if (data && data.current_condition && data.current_condition[0]) {
-            const temp = data.current_condition[0].temp_C;
-            document.getElementById(ciudad.id).textContent = `${temp}°C`;
-          }
-        } catch (err) {
-          console.log(`No se pudo actualizar ${ciudad.nombre}, usando valor por defecto`);
-        }
-      }
-    } catch (error) {
-      console.log('Usando temperaturas por defecto');
+    const sticky = document.getElementById('premiumSticky');
+    if (sticky && !localStorage.getItem('stickyClosed')) {
+      sticky.classList.add('visible');
     }
-  }
-  
-  // Actualizar clima al cargar y cada 30 minutos
-  actualizarClimaAutomatico();
-  setInterval(actualizarClimaAutomatico, 30 * 60 * 1000);
+  }, 8000);
 }
 
-// FIREBASE OPTIMIZADO
-// FIREBASE OPTIMIZADO CON COMPAT (más ligero)
+// FIREBASE
 function initFirebase() {
-  // Esperar a que los scripts de Firebase se carguen
-  if (typeof firebase === 'undefined') {
-    setTimeout(initFirebase, 100);
-    return;
-  }
-  
-  try {
-    // Inicializar Firebase con compat API
-    firebase.initializeApp(CONFIG.FIREBASE_CONFIG);
-    db = firebase.firestore();
-    
-    // Query optimizada
-    const q = db.collection('noticias')
-      .orderBy('fecha', 'desc')
-      .limit(20);
-    
-    // Listener en tiempo real
-    q.onSnapshot((snapshot) => {
-      if (!snapshot.empty) {
-        noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        document.getElementById('skeletonContainer').style.display = 'none';
-        document.getElementById('newsGrid').style.display = 'flex';
-        renderizarTodo();
-      }
-    }, (error) => {
-      console.error('Error en snapshot:', error);
-      mostrarErrorConexion();
+  import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js')
+    .then(({ initializeApp }) => {
+      return import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
+        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit }) => {
+          const app = initializeApp(CONFIG.FIREBASE_CONFIG);
+          db = initializeFirestore(app, { localCache: memoryLocalCache() });
+          
+          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(50));
+          onSnapshot(q, (snapshot) => {
+            if (!snapshot.empty) {
+              noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+              document.getElementById('skeletonContainer').style.display = 'none';
+              document.getElementById('newsGrid').style.display = 'flex';
+              renderizarTodo();
+            }
+          });
+        });
+    })
+    .catch(() => {
+      document.getElementById('skeletonContainer').innerHTML = 
+        '<p style="text-align:center;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">Recargar</button></p>';
     });
-  } catch (error) {
-    console.error('Error inicializando Firebase:', error);
-    mostrarErrorConexion();
-  }
 }
 
-function mostrarErrorConexion() {
-  document.getElementById('skeletonContainer').innerHTML = 
-    '<p style="text-align:center;color:#64748b;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:8px 16px;border-radius:6px;margin-top:10px;cursor:pointer;">Recargar</button></p>';
-}
-
-// RENDERIZADO
 function renderizarTodo() {
-  renderizarCarrusel();
+  renderizarCarousel();
   renderizarNoticias();
   renderizarTrending();
 }
 
-function renderizarCarrusel() {
+// CAROUSEL
+function renderizarCarousel() {
   const slides = noticias.slice(0, 5);
   if (!slides.length) return;
   
-  const inner = document.getElementById('carouselInner');
-  const indicators = document.getElementById('carouselIndicators');
+  const track = document.getElementById('carouselTrack');
+  const dots = document.getElementById('carouselDots');
   
-  inner.innerHTML = slides.map((n, i) => {
+  track.innerHTML = slides.map((n, i) => {
     const img = utils.sanitizeImage(n.imagen, n.categoria);
     const titulo = utils.escapeHtml(n.titulo || '');
-    const loadingAttr = i === 0 ? 'eager' : 'lazy';
     return `
-      <a href="noticia.html?id=${n.id}" class="carousel-item-custom ${i === 0 ? 'active' : ''}">
-        <div class="carousel-image-wrapper">
-          <img src="${img}" alt="${titulo}" loading="${loadingAttr}">
+      <a href="noticia.html?id=${n.id}" class="carousel-slide">
+        <div class="carousel-image">
+          <img src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}">
         </div>
-        <div class="carousel-caption-custom">
-          <span class="badge-categoria">${n.categoria || 'ÚLTIMA HORA'}</span>
-          <h3>${titulo}</h3>
+        <div class="carousel-content">
+          <span class="carousel-badge">${n.categoria || 'ÚLTIMA HORA'}</span>
+          <h3 class="carousel-title">${titulo}</h3>
         </div>
       </a>
     `;
   }).join('');
   
-  indicators.innerHTML = slides.map((_, i) => 
-    `<button class="indicator ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></button>`
+  dots.innerHTML = slides.map((_, i) => 
+    `<button class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></button>`
   ).join('');
   
   startCarousel();
 }
 
+function startCarousel() {
+  clearInterval(carouselInterval);
+  carouselInterval = setInterval(nextSlide, 6000);
+}
+
+function nextSlide() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dots = document.querySelectorAll('.dot');
+  if (!slides.length) return;
+  
+  carouselIndex = (carouselIndex + 1) % slides.length;
+  updateCarousel();
+}
+
+function prevSlide() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  if (!slides.length) return;
+  
+  carouselIndex = (carouselIndex - 1 + slides.length) % slides.length;
+  updateCarousel();
+}
+
+function goToSlide(index) {
+  carouselIndex = index;
+  updateCarousel();
+  clearInterval(carouselInterval);
+  startCarousel();
+}
+
+function updateCarousel() {
+  const track = document.getElementById('carouselTrack');
+  const dots = document.querySelectorAll('.dot');
+  
+  track.style.transform = `translateX(-${carouselIndex * 100}%)`;
+  dots.forEach((dot, i) => dot.classList.toggle('active', i === carouselIndex));
+}
+
+// NOTICIAS
 function renderizarNoticias() {
   const grid = document.getElementById('newsGrid');
   let filtradas = categoriaActual === 'Todas' 
@@ -1966,57 +1357,6 @@ function renderizarTrending() {
   `).join('');
 }
 
-// CARRUSEL CONTROLES
-function startCarousel() {
-  clearInterval(carouselInterval);
-  carouselInterval = setInterval(nextSlide, 6000);
-}
-
-function nextSlide() {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  
-  items[carouselIndex].classList.remove('active');
-  indicators[carouselIndex]?.classList.remove('active');
-  
-  carouselIndex = (carouselIndex + 1) % items.length;
-  
-  items[carouselIndex].classList.add('active');
-  indicators[carouselIndex]?.classList.add('active');
-}
-
-function prevSlide() {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  
-  items[carouselIndex].classList.remove('active');
-  indicators[carouselIndex]?.classList.remove('active');
-  
-  carouselIndex = (carouselIndex - 1 + items.length) % items.length;
-  
-  items[carouselIndex].classList.add('active');
-  indicators[carouselIndex]?.classList.add('active');
-}
-
-function goToSlide(index) {
-  const items = document.querySelectorAll('.carousel-item-custom');
-  const indicators = document.querySelectorAll('.indicator');
-  if (!items.length) return;
-  
-  items[carouselIndex].classList.remove('active');
-  indicators[carouselIndex]?.classList.remove('active');
-  
-  carouselIndex = index;
-  
-  items[carouselIndex].classList.add('active');
-  indicators[carouselIndex]?.classList.add('active');
-  
-  clearInterval(carouselInterval);
-  startCarousel();
-}
-
 // EVENTOS
 function cambiarCategoria(cat) {
   categoriaActual = cat;
@@ -2042,7 +1382,6 @@ function cargarMas() {
 }
 
 function initEventListeners() {
-  // Navegación
   document.querySelectorAll('.menu-btn').forEach(btn => {
     btn.addEventListener('click', () => cambiarCategoria(btn.dataset.cat));
   });
@@ -2066,17 +1405,14 @@ function initEventListeners() {
         (n.titulo || '').toLowerCase().includes(query)
       ).slice(0, 5);
       
-      if (!matches.length) {
-        resultados.innerHTML = '<div style="padding:16px;color:#64748b;">Sin resultados</div>';
-      } else {
-        resultados.innerHTML = matches.map(n => `
-          <a href="noticia.html?id=${n.id}" style="display:block;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;" 
-             onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
-            <div style="font-weight:600;font-size:13px;color:var(--text-primary);">${utils.escapeHtml(n.titulo)}</div>
-            <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">${n.categoria}</div>
-          </a>
-        `).join('');
-      }
+      resultados.innerHTML = matches.length ? matches.map(n => `
+        <a href="noticia.html?id=${n.id}" style="display:block;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;" 
+           onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
+          <div style="font-weight:600;font-size:13px;">${utils.escapeHtml(n.titulo)}</div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">${n.categoria}</div>
+        </a>
+      `).join('') : '<div style="padding:16px;color:#64748b;">Sin resultados</div>';
+      
       resultados.style.display = 'block';
     }, 200);
   });
@@ -2090,60 +1426,17 @@ function initEventListeners() {
 
 function suscribirNewsletter(e) {
   e.preventDefault();
-  alert('¡Gracias por suscribirte! Pronto recibirás nuestras actualizaciones.');
+  alert('¡Gracias por suscribirte!');
   e.target.reset();
 }
 
-// Cerrar CTA sticky
-function cerrarCta() {
-  const cta = document.getElementById('premiumSticky');
-  cta.style.display = 'none';
-  localStorage.setItem('ctaClosed', 'true');
+function cerrarSticky() {
+  document.getElementById('premiumSticky').classList.remove('visible');
+  localStorage.setItem('stickyClosed', 'true');
 }
 
-// DARK MODE
-function toggleDarkMode() {
-  document.body.classList.toggle('dark-theme');
-  const isDark = document.body.classList.contains('dark-theme');
-  const icon = document.getElementById('themeIcon');
-  
-  // Cambiar icono
-  icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-  
-  // Guardar preferencia
-  localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-}
-
-// Cargar preferencia de dark mode
-function loadDarkModePreference() {
-  const darkMode = localStorage.getItem('darkMode');
-  if (darkMode === 'enabled') {
-    document.body.classList.add('dark-theme');
-    document.getElementById('themeIcon').className = 'fas fa-sun';
-  }
-  
-  // Mostrar CTA sticky después de 10 segundos si no se cerró antes
-  const ctaClosed = localStorage.getItem('ctaClosed');
-  if (!ctaClosed) {
-    setTimeout(() => {
-      document.getElementById('premiumSticky')?.classList.add('visible');
-    }, 10000);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadDarkModePreference();
-  init();
-});
-
-// Registrar Service Worker para PWA
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(reg => console.log('SW registrado'))
-      .catch(err => console.log('SW error:', err));
-  });
-}
+document.addEventListener('DOMContentLoaded', init);
 </script>
+
 </body>
 </html>

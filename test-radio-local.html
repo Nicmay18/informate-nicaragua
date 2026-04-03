@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Radio Nicaragua - DIAGNÓSTICO</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #1a1a1a;
+  color: white;
+  max-width: 600px;
+  margin: 0 auto;
+}
+h1 { color: #e31e24; text-align: center; }
+.radio-box {
+  background: #2a2a2a;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+button {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.btn-play {
+  background: #10b981;
+  color: white;
+}
+.btn-stop {
+  background: #ef4444;
+  color: white;
+}
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 2px solid #444;
+  background: #333;
+  color: white;
+}
+.status {
+  padding: 15px;
+  margin: 15px 0;
+  background: #333;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+.log {
+  background: #000;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 8px;
+  font-family: monospace;
+  font-size: 12px;
+  max-height: 300px;
+  overflow-y: auto;
+  border: 2px solid #333;
+}
+.info {
+  background: #1e40af;
+  padding: 15px;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<h1>🎵 TEST RADIO NICARAGUA</h1>
+
+<div class="info">
+  <strong>📋 INSTRUCCIONES:</strong><br>
+  1. Selecciona una radio<br>
+  2. Presiona REPRODUCIR<br>
+  3. Observa los logs abajo<br>
+  4. Si no funciona, copia TODOS los logs y envíalos
+</div>
+
+<div class="radio-box">
+  <h3 style="margin-top:0;">Selecciona Emisora:</h3>
+  <select id="radioSelect">
+    <option value="https://stream.radiojar.com/8wqtdg30k8quv">📻 La Primerísima (MÁS ESTABLE)</option>
+    <option value="https://stream.ecmdigital.net:8010/radioya">🔴 Radio Ya (Puerto 8010)</option>
+    <option value="https://stream.zeno.fm/aqf8fnx2gg0uv">🎵 Viva FM</option>
+    <option value="https://stream.zeno.fm/8qhxqhx2gg0uv">💃 La Pachanguera</option>
+    <option value="https://stream.futurafm.com.ni/live">⚡ Futura Radio</option>
+  </select>
+  
+  <button class="btn-play" id="playBtn">▶️ REPRODUCIR</button>
+  <button class="btn-stop" id="stopBtn">⏹️ DETENER</button>
+  
+  <div class="status" id="status">Listo para reproducir</div>
+</div>
+
+<h3>📊 LOGS DEL SISTEMA:</h3>
+<div class="log" id="log"></div>
+
+<script>
+let audio = null;
+
+function log(msg) {
+  const logDiv = document.getElementById('log');
+  const time = new Date().toLocaleTimeString();
+  logDiv.innerHTML += `[${time}] ${msg}<br>`;
+  logDiv.scrollTop = logDiv.scrollHeight;
+  console.log(msg);
+}
+
+function updateStatus(msg) {
+  document.getElementById('status').textContent = msg;
+  document.getElementById('status').style.background = 
+    msg.includes('❌') ? '#ef4444' : 
+    msg.includes('🔴') ? '#10b981' : '#333';
+}
+
+document.getElementById('playBtn').addEventListener('click', function() {
+  const select = document.getElementById('radioSelect');
+  let url = select.value;
+  
+  // TRUCO: Evitar caché del navegador
+  url = url + (url.includes('?') ? '&' : '?') + 'nocache=' + Date.now();
+  
+  log('🎵 Botón REPRODUCIR presionado');
+  log('📡 URL seleccionada: ' + select.options[select.selectedIndex].text);
+  log('🔗 URL completa: ' + url);
+  
+  // Detener audio anterior - LIMPIEZA TOTAL
+  if (audio) {
+    audio.pause();
+    audio.src = "";
+    audio.load();
+    audio = null;
+    log('⏹️ Audio anterior detenido y limpiado');
+  }
+  
+  updateStatus('Conectando al servidor...');
+  
+  try {
+    audio = new Audio();
+    audio.src = url;
+    audio.preload = 'none';
+    audio.crossOrigin = 'anonymous';
+    audio.volume = 0.8;
+    
+    log('✅ Objeto Audio creado');
+    log('🔧 Configuración: preload=none, crossOrigin=anonymous, volume=0.8');
+    
+    audio.addEventListener('loadstart', () => {
+      log('📥 Iniciando carga del stream...');
+      updateStatus('Cargando stream...');
+    });
+    
+    audio.addEventListener('canplay', () => {
+      log('✅ Stream listo para reproducir');
+      updateStatus('🔴 Reproduciendo');
+    });
+    
+    audio.addEventListener('playing', () => {
+      log('🎶 Audio reproduciéndose correctamente');
+      updateStatus('🔴 EN VIVO');
+    });
+    
+    audio.addEventListener('stalled', () => {
+      log('⚠️ El servidor está tardando en enviar datos...');
+      updateStatus('Conectando...');
+    });
+    
+    audio.addEventListener('error', (e) => {
+      const errCode = audio.error ? audio.error.code : 'Desconocido';
+      const errMsg = audio.error ? audio.error.message : 'Sin mensaje';
+      log('❌ ERROR TÉCNICO: Código ' + errCode);
+      log('❌ Mensaje: ' + errMsg);
+      
+      if (errCode == 1) log('👉 MEDIA_ERR_ABORTED: Reproducción abortada');
+      if (errCode == 2) log('👉 MEDIA_ERR_NETWORK: Error de red');
+      if (errCode == 3) log('👉 MEDIA_ERR_DECODE: Error al decodificar');
+      if (errCode == 4) log('👉 MEDIA_ERR_SRC_NOT_SUPPORTED: Formato no soportado o servidor caído');
+      
+      updateStatus('❌ Error de conexión');
+    });
+    
+    log('▶️ Intentando reproducir...');
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise
+        .then(() => {
+          log('✅ Reproducción autorizada por el navegador');
+          updateStatus('🔴 REPRODUCIENDO');
+        })
+        .catch(error => {
+          log('❌ Bloqueo de Autoplay: ' + error.message);
+          log('👉 Solución: Haz clic de nuevo en REPRODUCIR');
+          updateStatus('❌ Haz clic de nuevo');
+        });
+    }
+      
+  } catch (err) {
+    log('❌ Error crítico: ' + err.message);
+    updateStatus('❌ Error crítico');
+  }
+});
+
+document.getElementById('stopBtn').addEventListener('click', function() {
+  log('⏹️ Botón DETENER presionado');
+  if (audio) {
+    audio.pause();
+    audio.src = "";
+    audio = null;
+    updateStatus('⏹️ Detenido');
+    log('✅ Audio detenido correctamente');
+  } else {
+    log('⚠️ No hay audio reproduciéndose');
+  }
+});
+
+log('✅ Página cargada - Sistema listo');
+log('📱 Navegador: ' + navigator.userAgent);
+log('🔒 Protocolo: ' + window.location.protocol);
+log('🌐 Ubicación: ' + window.location.href);
+</script>
+
+</body>
+</html>

@@ -21,11 +21,19 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const { request } = event;
+  const url = new URL(request.url);
+
+  // 🛑 EXCLUIR RADIOS: Si la URL contiene "stream", "radiojar", "zeno", "ecmdigital" o "futura", no usar el Service Worker
+  if (url.href.includes('stream') || 
+      url.href.includes('radiojar') || 
+      url.href.includes('zeno') || 
+      url.href.includes('ecmdigital') ||
+      url.href.includes('futurafm')) {
+    return; // Esto permite que el audio pase directo por la red normal
+  }
 
   // SOLO cachear GET - nunca POST, PUT, DELETE
   if (request.method !== 'GET') return;
-
-  const url = new URL(request.url);
 
   // No cachear APIs ni Firebase
   if (url.pathname.startsWith('/api/') || url.hostname.includes('firestore') || url.hostname.includes('googleapis')) return;

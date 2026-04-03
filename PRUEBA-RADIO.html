@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Prueba Radio Nicaragua</title>
+<style>
+body { 
+  font-family: Arial; 
+  padding: 40px; 
+  background: #222; 
+  color: white; 
+  text-align: center;
+}
+button { 
+  padding: 20px 40px; 
+  font-size: 18px; 
+  margin: 10px; 
+  cursor: pointer; 
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.play { background: #10b981; color: white; }
+.stop { background: #ef4444; color: white; }
+#status { 
+  margin: 30px 0; 
+  padding: 20px; 
+  background: #333; 
+  border-radius: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+#log {
+  background: #000;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: left;
+  font-family: monospace;
+  font-size: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+</style>
+</head>
+<body>
+
+<h1>🎵 PRUEBA RADIO NICARAGUA</h1>
+
+<div id="status">Presiona PLAY para probar</div>
+
+<button class="play" onclick="reproducir()">▶️ PLAY - RADIO YA</button>
+<button class="stop" onclick="detener()">⏹️ STOP</button>
+
+<div id="log"></div>
+
+<script>
+let audio = null;
+
+function escribir(msg) {
+  const log = document.getElementById('log');
+  const hora = new Date().toLocaleTimeString();
+  log.innerHTML += '[' + hora + '] ' + msg + '<br>';
+  log.scrollTop = log.scrollHeight;
+  console.log(msg);
+}
+
+function estado(msg) {
+  document.getElementById('status').textContent = msg;
+}
+
+function reproducir() {
+  escribir('🎵 Botón PLAY presionado');
+  
+  // URL de Radio Ya (la más estable)
+  const url = 'https://stream.ecmdigital.net:8010/radioya';
+  escribir('📡 URL: ' + url);
+  
+  // Detener audio anterior
+  if (audio) {
+    audio.pause();
+    audio.src = '';
+    audio = null;
+    escribir('⏹️ Audio anterior detenido');
+  }
+  
+  estado('Conectando...');
+  
+  try {
+    // Crear nuevo audio
+    audio = new Audio(url);
+    audio.volume = 0.8;
+    escribir('✅ Audio creado');
+    
+    // Eventos
+    audio.onloadstart = function() {
+      escribir('📥 Cargando stream...');
+      estado('Cargando...');
+    };
+    
+    audio.oncanplay = function() {
+      escribir('✅ Stream listo');
+      estado('🔴 Reproduciendo');
+    };
+    
+    audio.onplaying = function() {
+      escribir('🎶 Audio sonando');
+      estado('🔴 EN VIVO');
+    };
+    
+    audio.onerror = function() {
+      const codigo = audio.error ? audio.error.code : 'desconocido';
+      escribir('❌ ERROR código: ' + codigo);
+      estado('❌ Error');
+    };
+    
+    // Reproducir
+    escribir('▶️ Intentando reproducir...');
+    audio.play()
+      .then(function() {
+        escribir('✅ Reproducción iniciada');
+        estado('🔴 REPRODUCIENDO');
+      })
+      .catch(function(err) {
+        escribir('❌ Error: ' + err.message);
+        estado('❌ Error - Intenta de nuevo');
+      });
+      
+  } catch (err) {
+    escribir('❌ Error crítico: ' + err.message);
+    estado('❌ Error crítico');
+  }
+}
+
+function detener() {
+  escribir('⏹️ Botón STOP presionado');
+  if (audio) {
+    audio.pause();
+    audio.src = '';
+    audio = null;
+    estado('⏹️ Detenido');
+    escribir('✅ Audio detenido');
+  } else {
+    escribir('⚠️ No hay audio reproduciéndose');
+  }
+}
+
+escribir('✅ Página cargada');
+escribir('📱 Navegador: ' + navigator.userAgent);
+</script>
+
+</body>
+</html>

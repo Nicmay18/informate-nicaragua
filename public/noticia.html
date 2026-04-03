@@ -1,13 +1,192 @@
-<!-- noticia.html - Drop cap profesional -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Nicaragua Informate</title>
+<meta name="description" id="pageDescription" content="Noticias de Nicaragua al instante">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
+:root {
+  --brand-primary: #0f172a;
+  --brand-accent: #dc2626;
+  --brand-secondary: #2563eb;
+  --surface: #ffffff;
+  --surface-alt: #f8fafc;
+  --text-primary: #1a1a1a;
+  --text-secondary: #64748b;
+  --border: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.15);
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: var(--font-sans); 
+  background: var(--surface-alt); 
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* HEADER */
+.topbar { 
+  background: var(--surface); 
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky; 
+  top: 0; 
+  z-index: 1000;
+  box-shadow: var(--shadow);
+}
+.topbar-content { 
+  max-width: 1280px; 
+  margin: 0 auto; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center; 
+}
+.logo { 
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  text-decoration: none; 
+  color: var(--text-primary);
+}
+.logo img { 
+  width: 42px; 
+  height: 42px; 
+  border-radius: 8px; 
+  object-fit: cover;
+}
+.logo-title { 
+  font-family: var(--font-serif); 
+  font-size: 24px; 
+  font-weight: 900; 
+  color: var(--brand-primary);
+  letter-spacing: -0.5px;
+}
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
+  color: var(--text-primary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.back-btn:hover {
+  background: var(--brand-primary);
+  color: white;
+  border-color: var(--brand-primary);
+}
+
+/* ARTICLE */
+.article-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.article-header {
+  margin-bottom: 32px;
+}
+
+.article-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--brand-accent);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+}
+
+.premium-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #78350f;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.article-title {
+  font-family: var(--font-serif);
+  font-size: 42px;
+  font-weight: 900;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-meta span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.article-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  border-radius: 16px;
+  overflow: hidden;
+  margin: 32px 0;
+  box-shadow: var(--shadow-lg);
+}
+
+.article-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .article-content {
   font-size: 18px;
   line-height: 1.8;
   color: var(--text-primary);
 }
+
 .article-content p {
   margin-bottom: 24px;
 }
+
 /* PRIMERA LETRA GRANDE (Drop Cap) */
 .article-content > p:first-of-type::first-letter {
   font-family: var(--font-serif);
@@ -19,9 +198,527 @@
   font-weight: 900;
   color: var(--brand-accent);
 }
+
+/* PREMIUM PAYWALL */
+.premium-paywall {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 2px solid #fbbf24;
+  border-radius: 16px;
+  padding: 40px;
+  text-align: center;
+  margin: 40px 0;
+  box-shadow: 0 8px 24px rgba(251, 191, 36, 0.2);
+}
+
+.premium-paywall-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  font-size: 36px;
+  color: white;
+  box-shadow: 0 8px 16px rgba(251, 191, 36, 0.4);
+}
+
+.premium-paywall h3 {
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 900;
+  color: #78350f;
+  margin-bottom: 12px;
+}
+
+.premium-paywall p {
+  font-size: 16px;
+  color: #92400e;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.premium-paywall-benefits {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: left;
+}
+
+.premium-paywall-benefits h4 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #78350f;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.premium-paywall-benefits ul {
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.premium-paywall-benefits li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 15px;
+  color: #92400e;
+}
+
+.premium-paywall-benefits li i {
+  color: #10b981;
+  font-size: 18px;
+}
+
+.subscribe-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  color: #78350f;
+  border: none;
+  border-radius: 9999px;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.4);
+}
+
+.subscribe-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(251, 191, 36, 0.5);
+}
+
+.content-blur {
+  position: relative;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.content-blur::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to bottom, transparent, var(--surface-alt));
+}
+
+/* SHARE BUTTONS */
+.share-section {
+  margin: 48px 0;
+  padding: 32px;
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  text-align: center;
+}
+
+.share-section h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.share-btn.facebook {
+  background: #1877f2;
+  color: white;
+}
+
+.share-btn.whatsapp {
+  background: #25d366;
+  color: white;
+}
+
+.share-btn.telegram {
+  background: #0088cc;
+  color: white;
+}
+
+.share-btn.twitter {
+  background: #1da1f2;
+  color: white;
+}
+
+.share-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* FOOTER */
+.footer {
+  background: #1a1a1a;
+  color: #999;
+  padding: 40px 24px 20px;
+  margin-top: 60px;
+  font-size: 14px;
+}
+
+.footer-content {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer p {
+  margin-bottom: 16px;
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 20px 0;
+}
+
+.footer-social a {
+  color: #999;
+  font-size: 20px;
+  transition: all 0.2s;
+}
+
+.footer-social a:hover {
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* SKELETON LOADER */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-title {
+  height: 48px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.skeleton-meta {
+  height: 20px;
+  width: 300px;
+  margin-bottom: 32px;
+}
+
+.skeleton-image {
+  width: 100%;
+  aspect-ratio: 16/9;
+  margin: 32px 0;
+}
+
+.skeleton-text {
+  height: 16px;
+  margin-bottom: 12px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .article-title {
+    font-size: 32px;
+  }
+  
+  .article-content {
+    font-size: 16px;
+  }
+  
+  .premium-paywall {
+    padding: 24px;
+  }
+  
+  .premium-paywall h3 {
+    font-size: 22px;
+  }
+  
+  .share-buttons {
+    flex-direction: column;
+  }
+  
+  .share-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* Selección de texto */
 ::selection {
   background: var(--brand-accent);
   color: white;
 }
 </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-content">
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
+      <div>
+        <div class="logo-title">Nicaragua Informate</div>
+      </div>
+    </a>
+    <a href="/" class="back-btn">
+      <i class="fas fa-arrow-left"></i>
+      Volver al inicio
+    </a>
+  </div>
+</header>
+
+<article class="article-container" id="articleContainer">
+  <!-- SKELETON LOADER -->
+  <div id="skeletonLoader">
+    <div class="skeleton skeleton-title"></div>
+    <div class="skeleton skeleton-meta"></div>
+    <div class="skeleton skeleton-image"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text"></div>
+    <div class="skeleton skeleton-text" style="width: 60%;"></div>
+  </div>
+
+  <!-- CONTENIDO REAL (se llena con JavaScript) -->
+  <div id="articleContent" style="display: none;"></div>
+</article>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
+    <div class="footer-social">
+      <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+    </div>
+  </div>
+</footer>
+
+<script type="module">
+// FIREBASE CONFIG
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
+import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+  authDomain: "informate-instant-nicaragua.firebaseapp.com",
+  projectId: "informate-instant-nicaragua",
+  storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+  messagingSenderId: "24988088146",
+  appId: "1:24988088146:web:d26a207508da055668ec8b"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// OBTENER ID DE LA NOTICIA
+const urlParams = new URLSearchParams(window.location.search);
+const noticiaId = urlParams.get('id');
+
+if (!noticiaId) {
+  window.location.href = '/';
+}
+
+// CARGAR NOTICIA
+async function cargarNoticia() {
+  try {
+    const docRef = doc(db, 'noticias', noticiaId);
+    const docSnap = await getDoc(docRef);
+    
+    if (!docSnap.exists()) {
+      window.location.href = '/';
+      return;
+    }
+    
+    const noticia = docSnap.data();
+    
+    // Incrementar vistas
+    await updateDoc(docRef, {
+      vistas: increment(1)
+    });
+    
+    // Renderizar noticia
+    renderizarNoticia(noticia);
+    
+  } catch (error) {
+    console.error('Error:', error);
+    window.location.href = '/';
+  }
+}
+
+function renderizarNoticia(noticia) {
+  const esPremium = noticia.premium === true;
+  
+  // Actualizar meta tags
+  document.getElementById('pageTitle').textContent = noticia.titulo + ' | Nicaragua Informate';
+  document.getElementById('pageDescription').content = noticia.resumen || noticia.titulo;
+  
+  // Formatear fecha
+  let fechaStr = 'Hace un momento';
+  if (noticia.fecha) {
+    try {
+      const fecha = noticia.fecha.toDate ? noticia.fecha.toDate() : new Date(noticia.fecha);
+      fechaStr = fecha.toLocaleDateString('es-NI', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+      });
+    } catch(e) {}
+  }
+  
+  // Procesar contenido
+  const parrafos = noticia.contenido.split('\n').filter(p => p.trim());
+  let contenidoHTML = '';
+  
+  if (esPremium) {
+    // CONTENIDO PREMIUM: Solo mostrar primeros 2 párrafos
+    const preview = parrafos.slice(0, 2).map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    const restoContenido = parrafos.slice(2).map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    
+    contenidoHTML = `
+      <div class="article-header">
+        <span class="premium-badge">
+          <i class="fas fa-gem"></i> CONTENIDO PREMIUM
+        </span>
+        <h1 class="article-title">${escapeHtml(noticia.titulo)}</h1>
+        <div class="article-meta">
+          <span><i class="far fa-calendar"></i> ${fechaStr}</span>
+          <span><i class="far fa-user"></i> ${escapeHtml(noticia.autor || 'Keyling E. Muñoz R.')}</span>
+          <span><i class="far fa-eye"></i> ${noticia.vistas || 0} vistas</span>
+        </div>
+      </div>
+      
+      <div class="article-image">
+        <img src="${noticia.imagen}" alt="${escapeHtml(noticia.titulo)}" loading="eager">
+      </div>
+      
+      <div class="article-content">
+        ${preview}
+      </div>
+      
+      <div class="premium-paywall">
+        <div class="premium-paywall-icon">
+          <i class="fas fa-gem"></i>
+        </div>
+        <h3>Contenido Exclusivo Premium</h3>
+        <p>Esta noticia es exclusiva para suscriptores. Suscríbete por solo $5/mes y accede a todo nuestro contenido premium sin límites.</p>
+        
+        <div class="premium-paywall-benefits">
+          <h4>✨ Beneficios de la suscripción:</h4>
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Acceso ilimitado a todas las noticias premium</li>
+            <li><i class="fas fa-check-circle"></i> Sin anuncios en todo el sitio</li>
+            <li><i class="fas fa-check-circle"></i> Contenido exclusivo y análisis profundos</li>
+            <li><i class="fas fa-check-circle"></i> Apoyas el periodismo independiente</li>
+          </ul>
+        </div>
+        
+        <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="subscribe-btn">
+          <i class="fas fa-crown"></i>
+          Suscribirme por $5/mes
+        </a>
+        
+        <p style="margin-top: 16px; font-size: 14px; color: #92400e;">
+          ¿Solo quieres apoyarnos? <a href="https://paypal.me/NicaraguaInformate" target="_blank" style="color: #78350f; font-weight: 700; text-decoration: underline;">Haz una donación</a>
+        </p>
+      </div>
+      
+      <div class="content-blur">
+        <div class="article-content" style="filter: blur(8px); user-select: none; pointer-events: none;">
+          ${restoContenido}
+        </div>
+      </div>
+    `;
+  } else {
+    // CONTENIDO NORMAL: Mostrar todo
+    const contenidoCompleto = parrafos.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+    
+    contenidoHTML = `
+      <div class="article-header">
+        <span class="article-category">${noticia.categoria || 'General'}</span>
+        <h1 class="article-title">${escapeHtml(noticia.titulo)}</h1>
+        <div class="article-meta">
+          <span><i class="far fa-calendar"></i> ${fechaStr}</span>
+          <span><i class="far fa-user"></i> ${escapeHtml(noticia.autor || 'Keyling E. Muñoz R.')}</span>
+          <span><i class="far fa-eye"></i> ${noticia.vistas || 0} vistas</span>
+        </div>
+      </div>
+      
+      <div class="article-image">
+        <img src="${noticia.imagen}" alt="${escapeHtml(noticia.titulo)}" loading="eager">
+      </div>
+      
+      <div class="article-content">
+        ${contenidoCompleto}
+      </div>
+      
+      <div class="share-section">
+        <h3>Compartir esta noticia</h3>
+        <div class="share-buttons">
+          <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" class="share-btn facebook">
+            <i class="fab fa-facebook-f"></i> Facebook
+          </a>
+          <a href="https://wa.me/?text=${encodeURIComponent(noticia.titulo + ' ' + window.location.href)}" target="_blank" class="share-btn whatsapp">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
+          <a href="https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(noticia.titulo)}" target="_blank" class="share-btn telegram">
+            <i class="fab fa-telegram-plane"></i> Telegram
+          </a>
+          <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(noticia.titulo)}" target="_blank" class="share-btn twitter">
+            <i class="fab fa-twitter"></i> Twitter
+          </a>
+        </div>
+      </div>
+    `;
+  }
+  
+  // Mostrar contenido
+  document.getElementById('skeletonLoader').style.display = 'none';
+  document.getElementById('articleContent').innerHTML = contenidoHTML;
+  document.getElementById('articleContent').style.display = 'block';
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+// INICIAR
+cargarNoticia();
+</script>
+
+</body>
+</html>

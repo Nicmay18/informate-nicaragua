@@ -19,6 +19,13 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Escuchar mensaje para forzar actualización inmediata
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);

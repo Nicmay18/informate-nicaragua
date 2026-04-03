@@ -2043,19 +2043,41 @@ if ('serviceWorker' in navigator) {
     // Forzar actualización si hay una nueva versión
     registration.addEventListener('updatefound', () => {
       const newWorker = registration.installing;
+      console.log('🔄 Nueva versión del Service Worker detectada');
+      
       newWorker.addEventListener('statechange', () => {
-        if (newWorker.state === 'activated') {
-          console.log('🔄 Nueva versión del Service Worker activada');
-          // Recargar la página para usar la nueva versión
-          if (confirm('Hay una nueva versión disponible. ¿Recargar ahora?')) {
-            window.location.reload();
-          }
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          // Hay una nueva versión esperando
+          console.log('⏳ Nueva versión lista para activarse');
+          
+          // Activar automáticamente sin preguntar
+          updateServiceWorker(registration);
         }
       });
     });
+    
+    // Verificar actualizaciones cada 60 segundos
+    setInterval(() => {
+      registration.update();
+    }, 60000);
+    
   }).catch(function(error) {
     console.log('❌ Error al registrar Service Worker:', error);
   });
+  
+  // Función para actualizar el Service Worker automáticamente
+  function updateServiceWorker(registration) {
+    const worker = registration.waiting;
+    if (worker) {
+      worker.postMessage('SKIP_WAITING');
+      
+      // Escuchar el cambio de controlador para recargar la página
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        console.log('🔄 Recargando página con nueva versión...');
+        window.location.reload();
+      });
+    }
+  }
 }
 </script>
 

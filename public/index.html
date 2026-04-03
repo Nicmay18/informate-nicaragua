@@ -2033,5 +2033,31 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
 document.addEventListener('DOMContentLoaded', init);
 </script>
 
+<!-- SERVICE WORKER CON VERSIONADO -->
+<script>
+if ('serviceWorker' in navigator) {
+  // Versión 2.0 para forzar actualización del caché
+  navigator.serviceWorker.register('/sw.js?v=2.0').then(function(registration) {
+    console.log('✅ Service Worker registrado con éxito');
+    
+    // Forzar actualización si hay una nueva versión
+    registration.addEventListener('updatefound', () => {
+      const newWorker = registration.installing;
+      newWorker.addEventListener('statechange', () => {
+        if (newWorker.state === 'activated') {
+          console.log('🔄 Nueva versión del Service Worker activada');
+          // Recargar la página para usar la nueva versión
+          if (confirm('Hay una nueva versión disponible. ¿Recargar ahora?')) {
+            window.location.reload();
+          }
+        }
+      });
+    });
+  }).catch(function(error) {
+    console.log('❌ Error al registrar Service Worker:', error);
+  });
+}
+</script>
+
 </body>
 </html>

@@ -6,7 +6,6 @@
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
 
-<!-- Preconnect para performance -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -130,30 +129,96 @@ body {
   padding: 8px 0;
 }
 
-/* BARRA ECONÓMICA */
+/* ============================================================
+   BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
+   ============================================================ */
+.clima-bar {
+  background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  color: white;
+  padding: 10px 0;
+  font-size: 12px;
+  font-weight: 500;
+  overflow: hidden;
+  position: relative;
+}
+.clima-bar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: linear-gradient(90deg, #0f172a, transparent);
+  z-index: 2;
+}
+.clima-bar::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  background: linear-gradient(270deg, #0f172a, transparent);
+  z-index: 2;
+}
+.clima-scroll {
+  display: flex;
+  animation: scroll 40s linear infinite;
+  white-space: nowrap;
+}
+.clima-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 24px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.clima-item i {
+  color: #fbbf24;
+  font-size: 14px;
+}
+.clima-item .temp {
+  color: #fbbf24;
+  font-weight: 700;
+  font-size: 13px;
+}
+.clima-item .city {
+  opacity: 0.9;
+}
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.clima-bar:hover .clima-scroll {
+  animation-play-state: paused;
+}
+
+/* ============================================================
+   BARRA ECONÓMICA
+   ============================================================ */
 .econ-bar {
-  background: var(--brand-primary);
+  background: var(--brand-accent);
   color: white;
   padding: 8px 24px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
 }
 .econ-content {
   max-width: 1280px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: 40px;
   flex-wrap: wrap;
 }
 .econ-item {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 .econ-item strong {
-  color: #fbbf24;
-  font-weight: 700;
+  color: #fef3c7;
+  font-weight: 800;
 }
 
 /* NAVEGACIÓN */
@@ -196,7 +261,7 @@ body {
   color: white;
 }
 
-/* CARRUSEL PROFESIONAL */
+/* CARRUSEL */
 .carousel-section { 
   margin: 24px auto;
   max-width: 1280px;
@@ -320,7 +385,7 @@ body {
   border-radius: 5px;
 }
 
-/* LAYOUT PRINCIPAL */
+/* LAYOUT */
 .main-wrapper {
   max-width: 1280px;
   margin: 0 auto;
@@ -330,7 +395,6 @@ body {
   gap: 40px;
 }
 
-/* SECCIÓN NOTICIAS */
 .section-title {
   font-family: var(--font-serif);
   font-size: 24px;
@@ -342,7 +406,7 @@ body {
   display: inline-block;
 }
 
-/* NOTICIA DESTACADA */
+/* NOTICIAS */
 .breaking-card {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -419,7 +483,6 @@ body {
   font-weight: 500;
 }
 
-/* GRID NOTICIAS */
 .news-grid {
   display: flex;
   flex-direction: column;
@@ -578,7 +641,6 @@ body {
   margin-top: 4px;
 }
 
-/* NEWSLETTER */
 .newsletter-box {
   background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
   color: white;
@@ -617,7 +679,6 @@ body {
 }
 .newsletter-btn:hover { background: #b91c1c; }
 
-/* PAYPAL SIDEBAR - MÉTODO DE SUSCRIPCIÓN CORREGIDO */
 .paypal-box {
   background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
   color: white;
@@ -677,7 +738,103 @@ body {
   background: rgba(255,255,255,0.25);
 }
 
-/* STICKY CTA BOTTOM */
+/* ============================================================
+   REPRODUCTOR DE RADIO FLOTANTE - MEJORADO
+   ============================================================ */
+.radio-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--brand-primary) 0%, #1e293b 100%);
+  color: white;
+  padding: 16px 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  border: 1px solid rgba(255,255,255,0.1);
+  transition: all 0.3s;
+}
+.radio-player:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.radio-icon-btn {
+  width: 48px;
+  height: 48px;
+  background: var(--brand-accent);
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.radio-icon-btn:hover {
+  transform: scale(1.1);
+  background: #b91c1c;
+}
+.radio-icon-btn.playing {
+  background: #10b981;
+  animation: pulse-radio 2s infinite;
+}
+@keyframes pulse-radio {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+}
+.radio-info {
+  flex: 1;
+  min-width: 0;
+}
+.radio-station-name {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#radioSelector {
+  width: 100%;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  outline: none;
+}
+#radioSelector option {
+  background: #1e293b;
+  color: white;
+}
+.radio-status {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+.radio-close {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.6);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px;
+  transition: all 0.2s;
+}
+.radio-close:hover {
+  color: white;
+}
+
+/* STICKY CTA */
 .premium-sticky {
   position: fixed;
   bottom: -100px;
@@ -781,13 +938,11 @@ body {
   border-radius: 4px;
   margin-bottom: 8px;
 }
-.skeleton-text.short { width: 60%; }
 @keyframes loading {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
-/* LOAD MORE */
 .load-more-container { 
   text-align: center; 
   padding: 40px 0; 
@@ -905,6 +1060,12 @@ body {
   .breaking-card { grid-template-columns: 1fr; }
   .news-card { grid-template-columns: 200px 1fr; }
   .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  .radio-player {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    min-width: auto;
+  }
 }
 
 @media (max-width: 640px) {
@@ -917,6 +1078,7 @@ body {
   .sticky-content { flex-direction: column; text-align: center; }
   .footer-grid { grid-template-columns: 1fr; }
   .footer-top { flex-direction: column; text-align: center; }
+  .clima-item { padding: 0 16px; }
 }
 </style>
 </head>
@@ -941,6 +1103,15 @@ body {
   </div>
 </header>
 
+<!-- ============================================================
+     BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
+     ============================================================ -->
+<div class="clima-bar" id="climaBar">
+  <div class="clima-scroll" id="climaScroll">
+    <!-- Se llena dinámicamente con JavaScript -->
+  </div>
+</div>
+
 <div class="econ-bar">
   <div class="econ-content">
     <div class="econ-item"><i class="fas fa-dollar-sign"></i> USD: <strong>C$36.62</strong></div>
@@ -964,9 +1135,7 @@ body {
 
 <section class="carousel-section">
   <div class="carousel-container" id="carousel">
-    <div class="carousel-track" id="carouselTrack">
-      <!-- Se llena dinámicamente -->
-    </div>
+    <div class="carousel-track" id="carouselTrack"></div>
     <button class="carousel-btn prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
     <button class="carousel-btn next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
     <div class="carousel-dots" id="carouselDots"></div>
@@ -984,7 +1153,7 @@ body {
           <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
           <div class="skeleton-text"></div>
           <div class="skeleton-text"></div>
-          <div class="skeleton-text short"></div>
+          <div class="skeleton-text" style="width: 60%;"></div>
         </div>
       </div>
       <div class="skeleton-card">
@@ -1021,29 +1190,43 @@ body {
       </form>
     </div>
     
-    <!-- PAYPAL: MÉTODO DE SUSCRIPCIÓN CORREGIDO -->
     <div class="paypal-box">
       <h4><i class="fab fa-paypal"></i> Apóyanos</h4>
       <p>Tu contribución mantiene este medio independiente</p>
-      
-      <!-- Botón de Donación -->
       <a href="https://paypal.me/NicaraguaInformate" target="_blank" class="paypal-btn">
         <i class="fab fa-paypal"></i> Donar con PayPal
       </a>
-      
-      <!-- Botón de Suscripción Mensual (PayPal.Me con monto) -->
       <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="paypal-sub">
         <i class="fas fa-star"></i> Suscripción $5/mes
       </a>
-      
-      <p style="font-size: 11px; opacity: 0.8; margin-top: 12px;">
-        <i class="fas fa-shield-alt"></i> Pago seguro procesado por PayPal
-      </p>
     </div>
   </aside>
 </div>
 
-<!-- STICKY CTA BOTTOM CON PAYPAL -->
+<!-- ============================================================
+     REPRODUCTOR DE RADIO FLOTANTE
+     ============================================================ -->
+<div class="radio-player" id="radioPlayer">
+  <button class="radio-icon-btn" id="radioPlayBtn" onclick="toggleRadio()">
+    <i class="fas fa-play" id="radioPlayIcon"></i>
+  </button>
+  <div class="radio-info">
+    <div class="radio-station-name" id="radioStationName">Radio Ya 99.1 FM</div>
+    <select id="radioSelector" onchange="cambiarRadio()">
+      <option value="https://stream.zeno.fm/axr92qawesmtv">Radio Ya 99.1 FM</option>
+      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">La Primerísima</option>
+      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">Futura 91.3 FM</option>
+      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">Radio ABC</option>
+      <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+      <option value="https://stream.zeno.fm/7f7pj2jtpazuv">Radio Sandino</option>
+      <option value="https://stream.zeno.fm/8wqtdg30k8quv">La Pachanguera</option>
+    </select>
+    <div class="radio-status" id="radioStatus">Click para reproducir</div>
+  </div>
+  <button class="radio-close" onclick="cerrarRadio()"><i class="fas fa-times"></i></button>
+</div>
+
+<!-- STICKY CTA -->
 <div class="premium-sticky" id="premiumSticky">
   <div class="sticky-content">
     <div class="sticky-text">
@@ -1139,6 +1322,149 @@ let db = null;
 let carouselIndex = 0;
 let carouselInterval = null;
 
+// ============================================================
+// CLIMA DE TODAS LAS CIUDADES DE NICARAGUA
+// ============================================================
+const ciudadesNicaragua = [
+  { nombre: 'Managua', temp: 32, icono: 'fa-sun' },
+  { nombre: 'León', temp: 34, icono: 'fa-sun' },
+  { nombre: 'Granada', temp: 33, icono: 'fa-sun' },
+  { nombre: 'Masaya', temp: 31, icono: 'fa-cloud-sun' },
+  { nombre: 'Rivas', temp: 30, icono: 'fa-sun' },
+  { nombre: 'Estelí', temp: 26, icono: 'fa-cloud' },
+  { nombre: 'Chinandega', temp: 35, icono: 'fa-sun' },
+  { nombre: 'Jinotega', temp: 24, icono: 'fa-cloud' },
+  { nombre: 'Matagalpa', temp: 25, icono: 'fa-cloud' },
+  { nombre: 'Bluefields', temp: 29, icono: 'fa-cloud-rain' },
+  { nombre: 'Puerto Cabezas', temp: 28, icono: 'fa-cloud-rain' },
+  { nombre: 'Juigalpa', temp: 32, icono: 'fa-sun' },
+  { nombre: 'Boaco', temp: 30, icono: 'fa-cloud-sun' },
+  { nombre: 'Somoto', temp: 27, icono: 'fa-cloud' },
+  { nombre: 'Ocotal', temp: 28, icono: 'fa-sun' }
+];
+
+function initClima() {
+  const scroll = document.getElementById('climaScroll');
+  let html = '';
+  
+  // Duplicar para efecto infinito
+  [...ciudadesNicaragua, ...ciudadesNicaragua].forEach(ciudad => {
+    html += `
+      <div class="clima-item">
+        <i class="fas ${ciudad.icono}"></i>
+        <span class="city">${ciudad.nombre}:</span>
+        <span class="temp">${ciudad.temp}°C</span>
+      </div>
+    `;
+  });
+  
+  scroll.innerHTML = html;
+  
+  // Actualizar temperaturas simuladas cada 5 minutos
+  setInterval(() => {
+    document.querySelectorAll('.clima-item .temp').forEach(el => {
+      const base = parseInt(el.textContent);
+      const variacion = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
+      el.textContent = (base + variacion) + '°C';
+    });
+  }, 5 * 60 * 1000);
+}
+
+// ============================================================
+// RADIO FLOTANTE
+// ============================================================
+let radioAudio = null;
+let radioPlaying = false;
+
+function toggleRadio() {
+  if (radioPlaying) {
+    pauseRadio();
+  } else {
+    playRadio();
+  }
+}
+
+function playRadio() {
+  const url = document.getElementById('radioSelector').value;
+  const btn = document.getElementById('radioPlayBtn');
+  const icon = document.getElementById('radioPlayIcon');
+  const status = document.getElementById('radioStatus');
+  
+  if (!radioAudio) {
+    radioAudio = new Audio();
+    radioAudio.crossOrigin = 'anonymous';
+  }
+  
+  // Limpiar anterior
+  radioAudio.pause();
+  radioAudio.src = '';
+  
+  radioAudio.src = url;
+  radioAudio.volume = 0.8;
+  
+  status.textContent = 'Conectando...';
+  
+  radioAudio.play()
+    .then(() => {
+      radioPlaying = true;
+      btn.classList.add('playing');
+      icon.className = 'fas fa-pause';
+      status.textContent = '🔴 EN VIVO';
+      
+      // Media Session API para controles en segundo plano
+      if ('mediaSession' in navigator) {
+        const station = document.getElementById('radioSelector').options[document.getElementById('radioSelector').selectedIndex].text;
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: station,
+          artist: 'Nicaragua Informate',
+          artwork: [{ src: '/logo.png', sizes: '512x512', type: 'image/png' }]
+        });
+        navigator.mediaSession.setActionHandler('play', playRadio);
+        navigator.mediaSession.setActionHandler('pause', pauseRadio);
+      }
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      status.textContent = 'Error - Intenta otra emisora';
+      setTimeout(() => {
+        status.textContent = 'Click para reproducir';
+      }, 3000);
+    });
+  
+  // Manejar errores
+  radioAudio.onerror = () => {
+    status.textContent = 'Error de conexión';
+    radioPlaying = false;
+    btn.classList.remove('playing');
+    icon.className = 'fas fa-play';
+  };
+}
+
+function pauseRadio() {
+  if (radioAudio) {
+    radioAudio.pause();
+  }
+  radioPlaying = false;
+  document.getElementById('radioPlayBtn').classList.remove('playing');
+  document.getElementById('radioPlayIcon').className = 'fas fa-play';
+  document.getElementById('radioStatus').textContent = 'Pausado - Click para continuar';
+}
+
+function cambiarRadio() {
+  const select = document.getElementById('radioSelector');
+  document.getElementById('radioStationName').textContent = select.options[select.selectedIndex].text;
+  
+  if (radioPlaying) {
+    playRadio();
+  }
+}
+
+function cerrarRadio() {
+  pauseRadio();
+  document.getElementById('radioPlayer').style.display = 'none';
+  localStorage.setItem('radioClosed', 'true');
+}
+
 // UTILIDADES
 const utils = {
   formatDate: (fecha) => {
@@ -1169,16 +1495,22 @@ const utils = {
 
 // INICIALIZACIÓN
 function init() {
+  initClima();
   initFirebase();
   initEventListeners();
   
-  // Mostrar sticky después de 8 segundos
+  // Restaurar radio si no fue cerrado
+  if (localStorage.getItem('radioClosed') === 'true') {
+    document.getElementById('radioPlayer').style.display = 'none';
+  }
+  
+  // Mostrar sticky después de 10 segundos
   setTimeout(() => {
     const sticky = document.getElementById('premiumSticky');
     if (sticky && !localStorage.getItem('stickyClosed')) {
       sticky.classList.add('visible');
     }
-  }, 8000);
+  }, 10000);
 }
 
 // FIREBASE
@@ -1251,9 +1583,7 @@ function startCarousel() {
 
 function nextSlide() {
   const slides = document.querySelectorAll('.carousel-slide');
-  const dots = document.querySelectorAll('.dot');
   if (!slides.length) return;
-  
   carouselIndex = (carouselIndex + 1) % slides.length;
   updateCarousel();
 }
@@ -1261,7 +1591,6 @@ function nextSlide() {
 function prevSlide() {
   const slides = document.querySelectorAll('.carousel-slide');
   if (!slides.length) return;
-  
   carouselIndex = (carouselIndex - 1 + slides.length) % slides.length;
   updateCarousel();
 }
@@ -1276,7 +1605,6 @@ function goToSlide(index) {
 function updateCarousel() {
   const track = document.getElementById('carouselTrack');
   const dots = document.querySelectorAll('.dot');
-  
   track.style.transform = `translateX(-${carouselIndex * 100}%)`;
   dots.forEach((dot, i) => dot.classList.toggle('active', i === carouselIndex));
 }

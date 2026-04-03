@@ -1,5 +1,5 @@
-const STATIC_CACHE = 'static-v7';
-const IMAGE_CACHE = 'images-v7';
+const STATIC_CACHE = 'static-v8';
+const IMAGE_CACHE = 'images-v8';
 
 const STATIC_ASSETS = ['/', '/offline.html', '/logo.png', '/manifest.json'];
 

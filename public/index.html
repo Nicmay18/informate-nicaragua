@@ -2036,8 +2036,8 @@ document.addEventListener('DOMContentLoaded', init);
 <!-- SERVICE WORKER CON VERSIONADO -->
 <script>
 if ('serviceWorker' in navigator) {
-  // Versión 2.0 para forzar actualización del caché
-  navigator.serviceWorker.register('/sw.js?v=2.0').then(function(registration) {
+  // Versión 3.0 para forzar actualización del caché
+  navigator.serviceWorker.register('/sw.js?v=3.0').then(function(registration) {
     console.log('✅ Service Worker registrado con éxito');
     
     // Forzar actualización si hay una nueva versión

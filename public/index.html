@@ -6,6 +6,11 @@
 <title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
 <meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
 
+<!-- iOS Meta Tags -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nicaragua Informate">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
@@ -25,6 +30,49 @@
   --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.15);
   --font-serif: 'Merriweather', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+/* MODO OSCURO */
+[data-theme='dark'] {
+  --brand-primary: #1e293b;
+  --surface: #1e1e1e;
+  --surface-alt: #121212;
+  --text-primary: #e0e0e0;
+  --text-secondary: #9ca3af;
+  --border: #333333;
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
+  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.4);
+}
+
+[data-theme='dark'] body {
+  background: var(--surface-alt);
+  color: var(--text-primary);
+}
+
+[data-theme='dark'] .topbar,
+[data-theme='dark'] .menu-nav,
+[data-theme='dark'] .footer {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme='dark'] .news-card,
+[data-theme='dark'] .breaking-card,
+[data-theme='dark'] .sidebar-box,
+[data-theme='dark'] .newsletter-box,
+[data-theme='dark'] .carousel-container {
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+[data-theme='dark'] .skeleton-card {
+  background: var(--surface);
+}
+
+[data-theme='dark'] .skeleton-img,
+[data-theme='dark'] .skeleton-text {
+  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
+  background-size: 200% 100%;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -855,6 +903,42 @@ body {
   z-index: 1000;
   transition: bottom 0.5s ease;
 }
+
+/* BOTÓN MODO OSCURO FLOTANTE */
+#darkModeToggle {
+  position: fixed;
+  bottom: 80px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--brand-secondary);
+  color: white;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+#darkModeToggle:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
+#darkModeToggle:active {
+  transform: translateY(-2px) scale(0.95);
+}
+
+[data-theme='dark'] #darkModeToggle {
+  background: #fbbf24;
+  color: #1e293b;
+}
+
 .premium-sticky.visible { bottom: 0; }
 .sticky-content {
   max-width: 1280px;
@@ -1077,16 +1161,232 @@ body {
 }
 
 @media (max-width: 640px) {
-  .topbar-content { flex-direction: column; gap: 12px; }
+  /* HEADER MÓVIL */
+  .topbar { padding: 12px 16px; }
+  .topbar-content { flex-direction: column; gap: 8px; align-items: stretch; }
+  .logo { justify-content: center; }
+  .logo img { width: 36px; height: 36px; }
+  .logo-title { font-size: 20px; }
+  .logo-subtitle { font-size: 11px; }
   .search-wrapper { width: 100%; }
-  .carousel-container { height: 400px; }
-  .carousel-title { font-size: 20px; }
-  .news-card { grid-template-columns: 1fr; }
-  .card-image-wrapper { aspect-ratio: 16/9; }
-  .sticky-content { flex-direction: column; text-align: center; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-top { flex-direction: column; text-align: center; }
-  .clima-item { padding: 0 16px; }
+  #searchInput { font-size: 16px; padding: 10px 16px 10px 40px; }
+  
+  /* CLIMA MÓVIL - MÁS GRANDE Y LEGIBLE */
+  .clima-bar { 
+    padding: 12px 0; 
+    font-size: 13px;
+  }
+  .clima-item { 
+    padding: 0 20px;
+    gap: 8px;
+  }
+  .clima-item .temp {
+    font-size: 14px;
+  }
+  .clima-item i {
+    font-size: 16px;
+  }
+  
+  /* BARRA ECONÓMICA MÓVIL */
+  .econ-bar {
+    padding: 10px 16px;
+    font-size: 12px;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .econ-content {
+    gap: 20px;
+    justify-content: flex-start;
+  }
+  .econ-item {
+    flex-shrink: 0;
+  }
+  
+  /* MENÚ MÓVIL - SCROLL HORIZONTAL */
+  .menu-nav { 
+    padding: 0 16px;
+  }
+  .menu-content {
+    gap: 8px;
+    padding: 8px 0;
+  }
+  .menu-btn {
+    font-size: 12px;
+    padding: 10px 16px;
+    white-space: nowrap;
+  }
+  
+  /* CARRUSEL MÓVIL - MÁS COMPACTO */
+  .carousel-section {
+    margin: 16px auto;
+    padding: 0 16px;
+  }
+  .carousel-container { 
+    height: 380px;
+    border-radius: 12px;
+  }
+  .carousel-slide {
+    grid-template-columns: 1fr;
+    grid-template-rows: 60% 40%;
+  }
+  .carousel-image {
+    height: 100%;
+  }
+  .carousel-content {
+    padding: 20px;
+    justify-content: flex-start;
+  }
+  .carousel-badge {
+    font-size: 10px;
+    padding: 4px 10px;
+    margin-bottom: 12px;
+  }
+  .carousel-title { 
+    font-size: 18px;
+    line-height: 1.3;
+    -webkit-line-clamp: 3;
+  }
+  .carousel-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  .carousel-btn.prev { left: 12px; }
+  .carousel-btn.next { right: 12px; }
+  .carousel-dots {
+    bottom: 12px;
+    gap: 6px;
+  }
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+  .dot.active {
+    width: 24px;
+  }
+  
+  /* NOTICIAS MÓVIL */
+  .main-wrapper {
+    padding: 0 16px 40px;
+  }
+  .section-title {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .breaking-card {
+    grid-template-columns: 1fr;
+    border-radius: 12px;
+  }
+  .breaking-card .card-image {
+    min-height: 200px;
+  }
+  .breaking-body {
+    padding: 20px;
+  }
+  .breaking-body h2 {
+    font-size: 22px;
+  }
+  .news-card { 
+    grid-template-columns: 1fr;
+    padding: 16px;
+    border-radius: 10px;
+  }
+  .card-image-wrapper { 
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+  }
+  .card-body {
+    gap: 10px;
+  }
+  .tag {
+    font-size: 10px;
+    padding: 4px 8px;
+  }
+  .news-card h3 {
+    font-size: 16px;
+  }
+  .news-excerpt {
+    font-size: 13px;
+  }
+  .card-footer {
+    font-size: 11px;
+  }
+  
+  /* RADIO MÓVIL - MÁS COMPACTO */
+  .radio-player {
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    min-width: auto;
+    flex-wrap: wrap;
+  }
+  .radio-icon-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 16px;
+  }
+  .radio-info {
+    flex: 1;
+    min-width: 0;
+  }
+  .radio-station-name {
+    font-size: 13px;
+  }
+  #radioSelector {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+  .radio-status {
+    font-size: 10px;
+  }
+  .radio-close {
+    font-size: 14px;
+  }
+  
+  /* STICKY CTA MÓVIL */
+  .sticky-content { 
+    flex-direction: column; 
+    text-align: center;
+    gap: 16px;
+  }
+  .sticky-text h5 {
+    font-size: 15px;
+  }
+  .sticky-text p {
+    font-size: 12px;
+  }
+  .sticky-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  .sticky-btn {
+    width: 100%;
+    justify-content: center;
+    font-size: 13px;
+    padding: 12px 20px;
+  }
+  
+  /* FOOTER MÓVIL */
+  .footer {
+    padding: 40px 16px 20px;
+  }
+  .footer-grid { 
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .footer-top { 
+    flex-direction: column; 
+    text-align: center;
+    gap: 16px;
+  }
+  .footer-brand h3 {
+    font-size: 20px;
+  }
+  .footer-social {
+    justify-content: center;
+  }
 }
 </style>
 </head>
@@ -1211,9 +1511,7 @@ body {
   </aside>
 </div>
 
-<!-- ============================================================
-     REPRODUCTOR DE RADIO FLOTANTE
-     ============================================================ -->
+<!-- RADIO FLOTANTE -->
 <div class="radio-player" id="radioPlayer">
   <button class="radio-icon-btn" id="radioPlayBtn" onclick="toggleRadio()">
     <i class="fas fa-play" id="radioPlayIcon"></i>
@@ -1233,6 +1531,11 @@ body {
   </div>
   <button class="radio-close" onclick="cerrarRadio()"><i class="fas fa-times"></i></button>
 </div>
+
+<!-- BOTÓN MODO OSCURO -->
+<button id="darkModeToggle" aria-label="Cambiar modo oscuro">
+  <i class="fas fa-moon"></i>
+</button>
 
 <!-- STICKY CTA -->
 <div class="premium-sticky" id="premiumSticky">
@@ -1765,6 +2068,42 @@ function cerrarSticky() {
   document.getElementById('premiumSticky').classList.remove('visible');
   localStorage.setItem('stickyClosed', 'true');
 }
+
+// ============================================================
+// MODO OSCURO
+// ============================================================
+const darkModeToggle = document.getElementById('darkModeToggle');
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+  }
+}
+
+// Cargar tema guardado o detectar preferencia del sistema
+const savedTheme = localStorage.getItem('theme');
+const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
+applyTheme(initialTheme);
+
+// Toggle modo oscuro
+darkModeToggle.addEventListener('click', () => {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('theme', newTheme);
+  applyTheme(newTheme);
+});
+
+// Detectar cambios en preferencia del sistema
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+  if (!localStorage.getItem('theme')) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
+});
 
 document.addEventListener('DOMContentLoaded', init);
 </script>

@@ -925,6 +925,27 @@
                 </label>
               </div>
 
+              <!-- SELECTOR DE TIPO DE COLLAGE -->
+              <div class="form-group" style="margin-bottom: 24px;">
+                <label class="form-label">🎨 Estilo del Collage</label>
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                  <label class="checkbox-wrapper" style="flex: 1; min-width: 200px; cursor: pointer;">
+                    <input type="radio" name="tipoCollage" value="normal" checked onchange="window.tipoCollageSeleccionado = 'normal'">
+                    <div class="checkbox-content">
+                      <h4>📰 Noticia Normal</h4>
+                      <p>Marco profesional con logo y fecha</p>
+                    </div>
+                  </label>
+                  <label class="checkbox-wrapper" style="flex: 1; min-width: 200px; cursor: pointer; background: rgba(45, 45, 45, 0.3); border-color: rgba(100, 100, 100, 0.4);">
+                    <input type="radio" name="tipoCollage" value="luto" onchange="window.tipoCollageSeleccionado = 'luto'">
+                    <div class="checkbox-content">
+                      <h4 style="color: #9ca3af;">🎗️ Noticia de Luto</h4>
+                      <p style="color: #9ca3af;">Con cinta de pesar negra</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
               <!-- BOTONES -->
               <div style="display:flex;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;">
                 <button type="submit" class="btn btn-primary btn-lg" id="btnGuardar">
@@ -1257,6 +1278,9 @@
     let noticiaEditando = null;
     let lastRefresh = 0;
     const MAX_TOASTS = 3;
+    
+    // Variable global para el tipo de collage seleccionado
+    window.tipoCollageSeleccionado = 'normal';
 
     // ==========================================
     // UTILIDADES

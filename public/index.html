@@ -1310,6 +1310,7 @@ body {
 </footer>
 
 <script>
+// VERSION: 2026-04-02-PREMIUM-BADGE
 // CONFIGURACIÓN
 const CONFIG = {
   NOTICIAS_POR_PAGINA: 10,
@@ -1613,6 +1614,10 @@ function renderizarNoticias() {
   let filtradas = categoriaActual === 'Todas' 
     ? noticias 
     : noticias.filter(n => n.categoria === categoriaActual);
+  
+  console.log('🔍 RENDERIZANDO NOTICIAS - VERSION PREMIUM BADGE');
+  console.log('Total noticias:', noticias.length);
+  console.log('Noticias premium:', noticias.filter(n => n.premium === true).length);
   
   if (!filtradas.length) {
     grid.innerHTML = '<p style="text-align:center;color:#64748b;padding:40px;">No hay noticias en esta categoría</p>';

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#c41e3a">
-  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v3.1-jsDelivr]">
+  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v3.2-fixIDs]">
   <meta name="keywords" content="noticias nicaragua, sucesos, nacionales, deportes, internacionales, espectáculo, premium, managua, león, granada">
   <meta name="author" content="Nicaragua Informate">
   <meta name="robots" content="index, follow">
@@ -2931,7 +2931,7 @@
           const combined = [...related, ...trending];
           
           container.innerHTML = combined.map(n => `
-            <article class="related-card" onclick="app.openArticle('\${n.id}')">
+            <article class="related-card" onclick="app.openArticle('${n.id}')">
               <div class="related-image">
                 <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
               </div>
@@ -2950,18 +2950,28 @@
 
         renderHero() {
           const hero = data.news[0];
+          if (!hero) return;
+          
+          // Actualizar contenido
           document.getElementById('heroImg').src = this.getImageUrl(hero.image, 800, 600);
           document.getElementById('heroCat').textContent = hero.category;
           document.getElementById('heroTitle').textContent = hero.title;
           document.getElementById('heroExcerpt').textContent = hero.excerpt;
           document.getElementById('heroTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(hero.date)}`;
           
+          // Actualizar onclick con ID correcto
+          const heroMain = document.querySelector('.hero-main');
+          if (heroMain) {
+            heroMain.onclick = () => app.openArticle(hero.id);
+            heroMain.setAttribute('aria-label', `Leer ${hero.title}`);
+          }
+          
           // Sidebar
           const sidebar = document.getElementById('heroSidebar');
           const lateral = data.news.slice(1, 4);
           
           sidebar.innerHTML = lateral.map(n => `
-            <article class="side-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+            <article class="side-card" onclick="app.openArticle('${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
               <div class="side-card-image">
                 <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
               </div>
@@ -3011,7 +3021,7 @@
           }
           
           grid.innerHTML = filtered.map(n => `
-            <article class="news-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+            <article class="news-card" onclick="app.openArticle('${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
               <div class="news-card-image">
                 <img src="${this.getImageUrl(n.image, 400, 300)}" alt="" loading="lazy">
                 <span class="news-card-category" style="background: ${data.categories[n.category]?.color || '#000'}">${n.category}</span>
@@ -3038,7 +3048,7 @@
           const ranks = ['gold', 'silver', 'bronze', 'normal', 'normal'];
           
           list.innerHTML = trending.map((n, i) => `
-            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+            <div class="trending-item" onclick="app.openArticle('${n.id}')">
               <div class="trending-rank ${ranks[i]}">${i + 1}</div>
               <div class="trending-content">
                 <div class="trending-title">${n.title}</div>
@@ -3059,7 +3069,7 @@
             const views = data.getViews(n.id);
             const isHot = views > 20;
             return `
-            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+            <div class="trending-item" onclick="app.openArticle('${n.id}')">
               <div style="width: 60px; height: 60px; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; position: relative;">
                 <img src="${this.getImageUrl(n.image, 100, 100)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
                 ${isHot ? `<div style="position: absolute; top: 2px; right: 2px; background: #dc2626; color: white; font-size: 0.625rem; padding: 1px 4px; border-radius: 4px; font-weight: 700;"><i class="fas fa-fire"></i></div>` : ''}

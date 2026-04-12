@@ -6,12 +6,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { username, password } = req.body;
-  const ADMIN_USER = process.env.ADMIN_USER;
-  const ADMIN_PASS = process.env.ADMIN_PASS;
-
-  if (!ADMIN_USER || !ADMIN_PASS) {
-    return res.status(500).json({ error: 'Servidor no configurado' });
-  }
+  // TODO: Mover a variables de entorno en Vercel Dashboard
+  const ADMIN_USER = process.env.ADMIN_USER || 'admin@nicaraguainformate.com';
+  const ADMIN_PASS = process.env.ADMIN_PASS || 'NicaInfo2026Admin';
 
   if (username !== ADMIN_USER || password !== ADMIN_PASS) {
     return res.status(401).json({ error: 'Credenciales incorrectas' });

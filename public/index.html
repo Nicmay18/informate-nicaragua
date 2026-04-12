@@ -2651,20 +2651,21 @@
         async init() {
           this.applyTheme(data.state.theme);
           
-          // Intentar cargar desde Firebase primero
-          const firebaseLoaded = await data.loadFromFirebase();
+          // Inicializar arrays vacíos (sin noticias de ejemplo)
+          data.news = [];
           
-          if (!firebaseLoaded || data.news.length === 0) {
-            // Usar datos de ejemplo como fallback
-            data.news = [...data.newsExample];
-            this.renderAll();
+          // Intentar cargar desde Firebase
+          await data.loadFromFirebase();
+          
+          // Si no hay noticias, mostrar mensaje en lugar de ejemplos
+          if (data.news.length === 0) {
+            this.showToast('Cargando noticias...', 'info');
           }
           
-          this.initWeather(); // Inicializar clima en tiempo real
+          this.initWeather();
           this.setupEventListeners();
           this.startClock();
           
-          // Simular carga progresiva
           setTimeout(() => {
             document.body.classList.add('loaded');
           }, 100);

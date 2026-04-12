@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#c41e3a">
-  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v2.4]">
+  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v3.1-jsDelivr]">
   <meta name="keywords" content="noticias nicaragua, sucesos, nacionales, deportes, internacionales, espectáculo, premium, managua, león, granada">
   <meta name="author" content="Nicaragua Informate">
   <meta name="robots" content="index, follow">
@@ -2616,22 +2616,27 @@
           }, 100);
         },
 
-        // Helper para obtener URL de imagen - igual que el admin
+        // Helper para obtener URL de imagen - jsDelivr primero
         getImageUrl(image, width = 400, height = 300) {
-          // Si es string válido (URL de Firebase), usarlo directamente
-          if (typeof image === 'string' && image.length > 0 && image !== 'NaN' && image.startsWith('http')) {
+          // Si no hay imagen, usar picsum
+          if (!image || image === 'NaN') {
+            return `https://picsum.photos/seed/1/${width}/${height}`;
+          }
+          
+          // Si es URL de Firebase (http), usar directamente
+          if (typeof image === 'string' && image.startsWith('http')) {
             return image;
           }
           
-          // Generar seed para picsum fallback
-          let seed = 1;
-          if (typeof image === 'number') {
-            seed = image;
-          } else if (typeof image === 'string' && image.length > 0) {
-            seed = image.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % 1000;
+          // Si parece nombre de archivo, buscar en jsDelivr (GitHub)
+          if (typeof image === 'string' && image.length > 0) {
+            const fileName = image.split('/').pop().split('\\').pop();
+            // Intentar jsDelivr con el nombre limpio
+            return `https://cdn.jsdelivr.net/gh/Nicmay18/informate-nicaragua@main/images/${fileName}`;
           }
           
-          // Fallback a picsum
+          // Generar seed para picsum fallback
+          const seed = typeof image === 'number' ? image : 1;
           return `https://picsum.photos/seed/${seed}/${width}/${height}`;
         },
 

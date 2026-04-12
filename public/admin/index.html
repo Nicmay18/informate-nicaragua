@@ -2079,6 +2079,86 @@ INFORMACIÓN BRUTA: ${notas}`;
     }
 
     // ==========================================
+    // FORMATEAR TEXTO PLANO A HTML
+    // ==========================================
+    function formatearTexto(textoPlano) {
+      if (!textoPlano) return '';
+      
+      // Normalizar saltos de línea
+      let texto = textoPlano.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      
+      // Dividir en bloques (párrafos separados por doble salto)
+      const bloques = texto.split(/\n\s*\n/);
+      let resultado = [];
+      let listaActual = [];
+      
+      bloques.forEach(bloque => {
+        const lineas = bloque.trim().split('\n').filter(l => l.trim());
+        
+        lineas.forEach((linea, index) => {
+          linea = linea.trim();
+          
+          // Detectar ## Título -> <h2>
+          if (linea.startsWith('## ')) {
+            // Cerrar lista si hay una abierta
+            if (listaActual.length > 0) {
+              resultado.push('<ul>' + listaActual.map(item => `<li>${item}</li>`).join('') + '</ul>');
+              listaActual = [];
+            }
+            resultado.push(`<h2>${procesarInline(linea.replace('## ', ''))}</h2>`);
+          }
+          // Detectar ### Subtítulo -> <h3>
+          else if (linea.startsWith('### ')) {
+            if (listaActual.length > 0) {
+              resultado.push('<ul>' + listaActual.map(item => `<li>${item}</li>`).join('') + '</ul>');
+              listaActual = [];
+            }
+            resultado.push(`<h3>${procesarInline(linea.replace('### ', ''))}</h3>`);
+          }
+          // Detectar - item o * item -> lista
+          else if (linea.match(/^[-\*]\s/)) {
+            const item = procesarInline(linea.replace(/^[-\*]\s*/, ''));
+            listaActual.push(item);
+          }
+          // Detectar 1. item -> lista numerada (simplificado)
+          else if (linea.match(/^\d+\.\s/)) {
+            if (listaActual.length > 0) {
+              resultado.push('<ul>' + listaActual.map(i => `<li>${i}</li>`).join('') + '</ul>');
+              listaActual = [];
+            }
+            const item = procesarInline(linea.replace(/^\d+\.\s*/, ''));
+            resultado.push(`<p>${linea}</p>`); // Por ahora como párrafo numerado
+          }
+          // Párrafo normal
+          else {
+            // Cerrar lista si hay una abierta
+            if (listaActual.length > 0) {
+              resultado.push('<ul>' + listaActual.map(item => `<li>${item}</li>`).join('') + '</ul>');
+              listaActual = [];
+            }
+            resultado.push(`<p>${procesarInline(linea)}</p>`);
+          }
+        });
+      });
+      
+      // Cerrar lista pendiente al final
+      if (listaActual.length > 0) {
+        resultado.push('<ul>' + listaActual.map(item => `<li>${item}</li>`).join('') + '</ul>');
+      }
+      
+      return resultado.join('\n');
+    }
+    
+    // Procesar negritas **texto**
+    function procesarInline(texto) {
+      // **texto** -> <strong>texto</strong>
+      texto = texto.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+      // __texto__ -> <em>texto</em>
+      texto = texto.replace(/__(.+?)__/g, '<em>$1</em>');
+      return texto;
+    }
+
+    // ==========================================
     // GUARDAR NOTICIA
     // ==========================================
     async function guardarNoticia(e) {
@@ -2123,7 +2203,7 @@ INFORMACIÓN BRUTA: ${notas}`;
         titulo,
         slug,
         categoria, 
-        contenido, 
+        contenido: formatearTexto(contenido), // Convertir a HTML estructurado
         resumen, 
         imagen: imagenUrl,
         collageTipo: tipoCollageActual,

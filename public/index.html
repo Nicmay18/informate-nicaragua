@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#c41e3a">
-  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v3.2-fixIDs]">
+  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium. [v3.3-imgFix+WhatsApp]">
   <meta name="keywords" content="noticias nicaragua, sucesos, nacionales, deportes, internacionales, espectáculo, premium, managua, león, granada">
   <meta name="author" content="Nicaragua Informate">
   <meta name="robots" content="index, follow">
@@ -887,6 +887,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: top center;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -2143,11 +2144,11 @@
             <button class="share-btn" style="background:#1877f2" onclick="app.share('facebook')">
               <i class="fab fa-facebook-f"></i>Facebook
             </button>
-            <button class="share-btn" style="background:#1da1f2" onclick="app.share('twitter')">
-              <i class="fab fa-twitter"></i>Twitter
-            </button>
             <button class="share-btn" style="background:#25d366" onclick="app.share('whatsapp')">
               <i class="fab fa-whatsapp"></i>WhatsApp
+            </button>
+            <button class="share-btn" style="background:#0088cc" onclick="app.share('telegram')">
+              <i class="fab fa-telegram-plane"></i>Telegram
             </button>
             <button class="share-btn" style="background:#64748b" onclick="app.copyLink()">
               <i class="fas fa-link"></i>Copiar
@@ -2223,7 +2224,7 @@
           <li><a href="#" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a></li>
           <li><a href="#" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
           <li><a href="#" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a></li>
-          <li><a href="#" class="footer-link"><i class="fab fa-twitter"></i> X (Twitter)</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -3199,7 +3200,8 @@
           const urls = {
             facebook: `https://facebook.com/sharer/sharer.php?u=${url}`,
             twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
-            whatsapp: `https://wa.me/?text=${text}%20${url}`
+            whatsapp: `https://wa.me/?text=${text}%20${url}`,
+            telegram: `https://t.me/share/url?url=${url}&text=${text}`
           };
           
           window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');

@@ -1,2182 +1,3365 @@
-<!DOCTYPE html>
-<html lang="es">
+   <!DOCTYPE html>
+<html lang="es" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nicaragua Informate - Noticias de Nicaragua al Instante</title>
-<meta name="description" content="Noticias de Nicaragua al momento - Sucesos, deportes, tecnología e internacionales. Tu fuente confiable de información actualizada.">
-
-<!-- iOS Meta Tags -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Nicaragua Informate">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Merriweather:wght@400;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-:root {
-  --brand-primary: #0f172a;
-  --brand-accent: #dc2626;
-  --brand-secondary: #2563eb;
-  --surface: #ffffff;
-  --surface-alt: #f8fafc;
-  --text-primary: #1a1a1a;
-  --text-secondary: #64748b;
-  --border: #e2e8f0;
-  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.15);
-  --font-serif: 'Merriweather', Georgia, serif;
-  --font-sans: 'Inter', system-ui, sans-serif;
-}
-
-/* MODO OSCURO */
-[data-theme='dark'] {
-  --brand-primary: #1e293b;
-  --surface: #1e1e1e;
-  --surface-alt: #121212;
-  --text-primary: #e0e0e0;
-  --text-secondary: #9ca3af;
-  --border: #333333;
-  --shadow: 0 4px 6px -1px rgba(0,0,0,0.3);
-  --shadow-lg: 0 20px 25px -5px rgba(0,0,0,0.4);
-}
-
-[data-theme='dark'] body {
-  background: var(--surface-alt);
-  color: var(--text-primary);
-}
-
-[data-theme='dark'] .topbar,
-[data-theme='dark'] .menu-nav,
-[data-theme='dark'] .footer {
-  background: var(--surface);
-  border-color: var(--border);
-}
-
-[data-theme='dark'] .news-card,
-[data-theme='dark'] .breaking-card,
-[data-theme='dark'] .sidebar-box,
-[data-theme='dark'] .newsletter-box,
-[data-theme='dark'] .carousel-container {
-  background: var(--surface);
-  border-color: var(--border);
-}
-
-[data-theme='dark'] .skeleton-card {
-  background: var(--surface);
-}
-
-[data-theme='dark'] .skeleton-img,
-[data-theme='dark'] .skeleton-text {
-  background: linear-gradient(90deg, #2a2a2a 25%, #3a3a3a 50%, #2a2a2a 75%);
-  background-size: 200% 100%;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { 
-  font-family: var(--font-sans); 
-  background: var(--surface-alt); 
-  color: var(--text-primary);
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-}
-
-/* HEADER */
-.topbar { 
-  background: var(--surface); 
-  border-bottom: 1px solid var(--border);
-  padding: 16px 24px;
-  position: sticky; 
-  top: 0; 
-  z-index: 1000;
-  box-shadow: var(--shadow);
-}
-.topbar-content { 
-  max-width: 1280px; 
-  margin: 0 auto; 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: center; 
-}
-.logo { 
-  display: flex; 
-  align-items: center; 
-  gap: 12px; 
-  text-decoration: none; 
-  color: var(--text-primary);
-}
-.logo img { 
-  width: 42px; 
-  height: 42px; 
-  border-radius: 8px; 
-  object-fit: cover;
-}
-.logo-title { 
-  font-family: var(--font-serif); 
-  font-size: 24px; 
-  font-weight: 900; 
-  color: var(--brand-primary);
-  letter-spacing: -0.5px;
-}
-.logo-subtitle { 
-  font-size: 12px; 
-  color: var(--text-secondary);
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.header-meta {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-.search-wrapper { 
-  position: relative;
-  width: 280px;
-}
-#searchInput { 
-  background: var(--surface-alt); 
-  border: 1px solid var(--border); 
-  padding: 10px 16px 10px 40px; 
-  border-radius: 9999px; 
-  font-size: 14px; 
-  width: 100%;
-  transition: all 0.2s;
-}
-#searchInput:focus { 
-  background: #fff; 
-  border-color: var(--brand-secondary);
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-.search-icon { 
-  position: absolute; 
-  left: 14px; 
-  top: 50%; 
-  transform: translateY(-50%); 
-  color: var(--text-secondary);
-  font-size: 14px;
-}
-#searchResults {
-  position: absolute;
-  top: 110%;
-  left: 0;
-  right: 0;
-  background: white;
-  border-radius: 12px;
-  box-shadow: var(--shadow-lg);
-  max-height: 400px;
-  overflow-y: auto;
-  z-index: 100;
-  display: none;
-  border: 1px solid var(--border);
-  padding: 8px 0;
-}
-
-/* ============================================================
-   BARRA DE CLIMA CON TODAS LAS CIUDADES DE NICARAGUA
-   ============================================================ */
-.clima-bar {
-  background: linear-gradient(90deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
-  color: white;
-  padding: 10px 0;
-  font-size: 12px;
-  font-weight: 500;
-  overflow: hidden;
-  position: relative;
-}
-.clima-bar::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  background: linear-gradient(90deg, #0f172a, transparent);
-  z-index: 2;
-}
-.clima-bar::after {
-  content: '';
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 60px;
-  background: linear-gradient(270deg, #0f172a, transparent);
-  z-index: 2;
-}
-.clima-scroll {
-  display: flex;
-  animation: scroll 40s linear infinite;
-  white-space: nowrap;
-}
-.clima-item {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 24px;
-  border-right: 1px solid rgba(255,255,255,0.1);
-}
-.clima-item i {
-  color: #fbbf24;
-  font-size: 14px;
-}
-.clima-item .temp {
-  color: #fbbf24;
-  font-weight: 700;
-  font-size: 13px;
-}
-.clima-item .city {
-  opacity: 0.9;
-}
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.clima-bar:hover .clima-scroll {
-  animation-play-state: paused;
-}
-
-/* ============================================================
-   BARRA ECONÓMICA
-   ============================================================ */
-.econ-bar {
-  background: var(--brand-accent);
-  color: white;
-  padding: 8px 24px;
-  font-size: 13px;
-  font-weight: 600;
-}
-.econ-content {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-.econ-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.econ-item strong {
-  color: #fef3c7;
-  font-weight: 800;
-}
-
-/* NAVEGACIÓN */
-.menu-nav { 
-  background: var(--brand-primary); 
-  padding: 0 24px;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
-}
-.menu-nav::-webkit-scrollbar { display: none; }
-.menu-content { 
-  max-width: 1280px; 
-  margin: 0 auto; 
-  display: flex; 
-  gap: 4px; 
-  padding: 4px 0;
-  min-width: max-content;
-}
-.menu-btn { 
-  border: none; 
-  background: transparent; 
-  color: rgba(255,255,255,0.7); 
-  font-size: 13px; 
-  font-weight: 600; 
-  padding: 12px 20px; 
-  cursor: pointer; 
-  border-radius: 6px;
-  transition: all 0.2s;
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.menu-btn:hover { 
-  background: rgba(255,255,255,0.1);
-  color: white;
-}
-.menu-btn.active { 
-  background: var(--brand-accent);
-  color: white;
-}
-
-/* CARRUSEL */
-.carousel-section { 
-  margin: 24px auto;
-  max-width: 1280px;
-  padding: 0 24px;
-}
-.carousel-container {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  background: var(--brand-primary);
-  box-shadow: var(--shadow-lg);
-  height: 450px;
-}
-.carousel-track {
-  display: flex;
-  height: 100%;
-  transition: transform 0.5s ease-in-out;
-}
-.carousel-slide {
-  min-width: 100%;
-  height: 100%;
-  position: relative;
-  text-decoration: none;
-  color: inherit;
-  display: grid;
-  grid-template-columns: 60% 40%;
-}
-.carousel-image {
-  height: 100%;
-  overflow: hidden;
-  position: relative;
-}
-.carousel-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 8s ease;
-}
-.carousel-slide:hover .carousel-image img {
-  transform: scale(1.05);
-}
-.carousel-content {
-  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.carousel-badge {
-  display: inline-flex;
-  width: fit-content;
-  padding: 6px 14px;
-  background: var(--brand-accent);
-  color: white;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  border-radius: 20px;
-  margin-bottom: 16px;
-}
-.carousel-title {
-  font-family: var(--font-serif);
-  font-size: 32px;
-  font-weight: 900;
-  line-height: 1.2;
-  color: white;
-  letter-spacing: -0.02em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.carousel-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.95);
-  border: none;
-  color: var(--brand-primary);
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-  z-index: 10;
-}
-.carousel-btn:hover {
-  background: white;
-  transform: translateY(-50%) scale(1.1);
-}
-.carousel-btn.prev { left: 20px; }
-.carousel-btn.next { right: 20px; }
-.carousel-dots {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 8px;
-  z-index: 10;
-}
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.4);
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.dot.active {
-  background: white;
-  width: 32px;
-  border-radius: 5px;
-}
-
-/* LAYOUT */
-.main-wrapper {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px 60px;
-  display: grid;
-  grid-template-columns: 1fr 340px;
-  gap: 40px;
-}
-
-.section-title {
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: -0.5px;
-  margin: 0 0 24px;
-  padding-bottom: 12px;
-  border-bottom: 3px solid var(--brand-accent);
-  display: inline-block;
-}
-
-/* NOTICIAS */
-.breaking-card {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 0;
-  background: var(--surface);
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: var(--shadow);
-  margin-bottom: 32px;
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 1px solid var(--border);
-  text-decoration: none;
-  color: inherit;
-}
-.breaking-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-.breaking-card .card-image {
-  height: 100%;
-  min-height: 320px;
-  overflow: hidden;
-  position: relative;
-}
-.breaking-card .card-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s;
-}
-.breaking-card:hover .card-image img { transform: scale(1.05); }
-.breaking-body {
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.breaking-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: var(--brand-accent);
-  color: #fff;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 6px 14px;
-  border-radius: 20px;
-  text-transform: uppercase;
-  margin-bottom: 16px;
-  width: fit-content;
-  letter-spacing: 0.5px;
-}
-.breaking-body h2 {
-  font-family: var(--font-serif);
-  font-size: 28px;
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
-  color: var(--text-primary);
-}
-.breaking-body p {
-  color: var(--text-secondary);
-  font-size: 15px;
-  line-height: 1.6;
-  margin-bottom: 20px;
-}
-.breaking-meta {
-  display: flex;
-  gap: 16px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-
-.news-grid {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.news-card {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 20px;
-  background: var(--surface);
-  padding: 20px;
-  border-radius: 12px;
-  border: none !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05) !important;
-  cursor: pointer;
-  transition: all 0.3s;
-  text-decoration: none;
-  color: inherit;
-}
-.news-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
-}
-.card-image-wrapper {
-  aspect-ratio: 16/10;
-  overflow: hidden;
-  border-radius: 8px;
-  background: var(--surface-alt);
-}
-.card-image-wrapper img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s;
-}
-.news-card:hover .card-image-wrapper img { transform: scale(1.05); }
-.card-body {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.tag {
-  display: inline-flex;
-  width: fit-content;
-  font-size: 11px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--brand-accent);
-  background: rgba(220, 38, 38, 0.08);
-  padding: 4px 10px;
-  border-radius: 4px;
-}
-.tag.premium {
-  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-  color: #78350f;
-  box-shadow: 0 2px 8px rgba(251, 191, 36, 0.3);
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-.news-card h3 {
-  font-family: var(--font-serif);
-  font-size: 18px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.news-excerpt {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.6;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.card-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: auto;
-  padding-top: 12px;
-  font-size: 12px;
-  color: var(--text-secondary);
-  font-weight: 500;
-}
-.read-more {
-  color: var(--brand-secondary);
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  transition: gap 0.2s;
-}
-.news-card:hover .read-more { gap: 8px; }
-
-/* SIDEBAR */
-.sidebar-right {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-.sidebar-box {
-  background: var(--surface);
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
-}
-.sidebar-box h4 {
-  font-size: 14px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 16px;
-  color: var(--text-primary);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.trending-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  color: inherit;
-}
-.trending-item:last-child { border-bottom: none; }
-.trending-item:hover { padding-left: 8px; }
-.trending-number {
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--border);
-  min-width: 32px;
-  font-family: Georgia, serif;
-  line-height: 1;
-}
-.trending-item:nth-child(1) .trending-number { color: var(--brand-accent); }
-.trending-item:nth-child(2) .trending-number { color: #f59e0b; }
-.trending-item:nth-child(3) .trending-number { color: #10b981; }
-.trending-title {
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: -0.3px;
-  color: var(--text-primary);
-  line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.trending-meta {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-top: 4px;
-}
-
-.newsletter-box {
-  background: linear-gradient(135deg, var(--brand-primary) 0%, #334155 100%);
-  color: white;
-  padding: 24px;
-  border-radius: 12px;
-  text-align: center;
-}
-.newsletter-box h4 {
-  color: white;
-  justify-content: center;
-  margin-bottom: 8px;
-}
-.newsletter-box p {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-bottom: 16px;
-}
-.newsletter-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-.newsletter-btn {
-  width: 100%;
-  padding: 12px;
-  background: var(--brand-accent);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.newsletter-btn:hover { background: #b91c1c; }
-
-.paypal-box {
-  background: linear-gradient(135deg, #003087 0%, #0070ba 100%);
-  color: white;
-  padding: 24px;
-  border-radius: 12px;
-  text-align: center;
-}
-.paypal-box h4 {
-  color: white;
-  margin-bottom: 12px;
-  justify-content: center;
-}
-.paypal-box p {
-  font-size: 13px;
-  opacity: 0.95;
-  margin-bottom: 16px;
-}
-.paypal-btn {
-  width: 100%;
-  padding: 14px;
-  background: white;
-  color: #003087;
-  border: none;
-  border-radius: 8px;
-  font-weight: 800;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 14px;
-  text-decoration: none;
-}
-.paypal-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-}
-.paypal-sub {
-  margin-top: 12px;
-  padding: 12px;
-  background: rgba(255,255,255,0.15);
-  color: white;
-  border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 13px;
-  text-decoration: none;
-}
-.paypal-sub:hover {
-  background: rgba(255,255,255,0.25);
-}
-
-/* ============================================================
-   REPRODUCTOR DE RADIO FLOTANTE - MEJORADO
-   ============================================================ */
-.radio-player {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: linear-gradient(135deg, var(--brand-primary) 0%, #1e293b 100%);
-  color: white;
-  padding: 16px 20px;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 280px;
-  border: 1px solid rgba(255,255,255,0.1);
-  transition: all 0.3s;
-}
-.radio-player:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
-}
-.radio-icon-btn {
-  width: 48px;
-  height: 48px;
-  background: var(--brand-accent);
-  border: none;
-  border-radius: 50%;
-  color: white;
-  font-size: 18px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
-.radio-icon-btn:hover {
-  transform: scale(1.1);
-  background: #b91c1c;
-}
-.radio-icon-btn.playing {
-  background: #10b981;
-  animation: pulse-radio 2s infinite;
-}
-@keyframes pulse-radio {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
-  50% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
-}
-.radio-info {
-  flex: 1;
-  min-width: 0;
-}
-.radio-station-name {
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 4px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-#radioSelector {
-  width: 100%;
-  background: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.2);
-  color: white;
-  padding: 6px 10px;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  outline: none;
-}
-#radioSelector option {
-  background: #1e293b;
-  color: white;
-}
-.radio-status {
-  font-size: 11px;
-  opacity: 0.8;
-  margin-top: 4px;
-}
-.radio-close {
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.6);
-  cursor: pointer;
-  font-size: 16px;
-  padding: 4px;
-  transition: all 0.2s;
-}
-.radio-close:hover {
-  color: white;
-}
-
-/* STICKY CTA */
-.premium-sticky {
-  position: fixed;
-  bottom: -100px;
-  left: 0;
-  right: 0;
-  background: var(--brand-primary);
-  color: white;
-  padding: 16px 24px;
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
-  z-index: 1000;
-  transition: bottom 0.5s ease;
-}
-
-/* BOTÓN MODO OSCURO FLOTANTE */
-#darkModeToggle {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: var(--brand-secondary);
-  color: white;
-  border: none;
-  font-size: 22px;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-  z-index: 1001;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-#darkModeToggle:hover {
-  transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-}
-
-#darkModeToggle:active {
-  transform: translateY(-2px) scale(0.95);
-}
-
-[data-theme='dark'] #darkModeToggle {
-  background: #fbbf24;
-  color: #1e293b;
-}
-
-.premium-sticky.visible { bottom: 0; }
-.sticky-content {
-  max-width: 1280px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.sticky-text h5 {
-  font-size: 16px;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-.sticky-text p {
-  font-size: 13px;
-  opacity: 0.9;
-}
-.sticky-buttons {
-  display: flex;
-  gap: 12px;
-}
-.sticky-btn {
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.2s;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  border: none;
-}
-.sticky-btn.donate {
-  background: #0070ba;
-  color: white;
-}
-.sticky-btn.donate:hover {
-  background: #005ea6;
-  transform: translateY(-2px);
-}
-.sticky-btn.subscribe {
-  background: var(--brand-accent);
-  color: white;
-}
-.sticky-btn.subscribe:hover {
-  background: #b91c1c;
-  transform: translateY(-2px);
-}
-.close-sticky {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 20px;
-  padding: 4px;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-}
-.close-sticky:hover { opacity: 1; }
-
-/* SKELETON */
-.skeleton-card {
-  display: grid;
-  grid-template-columns: 280px 1fr;
-  gap: 20px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  border: 1px solid var(--border);
-}
-.skeleton-img {
-  width: 100%;
-  aspect-ratio: 16/10;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 8px;
-}
-.skeleton-text {
-  height: 16px;
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 4px;
-  margin-bottom: 8px;
-}
-@keyframes loading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-.load-more-container { 
-  text-align: center; 
-  padding: 40px 0; 
-}
-.load-more-btn {
-  padding: 14px 32px;
-  background: var(--brand-primary);
-  color: #fff;
-  border: none;
-  border-radius: 9999px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-}
-.load-more-btn:hover { 
-  background: var(--brand-accent);
-  transform: translateY(-2px);
-}
-
-/* FOOTER */
-.footer {
-  background: #1a1a1a;
-  color: #999;
-  padding: 50px 24px 30px;
-  font-size: 14px;
-}
-.footer-content {
-  max-width: 1280px;
-  margin: 0 auto;
-}
-.footer-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 30px;
-  border-bottom: 1px solid #333;
-  margin-bottom: 30px;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-.footer-brand h3 {
-  color: white;
-  font-family: var(--font-serif);
-  font-size: 24px;
-  font-weight: 900;
-  margin-bottom: 4px;
-}
-.footer-brand p {
-  color: #666;
-  font-size: 13px;
-}
-.footer-social {
-  display: flex;
-  gap: 16px;
-}
-.footer-social a {
-  color: #999;
-  font-size: 20px;
-  transition: all 0.2s;
-}
-.footer-social a:hover {
-  color: white;
-  transform: translateY(-3px);
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 40px;
-  margin-bottom: 40px;
-}
-.footer-section h4 {
-  color: white;
-  font-size: 14px;
-  font-weight: 700;
-  margin-bottom: 16px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-.footer-links {
-  list-style: none;
-}
-.footer-links li {
-  margin-bottom: 10px;
-}
-.footer-links a {
-  color: #999;
-  text-decoration: none;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-.footer-links a:hover {
-  color: white;
-  padding-left: 4px;
-}
-.footer-bottom {
-  text-align: center;
-  padding-top: 30px;
-  border-top: 1px solid #333;
-  color: #666;
-}
-  font-size: 13px;
-}
-
-/* RESPONSIVE */
-@media (max-width: 1024px) {
-  .main-wrapper { grid-template-columns: 1fr; }
-  .sidebar-right { display: none; }
-  .carousel-slide { grid-template-columns: 1fr; }
-  .carousel-image { height: 60%; }
-  .carousel-content { height: 40%; padding: 24px; }
-  .carousel-title { font-size: 24px; }
-  .breaking-card { grid-template-columns: 1fr; }
-  .news-card { grid-template-columns: 200px 1fr; }
-  .footer-grid { grid-template-columns: repeat(2, 1fr); }
-  .radio-player {
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    min-width: auto;
-  }
-}
-
-@media (max-width: 640px) {
-  /* HEADER MÓVIL */
-  .topbar { padding: 12px 16px; }
-  .topbar-content { flex-direction: column; gap: 8px; align-items: stretch; }
-  .logo { justify-content: center; }
-  .logo img { width: 36px; height: 36px; }
-  .logo-title { font-size: 20px; }
-  .logo-subtitle { font-size: 11px; }
-  .search-wrapper { width: 100%; }
-  #searchInput { font-size: 16px; padding: 10px 16px 10px 40px; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#c41e3a">
+  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium.">
+  <meta name="keywords" content="noticias nicaragua, sucesos, nacionales, deportes, internacionales, espectáculo, premium, managua, león, granada">
+  <meta name="author" content="Nicaragua Informate">
+  <meta name="robots" content="index, follow">
   
-  /* CLIMA MÓVIL - MÁS GRANDE Y LEGIBLE */
-  .clima-bar { 
-    padding: 12px 0; 
-    font-size: 13px;
-  }
-  .clima-item { 
-    padding: 0 20px;
-    gap: 8px;
-  }
-  .clima-item .temp {
-    font-size: 14px;
-  }
-  .clima-item i {
-    font-size: 16px;
-  }
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nicaragua Informate | Periodismo de Precisión">
+  <meta property="og:description" content="Periodismo de Precisión. Noticias al instante de Nicaragua y el mundo.">
+  <meta property="og:image" content="https://picsum.photos/seed/og/1200/630">
   
-  /* BARRA ECONÓMICA MÓVIL */
-  .econ-bar {
-    padding: 10px 16px;
-    font-size: 12px;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-  .econ-content {
-    gap: 20px;
-    justify-content: flex-start;
-  }
-  .econ-item {
-    flex-shrink: 0;
-  }
+  <title>Nicaragua Informate | Periodismo de Precisión</title>
   
-  /* MENÚ MÓVIL - SCROLL HORIZONTAL */
-  .menu-nav { 
-    padding: 0 16px;
-  }
-  .menu-content {
-    gap: 8px;
-    padding: 8px 0;
-  }
-  .menu-btn {
-    font-size: 12px;
-    padding: 10px 16px;
-    white-space: nowrap;
-  }
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://picsum.photos">
   
-  /* CARRUSEL MÓVIL - MÁS COMPACTO */
-  .carousel-section {
-    margin: 16px auto;
-    padding: 0 16px;
-  }
-  .carousel-container { 
-    height: 380px;
-    border-radius: 12px;
-  }
-  .carousel-slide {
-    grid-template-columns: 1fr;
-    grid-template-rows: 60% 40%;
-  }
-  .carousel-image {
-    height: 100%;
-  }
-  .carousel-content {
-    padding: 20px;
-    justify-content: flex-start;
-  }
-  .carousel-badge {
-    font-size: 10px;
-    padding: 4px 10px;
-    margin-bottom: 12px;
-  }
-  .carousel-title { 
-    font-size: 18px;
-    line-height: 1.3;
-    -webkit-line-clamp: 3;
-  }
-  .carousel-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 16px;
-  }
-  .carousel-btn.prev { left: 12px; }
-  .carousel-btn.next { right: 12px; }
-  .carousel-dots {
-    bottom: 12px;
-    gap: 6px;
-  }
-  .dot {
-    width: 8px;
-    height: 8px;
-  }
-  .dot.active {
-    width: 24px;
-  }
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  /* NOTICIAS MÓVIL */
-  .main-wrapper {
-    padding: 0 16px 40px;
-  }
-  .section-title {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  .breaking-card {
-    grid-template-columns: 1fr;
-    border-radius: 12px;
-  }
-  .breaking-card .card-image {
-    min-height: 200px;
-  }
-  .breaking-body {
-    padding: 20px;
-  }
-  .breaking-body h2 {
-    font-size: 22px;
-  }
-  .news-card { 
-    grid-template-columns: 1fr;
-    padding: 16px;
-    border-radius: 10px;
-  }
-  .card-image-wrapper { 
-    aspect-ratio: 16/9;
-    border-radius: 8px;
-  }
-  .card-body {
-    gap: 10px;
-  }
-  .tag {
-    font-size: 10px;
-    padding: 4px 8px;
-  }
-  .news-card h3 {
-    font-size: 16px;
-  }
-  .news-excerpt {
-    font-size: 13px;
-  }
-  .card-footer {
-    font-size: 11px;
-  }
-  
-  /* RADIO MÓVIL - MÁS COMPACTO */
-  .radio-player {
-    left: 8px;
-    right: 8px;
-    bottom: 8px;
-    padding: 12px 16px;
-    border-radius: 12px;
-    min-width: auto;
-    flex-wrap: wrap;
-  }
-  .radio-icon-btn {
-    width: 44px;
-    height: 44px;
-    font-size: 16px;
-  }
-  .radio-info {
-    flex: 1;
-    min-width: 0;
-  }
-  .radio-station-name {
-    font-size: 13px;
-  }
-  #radioSelector {
-    font-size: 12px;
-    padding: 6px 8px;
-  }
-  .radio-status {
-    font-size: 10px;
-  }
-  .radio-close {
-    font-size: 14px;
-  }
-  
-  /* STICKY CTA MÓVIL */
-  .sticky-content { 
-    flex-direction: column; 
-    text-align: center;
-    gap: 16px;
-  }
-  .sticky-text h5 {
-    font-size: 15px;
-  }
-  .sticky-text p {
-    font-size: 12px;
-  }
-  .sticky-buttons {
-    flex-direction: column;
-    width: 100%;
-  }
-  .sticky-btn {
-    width: 100%;
-    justify-content: center;
-    font-size: 13px;
-    padding: 12px 20px;
-  }
-  
-  /* FOOTER MÓVIL - Más compacto */
-  .footer {
-    padding: 30px 16px 20px;
-  }
-  .footer-grid { 
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 30px;
-  }
-  .footer-top { 
-    flex-direction: column; 
-    text-align: center;
-    gap: 12px;
-    padding-bottom: 20px;
-    margin-bottom: 20px;
-  }
-  .footer-brand h3 {
-    font-size: 20px;
-    margin-bottom: 4px;
-  }
-  .footer-brand p {
-    font-size: 12px;
-  }
-  .footer-social {
-    justify-content: center;
-  }
-  .footer-section h4 {
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-  .footer-links li {
-    margin-bottom: 8px;
-  }
-  .footer-links a {
-    font-size: 13px;
-  }
-  .footer-bottom {
-    padding-top: 20px;
-    font-size: 12px;
-  }
-}
-</style>
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
+
+  <!-- Firebase SDK - Informate 3.0 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+
+    // Configuración Firebase - Proyecto Real
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+      authDomain: "informate-instant-nicaragua.firebaseapp.com",
+      projectId: "informate-instant-nicaragua",
+      storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+      messagingSenderId: "24988088146",
+      appId: "1:24988088146:web:d26a207508da055668ec8b",
+      measurementId: "G-W1B5J61WEP"
+    };
+
+    // Inicializar Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const db = getFirestore(firebaseApp);
+    const storage = getStorage(firebaseApp);
+
+    // Exponer para uso global
+    window.firebaseDB = db;
+    window.firebaseStorage = storage;
+    window.firebaseApp = firebaseApp;
+
+    console.log('🔥 Firebase Informate 3.0 inicializado');
+  </script>
+
+  <style>
+    /* ============================================
+       DESIGN SYSTEM - NICARAGUA INFORMATE PRO
+       ============================================ */
+    :root {
+      /* Typography Scale */
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      /* Color Palette - Editorial Premium */
+      --color-primary: #c41e3a;
+      --color-primary-hover: #9b1830;
+      --color-secondary: #1a1a2e;
+      --color-accent: #e63946;
+      
+      /* Category Colors */
+      --cat-sucesos: #dc2626;
+      --cat-nacionales: #1e40af;
+      --cat-deportes: #047857;
+      --cat-internacionales: #7c3aed;
+      --cat-espectaculo: #db2777;
+      --cat-premium: #d97706;
+      --cat-economia: #0369a1;
+      
+      /* Neutral Scale */
+      --gray-50: #fafaf9;
+      --gray-100: #f5f5f4;
+      --gray-200: #e7e5e4;
+      --gray-300: #d6d3d1;
+      --gray-400: #a8a29e;
+      --gray-500: #78716c;
+      --gray-600: #57534e;
+      --gray-700: #44403c;
+      --gray-800: #292524;
+      --gray-900: #1c1917;
+      
+      /* Semantic Colors */
+      --bg: var(--gray-50);
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --text: var(--gray-900);
+      --text-secondary: var(--gray-600);
+      --text-muted: var(--gray-500);
+      --border: var(--gray-200);
+      --border-light: var(--gray-100);
+      
+      /* Shadows - Depth System */
+      --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      
+      /* Radii */
+      --radius-sm: 4px;
+      --radius: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      /* Spacing Scale */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Layout */
+      --max-width: 1400px;
+      --header-height: 80px;
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--gray-900);
+      --surface: var(--gray-800);
+      --surface-elevated: #3a3633;
+      --text: var(--gray-50);
+      --text-secondary: var(--gray-300);
+      --text-muted: var(--gray-400);
+      --border: var(--gray-700);
+      --border-light: var(--gray-800);
+    }
+
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--border-light) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: var(--radius);
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================
+       HEADER - EDITORIAL
+       ============================================ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: var(--header-height);
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] .header {
+      background: rgba(28, 25, 23, 0.95);
+    }
+
+    .header.scrolled {
+      box-shadow: var(--shadow-md);
+      height: 64px;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: var(--space-8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .brand:hover .brand-logo {
+      transform: rotate(-5deg) scale(1.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .brand-tagline {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: var(--space-2) var(--space-4);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: var(--radius);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--border-light);
+    }
+
+    .nav-link.active {
+      color: var(--color-primary);
+      background: rgba(196, 30, 58, 0.08);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 50%;
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .search-trigger {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .search-trigger:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+
+    .search-box {
+      position: relative;
+      width: 280px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(196, 30, 58, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      font-size: 1.125rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--border-light);
+      color: var(--text);
+      transform: rotate(15deg);
+    }
+
+    /* Live Badge */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: pulse-badge 2s infinite;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ============================================
+       RADIO BAR - IMMERSIVE
+       ============================================ */
+    .radio-bar {
+      background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: var(--space-3) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .radio-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--cat-deportes), var(--cat-internacionales));
+      animation: gradient-shift 10s linear infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .radio-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .radio-control {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(10px);
+    }
+
+    .radio-play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .radio-play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
+    }
+
+    .radio-play-btn.playing {
+      background: var(--cat-deportes);
+      animation: pulse-playing 2s infinite;
+    }
+
+    @keyframes pulse-playing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(4, 120, 87, 0.7); }
+      50% { box-shadow: 0 0 0 10px rgba(4, 120, 87, 0); }
+    }
+
+    .radio-select {
+      background: transparent;
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 200px;
+      font-size: 0.875rem;
+    }
+
+    .radio-select option {
+      background: #0f172a;
+    }
+
+    .radio-status {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+    }
+
+    .visualizer-bar {
+      width: 3px;
+      background: var(--color-primary);
+      border-radius: 2px;
+      transition: height 0.1s ease;
+    }
+
+    /* ============================================
+       HERO - EDITORIAL LAYOUT
+       ============================================ */
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: var(--space-6);
+      min-height: 600px;
+    }
+
+    .hero-main {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-xl);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-main:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-main:hover .hero-image {
+      transform: scale(1.05);
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-10);
+      color: white;
+    }
+
+    .hero-category {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-excerpt {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+
+    /* Hero Sidebar */
+    .hero-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .side-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      flex: 1;
+    }
+
+    .side-card:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+    }
+
+    .side-card-image {
+      height: 100%;
+      min-height: 100px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .side-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .side-card:hover .side-card-image img {
+      transform: scale(1.1);
+    }
+
+    .side-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .side-card-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .side-card-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ============================================
+       LAYOUT SYSTEM
+       ============================================ */
+    .layout {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+      display: grid;
+      grid-template-columns: 280px 1fr 320px;
+      gap: var(--space-8);
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    /* ============================================
+       SECTION HEADERS
+       ============================================ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      font-weight: 900;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      position: relative;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 32px;
+      background: var(--color-primary);
+      border-radius: 2px;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(196, 30, 58, 0.05);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .btn-ghost:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+
+    /* ============================================
+       NEWS GRID - MASONRY
+       ============================================ */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .news-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .news-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-primary);
+    }
+
+    .news-card-image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .news-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .news-card:hover .news-card-image img {
+      transform: scale(1.08);
+    }
+
+    .news-card-category {
+      position: absolute;
+      top: var(--space-4);
+      left: var(--space-4);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .news-card-content {
+      padding: var(--space-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: var(--space-3);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-card-excerpt {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: var(--space-4);
+      flex: 1;
+    }
+
+    .news-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .news-card-views {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8125rem;
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .news-card-views i {
+      font-size: 0.75rem;
+    }
+
+    .news-card-views.hot {
+      color: #dc2626;
+      animation: pulse-views 2s infinite;
+    }
+
+    @keyframes pulse-views {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .news-card-time {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ============================================
+       SIDEBAR WIDGETS
+       ============================================ */
+    .widget {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      margin-bottom: var(--space-6);
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .widget-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .widget-title i {
+      color: var(--color-primary);
+    }
+
+    /* Trending */
+    .trending-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .trending-item {
+      display: flex;
+      gap: var(--space-4);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      padding: var(--space-2);
+      margin: calc(-1 * var(--space-2));
+      border-radius: var(--radius);
+    }
+
+    .trending-item:hover {
+      background: var(--border-light);
+    }
+
+    .trending-rank {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .trending-rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .trending-rank.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+    .trending-rank.bronze { background: linear-gradient(135deg, #b45309, #92400e); }
+    .trending-rank.normal { background: var(--border); color: var(--text-muted); }
+
+    .trending-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .trending-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .trending-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* Indicators */
+    .indicator-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .indicator-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .indicator-item:last-child {
+      border-bottom: none;
+    }
+
+    .indicator-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .indicator-value {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .indicator-change {
+      font-size: 0.75rem;
+      margin-left: var(--space-2);
+    }
+
+    .indicator-change.positive { color: var(--cat-deportes); }
+    .indicator-change.negative { color: var(--color-primary); }
+
+    /* ============================================
+       WEATHER WIDGET - REAL TIME
+       ============================================ */
+    .weather-widget {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weather-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 2px 8px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .weather-live-badge .live-dot {
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    .weather-container {
+      position: relative;
+      text-align: center;
+      padding: var(--space-4) 0;
+    }
+
+    .weather-city-indicator {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--border-light);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+
+    .weather-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    .weather-icon {
+      font-size: 3rem;
+      color: #f59e0b;
+      animation: weather-float 3s ease-in-out infinite;
+    }
+
+    .weather-icon.rain {
+      color: #3b82f6;
+      animation: weather-bounce 1s ease-in-out infinite;
+    }
+
+    .weather-icon.cloud {
+      color: #6b7280;
+    }
+
+    .weather-icon.storm {
+      color: #6366f1;
+      animation: weather-shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes weather-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes weather-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes weather-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+
+    .weather-temp {
+      font-size: 2.5rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .weather-city {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: var(--space-1);
+    }
+
+    .weather-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-transform: capitalize;
+      margin-bottom: var(--space-4);
+    }
+
+    .weather-details {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+
+    .weather-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .weather-detail i {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .weather-cities-nav {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .weather-city-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .weather-city-dot:hover,
+    .weather-city-dot.active {
+      background: var(--color-primary);
+      transform: scale(1.3);
+    }
+
+    .weather-city-dot.active {
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.2);
+    }
+
+    /* Weather transition animation */
+    .weather-fade {
+      animation: weatherFade 0.5s ease;
+    }
+
+    @keyframes weatherFade {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       MODAL - IMMERSIVE READER
+       ============================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 9999;
+      padding: var(--space-6);
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      position: relative;
+      height: 450px;
+      overflow: hidden;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+    }
+
+    .modal-category {
+      position: absolute;
+      top: var(--space-6);
+      left: var(--space-6);
+      padding: var(--space-1) var(--space-4);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: var(--space-6);
+      right: var(--space-6);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 2;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-title-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-8) var(--space-10);
+      color: white;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .modal-body {
+      padding: var(--space-8) var(--space-10);
+    }
+
+    .modal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-primary);
+      border: none;
+      border-radius: var(--radius-full);
+      color: white;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: var(--space-4);
+      z-index: 10;
+    }
+
+    .modal-back:hover {
+      background: var(--color-primary-hover);
+      transform: translateX(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .modal-back i {
+      transition: transform 0.2s ease;
+    }
+
+    .modal-back:hover i {
+      transform: translateX(-2px);
+    }
+
+    .modal-back::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: var(--radius-full);
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .modal-back:focus::before {
+      border-color: var(--color-primary);
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .modal-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    #modalViews {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    #modalViews i {
+      animation: eye-blink 3s infinite;
+    }
+
+    @keyframes eye-blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+
+    .modal-content-text {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .modal-content-text::first-letter {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      padding-right: var(--space-4);
+      padding-top: var(--space-2);
+      color: var(--color-primary);
+    }
+
+    .modal-content-text p {
+      margin-bottom: var(--space-6);
+      text-align: justify;
+    }
+
+    .share-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-8);
+      border-top: 2px solid var(--border);
+    }
+
+    .share-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .share-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+
+    .share-btn {
+      padding: var(--space-4);
+      border-radius: var(--radius);
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      transition: var(--transition-fast);
+      font-size: 0.875rem;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.1);
+    }
+
+    .share-btn i {
+      font-size: 1.25rem;
+    }
+
+    /* Related News */
+    .related-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-8);
+      border-top: 2px solid var(--border);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .related-card {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .related-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .related-image {
+      height: 140px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+    }
+
+    .related-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .related-card:hover .related-image img {
+      transform: scale(1.05);
+    }
+
+    .related-category {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-1);
+    }
+
+    .related-title {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ============================================
+       LOADING STATES
+       ============================================ */
+    .loading-skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--border-light) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: var(--radius);
+    }
+
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      background: var(--color-secondary);
+      color: var(--gray-300);
+      padding: var(--space-16) var(--space-6) var(--space-8);
+      margin-top: var(--space-16);
+    }
+
+    .footer-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-10);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .footer-logo {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+    }
+
+    .footer-desc {
+      line-height: 1.7;
+      font-size: 0.9375rem;
+      max-width: 300px;
+    }
+
+    .footer-section h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer-link {
+      color: var(--gray-400);
+      transition: var(--transition-fast);
+      cursor: pointer;
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer-link:hover {
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: var(--space-10) auto 0;
+      padding-top: var(--space-8);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    /* ============================================
+       FLOATING ACTION BUTTON
+       ============================================ */
+    .fab {
+      position: fixed;
+      bottom: var(--space-8);
+      right: var(--space-8);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      box-shadow: var(--shadow-xl);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .fab:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 20px 40px -10px rgba(196, 30, 58, 0.4);
+    }
+
+    /* ============================================
+       NOTIFICATION TOAST
+       ============================================ */
+    .toast {
+      position: fixed;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--color-secondary);
+      color: white;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      box-shadow: var(--shadow-xl);
+      z-index: 10000;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ============================================
+       RESPONSIVE DESIGN
+       ============================================ */
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-left, .sidebar-right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-main {
+        min-height: 400px;
+      }
+      .hero-sidebar {
+        display: none;
+      }
+      .header-inner {
+        padding: 0 var(--space-4);
+      }
+      .nav {
+        display: none;
+      }
+      .search-box {
+        display: none;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+      .share-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 1.75rem;
+      }
+      .modal-body {
+        padding: var(--space-6);
+      }
+      .modal-header {
+        height: 300px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: var(--space-4);
+        text-align: center;
+      }
+    }
+
+    /* ============================================
+       ACCESSIBILITY
+       ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Print Styles */
+    @media print {
+      .header, .radio-bar, .fab, .modal-overlay {
+        display: none !important;
+      }
+      body {
+        background: white;
+        color: black;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<header class="topbar">
-  <div class="topbar-content">
-    <a href="/" class="logo">
-      <img src="/logo.png" alt="Nicaragua Informate" onerror="this.style.display='none'">
-      <div>
-        <div class="logo-title">Nicaragua Informate</div>
-        <div class="logo-subtitle">Tu fuente de noticias confiable</div>
-      </div>
-    </a>
-    <div class="header-meta">
-      <div class="search-wrapper">
-        <input type="text" id="searchInput" placeholder="Buscar noticias..." autocomplete="off">
-        <i class="fas fa-search search-icon"></i>
-        <div id="searchResults"></div>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="brand" onclick="app.refresh(); return false;" aria-label="Nicaragua Informate - Inicio">
+        <div class="brand-logo">NI</div>
+        <div class="brand-info">
+          <span class="brand-title">Nicaragua Informate</span>
+          <span class="brand-tagline">Noticias al Instante</span>
+        </div>
+      </a>
+      
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <button class="nav-link active" onclick="app.filter('Todas', this)" aria-current="page">
+          <i class="fas fa-home"></i> Inicio
+        </button>
+        <button class="nav-link" onclick="app.filter('Sucesos', this)">
+          <i class="fas fa-exclamation-triangle"></i> Sucesos
+        </button>
+        <button class="nav-link" onclick="app.filter('Nacionales', this)">
+          <i class="fas fa-building-columns"></i> Nacionales
+        </button>
+        <button class="nav-link" onclick="app.filter('Deportes', this)">
+          <i class="fas fa-futbol"></i> Deportes
+        </button>
+        <button class="nav-link" onclick="app.filter('Internacionales', this)">
+          <i class="fas fa-globe"></i> Internacionales
+        </button>
+        <button class="nav-link" onclick="app.filter('Espectáculo', this)">
+          <i class="fas fa-film"></i> Espectáculo
+        </button>
+        <button class="nav-link" onclick="app.filter('Premium', this)">
+          <i class="fas fa-crown"></i> Premium
+        </button>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="search" class="search-input" id="searchInput" 
+                 placeholder="Buscar noticias..." 
+                 oninput="app.search(this.value)"
+                 aria-label="Buscar noticias">
+        </div>
+        <button class="theme-toggle" onclick="app.toggleTheme()" id="themeBtn" aria-label="Cambiar tema">
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<!-- ============================================================
-     BARRA DE CLIMA CON LAS 5 CIUDADES PRINCIPALES
-     ============================================================ -->
-<div class="clima-bar" id="climaBar">
-  <div class="clima-scroll" id="climaScroll">
-    <!-- Se llena dinámicamente con JavaScript -->
+  <!-- Radio Bar -->
+  <div class="radio-bar" role="complementary" aria-label="Radio en vivo">
+    <div class="radio-inner">
+      <div class="live-badge">
+        <span class="live-dot" aria-hidden="true"></span>
+        En Vivo
+      </div>
+      
+      <div class="radio-control">
+        <button class="radio-play-btn" id="radioPlayBtn" onclick="app.radio.toggle()" aria-label="Reproducir radio">
+          <i class="fas fa-play" id="radioIcon"></i>
+        </button>
+        <select class="radio-select" id="radioStation" onchange="app.radio.change()" aria-label="Seleccionar emisora">
+          <option value="">Seleccionar emisora...</option>
+          <option value="https://stream.zenolive.com/axr92qawesmtv">Radio Ya</option>
+          <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+          <option value="https://stream.zeno.fm/primerisima921">La Primerísima 92.1</option>
+          <option value="https://stream.zeno.fm/futura913">Radio Futura 91.3</option>
+        </select>
+      </div>
+      
+      <span class="radio-status" id="radioStatus">Selecciona una emisora</span>
+      <div class="visualizer" id="visualizer" aria-hidden="true" style="opacity: 0;">
+        <div class="visualizer-bar" style="height: 5px;"></div>
+        <div class="visualizer-bar" style="height: 15px;"></div>
+        <div class="visualizer-bar" style="height: 10px;"></div>
+        <div class="visualizer-bar" style="height: 20px;"></div>
+        <div class="visualizer-bar" style="height: 8px;"></div>
+      </div>
+      
+      <audio id="radioAudio" preload="none" crossorigin="anonymous"></audio>
+    </div>
   </div>
-</div>
 
-<div class="econ-bar">
-  <div class="econ-content">
-    <div class="econ-item"><i class="fas fa-dollar-sign"></i> USD: <strong>C$36.62</strong></div>
-    <div class="econ-item"><i class="fas fa-gas-pump"></i> Súper: <strong>C$49.03</strong></div>
-    <div class="econ-item"><i class="fas fa-gas-pump"></i> Regular: <strong>C$47.84</strong></div>
-    <div class="econ-item"><i class="fas fa-gas-pump"></i> Diésel: <strong>C$43.21</strong></div>
-  </div>
-</div>
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Noticias destacadas">
+    <div class="hero-grid">
+      <article class="hero-main" onclick="app.openArticle(0)" role="button" tabindex="0" aria-label="Leer noticia principal">
+        <div class="hero-image-wrap">
+          <img src="https://picsum.photos/seed/hero1/800/600" alt="" class="hero-image" loading="eager" id="heroImg">
+          <div class="hero-image-overlay"></div>
+        </div>
+        <div class="hero-content">
+          <span class="hero-category" id="heroCat">Sucesos</span>
+          <h1 class="hero-title" id="heroTitle">Gobierno anuncia nuevas medidas económicas para impulsar el crecimiento</h1>
+          <p class="hero-excerpt" id="heroExcerpt">El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico...</p>
+          <div class="hero-meta">
+            <span id="heroTime"><i class="far fa-clock" aria-hidden="true"></i> Hace 2 horas</span>
+            <span class="live-badge">
+              <span class="live-dot"></span>
+              Destacado
+            </span>
+          </div>
+        </div>
+      </article>
+      
+      <aside class="hero-sidebar" id="heroSidebar" aria-label="Noticias secundarias">
+        <!-- Generated by JS -->
+      </aside>
+    </div>
+  </section>
 
-<nav class="menu-nav">
-  <div class="menu-content">
-    <button class="menu-btn active" data-cat="Todas">🔥 Última hora</button>
-    <button class="menu-btn" data-cat="Sucesos">🚨 Sucesos</button>
-    <button class="menu-btn" data-cat="Nacionales">🏠 Nacionales</button>
-    <button class="menu-btn" data-cat="Deportes">⚽ Deportes</button>
-    <button class="menu-btn" data-cat="Internacionales">🌍 Internacionales</button>
-    <button class="menu-btn" data-cat="Tecnología">💻 Tecnología</button>
-    <button class="menu-btn" data-cat="Cultura">🎭 Cultura</button>
-  </div>
-</nav>
-
-<section class="carousel-section">
-  <div class="carousel-container" id="carousel">
-    <div class="carousel-track" id="carouselTrack"></div>
-    <button class="carousel-btn prev" onclick="prevSlide()"><i class="fas fa-chevron-left"></i></button>
-    <button class="carousel-btn next" onclick="nextSlide()"><i class="fas fa-chevron-right"></i></button>
-    <div class="carousel-dots" id="carouselDots"></div>
-  </div>
-</section>
-
-<div class="main-wrapper">
-  <main class="content-main">
-    <h2 class="section-title" id="sectionTitle">📰 Últimas Noticias</h2>
-    
-    <div id="skeletonContainer">
-      <div class="skeleton-card">
-        <div class="skeleton-img"></div>
-        <div>
-          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text" style="width: 60%;"></div>
+  <!-- Main Layout -->
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left" role="complementary">
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-fire" aria-hidden="true"></i> Tendencias</h3>
+        </div>
+        <div class="trending-list" id="trendingList">
+          <!-- Generated by JS -->
         </div>
       </div>
-      <div class="skeleton-card">
-        <div class="skeleton-img"></div>
-        <div>
-          <div class="skeleton-text" style="width: 30%; height: 20px; margin-bottom: 16px;"></div>
-          <div class="skeleton-text"></div>
-          <div class="skeleton-text"></div>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-envelope" aria-hidden="true"></i> Newsletter</h3>
+        </div>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--space-4);">
+          Recibe las noticias más importantes cada mañana.
+        </p>
+        <input type="email" placeholder="tu@email.com" style="width: 100%; padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: var(--space-3); font-size: 0.875rem;">
+        <button class="btn btn-primary" style="width: 100%;">Suscribirse</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <header class="section-header">
+        <h2 class="section-title">Últimas Noticias</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary" onclick="app.loadMore()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i> Actualizar
+          </button>
+        </div>
+      </header>
+      
+      <div class="news-grid" id="newsGrid" aria-live="polite">
+        <!-- News cards generated by JS -->
+      </div>
+      
+      <div style="text-align: center; margin-top: var(--space-10);">
+        <button class="btn btn-primary" id="loadMoreBtn" onclick="app.loadMore()" style="min-width: 200px;">
+          <i class="fas fa-plus" aria-hidden="true"></i> Cargar más noticias
+        </button>
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right" role="complementary">
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-chart-line" aria-hidden="true"></i> Indicadores</h3>
+        </div>
+        <div class="indicator-list" id="indicatorsList">
+          <div class="indicator-item">
+            <span class="indicator-label">Dólar BCN</span>
+            <div>
+              <span class="indicator-value" id="indDolar">C$ 36.62</span>
+              <span class="indicator-change positive">↑ 0.02%</span>
+            </div>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Euro</span>
+            <div>
+              <span class="indicator-value" id="indEuro">C$ 39.45</span>
+              <span class="indicator-change negative">↓ 0.15%</span>
+            </div>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Gasolina Regular</span>
+            <span class="indicator-value" id="indRegular">C$ 47.84</span>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Gasolina Súper</span>
+            <span class="indicator-value" id="indSuper">C$ 49.03</span>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Diésel</span>
+            <span class="indicator-value" id="indDiesel">C$ 43.21</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost" style="width:100%; margin-top: var(--space-4);" onclick="app.updateIndicators()">
+          <i class="fas fa-sync-alt" aria-hidden="true"></i> Actualizar datos
+        </button>
+      </div>
+      
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-fire" style="color: #dc2626;" aria-hidden="true"></i> Más Leídas</h3>
+        </div>
+        <div class="trending-list" id="popularesList">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+
+      <div class="widget weather-widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-cloud-sun" aria-hidden="true"></i> Clima Nicaragua</h3>
+          <span class="weather-live-badge"><span class="live-dot"></span> EN VIVO</span>
+        </div>
+        <div class="weather-container" id="weatherContainer">
+          <div class="weather-city-indicator" id="weatherCityIndicator">1 / 12</div>
+          <div class="weather-main">
+            <i class="fas fa-sun weather-icon" id="weatherIcon"></i>
+            <div class="weather-temp" id="weatherTemp">--°C</div>
+          </div>
+          <div class="weather-city" id="weatherCity">Cargando...</div>
+          <div class="weather-desc" id="weatherDesc">Obteniendo datos...</div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fas fa-tint"></i>
+              <span id="weatherHumidity">--%</span>
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-wind"></i>
+              <span id="weatherWind">-- km/h</span>
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-eye"></i>
+              <span id="weatherVisibility">-- km</span>
+            </div>
+          </div>
+        </div>
+        <div class="weather-cities-nav" id="weatherCitiesNav">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Article Modal -->
+  <div class="modal-overlay" id="modal" onclick="app.closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <header class="modal-header">
+        <img src="" alt="" class="modal-image" id="modalImg">
+        <div class="modal-image-overlay"></div>
+        <span class="modal-category" id="modalCat">Categoría</span>
+        <button class="modal-close" onclick="app.closeModal()" aria-label="Cerrar artículo">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <div class="modal-title-wrap">
+          <h2 class="modal-title" id="modalTitle">Título del artículo</h2>
+        </div>
+      </header>
+      
+      <div class="modal-body">
+        <button class="modal-back" onclick="app.closeModal()" aria-label="Cerrar artículo y volver a noticias">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i> 
+          Cerrar y volver a noticias
+        </button>
+        
+        <div class="modal-meta">
+          <span id="modalTime"><i class="far fa-calendar" aria-hidden="true"></i> 11 Abr 2025</span>
+          <span id="modalReadTime"><i class="far fa-clock" aria-hidden="true"></i> 3 min lectura</span>
+          <span id="modalAuthor"><i class="far fa-user" aria-hidden="true"></i> Redacción NI</span>
+          <span id="modalViews" title="Veces leída"><i class="fas fa-eye" aria-hidden="true"></i> <span id="modalViewsCount">0</span> lecturas</span>
+        </div>
+        
+        <article class="modal-content-text" id="modalText">
+          <!-- Content -->
+        </article>
+
+        <div class="share-section">
+          <h4 class="share-title">Compartir artículo</h4>
+          <div class="share-grid">
+            <button class="share-btn" style="background:#1877f2" onclick="app.share('facebook')">
+              <i class="fab fa-facebook-f"></i>Facebook
+            </button>
+            <button class="share-btn" style="background:#1da1f2" onclick="app.share('twitter')">
+              <i class="fab fa-twitter"></i>Twitter
+            </button>
+            <button class="share-btn" style="background:#25d366" onclick="app.share('whatsapp')">
+              <i class="fab fa-whatsapp"></i>WhatsApp
+            </button>
+            <button class="share-btn" style="background:#64748b" onclick="app.copyLink()">
+              <i class="fas fa-link"></i>Copiar
+            </button>
+          </div>
+        </div>
+
+        <div class="related-section">
+          <h4 class="share-title" style="display: flex; align-items: center; gap: var(--space-2);">
+            <i class="fas fa-newspaper" style="color: var(--color-primary);"></i> 
+            Noticias Relacionadas
+          </h4>
+          <div class="related-grid" id="noticiasRelacionadas">
+            <!-- Generated by JS -->
+          </div>
+        </div>
+
+        <!-- Botón regresar al final del artículo -->
+        <div style="text-align: center; margin-top: var(--space-10); padding-top: var(--space-8); border-top: 2px solid var(--border);">
+          <button class="modal-back" onclick="app.closeModal()" style="position: static; display: inline-flex;">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> 
+            Volver a todas las noticias
+          </button>
+          <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: var(--space-3);">
+            Presiona <kbd style="background: var(--border); padding: 2px 8px; border-radius: 4px; font-family: inherit;">ESC</kbd> para cerrar
+          </p>
         </div>
       </div>
     </div>
+  </div>
 
-    <div class="news-grid" id="newsGrid" style="display: none;"></div>
-    
-    <div class="load-more-container" id="loadMoreContainer" style="display: none;">
-      <button class="load-more-btn" onclick="cargarMas()">
-        Ver más noticias <i class="fas fa-arrow-down"></i>
-      </button>
-    </div>
-  </main>
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <aside class="sidebar-right">
-    <div class="sidebar-box">
-      <h4><i class="fas fa-fire" style="color: var(--brand-accent);"></i> Tendencias</h4>
-      <div id="trendingContainer"></div>
-    </div>
-
-    <div class="newsletter-box">
-      <h4><i class="fas fa-envelope"></i> Newsletter</h4>
-      <p>Recibe las noticias más importantes cada mañana en tu correo.</p>
-      <form onsubmit="suscribirNewsletter(event)">
-        <input type="email" class="newsletter-input" placeholder="tu@email.com" required>
-        <button type="submit" class="newsletter-btn">Suscribirme gratis</button>
-      </form>
-    </div>
-    
-    <div class="paypal-box">
-      <h4><i class="fab fa-paypal"></i> Apóyanos</h4>
-      <p>Tu contribución mantiene este medio independiente</p>
-      <a href="https://paypal.me/NicaraguaInformate" target="_blank" class="paypal-btn">
-        <i class="fab fa-paypal"></i> Donar con PayPal
-      </a>
-      <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="paypal-sub">
-        <i class="fas fa-star"></i> Suscripción $5/mes
-      </a>
-    </div>
-  </aside>
-</div>
-
-<!-- RADIO FLOTANTE -->
-<div class="radio-player" id="radioPlayer">
-  <button class="radio-icon-btn" id="radioPlayBtn" onclick="toggleRadio()">
-    <i class="fas fa-play" id="radioPlayIcon"></i>
+  <!-- Floating Action Button -->
+  <button class="fab" onclick="app.sharePage()" aria-label="Compartir página">
+    <i class="fas fa-share-alt" aria-hidden="true"></i>
   </button>
-  <div class="radio-info">
-    <div class="radio-station-name" id="radioStationName">Radio Ya 99.1 FM</div>
-    <select id="radioSelector" onchange="cambiarRadio()">
-      <option value="https://stream.zeno.fm/axr92qawesmtv">Radio Ya 99.1 FM</option>
-      <option value="https://stream.zeno.fm/53gyb6d8gs0uv">La Primerísima</option>
-      <option value="https://stream.zeno.fm/h0x2jp7nrtzuv">Futura 91.3 FM</option>
-      <option value="https://stream.zeno.fm/vtxcp1k7c7quv">Radio ABC</option>
-      <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
-      <option value="https://stream.zeno.fm/7f7pj2jtpazuv">Radio Sandino</option>
-      <option value="https://stream.zeno.fm/8wqtdg30k8quv">La Pachanguera</option>
-    </select>
-    <div class="radio-status" id="radioStatus">Click para reproducir</div>
-  </div>
-  <button class="radio-close" onclick="cerrarRadio()"><i class="fas fa-times"></i></button>
-</div>
 
-<!-- BOTÓN MODO OSCURO -->
-<button id="darkModeToggle" aria-label="Cambiar modo oscuro">
-  <i class="fas fa-moon"></i>
-</button>
-
-<!-- STICKY CTA -->
-<div class="premium-sticky" id="premiumSticky">
-  <div class="sticky-content">
-    <div class="sticky-text">
-      <h5>⭐ Apoya el periodismo independiente</h5>
-      <p>Tu aporte nos permite seguir informando sin barreras</p>
-    </div>
-    <div class="sticky-buttons">
-      <a href="https://paypal.me/NicaraguaInformate" target="_blank" class="sticky-btn donate">
-        <i class="fab fa-paypal"></i> Donar
-      </a>
-      <a href="https://paypal.me/NicaraguaInformate/5" target="_blank" class="sticky-btn subscribe">
-        <i class="fas fa-heart"></i> $5/mes
-      </a>
-    </div>
-    <button class="close-sticky" onclick="cerrarSticky()"><i class="fas fa-times"></i></button>
-  </div>
-</div>
-
-<footer class="footer">
-  <div class="footer-content">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <h3>Nicaragua Informate</h3>
-        <p>Tu fuente confiable de noticias</p>
-      </div>
-      <div class="footer-social">
-        <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-        <a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
-      </div>
-    </div>
-    
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
     <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">NI</div>
+        <h3 class="footer-title">Nicaragua Informate</h3>
+        <p class="footer-desc">Periodismo de Precisión. Cobertura integral de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium.</p>
+      </div>
+      
       <div class="footer-section">
-        <h4>Secciones</h4>
+        <h4><i class="fas fa-folder" aria-hidden="true"></i> Secciones</h4>
         <ul class="footer-links">
-          <li><a href="/">Última Hora</a></li>
-          <li><a href="/?cat=Sucesos">Sucesos</a></li>
-          <li><a href="/?cat=Nacionales">Nacionales</a></li>
-          <li><a href="/?cat=Deportes">Deportes</a></li>
+          <li><span class="footer-link" onclick="app.filter('Todas')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Última Hora</span></li>
+          <li><span class="footer-link" onclick="app.filter('Sucesos')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Sucesos</span></li>
+          <li><span class="footer-link" onclick="app.filter('Nacionales')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Nacionales</span></li>
+          <li><span class="footer-link" onclick="app.filter('Deportes')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Deportes</span></li>
+          <li><span class="footer-link" onclick="app.filter('Internacionales')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Internacionales</span></li>
         </ul>
       </div>
+      
       <div class="footer-section">
-        <h4>Internacional</h4>
+        <h4><i class="fas fa-chart-bar" aria-hidden="true"></i> Servicios</h4>
         <ul class="footer-links">
-          <li><a href="/?cat=Internacionales">Internacionales</a></li>
-          <li><a href="/?cat=Tecnología">Tecnología</a></li>
-          <li><a href="/?cat=Cultura">Cultura</a></li>
+          <li><span class="footer-link">Indicadores Económicos</span></li>
+          <li><span class="footer-link">Clima</span></li>
+          <li><span class="footer-link">Radio en Vivo</span></li>
+          <li><span class="footer-link">Archivo Histórico</span></li>
         </ul>
       </div>
+      
       <div class="footer-section">
-        <h4>Legal</h4>
+        <h4><i class="fas fa-bullhorn" aria-hidden="true"></i> Síguenos</h4>
         <ul class="footer-links">
-          <li><a href="/privacidad.html">Privacidad</a></li>
-          <li><a href="/terminos.html">Términos de Uso</a></li>
-          <li><a href="/cookies.html">Cookies</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Información</h4>
-        <ul class="footer-links">
-          <li><a href="/nosotros.html">Acerca de</a></li>
-          <li><a href="/contacto.html">Contáctenos</a></li>
-          <li><a href="/etica.html">Política de Ética</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-twitter"></i> X (Twitter)</a></li>
         </ul>
       </div>
     </div>
     
     <div class="footer-bottom">
-      <p>© 2026 Nicaragua Informate. Todos los derechos reservados.</p>
-    </div>
-  </div>
-</footer>
-
-<script>
-// VERSION: 2026-04-02-PREMIUM-BADGE
-// CONFIGURACIÓN
-const CONFIG = {
-  NOTICIAS_POR_PAGINA: 10,
-  FIREBASE_CONFIG: {
-    apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
-    authDomain: "informate-instant-nicaragua.firebaseapp.com",
-    projectId: "informate-instant-nicaragua",
-    storageBucket: "informate-instant-nicaragua.firebasestorage.app",
-    messagingSenderId: "24988088146",
-    appId: "1:24988088146:web:d26a207508da055668ec8b"
-  }
-};
-
-let noticias = [];
-let categoriaActual = 'Todas';
-let paginaActual = 1;
-let db = null;
-let carouselIndex = 0;
-let carouselInterval = null;
-
-// ============================================================
-// CLIMA DE LAS 5 CIUDADES PRINCIPALES DE NICARAGUA
-// ============================================================
-const ciudadesNicaragua = [
-  { nombre: 'Managua', temp: 32, icono: 'fa-sun' },
-  { nombre: 'León', temp: 34, icono: 'fa-sun' },
-  { nombre: 'Granada', temp: 33, icono: 'fa-sun' },
-  { nombre: 'Masaya', temp: 31, icono: 'fa-cloud-sun' },
-  { nombre: 'Estelí', temp: 26, icono: 'fa-cloud' }
-];
-
-function initClima() {
-  const scroll = document.getElementById('climaScroll');
-  let html = '';
-  
-  // Duplicar para efecto infinito
-  [...ciudadesNicaragua, ...ciudadesNicaragua].forEach(ciudad => {
-    html += `
-      <div class="clima-item">
-        <i class="fas ${ciudad.icono}"></i>
-        <span class="city">${ciudad.nombre}:</span>
-        <span class="temp">${ciudad.temp}°C</span>
+      <div>&copy; 2025 Nicaragua Informate. Todos los derechos reservados.</div>
+      <div style="display: flex; gap: var(--space-6);">
+        <a href="#" style="color: inherit;">Privacidad</a>
+        <a href="#" style="color: inherit;">Términos</a>
+        <a href="#" style="color: inherit;">Cookies</a>
       </div>
-    `;
-  });
-  
-  scroll.innerHTML = html;
-  
-  // Actualizar temperaturas simuladas cada 5 minutos
-  setInterval(() => {
-    document.querySelectorAll('.clima-item .temp').forEach(el => {
-      const base = parseInt(el.textContent);
-      const variacion = Math.floor(Math.random() * 3) - 1; // -1, 0, +1
-      el.textContent = (base + variacion) + '°C';
-    });
-  }, 5 * 60 * 1000);
-}
+    </div>
+  </footer>
 
-// ============================================================
-// RADIO FLOTANTE
-// ============================================================
-let radioAudio = null;
-let radioPlaying = false;
+  <script>
+    /**
+     * Nicaragua Informate - Application Controller
+     * Arquitectura modular profesional con manejo de estado
+     */
+    const app = (function() {
+      'use strict';
 
-function toggleRadio() {
-  if (radioPlaying) {
-    pauseRadio();
-  } else {
-    playRadio();
-  }
-}
+      // ==========================================
+      // DATA LAYER - Modelo de datos robusto
+      // ==========================================
+      const data = {
+        categories: {
+          'Sucesos': { color: '#dc2626', icon: 'fa-exclamation-triangle' },
+          'Nacionales': { color: '#1e40af', icon: 'fa-building-columns' },
+          'Deportes': { color: '#047857', icon: 'fa-futbol' },
+          'Internacionales': { color: '#7c3aed', icon: 'fa-globe' },
+          'Espectáculo': { color: '#db2777', icon: 'fa-film' },
+          'Premium': { color: '#d97706', icon: 'fa-crown' },
+          'Economía': { color: '#0369a1', icon: 'fa-chart-line' }
+        },
 
-function playRadio() {
-  const url = document.getElementById('radioSelector').value;
-  const btn = document.getElementById('radioPlayBtn');
-  const icon = document.getElementById('radioPlayIcon');
-  const status = document.getElementById('radioStatus');
-  
-  if (!radioAudio) {
-    radioAudio = new Audio();
-    radioAudio.crossOrigin = 'anonymous';
-  }
-  
-  // Limpiar anterior
-  radioAudio.pause();
-  radioAudio.src = '';
-  
-  radioAudio.src = url;
-  radioAudio.volume = 0.8;
-  
-  status.textContent = 'Conectando...';
-  
-  radioAudio.play()
-    .then(() => {
-      radioPlaying = true;
-      btn.classList.add('playing');
-      icon.className = 'fas fa-pause';
-      status.textContent = '🔴 EN VIVO';
-      
-      // Media Session API para controles en segundo plano
-      if ('mediaSession' in navigator) {
-        const station = document.getElementById('radioSelector').options[document.getElementById('radioSelector').selectedIndex].text;
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: station,
-          artist: 'Nicaragua Informate',
-          artwork: [{ src: '/logo.png', sizes: '512x512', type: 'image/png' }]
-        });
-        navigator.mediaSession.setActionHandler('play', playRadio);
-        navigator.mediaSession.setActionHandler('pause', pauseRadio);
-      }
-    })
-    .catch(err => {
-      console.error('Error:', err);
-      status.textContent = 'Error - Intenta otra emisora';
-      setTimeout(() => {
-        status.textContent = 'Click para reproducir';
-      }, 3000);
-    });
-  
-  // Manejar errores
-  radioAudio.onerror = () => {
-    status.textContent = 'Error de conexión';
-    radioPlaying = false;
-    btn.classList.remove('playing');
-    icon.className = 'fas fa-play';
-  };
-}
+        // 12 CIUDADES DE NICARAGUA - Clima en tiempo real
+        cities: [
+          { id: 0, name: 'Managua', lat: 12.1328, lon: -86.2504, region: 'Pacifico' },
+          { id: 1, name: 'León', lat: 12.4379, lon: -86.8784, region: 'Pacifico' },
+          { id: 2, name: 'Estelí', lat: 13.0900, lon: -86.3600, region: 'Norte' },
+          { id: 3, name: 'Bluefields', lat: 12.0137, lon: -83.7634, region: 'Atlantico' },
+          { id: 4, name: 'Nueva Guinea', lat: 11.6833, lon: -84.4563, region: 'Zelaya Central' },
+          { id: 5, name: 'Matagalpa', lat: 12.9259, lon: -85.9177, region: 'Norte' },
+          { id: 6, name: 'Granada', lat: 11.9299, lon: -85.9560, region: 'Pacifico' },
+          { id: 7, name: 'Rivas', lat: 11.4432, lon: -85.8153, region: 'Pacifico' },
+          { id: 8, name: 'Masaya', lat: 11.9734, lon: -86.0949, region: 'Pacifico' },
+          { id: 9, name: 'Jinotepe', lat: 11.8500, lon: -86.2000, region: 'Pacifico' },
+          { id: 10, name: 'Jinotega', lat: 13.0917, lon: -85.9994, region: 'Norte' },
+          { id: 11, name: 'Ocotal', lat: 13.4667, lon: -86.4833, region: 'Nueva Segovia' }
+        ],
 
-function pauseRadio() {
-  if (radioAudio) {
-    radioAudio.pause();
-  }
-  radioPlaying = false;
-  document.getElementById('radioPlayBtn').classList.remove('playing');
-  document.getElementById('radioPlayIcon').className = 'fas fa-play';
-  document.getElementById('radioStatus').textContent = 'Pausado - Click para continuar';
-}
+        weatherState: {
+          currentCityIndex: 0,
+          weatherData: {},
+          autoRotateInterval: null,
+          lastUpdate: null
+        },
 
-function cambiarRadio() {
-  const select = document.getElementById('radioSelector');
-  document.getElementById('radioStationName').textContent = select.options[select.selectedIndex].text;
-  
-  if (radioPlaying) {
-    playRadio();
-  }
-}
+        // Mapeo de códigos WMO a iconos FontAwesome
+        weatherCodes: {
+          0: { icon: 'fa-sun', label: 'Despejado', class: '' },
+          1: { icon: 'fa-cloud-sun', label: 'Parcialmente nublado', class: '' },
+          2: { icon: 'fa-cloud-sun', label: 'Parcialmente nublado', class: '' },
+          3: { icon: 'fa-cloud', label: 'Nublado', class: 'cloud' },
+          45: { icon: 'fa-smog', label: 'Niebla', class: 'cloud' },
+          48: { icon: 'fa-smog', label: 'Niebla', class: 'cloud' },
+          51: { icon: 'fa-cloud-rain', label: 'Llovizna', class: 'rain' },
+          53: { icon: 'fa-cloud-rain', label: 'Llovizna', class: 'rain' },
+          55: { icon: 'fa-cloud-rain', label: 'Llovizna fuerte', class: 'rain' },
+          61: { icon: 'fa-cloud-rain', label: 'Lluvia', class: 'rain' },
+          63: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia moderada', class: 'rain' },
+          65: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia fuerte', class: 'rain' },
+          71: { icon: 'fa-snowflake', label: 'Nieve', class: '' },
+          73: { icon: 'fa-snowflake', label: 'Nieve', class: '' },
+          75: { icon: 'fa-snowflake', label: 'Nieve fuerte', class: '' },
+          80: { icon: 'fa-cloud-rain', label: 'Lluvia', class: 'rain' },
+          81: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia fuerte', class: 'rain' },
+          82: { icon: 'fa-cloud-showers-heavy', label: 'Tormenta', class: 'storm' },
+          95: { icon: 'fa-bolt', label: 'Tormenta eléctrica', class: 'storm' },
+          96: { icon: 'fa-bolt', label: 'Tormenta con granizo', class: 'storm' },
+          99: { icon: 'fa-bolt', label: 'Tormenta severa', class: 'storm' }
+        },
 
-function cerrarRadio() {
-  pauseRadio();
-  document.getElementById('radioPlayer').style.display = 'none';
-  localStorage.setItem('radioClosed', 'true');
-}
-
-// UTILIDADES
-const utils = {
-  formatDate: (fecha) => {
-    if (!fecha) return "Hace un momento";
-    try {
-      let d = fecha.toDate ? fecha.toDate() : new Date(fecha);
-      const diff = Math.floor((new Date() - d) / 1000);
-      if (diff < 60) return 'Hace un momento';
-      if (diff < 3600) return `Hace ${Math.floor(diff/60)} min`;
-      if (diff < 86400) return `Hace ${Math.floor(diff/3600)} h`;
-      return d.toLocaleDateString('es-NI', {day:'numeric', month:'short'});
-    } catch(e) { return "Hace un momento"; }
-  },
-  
-  sanitizeImage: (url, categoria) => {
-    if (!url || url.includes('facebook') || url.includes('fbcdn')) {
-      return '/logo.png';
-    }
-    return url;
-  },
-  
-  escapeHtml: (text) => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-};
-
-// INICIALIZACIÓN
-function init() {
-  initClima();
-  initFirebase();
-  initEventListeners();
-  
-  // Restaurar radio si no fue cerrado
-  if (localStorage.getItem('radioClosed') === 'true') {
-    document.getElementById('radioPlayer').style.display = 'none';
-  }
-  
-  // Mostrar sticky después de 10 segundos
-  setTimeout(() => {
-    const sticky = document.getElementById('premiumSticky');
-    if (sticky && !localStorage.getItem('stickyClosed')) {
-      sticky.classList.add('visible');
-    }
-  }, 10000);
-}
-
-// FIREBASE
-function initFirebase() {
-  import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js')
-    .then(({ initializeApp }) => {
-      return import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js')
-        .then(({ initializeFirestore, memoryLocalCache, collection, onSnapshot, query, orderBy, limit }) => {
-          const app = initializeApp(CONFIG.FIREBASE_CONFIG);
-          db = initializeFirestore(app, { localCache: memoryLocalCache() });
+        // Datos de ejemplo (fallback)
+        newsExample: [
+          // SUCESOS
+          { id: 1, title: 'Gobierno anuncia nuevas medidas económicas para impulsar el crecimiento', category: 'Sucesos', excerpt: 'El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico y la inversión extranjera directa.', content: '<p>El gobierno de Nicaragua presentó este martes un paquete integral de medidas económicas destinadas a dinamizar el crecimiento y atraer inversión extranjera directa al país. Las iniciativas incluyen incentivos fiscales significativos para nuevas inversiones, simplificación de trámites administrativos mediante plataformas digitales, y programas de capacitación técnica para emprendedores.</p><p>El Ministro de Hacienda y Crédito Público destacó que estas medidas están proyectadas para generar más de 50,000 empleos directos en los próximos 24 meses, concentrándose principalmente en zonas francas y pequeña y mediana empresa.</p><p>Además, se anunció la creación de un fondo de garantía de $100 millones para facilitar el acceso al crédito de las MIPYMES, con tasas preferenciales que oscilarán entre el 8% y el 12% anual.</p>', date: new Date(), image: 101, author: 'Redacción Economía', readTime: 4 },
           
-          const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'), limit(50));
-          onSnapshot(q, (snapshot) => {
-            if (!snapshot.empty) {
-              noticias = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-              document.getElementById('skeletonContainer').style.display = 'none';
-              document.getElementById('newsGrid').style.display = 'flex';
-              renderizarTodo();
+          { id: 8, title: 'Operativo policial en Managua deja varios detenidos y recupera objetos robados', category: 'Sucesos', excerpt: 'La Policía Nacional realizó un operativo en el barrio Oriental de Managua.', content: '<p>Un operativo táctico de la Policía Nacional en el mercado Oriental de Managua resultó en la detención de 12 sospechosos y la recuperación de mercadería valorada en más de 500,000 córdobas.</p><p>La operación "Seguridad Ciudadana", que duró más de seis horas, fue realizada en coordinación con la Fiscalía General de la República y contó con el apoyo de unidades especializadas de investigación criminal.</p>', date: new Date(Date.now() - 25200000), image: 103, author: 'Juan Pérez', readTime: 2 },
+          
+          { id: 15, title: 'Rescatan a 23 víctimas de tráfico humano en operativo binacional', category: 'Sucesos', excerpt: 'Autoridades de Nicaragua y Costa Rica realizaron operativo conjunto.', content: '<p>Un total de 23 personas, entre ellas 8 menores de edad, fueron rescatadas en un operativo binacional contra el tráfico humano coordinado entre las autoridades de Nicaragua y Costa Rica.</p><p>Las víctimas, originarias de Honduras, Guatemala y El Salvador, eran transportadas hacia Estados Unidos. Ya reciben atención psicológica y legal integral en albergues especializados.</p>', date: new Date(Date.now() - 86400000), image: 105, author: 'María González', readTime: 3 },
+
+          // NACIONALES
+          { id: 10, title: 'Presidente inaugura nuevo hospital en León con tecnología de punta', category: 'Nacionales', excerpt: 'El centro médico contará con 200 camas y equipamiento moderno para toda la región.', content: '<p>El nuevo Hospital Dr. Oscar Danilo Rosales Argüello fue inaugurado este jueves en la ciudad de León, representando una inversión de más de 80 millones de dólares en infraestructura hospitalaria.</p><p>El centro médico cuenta con 200 camas hospitalarias, 10 quirófanos equipados con tecnología robótica, una unidad de cuidados intensivos de última generación y el primer tomógrafo de 256 cortes en el país.</p>', date: new Date(Date.now() - 18000000), image: 501, author: 'Carlos López', readTime: 5 },
+          
+          { id: 11, title: 'Más de 100,000 turistas visitaron Granada durante Semana Santa', category: 'Nacionales', excerpt: 'La ciudad colonial vivió una temporada récord de visitantes nacionales y extranjeros.', content: '<p>La histórica ciudad de Granada recibió más de 100,000 turistas durante la Semana Santa, generando ingresos económicos superiores a 5 millones de dólares para la economía local.</p><p>Los hoteles de la ciudad reportaron una ocupación del 95%, mientras que los restaurantes y tour operadores registraron cifras históricas de atención al cliente.</p>', date: new Date(Date.now() - 43200000), image: 502, author: 'Ana Martínez', readTime: 3 },
+          
+          { id: 12, title: 'Programa social beneficia a 50,000 familias con viviendas dignas', category: 'Nacionales', excerpt: 'El programa Bismarck Martínez continúa transformando comunidades.', content: '<p>El programa de viviendas Bismarck Martínez entregó este mes 2,500 nuevas viviendas a familias de escasos recursos de todo el país, alcanzando la cifra histórica de 50,000 hogares beneficiados desde su creación.</p><p>Las nuevas viviendas cuentan con todos los servicios básicos y están construidas con materiales sismorresistentes.</p>', date: new Date(Date.now() - 60480000), image: 503, author: 'Pedro Castillo', readTime: 4 },
+
+          // DEPORTES
+          { id: 2, title: 'Selección Nicaragüense se prepara intensamente para eliminatorias', category: 'Deportes', excerpt: 'La selección nacional intensifica su preparación de cara a los próximos partidos.', content: '<p>La selección nacional de fútbol de Nicaragua intensifica su preparación en el Centro de Alto Rendimiento de Managua con miras a los próximos compromisos internacionales de eliminatorias mundialistas.</p><p>El director técnico, Michael Adams, ha convocado a 26 jugadores para la concentración que iniciará el próximo lunes, incluyendo tres legionarios que militan en ligas de Europa.</p>', date: new Date(Date.now() - 3600000), image: 201, author: 'Luis Sports', readTime: 3 },
+          
+          { id: 6, title: 'Nuevo estadio de béisbol en Managua impulsará el deporte nacional', category: 'Deportes', excerpt: 'El gobierno anunció la construcción de un moderno estadio de béisbol.', content: '<p>Las obras del nuevo estadio de béisbol "Dennis Martínez" comenzarán el próximo mes, con una inversión de 45 millones de dólares que incluye las más modernas instalaciones para deportistas y espectadores.</p><p>El recinto tendrá capacidad para 15,000 personas y cumplirá con estándares internacionales para albergar torneos clasificatorios al Clásico Mundial de Béisbol.</p>', date: new Date(Date.now() - 18000000), image: 202, author: 'Roberto Baseball', readTime: 4 },
+          
+          { id: 16, title: 'Atleta nicaragüense gana medalla de oro en Juegos Centroamericanos', category: 'Deportes', excerpt: 'María José López se coronó campeona en atletismo femenino.', content: '<p>La velocista nicaragüense María José López ganó la medalla de oro en los 400 metros planos de los Juegos Centroamericanos y del Caribe, estableciendo un nuevo récord nacional con tiempo de 52.34 segundos.</p><p>La atleta de 22 años superó a competidoras de Jamaica y Trinidad y Tobago, convirtiéndose en la primera nicaragüense en ganar oro en esta disciplina desde 1998.</p>', date: new Date(Date.now() - 129600000), image: 203, author: 'Diana Sport', readTime: 3 },
+
+          // INTERNACIONALES
+          { id: 4, title: 'Descubrimiento arqueológico revela vestigios de más de 1000 años', category: 'Internacionales', excerpt: 'Arqueólogos internacionales descubrieron importantes vestigios precolombinos.', content: '<p>Un equipo internacional de arqueólogos realizó un importante descubrimiento en la región del Pacífico nicaragüense, encontrando vestigios de una antigua civilización que datan de más de 1,000 años de antigüedad.</p><p>El hallazgo incluye cerámicas únicas, herramientas de obsidiana y los restos de lo que parece ser un centro ceremonial precolombino de gran magnitud.</p>', date: new Date(Date.now() - 10800000), image: 401, author: 'Dr. Arqueólogo', readTime: 5 },
+          
+          { id: 5, title: 'Nicaragua consolida liderazgo en exportaciones de café centroamericano', category: 'Internacionales', excerpt: 'Las exportaciones de café nicaragüense alcanzaron cifras récord.', content: '<p>Nicaragua se posicionó como el mayor exportador de café de especialidad de Centroamérica durante el último año, superando las cifras históricas con más de 2.5 millones de quintales exportados.</p><p>El café nicaragüense ha obtenido la más alta calificación en subastas internacionales, llegando a precios récord de $45 por libra en el mercado de especialidad.</p>', date: new Date(Date.now() - 14400000), image: 102, author: 'Economía Global', readTime: 4 },
+
+          // ESPECTÁCULO
+          { id: 21, title: 'Banda nicaragüense Filarmónica estrena disco en Teatro Nacional', category: 'Espectáculo', excerpt: 'El concierto de presentación agotó entradas en menos de 24 horas.', content: '<p>La banda de rock alternativo nicaragüense Filarmónica presentó su tercer álbum de estudio "Volcanes" en una noche memorable en el Teatro Nacional Rubén Darío de Managua.</p><p>Los 1,200 boletos disponibles se agotaron en menos de 24 horas, demostrando el creciente apoyo del público nacional a la música local de alta calidad.</p>', date: new Date(Date.now() - 21600000), image: 601, author: 'Cultura NI', readTime: 3 },
+          
+          { id: 22, title: 'Netflix anuncia serie documental sobre historia de Nicaragua', category: 'Espectáculo', excerpt: 'La producción estará disponible en 190 países.', content: '<p>La plataforma Netflix anunció la producción de una serie documental de 8 episodios sobre la historia contemporánea de Nicaragua, dirigida por la reconocida cineasta mexicana María Novaro.</p><p>La producción, que llevará por título "Tierra de Lagos y Volcanes", se estrenará globalmente en junio próximo y contará con testimonios exclusivos de historiadores y protagonistas de la vida nacional.</p>', date: new Date(Date.now() - 93600000), image: 602, author: 'Cine y Series', readTime: 4 },
+
+          // ESPECTÁCULO - Más noticias
+          { id: 23, title: 'Festival Internacional de Teatro llega a 10 ciudades del país', category: 'Espectáculo', excerpt: 'Más de 50 compañías teatrales participarán en esta edición.', content: '<p>El Festival Internacional de Teatro "Luis Alberto Sánchez" se desarrollará durante todo abril en 10 ciudades nicaragüenses, con la participación de compañías de España, Argentina, México y Nicaragua.</p><p>El evento incluirá obras clásicas y contemporáneas, talleres de actuación y encuentros con directores internacionales.</p>', date: new Date(Date.now() - 120000000), image: 603, author: 'Cultura NI', readTime: 3 },
+          { id: 24, title: 'Artista nicaragüense expone en Museo de Arte Moderno de Nueva York', category: 'Espectáculo', excerpt: 'Patricia Solórzano presenta su colección "Raíces Volcánicas".', content: '<p>La artista nicaragüense Patricia Solórzano inauguró su exposición "Raíces Volcánicas" en el MoMA de Nueva York, convirtiéndose en la primera centroamericana en exponer individualmente en este prestigioso museo.</p><p>La colección incluye 25 obras que exploran la relación entre la identidad nicaragüense y los elementos naturales del país.</p>', date: new Date(Date.now() - 180000000), image: 604, author: 'Arte Global', readTime: 4 },
+          { id: 30, title: 'Gala de Ballet Clásico en el Teatro Nacional Rubén Darío', category: 'Espectáculo', excerpt: 'Compañía nacional presenta "El Lago de los Cisnes".', content: '<p>La Compañía Nacional de Ballet de Nicaragua presentará "El Lago de los Cisnes" en una gala benéfica en el Teatro Nacional Rubén Darío. Los fondos recaudados servirán para becar a jóvenes bailarines de escasos recursos.</p>', date: new Date(Date.now() - 3600000), image: 605, author: 'Danza NI', readTime: 3 },
+
+          // PREMIUM - Más contenido exclusivo
+          { id: 25, title: 'Análisis: Impacto de la nueva reforma tributaria en economía familiar', category: 'Premium', excerpt: 'Estudio exclusivo revela efectos en el poder adquisitivo.', content: '<p>Un análisis detallado de la nueva reforma tributaria muestra que el 78% de los hogares nicaragüenses verán un impacto positivo en su economía familiar durante el próximo año fiscal.</p><p>El estudio, realizado por economistas de la Universidad Nacional Autónoma de Nicaragua (UNAN), proyecta una reducción del 12% en el costo de la canasta básica para 2026, gracias a las exenciones en productos de primera necesidad.</p><p>Los sectores más beneficiados serán las familias con ingresos entre 15,000 y 30,000 córdobos mensuales, que verán un aumento real en su poder adquisitivo.</p>', date: new Date(Date.now() - 7200000), image: 701, author: 'Análisis Económico', readTime: 8 },
+          { id: 26, title: 'Investigación especial: Los 10 empresarios que transforman Nicaragua', category: 'Premium', excerpt: 'Perfiles exclusivos de los líderes empresariales del año.', content: '<p>Esta investigación especial presenta perfiles en profundidad de los 10 empresarios más influyentes de Nicaragua en 2025, analizando sus estrategias de negocio y su impacto en la generación de empleo.</p><p>Entre ellos destacan líderes del sector tecnológico, agrícola y manufacturero que han logrado expandir sus operaciones internacionalmente.</p>', date: new Date(Date.now() - 90000000), image: 702, author: 'Negocios Pro', readTime: 6 },
+          { id: 27, title: 'Reportaje: Así es la vida en la Zona Económica Especial más grande de Centroamérica', category: 'Premium', excerpt: 'Recorrido exclusivo por el interior de las empresas que operan en la ZEE.', content: '<p>Un reportaje especial con acceso exclusivo a las instalaciones de la Zona Económica Especial muestra el día a día de más de 15,000 trabajadores y las operaciones de empresas exportadoras líderes.</p><p>La investigación incluye entrevistas con trabajadores, directivos y autoridades gubernamentales sobre el impacto económico de esta zona.</p>', date: new Date(Date.now() - 150000000), image: 703, author: 'Reportajes NI', readTime: 7 },
+          { id: 28, title: 'Entrevista exclusiva: El futuro de la educación universitaria en Nicaragua', category: 'Premium', excerpt: 'Rector de la UNAN-Managua habla sobre innovación y nuevas carreras.', content: '<p>En esta entrevista exclusiva, el rector de la UNAN-Managua detalla los planes de expansión de la universidad, incluyendo 5 nuevas carreras tecnológicas y convenios internacionales con universidades de Alemania y España.</p><p>También aborda los desafíos de la educación post-pandemia y la digitalización de los programas académicos.</p>', date: new Date(Date.now() - 200000000), image: 704, author: 'Educación 360', readTime: 5 },
+          { id: 29, title: 'Análisis profundo: El sector turístico nicaragüense post-pandemia', category: 'Premium', excerpt: 'Datos exclusivos sobre la recuperación del turismo en 2025.', content: '<p>Un análisis detallado basado en datos oficiales del Instituto Nicaragüense de Turismo (INTUR) muestra una recuperación del 85% del sector turístico comparado con niveles pre-pandemia.</p><p>El estudio identifica las zonas de mayor crecimiento y las estrategias que han funcionado para atraer turismo internacional.</p>', date: new Date(Date.now() - 250000000), image: 705, author: 'Turismo Pro', readTime: 6 },
+
+          // INTERNACIONALES - Más noticias
+          { id: 31, title: 'Cumbre de Presidentes Centroamericanos aborda crisis climática', category: 'Internacionales', excerpt: 'Líderes de la región acuerdan plan de acción conjunto.', content: '<p>Los presidentes de Centroamérica se reunieron en San José, Costa Rica, para acordar un plan regional de acción contra el cambio climático, incluyendo medidas de protección de bosques y gestión de desastres.</p><p>Nicaragua propuso la creación de un fondo regional para la protección de los bosques tropicales.</p>', date: new Date(Date.now() - 86400000), image: 405, author: 'Diplomacia NI', readTime: 4 },
+          { id: 32, title: 'Turistas europeos eligen a Nicaragua como destino emergente 2025', category: 'Internacionales', excerpt: 'Revista alemana destaca la seguridad y belleza natural del país.', content: '<p>La reconocida revista alemana Geo Saison seleccionó a Nicaragua como uno de los destinos turísticos emergentes de 2025, destacando sus volcanes, playas vírgenes y seguridad para visitantes.</p><p>El artículo destaca particularmente Granada, Ometepe y San Juan del Sur como destinos imperdibles.</p>', date: new Date(Date.now() - 120000000), image: 406, author: 'Turismo Global', readTime: 4 },
+          { id: 33, title: 'UE anuncia cooperación millonaria para proyectos sostenibles en Nicaragua', category: 'Internacionales', excerpt: 'Fondos para energías renovables y agricultura orgánica.', content: '<p>La Unión Europea anunció un paquete de cooperación de 45 millones de euros para proyectos de energías renovables y agricultura orgánica en Nicaragua.</p><p>El acuerdo incluye transferencia de tecnología y capacitación para técnicos nicaragüenses en Europa.</p>', date: new Date(Date.now() - 200000000), image: 407, author: 'Cooperación EU', readTime: 5 }
+        ],
+
+        // Noticias activas (se carga desde Firebase o usa ejemplo)
+        news: [],
+
+        state: {
+          currentCategory: 'Todas',
+          searchQuery: '',
+          isPlaying: false,
+          favorites: JSON.parse(localStorage.getItem('ni_favorites') || '[]'),
+          theme: localStorage.getItem('ni_theme') || 'light',
+          views: JSON.parse(localStorage.getItem('ni_views') || '{}')
+        },
+
+        // Contador de vistas
+        getViews(articleId) {
+          return data.state.views[articleId] || 0;
+        },
+
+        incrementViews(articleId) {
+          if (!data.state.views[articleId]) {
+            data.state.views[articleId] = 0;
+          }
+          data.state.views[articleId]++;
+          localStorage.setItem('ni_views', JSON.stringify(data.state.views));
+          return data.state.views[articleId];
+        },
+
+        // Cargar noticias desde Firebase - Informate 3.0
+        async loadFromFirebase() {
+          try {
+            // Esperar a que Firebase esté listo
+            if (!window.firebaseDB) {
+              console.log('⏳ Esperando Firebase...');
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              if (!window.firebaseDB) {
+                console.warn('❌ Firebase no disponible después de esperar');
+                return false;
+              }
+            }
+
+            const { collection, query, orderBy, getDocs, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            
+            const q = query(collection(window.firebaseDB, 'noticias'), orderBy('fecha', 'desc'));
+            
+            console.log('🔍 Cargando noticias desde Firestore...');
+            
+            // PRIMERO: Carga inicial con getDocs (más confiable)
+            const snapshot = await getDocs(q);
+            console.log(`📄 Documentos encontrados: ${snapshot.size}`);
+            
+            const noticiasFirebase = [];
+            
+            snapshot.forEach((doc, index) => {
+              const noticia = doc.data();
+              noticia.id = doc.id;
+              
+              console.log(`📝 Noticia ${index + 1}:`, noticia.titulo || noticia.title || 'Sin título');
+              console.log(`   📸 Campo 'imagen':`, noticia.imagen);
+              console.log(`   📸 Campo 'image':`, noticia.image);
+              
+              // Normalizar campos
+              noticia.title = noticia.titulo || noticia.title || 'Sin título';
+              noticia.category = noticia.categoria || noticia.category || 'Nacionales';
+              noticia.excerpt = noticia.resumen || noticia.excerpt || noticia.content?.substring(0, 150) + '...' || '';
+              noticia.content = noticia.contenido || noticia.content || '';
+              noticia.date = noticia.fecha?.toDate ? noticia.fecha.toDate() : new Date(noticia.fecha || Date.now());
+              noticia.author = noticia.autor || noticia.author || 'Redacción NI';
+              noticia.readTime = noticia.tiempoLectura || noticia.readTime || 3;
+              
+              // Procesar imagen - validar y usar número para picsum si es inválido
+              let rawImage = noticia.imagen || noticia.image;
+              
+              // Validar: si no es string válido o es "NaN", usar número para picsum placeholder
+              if (!rawImage || typeof rawImage !== 'string' || rawImage === 'NaN' || rawImage === 'null' || rawImage === 'undefined') {
+                console.log(`   ⚠️ Imagen inválida en noticia ${noticia.id}, usando placeholder picsum`);
+                rawImage = index + 100; // Número para picsum.photos
+              }
+              
+              console.log(`   📸 Raw image value:`, rawImage);
+              noticia.image = this.processImage(rawImage, index);
+              console.log(`   📸 Processed image:`, noticia.image);
+              
+              noticiasFirebase.push(noticia);
+            });
+            
+            if (noticiasFirebase.length > 0) {
+              console.log(`✅ ${noticiasFirebase.length} noticias cargadas de Firebase`);
+              data.news = noticiasFirebase;
+              controller.renderAll();
+              controller.showToast(`${noticiasFirebase.length} noticias cargadas de Firebase`, 'success');
+            } else {
+              console.log('ℹ️ No hay noticias en Firebase, usando datos de ejemplo');
+              return false;
+            }
+            
+            // LUEGO: Activar listener en tiempo real con onSnapshot
+            onSnapshot(q, (snapshotRealtime) => {
+              const noticiasRealtime = [];
+              snapshotRealtime.forEach((doc, index) => {
+                const noticia = doc.data();
+                noticia.id = doc.id;
+                noticia.title = noticia.titulo || noticia.title || 'Sin título';
+                noticia.excerpt = noticia.resumen || noticia.excerpt || '';
+                noticia.content = noticia.contenido || noticia.content || '<p>Contenido no disponible</p>';
+                noticia.category = noticia.categoria || noticia.category || 'Nacionales';
+                noticia.date = noticia.fecha?.toDate ? noticia.fecha.toDate() : new Date(noticia.fecha || Date.now());
+                noticia.author = noticia.autor || noticia.author || 'Redacción NI';
+                noticia.readTime = noticia.tiempoLectura || noticia.readTime || 3;
+                
+                // Validar imagen en tiempo real
+                let imgValue = noticia.imagen || noticia.image;
+                if (!imgValue || typeof imgValue !== 'string' || imgValue === 'NaN') {
+                  imgValue = index + 100; // Número para picsum.photos placeholder
+                }
+                noticia.image = this.processImage(imgValue, index);
+                
+                noticiasRealtime.push(noticia);
+              });
+              
+              if (noticiasRealtime.length > 0) {
+                console.log(`🔄 Actualización en tiempo real: ${noticiasRealtime.length} noticias`);
+                data.news = noticiasRealtime;
+                controller.renderAll();
+              }
+            });
+            
+            return true;
+          } catch (error) {
+            console.error('❌ Error cargando Firebase:', error);
+            console.error('Detalle:', error.message);
+            controller.showToast('Error al cargar de Firebase', 'error');
+            return false;
+          }
+        },
+
+        // Lista de imágenes que existen localmente (extraído del directorio)
+        imagenesDisponibles: new Set([
+          '1774024854629_655278217_18005774471850823_1069036113521707958_n_jpg.webp',
+          '1774026861491_hue_jpg.webp',
+          '1774027225845_g_png.webp',
+          '1774028977124_chuck_norris_texas_webp.webp',
+          '1774030005635_unnamed_jpg.webp',
+          '1774043060134_haa_webp.webp',
+          '1774045561737_leon_webp.webp',
+          '1774048380338_preso_webp.webp',
+          '1774062057495_122_webp.webp',
+          '1774062696605_ruben_webp.webp',
+          '1774064218765_ruta_webp.webp',
+          '1774064490349_SELE_webp.webp',
+          '1774086809370_incend_webp.webp',
+          '1774088285400_Captura_de_pantalla_2026_03_21_041635_webp.webp',
+          '1774091802394_JSDJS_webp.webp',
+          '1774092678008_SEELE_webp.webp',
+          '1774098956732_63139_webp.webp',
+          '1774116834145_63328_webp.webp',
+          '1774128476900_63435_webp.webp',
+          '1774130407030_63477_webp.webp',
+          '1774132339385_63483_webp.webp',
+          '1774133749920_63513_webp.webp',
+          '1774134733172_63518_webp.webp',
+          '1774136909877_63536_webp.webp',
+          '1774178981611_63963_webp.webp',
+          '1774195735279_64051_webp.webp',
+          '1774196293698_64064_webp.webp',
+          '1774201298947_64131_webp.webp',
+          '1774282483211_aveja_webp.webp',
+          '1774286298283_12_webp.webp',
+          '1774287327911_avion_webp.webp',
+          '1774288701609_jalapa_webp.webp',
+          '1774289649734_grecia_webp.webp',
+          '1774291041891_WhatsApp_Image_2026_03_23_at_12_32_03_PM_webp.webp',
+          '1774291866168_alfabetizacion_webp.webp',
+          '1774295719228_norr_webp.webp',
+          '1774296209489_minsa_webp.webp',
+          '1774296735187_madris_webp.webp',
+          '1774297565420_bar_webp.webp',
+          '1774299337338_bad_webp.webp',
+          '1774300622526_WhatsApp_Image_2026_03_23_at_3_16_23_PM_webp.webp',
+          '1774301873801_657540689_1626468092210788_1787147465049955445_n_webp.webp',
+          '1774320901279_65270_webp.webp',
+          '1774355917105_65537_webp.webp',
+          '1774374057364_WhatsApp_Image_2026_03_24_at_11_37_48_AM_webp.webp',
+          '1774382299072_DarkSword_1300x867_webp.webp',
+          '1774383407437_Policia_Nacional_1_webp.webp',
+          '1774393881872_655479942_1473903334334383_4143752232754479216_n_webp.webp',
+          '1774455200705_silla_webp.webp',
+          '1774456418543_pn_webp.webp',
+          '1774459872277_rivas_webp.webp',
+          '1774461493954_WhatsApp_Image_2026_03_25_at_11_51_51_AM_webp.webp',
+          '1774470174159_sina_webp.webp',
+          '1774472771613_iran_webp.webp',
+          '1774476610060_pn_webp.webp',
+          '1774479210380_peaton_webp.webp',
+          '1774480548263_656710854_1371480261671726_2712724060909172517_n_webp.webp',
+          '1774536365593_nica_webp.webp',
+          '1774560444701_leon_webp.webp',
+          '1774564411657_crimen_webp.webp',
+          '1774567322024_nindiri_webp.webp',
+          '1774574986569_67703_webp.webp',
+          '1774576371421_67713_webp.webp',
+          '1774577788947_67723_webp.webp',
+          '1774578485042_67840_webp.webp',
+          '1774582808832_67864_webp.webp',
+          '1774665327981_68524_webp.webp',
+          '1774666976642_68540_webp.webp',
+          '1774669025820_68547_webp.webp',
+          '1774670328647_68560_webp.webp',
+          '1774683244534_68613_webp.webp',
+          '1774911901066_pn_protected_jpg.webp',
+          '1774971472475_piscina_protected_jpg.webp',
+          '1774972133597_luz_protected_jpg.webp',
+          '1774972694965_managua_protected_jpg.webp',
+          '1774973047767_ricardo_protected_jpg.webp',
+          '1774990388572_esteli_protected_jpg.webp',
+          '1774990790985_dise_ador_protected_jpg.webp',
+          '1774992909013_FERI_protected_jpg.webp',
+          '1774993515743_madriz_protected_jpg.webp',
+          '1774994904090_fuentes_protected_jpg.webp',
+          '1774995994066_copa_protected_jpg.webp',
+          '1774996378384_Shakira_protected_jpg.webp',
+          '1774996632541_italia_protected_jpg.webp',
+          '1774997303476_ejercito_protected_jpg.webp',
+          '1774997514950_WhatsApp_Image_2026_03_31_at_4_51_14_PM_protected_jpg.webp',
+          '1774998353499_Telescopio_Espacial_Hubble_de_la_NAS_protected_jpg.webp',
+          '1774998516873_mujer_protected_jpg.webp',
+          '1774999553418_ulises_protected_jpg.webp',
+          '1774999678817_WhatsApp_Image_2026_03_31_at_5_27_25_PM_protected_jpg.webp',
+          '1775000026972_espa_a_protected_jpg.webp',
+          '1775000252839_haiti_protected_jpg.webp',
+          '1775000906310_motoo_protected_jpg.webp',
+          '1775018081750_72946_protected_jpg.webp',
+          '1775019075378_72973_protected_jpg.webp',
+          '1775019391021_72976_protected_jpg.webp',
+          '1775056477194_CHAVALO_protected_jpg.webp',
+          '1775081451501_chavalooo_protected_jpg.webp',
+          '1775081745624_retroescavadora_protected_jpg.webp',
+          '1775092920621_73846_protected_jpg.webp',
+          '1775093518695_73848_protected_jpg.webp',
+          '1775110944352_san_marco_protected_jpg.webp',
+          '1775112479190_joaooaoa_protected_jpg.webp',
+          '1775168963993_WhatsApp_Image_2026_04_02_at_4_28_04_PM_protected_jpg.webp',
+          '1775180228536_xilo_protected_jpg.webp',
+          '1775180600629_lago_apanas_protected_jpg.webp',
+          '1775180737006_masyyaaa_protected_jpg.webp',
+          '1775180988992_caribe_protected_jpg.webp',
+          '1775181638829_leon_protected_jpg.webp',
+          '1775181841907_jinotega_protected_jpg.webp',
+          '1775182333508_WhatsApp_Image_2026_04_02_at_8_07_16_PM_protected_jpg.webp',
+          '1775182574700_EBRIO_protected_jpg.webp',
+          '1775182833993_FALLLE_protected_jpg.webp',
+          '1775185257151_ahogado_protected_jpg.webp',
+          '1775185840922_pn_protected_jpg.webp',
+          '1775194191464_HACKER_protected_jpg.webp',
+          '1775194577059_NIGER_protected_jpg.webp',
+          '1775234031877_peaton_protected_jpg.webp',
+          '1775238636487_WhatsApp_Image_2026_04_03_at_11_48_34_AM_protected_jpg.webp',
+          '1775239778405_reli_protected_jpg.webp'
+        ]),
+
+        // Procesar imágenes - usar valor de Firebase directamente
+        processImage(imageUrl, index) {
+          if (!imageUrl) return index + 100;
+          if (typeof imageUrl === 'number') return imageUrl;
+          
+          // Si es URL http completa, devolverla tal cual
+          if (typeof imageUrl === 'string' && imageUrl.startsWith('http')) {
+            return imageUrl;
+          }
+          
+          // Usar el nombre del campo imagen de Firebase directamente
+          if (typeof imageUrl === 'string' && imageUrl.includes('.webp')) {
+            const cleanFileName = imageUrl.split('/').pop().split('\\').pop();
+            console.log(`🖼️ Usando imagen de Firebase: ${cleanFileName}`);
+            return cleanFileName;
+          }
+          
+          return index + 100;
+        },
+
+        // Fallback a datos de ejemplo
+        useFallbackData() {
+          console.log('📦 Usando datos de ejemplo');
+          return data.newsExample || [];
+        }
+      };
+
+      // ==========================================
+      // CONTROLLER - Lógica de negocio
+      // ==========================================
+      const controller = {
+        async init() {
+          this.applyTheme(data.state.theme);
+          
+          // Intentar cargar desde Firebase primero
+          const firebaseLoaded = await data.loadFromFirebase();
+          
+          if (!firebaseLoaded || data.news.length === 0) {
+            // Usar datos de ejemplo como fallback
+            data.news = [...data.newsExample];
+            this.renderAll();
+          }
+          
+          this.initWeather(); // Inicializar clima en tiempo real
+          this.setupEventListeners();
+          this.startClock();
+          
+          // Simular carga progresiva
+          setTimeout(() => {
+            document.body.classList.add('loaded');
+          }, 100);
+        },
+
+        // Helper para obtener URL de imagen - jsDelivr desde GitHub
+        getImageUrl(image, width = 400, height = 300) {
+          // Si es número, usar picsum
+          if (typeof image === 'number') {
+            return `https://picsum.photos/seed/${image}/${width}/${height}`;
+          }
+          
+          if (typeof image === 'string' && image.length > 0 && image !== 'NaN') {
+            // Limpiar nombre
+            let cleanName = image.split('/').pop().split('\\').pop();
+            
+            // 🎯 jsDelivr CDN desde GitHub
+            return `https://cdn.jsdelivr.net/gh/Nicmay18/informate-nicaragua@main/images/${cleanName}`;
+          }
+          
+          // Fallback a picsum
+          return `https://picsum.photos/seed/1/${width}/${height}`;
+        },
+
+        // ==========================================
+        // WEATHER SYSTEM - Clima en tiempo real
+        // ==========================================
+        initWeather() {
+          this.loadWeatherForCity(0); // Cargar primera ciudad
+          this.renderWeatherNav(); // Renderizar navegación
+          this.startWeatherRotation(); // Iniciar rotación automática
+        },
+
+        async loadWeatherForCity(cityIndex) {
+          const city = data.cities[cityIndex];
+          if (!city) return;
+
+          // Mostrar estado de carga
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = 'Actualizando...';
+
+          try {
+            // Usar Open-Meteo API (gratuita, sin API key)
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,visibility&timezone=America%2FManagua`;
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Error en API');
+            
+            const weatherData = await response.json();
+            this.displayWeather(city, weatherData.current);
+            
+            // Guardar en cache
+            data.weatherState.weatherData[city.id] = weatherData.current;
+            data.weatherState.lastUpdate = Date.now();
+          } catch (error) {
+            console.error('Error cargando clima:', error);
+            // Usar datos simulados realistas si falla la API
+            this.displaySimulatedWeather(city);
+          }
+        },
+
+        displayWeather(city, current) {
+          const code = current.weather_code || 0;
+          const weatherInfo = data.weatherCodes[code] || data.weatherCodes[0];
+          
+          // Actualizar UI
+          const iconEl = document.getElementById('weatherIcon');
+          iconEl.className = `fas ${weatherInfo.icon} weather-icon ${weatherInfo.class}`;
+          
+          document.getElementById('weatherTemp').textContent = `${Math.round(current.temperature_2m)}°C`;
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = weatherInfo.label;
+          document.getElementById('weatherHumidity').textContent = `${current.relative_humidity_2m || 65}%`;
+          document.getElementById('weatherWind').textContent = `${current.wind_speed_10m || 8} km/h`;
+          document.getElementById('weatherVisibility').textContent = `${((current.visibility || 10000) / 1000).toFixed(1)} km`;
+          document.getElementById('weatherCityIndicator').textContent = `${data.weatherState.currentCityIndex + 1} / ${data.cities.length}`;
+          
+          // Animación de fade
+          const container = document.getElementById('weatherContainer');
+          container.classList.remove('weather-fade');
+          void container.offsetWidth; // Trigger reflow
+          container.classList.add('weather-fade');
+        },
+
+        displaySimulatedWeather(city) {
+          // Datos simulados pero realistas según la región
+          const regionTemps = {
+            'Pacifico': 32,
+            'Norte': 26,
+            'Atlantico': 29,
+            'Zelaya Central': 28,
+            'Nueva Segovia': 25
+          };
+          
+          const baseTemp = regionTemps[city.region] || 28;
+          const variation = Math.floor(Math.random() * 5) - 2;
+          const temp = baseTemp + variation;
+          
+          const conditions = [
+            { code: 0, prob: 0.3 },
+            { code: 1, prob: 0.4 },
+            { code: 3, prob: 0.2 },
+            { code: 61, prob: 0.1 }
+          ];
+          
+          const rand = Math.random();
+          let selectedCode = 0;
+          let cumProb = 0;
+          
+          for (const cond of conditions) {
+            cumProb += cond.prob;
+            if (rand <= cumProb) {
+              selectedCode = cond.code;
+              break;
+            }
+          }
+          
+          const weatherInfo = data.weatherCodes[selectedCode];
+          
+          document.getElementById('weatherIcon').className = `fas ${weatherInfo.icon} weather-icon ${weatherInfo.class}`;
+          document.getElementById('weatherTemp').textContent = `${temp}°C`;
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = weatherInfo.label;
+          document.getElementById('weatherHumidity').textContent = `${60 + Math.floor(Math.random() * 25)}%`;
+          document.getElementById('weatherWind').textContent = `${8 + Math.floor(Math.random() * 15)} km/h`;
+          document.getElementById('weatherVisibility').textContent = `${(8 + Math.random() * 4).toFixed(1)} km`;
+          document.getElementById('weatherCityIndicator').textContent = `${data.weatherState.currentCityIndex + 1} / ${data.cities.length}`;
+        },
+
+        renderWeatherNav() {
+          const nav = document.getElementById('weatherCitiesNav');
+          nav.innerHTML = data.cities.map((city, index) => `
+            <div class="weather-city-dot ${index === 0 ? 'active' : ''}" 
+                 onclick="app.weather.goToCity(${index})" 
+                 title="${city.name}"></div>
+          `).join('');
+        },
+
+        startWeatherRotation() {
+          // Cambiar ciudad cada 10 segundos
+          data.weatherState.autoRotateInterval = setInterval(() => {
+            const nextIndex = (data.weatherState.currentCityIndex + 1) % data.cities.length;
+            this.changeWeatherCity(nextIndex);
+          }, 10000);
+        },
+
+        changeWeatherCity(index) {
+          data.weatherState.currentCityIndex = index;
+          
+          // Actualizar dots de navegación
+          document.querySelectorAll('.weather-city-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+          
+          // Cargar clima de la nueva ciudad
+          this.loadWeatherForCity(index);
+        },
+
+        stopWeatherRotation() {
+          if (data.weatherState.autoRotateInterval) {
+            clearInterval(data.weatherState.autoRotateInterval);
+          }
+        },
+
+        // Weather public API
+        weather: {
+          goToCity: (index) => {
+            controller.stopWeatherRotation();
+            controller.changeWeatherCity(index);
+            controller.startWeatherRotation(); // Reiniciar rotación
+          },
+          refresh: () => {
+            controller.loadWeatherForCity(data.weatherState.currentCityIndex);
+          },
+          pause: () => controller.stopWeatherRotation(),
+          resume: () => controller.startWeatherRotation()
+        },
+
+        applyTheme(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          const btn = document.getElementById('themeBtn');
+          if (btn) {
+            btn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+          }
+          localStorage.setItem('ni_theme', theme);
+        },
+
+        toggleTheme() {
+          const newTheme = data.state.theme === 'light' ? 'dark' : 'light';
+          data.state.theme = newTheme;
+          this.applyTheme(newTheme);
+        },
+
+        filter(category, btn) {
+          data.state.currentCategory = category;
+          
+          // Update UI - si no viene btn (ej: desde footer), buscar el botón correspondiente
+          document.querySelectorAll('.nav-link').forEach(b => {
+            b.classList.remove('active');
+            // Remover aria-current de todos
+            b.removeAttribute('aria-current');
+          });
+          
+          let activeBtn = btn;
+          if (!activeBtn) {
+            // Buscar el botón que coincida con la categoría
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+              const linkText = link.textContent.trim();
+              if (category === 'Todas' && linkText.includes('Inicio')) {
+                activeBtn = link;
+              } else if (linkText.includes(category)) {
+                activeBtn = link;
+              }
+            });
+          }
+          
+          if (activeBtn) {
+            activeBtn.classList.add('active');
+            activeBtn.setAttribute('aria-current', 'page');
+          }
+          
+          this.renderNews();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          // Mostrar toast de confirmación
+          if (category !== 'Todas') {
+            this.showToast(`Mostrando noticias de ${category}`);
+          }
+          
+          // Analytics
+          this.trackEvent('filter', category);
+        },
+
+        search(query) {
+          data.state.searchQuery = query.toLowerCase();
+          this.renderNews();
+        },
+
+        getFilteredNews() {
+          let filtered = data.state.currentCategory === 'Todas' 
+            ? [...data.news] 
+            : data.news.filter(n => n.category === data.state.currentCategory);
+          
+          if (data.state.searchQuery) {
+            filtered = filtered.filter(n => 
+              n.title.toLowerCase().includes(data.state.searchQuery) ||
+              n.excerpt.toLowerCase().includes(data.state.searchQuery)
+            );
+          }
+          
+          return filtered.sort((a, b) => b.date - a.date);
+        },
+
+        openArticle(id) {
+          const article = data.news.find(n => n.id === id) || data.news[0];
+          if (!article) return;
+
+          const modal = document.getElementById('modal');
+          const img = document.getElementById('modalImg');
+          
+          img.src = this.getImageUrl(article.image, 900, 500);
+          document.getElementById('modalCat').textContent = article.category;
+          document.getElementById('modalCat').style.background = data.categories[article.category]?.color || '#c41e3a';
+          document.getElementById('modalTitle').textContent = article.title;
+          document.getElementById('modalTime').innerHTML = `<i class="far fa-calendar" aria-hidden="true"></i> ${this.formatDate(article.date)}`;
+          document.getElementById('modalReadTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${article.readTime || 3} min lectura`;
+          document.getElementById('modalAuthor').innerHTML = `<i class="far fa-user" aria-hidden="true"></i> ${article.author || 'Redacción NI'}`;
+          document.getElementById('modalText').innerHTML = article.content;
+          
+          // Incrementar y mostrar contador de vistas
+          const currentViews = data.incrementViews(article.id);
+          document.getElementById('modalViewsCount').textContent = currentViews.toLocaleString('es-NI');
+          
+          // Actualizar contador en la tarjeta si está visible
+          this.renderNews();
+          
+          this.renderRelated(article);
+          
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          
+          // Focus management for accessibility
+          setTimeout(() => {
+            document.querySelector('.modal-close').focus();
+          }, 100);
+          
+          this.trackEvent('article_view', article.title);
+        },
+
+        closeModal(e) {
+          if (!e || e.target.id === 'modal') {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+            // Return focus to trigger element
+            if (this.lastFocused) {
+              this.lastFocused.focus();
+            }
+          }
+        },
+
+        renderRelated(currentArticle) {
+          const container = document.getElementById('noticiasRelacionadas');
+          const related = data.news
+            .filter(n => n.id !== currentArticle.id && n.category === currentArticle.category)
+            .slice(0, 3);
+          
+          // If not enough related, add trending
+          const trending = data.news
+            .filter(n => n.id !== currentArticle.id && !related.includes(n))
+            .slice(0, 3 - related.length);
+          
+          const combined = [...related, ...trending];
+          
+          container.innerHTML = combined.map(n => `
+            <article class="related-card" onclick="app.openArticle('\${n.id}')">
+              <div class="related-image">
+                <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
+              </div>
+              <div class="related-category" style="color: ${data.categories[n.category]?.color || '#c41e3a'}">${n.category}</div>
+              <h5 class="related-title">${n.title}</h5>
+            </article>
+          `).join('');
+        },
+
+        renderAll() {
+          this.renderHero();
+          this.renderNews();
+          this.renderTrending();
+          this.renderPopulares();
+        },
+
+        renderHero() {
+          const hero = data.news[0];
+          document.getElementById('heroImg').src = this.getImageUrl(hero.image, 800, 600);
+          document.getElementById('heroCat').textContent = hero.category;
+          document.getElementById('heroTitle').textContent = hero.title;
+          document.getElementById('heroExcerpt').textContent = hero.excerpt;
+          document.getElementById('heroTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(hero.date)}`;
+          
+          // Sidebar
+          const sidebar = document.getElementById('heroSidebar');
+          const lateral = data.news.slice(1, 4);
+          
+          sidebar.innerHTML = lateral.map(n => `
+            <article class="side-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+              <div class="side-card-image">
+                <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
+              </div>
+              <div class="side-card-content">
+                <span class="side-card-category" style="color: ${data.categories[n.category]?.color || '#c41e3a'}">${n.category}</span>
+                <h3 class="side-card-title">${n.title}</h3>
+              </div>
+            </article>
+          `).join('');
+        },
+
+        renderNews() {
+          const grid = document.getElementById('newsGrid');
+          const filtered = this.getFilteredNews();
+          const sectionTitle = document.querySelector('.section-title');
+          
+          // Actualizar título según categoría
+          const categoryColors = {
+            'Todas': 'var(--text)',
+            'Sucesos': 'var(--cat-sucesos)',
+            'Nacionales': 'var(--cat-nacionales)',
+            'Deportes': 'var(--cat-deportes)',
+            'Internacionales': 'var(--cat-internacionales)',
+            'Espectáculo': 'var(--cat-espectaculo)',
+            'Premium': 'var(--cat-premium)'
+          };
+          
+          const activeCategory = data.state.currentCategory;
+          if (sectionTitle) {
+            if (activeCategory === 'Todas') {
+              sectionTitle.innerHTML = 'Últimas Noticias';
+            } else {
+              sectionTitle.innerHTML = `<span style="color: ${categoryColors[activeCategory] || 'var(--text)'}"><i class="fas fa-folder-open"></i></span> ${activeCategory}`;
+            }
+          }
+          
+          if (filtered.length === 0) {
+            grid.innerHTML = `
+              <div style="grid-column: 1/-1; text-align: center; padding: var(--space-10);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: var(--space-4); color: var(--text-muted);"></i>
+                <p style="color: var(--text-muted); font-size: 1.125rem; margin-bottom: var(--space-4);">No hay noticias en esta categoría</p>
+                <button class="btn btn-primary" onclick="app.filter('Todas', document.querySelector('.nav-link'))">
+                  <i class="fas fa-home"></i> Ver todas las noticias
+                </button>
+              </div>`;
+            return;
+          }
+          
+          grid.innerHTML = filtered.map(n => `
+            <article class="news-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+              <div class="news-card-image">
+                <img src="${this.getImageUrl(n.image, 400, 300)}" alt="" loading="lazy">
+                <span class="news-card-category" style="background: ${data.categories[n.category]?.color || '#000'}">${n.category}</span>
+              </div>
+              <div class="news-card-content">
+                <h3 class="news-card-title">${n.title}</h3>
+                <p class="news-card-excerpt">${n.excerpt}</p>
+                <div class="news-card-meta">
+                  <span class="news-card-time">
+                    <i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(n.date)}
+                  </span>
+                  <span class="news-card-views ${data.getViews(n.id) > 50 ? 'hot' : ''}" title="${data.getViews(n.id)} lecturas">
+                    <i class="fas fa-eye" aria-hidden="true"></i> ${data.getViews(n.id) > 999 ? (data.getViews(n.id)/1000).toFixed(1) + 'k' : data.getViews(n.id)}
+                  </span>
+                </div>
+              </div>
+            </article>
+          `).join('');
+        },
+
+        renderTrending() {
+          const list = document.getElementById('trendingList');
+          const trending = data.news.slice(0, 5);
+          const ranks = ['gold', 'silver', 'bronze', 'normal', 'normal'];
+          
+          list.innerHTML = trending.map((n, i) => `
+            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+              <div class="trending-rank ${ranks[i]}">${i + 1}</div>
+              <div class="trending-content">
+                <div class="trending-title">${n.title}</div>
+                <div class="trending-meta">${n.category} • ${this.timeAgo(n.date)}</div>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        renderPopulares() {
+          const list = document.getElementById('popularesList');
+          // Ordenar por vistas (más leídas primero)
+          const populares = [...data.news]
+            .sort((a, b) => data.getViews(b.id) - data.getViews(a.id))
+            .slice(0, 4);
+          
+          list.innerHTML = populares.map((n, index) => {
+            const views = data.getViews(n.id);
+            const isHot = views > 20;
+            return `
+            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+              <div style="width: 60px; height: 60px; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; position: relative;">
+                <img src="${this.getImageUrl(n.image, 100, 100)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                ${isHot ? `<div style="position: absolute; top: 2px; right: 2px; background: #dc2626; color: white; font-size: 0.625rem; padding: 1px 4px; border-radius: 4px; font-weight: 700;"><i class="fas fa-fire"></i></div>` : ''}
+              </div>
+              <div class="trending-content">
+                <div class="trending-title">${n.title}</div>
+                <div class="trending-meta">
+                  ${n.category} • <i class="fas fa-eye" style="font-size: 0.75rem; color: var(--color-primary);"></i> ${views}
+                </div>
+              </div>
+            </div>
+          `}).join('');
+        },
+
+        loadMore() {
+          const btn = document.getElementById('loadMoreBtn');
+          const originalText = btn.innerHTML;
+          
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+          btn.disabled = true;
+          
+          // Simular carga de API
+          setTimeout(() => {
+            // En producción, aquí se haría fetch a la API
+            this.showToast('Noticias actualizadas');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 1500);
+        },
+
+        updateIndicators() {
+          // Simular actualización de API
+          this.showToast('Indicadores actualizados');
+          
+          // Animar valores
+          const elements = ['indDolar', 'indEuro', 'indRegular', 'indSuper', 'indDiesel'];
+          elements.forEach(id => {
+            const el = document.getElementById(id);
+            el.style.opacity = '0.5';
+            setTimeout(() => {
+              el.style.opacity = '1';
+            }, 300);
+          });
+        },
+
+        // Radio Controller
+        radio: {
+          audio: document.getElementById('radioAudio'),
+          isPlaying: false,
+          visualizerInterval: null,
+
+          toggle() {
+            if (this.isPlaying) {
+              this.stop();
+            } else {
+              this.play();
+            }
+          },
+
+          play() {
+            const station = document.getElementById('radioStation').value;
+            if (!station) {
+              controller.showToast('Selecciona una emisora primero');
+              return;
+            }
+
+            document.getElementById('radioStatus').textContent = 'Conectando...';
+            this.audio.src = station;
+            
+            this.audio.play().then(() => {
+              this.isPlaying = true;
+              document.getElementById('radioPlayBtn').classList.add('playing');
+              document.getElementById('radioIcon').className = 'fas fa-pause';
+              document.getElementById('radioStatus').textContent = 'Reproduciendo';
+              document.getElementById('visualizer').style.opacity = '1';
+              this.startVisualizer();
+            }).catch(err => {
+              console.error('Error:', err);
+              document.getElementById('radioStatus').textContent = 'Error de conexión';
+              controller.showToast('Error al conectar con la emisora');
+            });
+          },
+
+          stop() {
+            this.audio.pause();
+            this.audio.src = '';
+            this.isPlaying = false;
+            document.getElementById('radioPlayBtn').classList.remove('playing');
+            document.getElementById('radioIcon').className = 'fas fa-play';
+            document.getElementById('radioStatus').textContent = 'Selecciona una emisora';
+            document.getElementById('visualizer').style.opacity = '0';
+            this.stopVisualizer();
+          },
+
+          change() {
+            if (this.isPlaying) {
+              this.stop();
+              setTimeout(() => this.play(), 300);
+            }
+          },
+
+          startVisualizer() {
+            const bars = document.querySelectorAll('.visualizer-bar');
+            this.visualizerInterval = setInterval(() => {
+              bars.forEach(bar => {
+                const height = Math.random() * 20 + 5;
+                bar.style.height = `${height}px`;
+              });
+            }, 100);
+          },
+
+          stopVisualizer() {
+            if (this.visualizerInterval) {
+              clearInterval(this.visualizerInterval);
+              document.querySelectorAll('.visualizer-bar').forEach(bar => {
+                bar.style.height = '5px';
+              });
+            }
+          }
+        },
+
+        // Sharing
+        share(platform) {
+          const url = encodeURIComponent(window.location.href);
+          const text = encodeURIComponent('Nicaragua Informate - Noticias de Nicaragua');
+          
+          const urls = {
+            facebook: `https://facebook.com/sharer/sharer.php?u=${url}`,
+            twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+            whatsapp: `https://wa.me/?text=${text}%20${url}`
+          };
+          
+          window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+        },
+
+        sharePage() {
+          if (navigator.share) {
+            navigator.share({
+              title: 'Nicaragua Informate',
+              text: 'Noticias de Nicaragua al instante',
+              url: window.location.href
+            }).catch(() => {});
+          } else {
+            this.share('facebook');
+          }
+        },
+
+        copyLink() {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            this.showToast('Enlace copiado al portapapeles');
+          });
+        },
+
+        // Utilities
+        showToast(message) {
+          const toast = document.getElementById('toast');
+          toast.textContent = message;
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+          }, 3000);
+        },
+
+        formatDate(date) {
+          return date.toLocaleDateString('es-NI', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          });
+        },
+
+        timeAgo(date) {
+          const seconds = Math.floor((new Date() - date) / 1000);
+          if (seconds < 60) return 'Hace un momento';
+          const minutes = Math.floor(seconds / 60);
+          if (minutes < 60) return `Hace ${minutes} min`;
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return `Hace ${hours} h`;
+          return this.formatDate(date);
+        },
+
+        trackEvent(event, value) {
+          // Aquí iría integración con Google Analytics o similar
+          console.log(`[Analytics] ${event}: ${value}`);
+        },
+
+        setupEventListeners() {
+          // Header scroll effect
+          window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+              header.classList.add('scrolled');
+            } else {
+              header.classList.remove('scrolled');
             }
           });
-        });
-    })
-    .catch(() => {
-      document.getElementById('skeletonContainer').innerHTML = 
-        '<p style="text-align:center;padding:40px;">Error de conexión. <button onclick="location.reload()" style="background:var(--brand-accent);color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;">Recargar</button></p>';
-    });
-}
 
-function renderizarTodo() {
-  renderizarCarousel();
-  renderizarNoticias();
-  renderizarTrending();
-}
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+              this.closeModal();
+            }
+          });
 
-// CAROUSEL
-function renderizarCarousel() {
-  const slides = noticias.slice(0, 5);
-  if (!slides.length) return;
-  
-  const track = document.getElementById('carouselTrack');
-  const dots = document.getElementById('carouselDots');
-  
-  track.innerHTML = slides.map((n, i) => {
-    const img = utils.sanitizeImage(n.imagen, n.categoria);
-    const titulo = utils.escapeHtml(n.titulo || '');
-    return `
-      <a href="noticia.html?id=${n.id}" class="carousel-slide">
-        <div class="carousel-image">
-          <img src="${img}" alt="${titulo}" loading="${i === 0 ? 'eager' : 'lazy'}">
-        </div>
-        <div class="carousel-content">
-          <span class="carousel-badge">${n.categoria || 'ÚLTIMA HORA'}</span>
-          <h3 class="carousel-title">${titulo}</h3>
-        </div>
-      </a>
-    `;
-  }).join('');
-  
-  dots.innerHTML = slides.map((_, i) => 
-    `<button class="dot ${i === 0 ? 'active' : ''}" onclick="goToSlide(${i})"></button>`
-  ).join('');
-  
-  startCarousel();
-}
+          // Save focus before opening modal
+          document.addEventListener('click', (e) => {
+            if (e.target.closest('.news-card, .side-card, .hero-main')) {
+              this.lastFocused = e.target;
+            }
+          });
+        },
 
-function startCarousel() {
-  clearInterval(carouselInterval);
-  carouselInterval = setInterval(nextSlide, 6000);
-}
+        startClock() {
+          // Actualizar "hace X tiempo" cada minuto
+          setInterval(() => {
+            this.renderNews();
+            this.renderHero();
+          }, 60000);
+        },
 
-function nextSlide() {
-  const slides = document.querySelectorAll('.carousel-slide');
-  if (!slides.length) return;
-  carouselIndex = (carouselIndex + 1) % slides.length;
-  updateCarousel();
-}
-
-function prevSlide() {
-  const slides = document.querySelectorAll('.carousel-slide');
-  if (!slides.length) return;
-  carouselIndex = (carouselIndex - 1 + slides.length) % slides.length;
-  updateCarousel();
-}
-
-function goToSlide(index) {
-  carouselIndex = index;
-  updateCarousel();
-  clearInterval(carouselInterval);
-  startCarousel();
-}
-
-function updateCarousel() {
-  const track = document.getElementById('carouselTrack');
-  const dots = document.querySelectorAll('.dot');
-  track.style.transform = `translateX(-${carouselIndex * 100}%)`;
-  dots.forEach((dot, i) => dot.classList.toggle('active', i === carouselIndex));
-}
-
-// NOTICIAS
-function renderizarNoticias() {
-  const grid = document.getElementById('newsGrid');
-  let filtradas = categoriaActual === 'Todas' 
-    ? noticias 
-    : noticias.filter(n => n.categoria === categoriaActual);
-  
-  console.log('🔍 RENDERIZANDO NOTICIAS - VERSION PREMIUM BADGE');
-  console.log('Total noticias:', noticias.length);
-  console.log('Noticias premium:', noticias.filter(n => n.premium === true).length);
-  
-  if (!filtradas.length) {
-    grid.innerHTML = '<p style="text-align:center;color:#64748b;padding:40px;">No hay noticias en esta categoría</p>';
-    return;
-  }
-
-  const visibles = filtradas.slice(0, CONFIG.NOTICIAS_POR_PAGINA * paginaActual);
-  
-  const cards = visibles.map((n, idx) => {
-    const img = utils.sanitizeImage(n.imagen, n.categoria);
-    const titulo = utils.escapeHtml(n.titulo || '');
-    const resumen = utils.escapeHtml((n.resumen || '').substring(0, 150));
-    const fecha = utils.formatDate(n.fecha);
-    
-    if (idx === 0 && categoriaActual === 'Todas' && paginaActual === 1) {
-      return `
-        <a href="noticia.html?id=${n.id}" class="breaking-card">
-          <div class="card-image">
-            <img src="${img}" alt="${titulo}" loading="eager">
-          </div>
-          <div class="breaking-body">
-            <div class="breaking-badge"><i class="fas fa-bolt"></i> Destacada</div>
-            <h2>${titulo}</h2>
-            <p>${resumen}...</p>
-            <div class="breaking-meta">
-              <span><i class="far fa-clock"></i> ${fecha}</span>
-              <span><i class="fas fa-arrow-right"></i> Leer más</span>
-            </div>
-          </div>
-        </a>
-      `;
-    }
-    
-    return `
-      <a href="noticia.html?id=${n.id}" class="news-card">
-        <div class="card-image-wrapper">
-          <img src="${img}" alt="${titulo}" loading="lazy">
-        </div>
-        <div class="card-body">
-          ${n.premium ? '<span class="tag premium"><i class="fas fa-gem"></i> PREMIUM</span>' : `<span class="tag">${n.categoria || 'General'}</span>`}
-          <h3>${titulo}</h3>
-          <p class="news-excerpt">${resumen}...</p>
-          <div class="card-footer">
-            <span><i class="far fa-clock"></i> ${fecha}</span>
-            <span class="read-more">Leer más <i class="fas fa-arrow-right"></i></span>
-          </div>
-        </div>
-      </a>
-    `;
-  });
-  
-  grid.innerHTML = cards.join('');
-  
-  const hayMas = filtradas.length > CONFIG.NOTICIAS_POR_PAGINA * paginaActual;
-  document.getElementById('loadMoreContainer').style.display = hayMas ? 'block' : 'none';
-}
-
-function renderizarTrending() {
-  const top = noticias.slice(0, 5);
-  document.getElementById('trendingContainer').innerHTML = top.map((n, i) => `
-    <div class="trending-item" onclick="location.href='noticia.html?id=${n.id}'">
-      <div class="trending-number">${String(i + 1).padStart(2, '0')}</div>
-      <div>
-        <div class="trending-title">${utils.escapeHtml(n.titulo || '')}</div>
-        <div class="trending-meta">${utils.formatDate(n.fecha)}</div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// EVENTOS
-function cambiarCategoria(cat) {
-  categoriaActual = cat;
-  paginaActual = 1;
-  
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.cat === cat);
-  });
-  
-  document.getElementById('sectionTitle').textContent = 
-    cat === 'Todas' ? '📰 Últimas Noticias' : cat;
-  
-  document.querySelector('.carousel-section').style.display = 
-    cat === 'Todas' ? 'block' : 'none';
-  
-  renderizarNoticias();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-}
-
-function cargarMas() {
-  paginaActual++;
-  renderizarNoticias();
-}
-
-function initEventListeners() {
-  document.querySelectorAll('.menu-btn').forEach(btn => {
-    btn.addEventListener('click', () => cambiarCategoria(btn.dataset.cat));
-  });
-  
-  // Búsqueda
-  const input = document.getElementById('searchInput');
-  const resultados = document.getElementById('searchResults');
-  
-  let debounceTimer;
-  input?.addEventListener('input', (e) => {
-    clearTimeout(debounceTimer);
-    const query = e.target.value.toLowerCase().trim();
-    
-    if (!query) {
-      resultados.style.display = 'none';
-      return;
-    }
-    
-    debounceTimer = setTimeout(() => {
-      const matches = noticias.filter(n => 
-        (n.titulo || '').toLowerCase().includes(query)
-      ).slice(0, 5);
-      
-      resultados.innerHTML = matches.length ? matches.map(n => `
-        <a href="noticia.html?id=${n.id}" style="display:block;padding:12px 16px;border-bottom:1px solid var(--border);text-decoration:none;color:inherit;" 
-           onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='white'">
-          <div style="font-weight:600;font-size:13px;">${utils.escapeHtml(n.titulo)}</div>
-          <div style="font-size:11px;color:var(--text-secondary);margin-top:4px;">${n.categoria}</div>
-        </a>
-      `).join('') : '<div style="padding:16px;color:#64748b;">Sin resultados</div>';
-      
-      resultados.style.display = 'block';
-    }, 200);
-  });
-  
-  document.addEventListener('click', (e) => {
-    if (!input?.contains(e.target) && !resultados?.contains(e.target)) {
-      resultados.style.display = 'none';
-    }
-  });
-}
-
-function suscribirNewsletter(e) {
-  e.preventDefault();
-  alert('¡Gracias por suscribirte!');
-  e.target.reset();
-}
-
-function cerrarSticky() {
-  document.getElementById('premiumSticky').classList.remove('visible');
-  localStorage.setItem('stickyClosed', 'true');
-}
-
-// ============================================================
-// MODO OSCURO
-// ============================================================
-const darkModeToggle = document.getElementById('darkModeToggle');
-
-function applyTheme(theme) {
-  if (theme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    darkModeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-  } else {
-    document.documentElement.removeAttribute('data-theme');
-    darkModeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-  }
-}
-
-// Cargar tema guardado o detectar preferencia del sistema
-const savedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const initialTheme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-applyTheme(initialTheme);
-
-// Toggle modo oscuro
-darkModeToggle.addEventListener('click', () => {
-  const currentTheme = document.documentElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  localStorage.setItem('theme', newTheme);
-  applyTheme(newTheme);
-});
-
-// Detectar cambios en preferencia del sistema
-window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-  if (!localStorage.getItem('theme')) {
-    applyTheme(e.matches ? 'dark' : 'light');
-  }
-});
-
-document.addEventListener('DOMContentLoaded', init);
-</script>
-
-<!-- SERVICE WORKER CON VERSIONADO -->
-<script>
-if ('serviceWorker' in navigator) {
-  // Versión 3.0 para forzar actualización del caché
-  navigator.serviceWorker.register('/sw.js?v=3.0').then(function(registration) {
-    console.log('✅ Service Worker registrado con éxito');
-    
-    // Forzar actualización si hay una nueva versión
-    registration.addEventListener('updatefound', () => {
-      const newWorker = registration.installing;
-      console.log('🔄 Nueva versión del Service Worker detectada');
-      
-      newWorker.addEventListener('statechange', () => {
-        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-          // Hay una nueva versión esperando
-          console.log('⏳ Nueva versión lista para activarse');
-          
-          // Activar automáticamente sin preguntar
-          updateServiceWorker(registration);
+        refresh() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          this.renderAll();
+          this.showToast('Página actualizada');
         }
-      });
-    });
-    
-    // Verificar actualizaciones cada 60 segundos
-    setInterval(() => {
-      registration.update();
-    }, 60000);
-    
-  }).catch(function(error) {
-    console.log('❌ Error al registrar Service Worker:', error);
-  });
-  
-  // Función para actualizar el Service Worker automáticamente
-  function updateServiceWorker(registration) {
-    const worker = registration.waiting;
-    if (worker) {
-      worker.postMessage('SKIP_WAITING');
-      
-      // Escuchar el cambio de controlador para recargar la página
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        console.log('🔄 Recargando página con nueva versión...');
-        window.location.reload();
-      });
-    }
-  }
-}
-</script>
+      };
 
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        controller.init();
+      });
+
+      // Public API
+      return {
+        filter: (cat, btn) => controller.filter(cat, btn),
+        search: (query) => controller.search(query),
+        openArticle: (id) => controller.openArticle(id),
+        closeModal: (e) => controller.closeModal(e),
+        toggleTheme: () => controller.toggleTheme(),
+        loadMore: () => controller.loadMore(),
+        updateIndicators: () => controller.updateIndicators(),
+        share: (platform) => controller.share(platform),
+        sharePage: () => controller.sharePage(),
+        copyLink: () => controller.copyLink(),
+        refresh: () => controller.refresh(),
+        radio: controller.radio,
+        weather: controller.weather
+      };
+    })();
+  </script>
+  <!-- Deploy 2026-04-11 v2 - Image system fix -->
 </body>
 </html>

@@ -1953,18 +1953,18 @@
   <!-- Hero Section -->
   <section class="hero" aria-label="Noticias destacadas">
     <div class="hero-grid">
-      <article class="hero-main" onclick="app.openArticle(0)" role="button" tabindex="0" aria-label="Leer noticia principal">
+      <article class="hero-main" role="button" tabindex="0" aria-label="Cargando noticia principal" id="heroMain" style="display:none;">
         <div class="hero-image-wrap">
-          <img src="https://picsum.photos/seed/hero1/800/600" alt="" class="hero-image" loading="eager" id="heroImg">
+          <img src="" alt="" class="hero-image" loading="eager" id="heroImg">
           <div class="hero-image-overlay"></div>
         </div>
         <div class="hero-content">
-          <span class="hero-category" id="heroCat">Sucesos</span>
-          <h1 class="hero-title" id="heroTitle">Gobierno anuncia nuevas medidas económicas para impulsar el crecimiento</h1>
-          <p class="hero-excerpt" id="heroExcerpt">El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico...</p>
+          <span class="hero-category" id="heroCat"></span>
+          <h1 class="hero-title" id="heroTitle">Cargando...</h1>
+          <p class="hero-excerpt" id="heroExcerpt"></p>
           <div class="hero-meta">
-            <span id="heroTime"><i class="far fa-clock" aria-hidden="true"></i> Hace 2 horas</span>
-            <span class="live-badge">
+            <span id="heroTime"><i class="far fa-clock" aria-hidden="true"></i></span>
+            <span class="live-badge" id="heroBadge" style="display:none;">
               <span class="live-dot"></span>
               Destacado
             </span>
@@ -2960,19 +2960,23 @@
           const hero = data.news[0];
           if (!hero) return;
           
-          // Actualizar contenido
+          // Mostrar hero y actualizar contenido
+          const heroMain = document.getElementById('heroMain');
+          if (heroMain) {
+            heroMain.style.display = '';
+            heroMain.onclick = () => app.openArticle(hero.id);
+            heroMain.setAttribute('aria-label', `Leer ${hero.title}`);
+          }
+          
           document.getElementById('heroImg').src = this.getImageUrl(hero.image, 800, 600);
           document.getElementById('heroCat').textContent = hero.category;
           document.getElementById('heroTitle').textContent = hero.title;
           document.getElementById('heroExcerpt').textContent = hero.excerpt;
           document.getElementById('heroTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(hero.date)}`;
           
-          // Actualizar onclick con ID correcto
-          const heroMain = document.querySelector('.hero-main');
-          if (heroMain) {
-            heroMain.onclick = () => app.openArticle(hero.id);
-            heroMain.setAttribute('aria-label', `Leer ${hero.title}`);
-          }
+          // Mostrar badge destacado
+          const heroBadge = document.getElementById('heroBadge');
+          if (heroBadge) heroBadge.style.display = '';
           
           // Sidebar
           const sidebar = document.getElementById('heroSidebar');

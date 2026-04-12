@@ -1,0 +1,41 @@
+/* ============================================
+   TICKER DE NOTICIAS - Nicaragua Informate
+   ============================================ */
+
+.ticker {
+  background: linear-gradient(90deg, #0f172a, #1e293b);
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 0;
+  overflow: hidden;
+  border-bottom: 3px solid var(--azul);
+}
+
+.ticker-content {
+  display: flex;
+  animation: ticker 30s linear infinite;
+  white-space: nowrap;
+}
+
+.ticker-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 30px;
+  font-weight: 500;
+}
+
+.ticker-item span {
+  color: #60a5fa;
+  font-weight: 700;
+}
+
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Ticker pause on hover */
+.ticker:hover .ticker-content {
+  animation-play-state: paused;
+}

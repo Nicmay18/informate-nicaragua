@@ -1,0 +1,69 @@
+/* ============================================
+   VARIABLES CSS - Nicaragua Informate
+   ============================================ */
+
+:root {
+  /* Colores primarios */
+  --azul: #0d47a1;
+  --azul2: #1565c0;
+  --azul-light: #1976d2;
+  
+  /* Colores de categorías */
+  --sucesos: #c62828;
+  --deportes: #2e7d32;
+  --inter: #6a1b9a;
+  --tecnologia: #0288d1;
+  
+  /* Colores de superficie */
+  --gris: #f8fafc;
+  --bg: #f1f5f9;
+  --surface: #fff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --border: #e2e8f0;
+  --text-dark: #334155;
+  
+  /* Sombras */
+  --sombra: 0 4px 6px -1px rgba(0,0,0,.1);
+  --sombra-md: 0 8px 12px -2px rgba(0,0,0,.1);
+  --sombra-lg: 0 20px 25px -5px rgba(0,0,0,.1);
+  --sombra-xl: 0 25px 50px -12px rgba(0,0,0,.25);
+  
+  /* Bordes */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+  
+  /* Transiciones */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+  
+  /* Layout */
+  --max-width: 1400px;
+  --sidebar-left-width: 200px;
+  --sidebar-right-width: 300px;
+  --gap: 24px;
+  
+  /* Z-index */
+  --z-toast: 9999;
+  --z-modal: 9999;
+  --z-floating: 100;
+  --z-header: 100;
+  --z-menu: 90;
+  --z-radio: 50;
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --border: #334155;
+  --gris: #1e293b;
+  --text-dark: #e2e8f0;
+  --sombra: 0 4px 6px -1px rgba(0,0,0,.4);
+  --sombra-lg: 0 20px 25px -5px rgba(0,0,0,.5);
+}

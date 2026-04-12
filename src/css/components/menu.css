@@ -1,0 +1,132 @@
+/* ============================================
+   MENU DE NAVEGACIÓN - Nicaragua Informate
+   ============================================ */
+
+.menu {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: var(--z-menu);
+  box-shadow: 0 1px 3px rgba(0,0,0,.1);
+  flex-wrap: wrap;
+  transition: background var(--transition-normal);
+}
+
+.menu button {
+  border: none;
+  background: var(--gris);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 20px;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  transition: all 0.3s;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.menu button:hover {
+  background: var(--border);
+  transform: translateY(-2px);
+}
+
+.menu button.active {
+  background: var(--azul);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(13,71,161,.3);
+}
+
+/* Radio section */
+.radio {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  background: linear-gradient(90deg, #dc2626, #b91c1c);
+  color: #fff;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+}
+
+.radio::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  z-index: 1;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+#radioSelect {
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  max-width: 220px;
+}
+
+#radioSelect option {
+  color: #333;
+}
+
+#radioBtn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.5);
+  background: rgba(255,255,255,.15);
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#radioNombre {
+  font-size: 13px;
+  font-weight: 600;
+  max-width: 180px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  z-index: 1;
+}
+
+audio {
+  width: 300px;
+  height: 36px;
+  border-radius: 18px;
+  position: relative;
+  z-index: 1;
+}

@@ -1,0 +1,175 @@
+/* ============================================
+   GRID Y CARDS - Nicaragua Informate
+   ============================================ */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--sombra-lg);
+  border-color: var(--azul);
+}
+
+.card-image-wrapper {
+  position: relative;
+  overflow: hidden;
+  height: 200px;
+  background: var(--border);
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.6) 0%, transparent 50%);
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+.card:hover .card-overlay {
+  opacity: 1;
+}
+
+.card-body {
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.tag {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  color: #fff;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  width: fit-content;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+
+.tag.Sucesos { background: var(--sucesos); }
+.tag.Deportes { background: var(--deportes); }
+.tag.Internacionales { background: var(--inter); }
+.tag.Tecnología,
+.tag.Tecnologia { background: var(--tecnologia); }
+
+.card h3 {
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 12px;
+  color: var(--text);
+  font-weight: 700;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card p {
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex: 1;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.read-more {
+  color: var(--azul);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: gap var(--transition-fast);
+}
+
+.card:hover .read-more {
+  gap: 8px;
+}
+
+/* Load more button */
+.load-more-btn {
+  display: block;
+  margin: 32px auto 0;
+  padding: 14px 40px;
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-full);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 4px 12px rgba(13,71,161,.3);
+}
+
+.load-more-btn:hover {
+  background: var(--azul2);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(13,71,161,.4);
+}
+
+.load-more-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* No results */
+.no-results {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+.no-results .icon {
+  font-size: 56px;
+  margin-bottom: 16px;
+}

@@ -1,0 +1,162 @@
+/* ============================================
+   INDICADORES ECONÓMICOS - Nicaragua Informate
+   ============================================ */
+
+.sidebar-right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-box.indicadores-box {
+  background: var(--surface);
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sombra);
+  border: 1px solid var(--border);
+}
+
+.sidebar-box.indicadores-box h4 {
+  font-size: 16px;
+  margin-bottom: 12px;
+  color: var(--text);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.indicadores-list {
+  display: grid;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-dark);
+}
+
+.indicadores-list .label {
+  color: var(--text-muted);
+  font-weight: 600;
+  margin-right: 6px;
+}
+
+.indicadores-list strong {
+  font-weight: 800;
+  color: var(--azul);
+}
+
+.indicadores-footer {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.refresh-btn {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: 1px solid var(--azul);
+  background: var(--surface);
+  color: var(--azul);
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.refresh-btn:hover {
+  background: var(--azul);
+  color: #fff;
+}
+
+.indicadores-box .small {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Popular box */
+.popular-box {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sombra);
+  transition: background var(--transition-normal);
+}
+
+.popular-box h4 {
+  font-size: 16px;
+  margin-bottom: 16px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* Ad box */
+.ad-box {
+  background: var(--surface);
+  padding: 24px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sombra);
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* WhatsApp CTA */
+.ad-whatsapp {
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color: #fff;
+  padding: 24px;
+  border-radius: 20px;
+  margin-bottom: 32px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(37,211,102,.3);
+  transition: all var(--transition-normal);
+}
+
+.ad-whatsapp:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(37,211,102,.4);
+}
+
+.ad-whatsapp::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,.1) 50%, transparent 70%);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.icon-wa {
+  width: 60px;
+  height: 60px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,.3);
+  animation: waBounce 2s infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes waBounce {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}

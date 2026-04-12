@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nicaragua Informate | Noticias al Instante</title>
+  <meta name="description" content="Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales.">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Nicaragua Informate | Noticias al Instante">
+  <meta property="og:description" content="Noticias de Nicaragua en tiempo real.">
+  <meta property="og:image" content="logo.png">
+  <meta property="og:type" content="website">
+  
+  <!-- Theme -->
+  <meta name="theme-color" content="#0d47a1">
+  
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="public/icons/favicon.svg" type="image/svg+xml">
+  
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="src/css/styles.css">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
+</head>
+<body>
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Contador de Visitas -->
+  <div class="visit-counter" id="visitCounter" aria-label="Visitantes">
+    <i class="fas fa-eye" aria-hidden="true"></i>
+    <span id="visitCount">...</span>
+  </div>
+
+  <!-- Header -->
+  <header class="topbar">
+    <a href="#" class="logo" onclick="location.reload();return false;" aria-label="Nicaragua Informate - Inicio">
+      <div class="logo-3d-wrapper" aria-hidden="true">
+        <div class="logo-shadow"></div>
+        <div class="logo-ring"></div>
+        <div class="logo-main">
+          <img src="logo.png" alt="" onerror="this.src='https://placehold.co/100x100/0d47a1/ffffff?text=NI'">
+        </div>
+        <div class="logo-shine"></div>
+      </div>
+      <div class="logo-text">
+        <span class="logo-title">Nicaragua Informate</span>
+        <span class="logo-subtitle">Tu fuente de noticias</span>
+      </div>
+    </a>
+    <div class="topbar-right">
+      <div class="search-bar" role="search">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input type="search" id="searchInput" placeholder="Buscar noticias..." aria-label="Buscar noticias">
+      </div>
+      <div class="infoTop">
+        <div id="hora" aria-live="polite">--</div>
+        <div id="clima">⛅ --°C</div>
+      </div>
+      <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro" title="Modo oscuro">🌙</button>
+    </div>
+  </header>
+
+  <!-- Ticker de Noticias -->
+  <div class="ticker" role="complementary" aria-label="Noticias en ticker">
+    <div class="ticker-content">
+      <div class="ticker-item"><span>📅</span> Cargando noticias...</div>
+    </div>
+  </div>
+
+  <!-- Menú de Categorías -->
+  <nav class="menu" aria-label="Categorías de noticias">
+    <button class="active" onclick="cambiar('Todas',this)" aria-pressed="true">🔥 Última hora</button>
+    <button onclick="cambiar('Sucesos',this)" aria-pressed="false">🚨 Sucesos</button>
+    <button onclick="cambiar('Deportes',this)" aria-pressed="false">⚽ Deportes</button>
+    <button onclick="cambiar('Internacionales',this)" aria-pressed="false">🌍 Internacionales</button>
+    <button onclick="cambiar('Tecnología',this)" aria-pressed="false">💻 Tecnología</button>
+  </nav>
+
+  <!-- Radio en Vivo -->
+  <div class="radio" role="complementary" aria-label="Radio en vivo">
+    <div class="live-indicator">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      🔴 Radio en Vivo
+    </div>
+    <select id="radioSelect" onchange="cambiarRadio()" aria-label="Seleccionar radio">
+      <option value="">📻 Elige una radio</option>
+      <option value="https://stream.zenolive.com/axr92qawesmtv">📻 Radio Ya</option>
+      <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
+      <option value="https://stream.zeno.fm/primerisima921">📻 La Primerísima</option>
+      <option value="https://stream.zeno.fm/futura913">📻 Radio Futura 91.3</option>
+      <option value="https://stream.zeno.fm/viva983">📻 Viva FM 98.3</option>
+      <option value="https://stream.zeno.fm/romantica987">📻 Romántica 98.7</option>
+      <option value="https://stream.zeno.fm/clasica1019">📻 Clásica 101.9</option>
+      <option value="https://stream.zeno.fm/buenisima931">📻 La Buenísima</option>
+    </select>
+    <button onclick="toggleRadio()" id="radioBtn" aria-label="Play/Pause">
+      <i class="fas fa-play" id="radioIcon"></i>
+    </button>
+    <span id="radioNombre">Selecciona y dale play</span>
+    <audio id="radioAudio" preload="none"></audio>
+  </div>
+
+  <!-- Carrusel Noticias Destacadas -->
+  <div style="background:var(--surface);padding:16px 0;border-bottom:2px solid var(--border);">
+    <div id="carruselNoticias" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" style="max-width:1400px;margin:0 auto;">
+      <div class="carousel-indicators" id="carruselIndicadores"></div>
+      <div class="carousel-inner" id="carruselInner">
+        <div class="carousel-item active">
+          <div style="height:420px;background:var(--border);display:flex;align-items:center;justify-content:center;">
+            <div style="width:40px;height:40px;border:4px solid var(--azul);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carruselNoticias" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carruselNoticias" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Wrapper -->
+  <div class="main-wrapper">
+    <!-- Sidebar Izquierda -->
+    <aside class="sidebar-left" aria-label="Redes sociales y trending">
+      <div class="social-box">
+        <h3>🚀 Síguenos</h3>
+        <p>Noticias de Nicaragua en tiempo real</p>
+        <div class="social-buttons-vertical">
+          <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" rel="noopener" class="social-btn-large facebook" aria-label="Facebook página 1">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook 1
+          </a>
+          <a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" rel="noopener" class="social-btn-large facebook" style="opacity:.9" aria-label="Facebook página 2">
+            <i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook 2
+          </a>
+          <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" rel="noopener" class="social-btn-large whatsapp" aria-label="Canal de WhatsApp">
+            <i class="fab fa-whatsapp" aria-hidden="true"></i> Canal WhatsApp
+          </a>
+          <a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" rel="noopener" class="social-btn-large whatsapp" style="background:#128C7E" aria-label="Grupo de WhatsApp">
+            <i class="fas fa-users" aria-hidden="true"></i> Grupo WhatsApp
+          </a>
+          <a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank" rel="noopener" class="social-btn-large telegram" aria-label="Canal de Telegram">
+            <i class="fab fa-telegram-plane" aria-hidden="true"></i> Telegram
+          </a>
+        </div>
+      </div>
+      <div class="trending-sidebar">
+        <h4><i class="fas fa-fire" aria-hidden="true"></i> Trending</h4>
+        <div id="trendingContainer" aria-label="Noticias en tendencia">
+          <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
+          <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
+          <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Contenido Central -->
+    <main class="content-main" id="mainContent">
+      <div id="portada"></div>
+
+      <div class="ad-whatsapp" onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17','_blank')" role="button" tabindex="0" aria-label="Unirse al canal de WhatsApp">
+        <div class="icon-wa" aria-hidden="true"><i class="fab fa-whatsapp"></i></div>
+        <div style="position:relative;z-index:1;">
+          <div style="font-weight:800;font-size:18px;margin-bottom:4px;">📢 ¿Tienes una noticia?</div>
+          <div style="font-size:14px;opacity:.9;">Envíala a nuestro canal de WhatsApp</div>
+          <div style="font-size:12px;opacity:.7;margin-top:8px;"><i class="fas fa-paper-plane" aria-hidden="true"></i> Click para unirte</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">📰 Más Noticias</h2>
+      <div id="lista" class="grid" aria-live="polite" aria-label="Lista de noticias">
+        <!-- Skeleton loaders -->
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
+        <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
+      </div>
+      <button class="load-more-btn" id="loadMoreBtn" onclick="cargarMas()" style="display:none" aria-label="Cargar más noticias">
+        <i class="fas fa-plus" aria-hidden="true"></i> Cargar más noticias
+      </button>
+    </main>
+
+    <!-- Sidebar Derecha -->
+    <aside class="sidebar-right" aria-label="Noticias populares y publicidad">
+      <div class="sidebar-box indicadores-box">
+        <h4><i class="fas fa-chart-line"></i> Indicadores económicos</h4>
+        <div class="indicadores-list" aria-live="polite" aria-atomic="true">
+          <div><span class="label">Dólar BCN</span> <strong id="ind-dolar">C$ 36.62</strong></div>
+          <div><span class="label">Gasolina Regular</span> <strong id="ind-regular">C$ 47.84</strong> /ltr</div>
+          <div><span class="label">Gasolina Súper</span> <strong id="ind-super">C$ 49.03</strong> /ltr</div>
+          <div><span class="label">Diésel</span> <strong id="ind-diesel">C$ 43.21</strong> /ltr</div>
+        </div>
+        <div class="indicadores-footer">
+          <span>Última actualización:</span> <strong id="ind-last-updated">--:--</strong>
+        </div>
+        <button id="refreshIndicadoresBtn" type="button" class="refresh-btn" aria-label="Actualizar indicadores">Actualizar</button>
+        <p class="small">Se actualiza cada 30 minutos automáticamente.</p>
+      </div>
+      <div class="popular-box">
+        <h4>⭐ Populares</h4>
+        <div id="popularPosts">
+          <div class="skeleton skeleton-line medium" style="margin-bottom:12px;height:60px;border-radius:8px"></div>
+          <div class="skeleton skeleton-line medium" style="margin-bottom:12px;height:60px;border-radius:8px"></div>
+          <div class="skeleton skeleton-line medium" style="height:60px;border-radius:8px"></div>
+        </div>
+      </div>
+      <div class="ad-box">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="8408634019" data-ad-format="auto" data-full-width-responsive="true"></ins>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Modal -->
+  <div id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitulo" onclick="cerrarModal()">
+    <div id="modalContent" onclick="event.stopPropagation()">
+      <button class="close-btn" onclick="cerrarModal()" aria-label="Cerrar noticia">×</button>
+      <div class="modal-header">
+        <img id="mImg" src="" alt="">
+        <div class="modal-title-wrap">
+          <span id="mCat" class="tag"></span>
+          <h2 id="mTitulo" style="font-size:32px;font-weight:800;line-height:1.2;margin-top:12px;"></h2>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-meta">
+          <span id="mFecha">📅 </span>
+          <span>⏱️ <span id="mReadTime">3</span> min lectura</span>
+        </div>
+        <div class="modal-text" id="mCont"></div>
+        <div style="margin-top:32px;padding-top:24px;border-top:2px solid var(--border);">
+          <h4 style="margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:8px;">
+            <i class="fas fa-share-alt" aria-hidden="true"></i> Compartir Noticia
+          </h4>
+          <div class="share-grid">
+            <button class="share-btn" onclick="shareFacebook()" style="background:#1877f2" aria-label="Compartir en Facebook"><i class="fab fa-facebook-f" style="font-size:20px" aria-hidden="true"></i>Facebook</button>
+            <button class="share-btn" onclick="shareTwitter()" style="background:#1da1f2" aria-label="Compartir en Twitter"><i class="fab fa-twitter" style="font-size:20px" aria-hidden="true"></i>Twitter</button>
+            <button class="share-btn" onclick="shareWhatsApp()" style="background:#25d366" aria-label="Compartir en WhatsApp"><i class="fab fa-whatsapp" style="font-size:20px" aria-hidden="true"></i>WhatsApp</button>
+            <button class="share-btn" onclick="copyLink()" style="background:#64748b" aria-label="Copiar enlace"><i class="fas fa-link" style="font-size:20px" aria-hidden="true"></i>Copiar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón Flotante -->
+  <button class="floating-share" onclick="sharePage()" aria-label="Compartir página">
+    <i class="fas fa-share-alt" aria-hidden="true"></i>
+  </button>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">
+          <div class="footer-logo-3d" aria-hidden="true">
+            <div class="footer-logo-shadow"></div>
+            <div class="footer-logo-main"><img src="logo.png" alt="" onerror="this.src='https://placehold.co/100x100/0d47a1/ffffff?text=NI'"></div>
+          </div>
+          Nicaragua Informate
+        </div>
+        <p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales.</p>
+      </div>
+      <div class="footer-section">
+        <h4>📂 Secciones</h4>
+        <ul class="footer-links">
+          <li onclick="cambiar('Todas',document.querySelector('.menu button'))">→ Última Hora</li>
+          <li onclick="cambiar('Sucesos',document.querySelectorAll('.menu button')[1])">→ Sucesos</li>
+          <li onclick="cambiar('Deportes',document.querySelectorAll('.menu button')[2])">→ Deportes</li>
+          <li onclick="cambiar('Internacionales',document.querySelectorAll('.menu button')[3])">→ Internacionales</li>
+          <li onclick="cambiar('Tecnología',document.querySelectorAll('.menu button')[4])">→ Tecnología</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>📊 Indicadores</h4>
+        <ul class="footer-links">
+          <li>💵 Dólar: C$36.62</li>
+          <li>⛽ Gasolina: C$47.84</li>
+          <li>🛢 Diésel: C$43.21</li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>📢 Síguenos</h4>
+        <ul class="footer-links">
+          <li onclick="window.open('https://www.facebook.com/profile.php?id=61578261125687','_blank')"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook 1</li>
+          <li onclick="window.open('https://www.facebook.com/profile.php?id=61577962970892','_blank')"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook 2</li>
+          <li onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17','_blank')"><i class="fab fa-whatsapp" aria-hidden="true"></i> Canal WhatsApp</li>
+          <li onclick="window.open('https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv','_blank')"><i class="fas fa-users" aria-hidden="true"></i> Grupo WhatsApp</li>
+          <li onclick="window.open('https://t.me/fHHjncJqMQM3NjZh','_blank')"><i class="fab fa-telegram" aria-hidden="true"></i> Telegram</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
+      <div style="display:flex;gap:24px;">
+        <a href="privacidad.html">Privacidad</a>
+        <a href="terminos.html">Términos</a>
+        <a href="cookies.html">Cookies</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="src/js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

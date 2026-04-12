@@ -1,0 +1,61 @@
+/* ============================================
+   NICARAGUA INFORMATE - ESTILOS PRINCIPALES
+   Sistema CSS modular y profesional
+   ============================================ */
+
+/* Base */
+@import 'base/variables.css';
+@import 'base/reset.css';
+@import 'base/responsive.css';
+
+/* Componentes */
+@import 'components/topbar.css';
+@import 'components/menu.css';
+@import 'components/ticker.css';
+@import 'components/hero.css';
+@import 'components/grid-cards.css';
+@import 'components/skeleton.css';
+@import 'components/social-sidebar.css';
+@import 'components/indicadores.css';
+@import 'components/modal.css';
+@import 'components/footer.css';
+
+/* Layout principal */
+.main-wrapper {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: var(--sidebar-left-width) 1fr var(--sidebar-right-width);
+  gap: var(--gap);
+  padding: 24px;
+}
+
+.sidebar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.content-main {
+  min-width: 0;
+}
+
+/* Utilidades */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.hidden { display: none !important; }
+.invisible { visibility: hidden; }

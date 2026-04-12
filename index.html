@@ -1,1140 +1,3364 @@
-<!DOCTYPE html>
-<html lang="es">
+   <!DOCTYPE html>
+<html lang="es" data-theme="light">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Nicaragua Informate | Noticias al Instante</title>
-<meta name="description" content="Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales.">
-<meta property="og:title" content="Nicaragua Informate | Noticias al Instante">
-<meta property="og:description" content="Noticias de Nicaragua en tiempo real.">
-<meta property="og:image" content="logo.png">
-<meta property="og:type" content="website">
-<meta name="theme-color" content="#0d47a1">
-<link rel="manifest" href="manifest.json">
-<link rel="icon" href="public/icons/favicon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-XXXXXXXXXX');</script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4115203339551838" crossorigin="anonymous"></script>
-<style>
-:root{
-  --azul:#0d47a1;--azul2:#1565c0;--sucesos:#c62828;--deportes:#2e7d32;--inter:#6a1b9a;--tecnologia:#0288d1;
-  --gris:#f8fafc;--sombra:0 4px 6px -1px rgba(0,0,0,.1);--sombra-lg:0 20px 25px -5px rgba(0,0,0,.1);
-  --bg:#f1f5f9;--surface:#fff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;
-}
-[data-theme="dark"]{
-  --bg:#0f172a;--surface:#1e293b;--text:#f1f5f9;--text-muted:#94a3b8;--border:#334155;
-  --gris:#1e293b;--sombra:0 4px 6px -1px rgba(0,0,0,.4);--sombra-lg:0 20px 25px -5px rgba(0,0,0,.5);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;transition:background .3s,color .3s}
-</style>
-<style>
-/* TOAST */
-.toast-container{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;gap:8px;pointer-events:none}
-.toast{background:#1e293b;color:#fff;padding:12px 20px;border-radius:12px;font-size:14px;font-weight:600;display:flex;align-items:center;gap:10px;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:toastIn .3s ease-out;pointer-events:auto}
-.toast.success{background:#059669}.toast.error{background:#dc2626}
-@keyframes toastIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes toastOut{from{opacity:1;transform:translateY(0)}to{opacity:0;transform:translateY(20px)}}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#c41e3a">
+  <meta name="description" content="Nicaragua Informate - Portal periodístico líder. Cobertura en tiempo real de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium.">
+  <meta name="keywords" content="noticias nicaragua, sucesos, nacionales, deportes, internacionales, espectáculo, premium, managua, león, granada">
+  <meta name="author" content="Nicaragua Informate">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nicaragua Informate | Periodismo de Precisión">
+  <meta property="og:description" content="Periodismo de Precisión. Noticias al instante de Nicaragua y el mundo.">
+  <meta property="og:image" content="https://picsum.photos/seed/og/1200/630">
+  
+  <title>Nicaragua Informate | Periodismo de Precisión</title>
+  
+  <!-- Preconnect para performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://picsum.photos">
+  
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer">
 
-/* SKELETON */
-.skeleton{background:linear-gradient(90deg,var(--border) 25%,var(--gris) 50%,var(--border) 75%);background-size:200% 100%;animation:shimmer 1.5s infinite;border-radius:8px}
-@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.skeleton-card{background:var(--surface);border-radius:16px;overflow:hidden;border:1px solid var(--border)}
-.skeleton-img{height:200px;width:100%}
-.skeleton-body{padding:20px;display:flex;flex-direction:column;gap:10px}
-.skeleton-line{height:14px;border-radius:4px}
-.skeleton-line.short{width:60%}
-.skeleton-line.medium{width:80%}
+  <!-- Firebase SDK - Informate 3.0 -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
 
-/* VISIT COUNTER */
-.visit-counter{position:fixed;top:20px;right:20px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;padding:10px 18px;border-radius:20px;font-size:13px;font-weight:600;box-shadow:0 4px 12px rgba(16,185,129,.3);z-index:1000;display:flex;align-items:center;gap:8px}
-.visit-counter i{animation:pulse 1.5s infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.2)}}
+    // Configuración Firebase - Proyecto Real
+    const firebaseConfig = {
+      apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
+      authDomain: "informate-instant-nicaragua.firebaseapp.com",
+      projectId: "informate-instant-nicaragua",
+      storageBucket: "informate-instant-nicaragua.firebasestorage.app",
+      messagingSenderId: "24988088146",
+      appId: "1:24988088146:web:d26a207508da055668ec8b",
+      measurementId: "G-W1B5J61WEP"
+    };
 
-/* TICKER */
-.ticker{background:linear-gradient(90deg,#0f172a,#1e293b);color:#fff;font-size:13px;padding:10px 0;overflow:hidden;border-bottom:3px solid var(--azul)}
-.ticker-content{display:flex;animation:ticker 30s linear infinite;white-space:nowrap}
-.ticker-item{display:inline-flex;align-items:center;gap:8px;padding:0 30px;font-weight:500}
-.ticker-item span{color:#60a5fa;font-weight:700}
-@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-</style>
-<style>
-/* TOPBAR */
-.topbar{background:var(--surface);padding:16px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:var(--sombra);position:relative;z-index:100;transition:background .3s}
-.logo{display:flex;align-items:center;gap:12px;font-weight:800;font-size:20px;color:var(--azul);text-decoration:none;perspective:1000px}
-.logo-3d-wrapper{width:55px;height:55px;position:relative;transform-style:preserve-3d;animation:floatLogo 4s ease-in-out infinite}
-.logo-shadow{position:absolute;width:45px;height:45px;background:var(--azul);border-radius:50%;bottom:-5px;left:5px;filter:blur(12px);opacity:.4;transform:translateZ(-20px);animation:shadowMove 4s ease-in-out infinite}
-.logo-ring{position:absolute;inset:-3px;border:3px solid var(--azul);border-radius:50%;transform:translateZ(-10px);box-shadow:0 0 0 2px rgba(13,71,161,.2)}
-.logo-main{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#fff;transform:translateZ(0);box-shadow:0 8px 25px rgba(13,71,161,.3),inset 0 -3px 10px rgba(0,0,0,.1);border:3px solid var(--azul)}
-.logo-main img{width:100%;height:100%;object-fit:cover;display:block}
-.logo-shine{position:absolute;inset:0;border-radius:50%;background:linear-gradient(135deg,rgba(255,255,255,.4) 0%,transparent 50%);transform:translateZ(1px);pointer-events:none}
-.logo:hover .logo-3d-wrapper{animation:none;transform:rotateY(20deg) rotateX(-10deg);transition:transform .4s ease}
-.logo:hover .logo-shadow{animation:none;transform:translateZ(-30px) translateX(-10px);opacity:.2}
-.logo:hover .logo-main{box-shadow:0 15px 35px rgba(13,71,161,.4),inset 0 -3px 10px rgba(0,0,0,.1)}
-@keyframes floatLogo{0%,100%{transform:translateY(0) rotateY(-5deg)}50%{transform:translateY(-8px) rotateY(5deg)}}
-@keyframes shadowMove{0%,100%{transform:translateZ(-20px) scale(1);opacity:.4}50%{transform:translateZ(-20px) scale(.8);opacity:.2}}
-.logo-text{display:flex;flex-direction:column}
-.logo-title{font-size:20px;font-weight:800;color:var(--azul);line-height:1.2;text-shadow:0 2px 4px rgba(0,0,0,.1)}
-.logo-subtitle{font-size:12px;color:var(--text-muted);font-weight:500}
-.topbar-right{display:flex;align-items:center;gap:16px}
-.infoTop{text-align:right;font-size:14px}
-#hora{font-weight:700;color:var(--azul);font-size:16px}
-#clima{color:var(--text-muted);font-size:13px;margin-top:4px;display:flex;align-items:center;justify-content:flex-end;gap:6px}
+    // Inicializar Firebase
+    const firebaseApp = initializeApp(firebaseConfig);
+    const db = getFirestore(firebaseApp);
+    const storage = getStorage(firebaseApp);
 
-/* DARK MODE TOGGLE */
-.dark-toggle{background:none;border:2px solid var(--border);border-radius:50%;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--text-muted);transition:all .2s}
-.dark-toggle:hover{border-color:var(--azul);color:var(--azul)}
+    // Exponer para uso global
+    window.firebaseDB = db;
+    window.firebaseStorage = storage;
+    window.firebaseApp = firebaseApp;
 
-/* SEARCH BAR */
-.search-bar{display:flex;align-items:center;gap:8px;background:var(--gris);border:2px solid var(--border);border-radius:9999px;padding:8px 16px;transition:all .2s;max-width:220px}
-.search-bar:focus-within{border-color:var(--azul);background:var(--surface);box-shadow:0 0 0 3px rgba(13,71,161,.1)}
-.search-bar input{border:none;background:none;outline:none;font-size:14px;color:var(--text);width:100%}
-.search-bar input::placeholder{color:var(--text-muted)}
-.search-bar i{color:var(--text-muted);font-size:14px}
-</style>
-<style>
-/* MENU */
-.menu{display:flex;justify-content:center;gap:8px;padding:16px;background:var(--surface);position:sticky;top:0;z-index:90;box-shadow:0 1px 3px rgba(0,0,0,.1);flex-wrap:wrap;transition:background .3s}
-.menu button{border:none;background:var(--gris);font-weight:600;cursor:pointer;padding:10px 20px;color:var(--text-muted);border-radius:9999px;transition:all .3s;font-size:14px;display:flex;align-items:center;gap:6px}
-.menu button:hover{background:var(--border);transform:translateY(-2px)}
-.menu button.active{background:var(--azul);color:#fff;box-shadow:0 4px 12px rgba(13,71,161,.3)}
+    console.log('🔥 Firebase Informate 3.0 inicializado');
+  </script>
 
-/* RADIO */
-.radio{display:flex;justify-content:center;align-items:center;gap:16px;padding:16px;background:linear-gradient(90deg,#dc2626,#b91c1c);color:#fff;font-weight:600;position:relative;overflow:hidden}
-.radio::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
-.live-indicator{display:flex;align-items:center;gap:8px;font-size:14px;text-transform:uppercase;letter-spacing:1px;position:relative;z-index:1}
-.pulse-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:pulse 2s infinite}
-audio{width:300px;height:36px;border-radius:18px;position:relative;z-index:1}
+  <style>
+    /* ============================================
+       DESIGN SYSTEM - NICARAGUA INFORMATE PRO
+       ============================================ */
+    :root {
+      /* Typography Scale */
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      /* Color Palette - Editorial Premium */
+      --color-primary: #c41e3a;
+      --color-primary-hover: #9b1830;
+      --color-secondary: #1a1a2e;
+      --color-accent: #e63946;
+      
+      /* Category Colors */
+      --cat-sucesos: #dc2626;
+      --cat-nacionales: #1e40af;
+      --cat-deportes: #047857;
+      --cat-internacionales: #7c3aed;
+      --cat-espectaculo: #db2777;
+      --cat-premium: #d97706;
+      --cat-economia: #0369a1;
+      
+      /* Neutral Scale */
+      --gray-50: #fafaf9;
+      --gray-100: #f5f5f4;
+      --gray-200: #e7e5e4;
+      --gray-300: #d6d3d1;
+      --gray-400: #a8a29e;
+      --gray-500: #78716c;
+      --gray-600: #57534e;
+      --gray-700: #44403c;
+      --gray-800: #292524;
+      --gray-900: #1c1917;
+      
+      /* Semantic Colors */
+      --bg: var(--gray-50);
+      --surface: #ffffff;
+      --surface-elevated: #ffffff;
+      --text: var(--gray-900);
+      --text-secondary: var(--gray-600);
+      --text-muted: var(--gray-500);
+      --border: var(--gray-200);
+      --border-light: var(--gray-100);
+      
+      /* Shadows - Depth System */
+      --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+      --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+      --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+      
+      /* Radii */
+      --radius-sm: 4px;
+      --radius: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+      
+      /* Spacing Scale */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      
+      /* Transitions */
+      --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+      
+      /* Layout */
+      --max-width: 1400px;
+      --header-height: 80px;
+    }
 
-/* LAYOUT */
-.main-wrapper{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:200px 1fr 300px;gap:24px;padding:24px}
-.sidebar-left{display:flex;flex-direction:column;gap:20px}
+    [data-theme="dark"] {
+      --bg: var(--gray-900);
+      --surface: var(--gray-800);
+      --surface-elevated: #3a3633;
+      --text: var(--gray-50);
+      --text-secondary: var(--gray-300);
+      --text-muted: var(--gray-400);
+      --border: var(--gray-700);
+      --border-light: var(--gray-800);
+    }
 
-/* SOCIAL BOX */
-.social-box{background:linear-gradient(135deg,var(--azul),var(--azul2));color:#fff;padding:24px;border-radius:16px;box-shadow:var(--sombra-lg);text-align:center}
-.social-box h3{font-size:18px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;gap:8px}
-.social-box p{font-size:13px;opacity:.9;margin-bottom:20px;line-height:1.5}
-.social-buttons-vertical{display:flex;flex-direction:column;gap:10px}
-.social-btn-large{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border-radius:10px;color:#fff;text-decoration:none;font-weight:600;font-size:14px;transition:all .2s}
-.social-btn-large:hover{transform:translateX(5px);box-shadow:0 4px 12px rgba(0,0,0,.2)}
-.social-btn-large.facebook{background:#1877F2}
-.social-btn-large.whatsapp{background:#25D366}
-.social-btn-large.telegram{background:#0088cc}
+    /* ============================================
+       RESET & BASE
+       ============================================ */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-/* TRENDING SIDEBAR */
-.trending-sidebar h4{font-size:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.trending-item{padding:16px 16px 16px 36px;background:var(--surface);border-radius:12px;margin-bottom:12px;box-shadow:var(--sombra);cursor:pointer;transition:all .2s;border-left:3px solid transparent;position:relative}
-.trending-item:hover{border-left-color:var(--azul);transform:translateX(4px);box-shadow:var(--sombra-lg)}
-.trending-title{font-weight:600;line-height:1.4;color:var(--text);font-size:13px;display:-webkit-box;-webkit-line-clamp:3;line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.trending-meta{font-size:11px;color:#94a3b8;margin-top:6px;display:flex;align-items:center;gap:6px;font-weight:500}
-.trending-number{position:absolute;left:-10px;top:14px;width:26px;height:26px;border-radius:50%;color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.trending-item:nth-child(1) .trending-number{background:linear-gradient(135deg,#ef4444,#dc2626);animation:pulse-fire 2s infinite}
-.trending-item:nth-child(2) .trending-number{background:linear-gradient(135deg,#f97316,#ea580c)}
-.trending-item:nth-child(3) .trending-number{background:linear-gradient(135deg,#eab308,#ca8a04)}
-@keyframes pulse-fire{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.7)}50%{box-shadow:0 0 0 10px rgba(239,68,68,0)}}
-</style>
-<style>
-/* CONTENT */
-.content-main{min-width:0}
-.hero-layout{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;margin-bottom:32px}
-.hero-main{position:relative;border-radius:20px;overflow:hidden;min-height:480px;color:#fff;cursor:pointer;box-shadow:var(--sombra-lg);transition:transform .3s;background:#1e293b}
-.hero-main:hover{transform:translateY(-4px)}
-.hero-main img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.hero-main:hover img{transform:scale(1.05)}
-.hero-main::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.1) 100%)}
-.hero-content{position:absolute;bottom:0;left:0;right:0;padding:32px;z-index:2}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;color:#fff;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,.3)}
-.hero-content h2{margin:0 0 16px;font-size:32px;line-height:1.2;font-weight:800;text-shadow:0 2px 4px rgba(0,0,0,.3)}
-.hero-content p{font-size:16px;opacity:.95;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.hero-meta{display:flex;gap:20px;margin-top:20px;font-size:13px;opacity:.8}
-.hero-side{display:flex;flex-direction:column;gap:16px}
-.side-item{display:flex;gap:14px;background:var(--surface);border-radius:16px;overflow:hidden;box-shadow:var(--sombra);cursor:pointer;transition:all .3s;border:1px solid var(--border);height:calc(33.333% - 11px)}
-.side-item:hover{transform:translateX(8px);box-shadow:var(--sombra-lg);border-color:var(--azul)}
-.side-item img{width:120px;height:100%;object-fit:cover;transition:transform .3s}
-.side-item:hover img{transform:scale(1.1)}
-.side-content{padding:16px;display:flex;flex-direction:column;justify-content:center;flex:1}
-.side-tag{display:inline-block;padding:4px 10px;border-radius:6px;font-size:11px;color:#fff;font-weight:700;text-transform:uppercase;margin-bottom:8px;width:fit-content}
-.side-item h3{font-size:15px;line-height:1.4;font-weight:700;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.section-title{font-size:20px;font-weight:800;color:var(--text);margin:32px 0 20px;display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:3px solid var(--border)}
-.section-title::after{content:"";flex:1;height:3px;background:linear-gradient(90deg,var(--azul),transparent);border-radius:2px}
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-/* GRID */
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.card{background:var(--surface);border-radius:16px;overflow:hidden;box-shadow:var(--sombra);cursor:pointer;display:flex;flex-direction:column;transition:all .3s;border:1px solid var(--border);position:relative}
-.card:hover{transform:translateY(-8px);box-shadow:var(--sombra-lg);border-color:var(--azul)}
-.card-image-wrapper{position:relative;overflow:hidden;height:200px;background:var(--border)}
-.card img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
-.card:hover img{transform:scale(1.1)}
-.card-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 50%);opacity:0;transition:opacity .3s}
-.card:hover .card-overlay{opacity:1}
-.card-body{padding:20px;flex:1;display:flex;flex-direction:column}
-.tag{display:inline-block;padding:4px 12px;border-radius:20px;font-size:11px;color:#fff;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;width:fit-content;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-.tag.Sucesos{background:var(--sucesos)}.tag.Deportes{background:var(--deportes)}.tag.Internacionales{background:var(--inter)}.tag.Tecnología,.tag.Tecnologia{background:var(--tecnologia)}
-.card h3{font-size:18px;line-height:1.4;margin-bottom:12px;color:var(--text);font-weight:700;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.card p{color:var(--text-muted);font-size:14px;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1}
-.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:16px;border-top:1px solid var(--border);font-size:12px;color:#94a3b8}
-.read-more{color:var(--azul);font-weight:700;display:flex;align-items:center;gap:4px;transition:gap .2s}
-.card:hover .read-more{gap:8px}
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
 
-/* LOAD MORE */
-.load-more-btn{display:block;margin:32px auto 0;padding:14px 40px;background:var(--azul);color:#fff;border:none;border-radius:9999px;font-size:15px;font-weight:700;cursor:pointer;transition:all .3s;box-shadow:0 4px 12px rgba(13,71,161,.3)}
-.load-more-btn:hover{background:var(--azul2);transform:translateY(-2px);box-shadow:0 8px 20px rgba(13,71,161,.4)}
-.load-more-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
 
-/* NO RESULTS */
-.no-results{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--text-muted)}
-.no-results .icon{font-size:56px;margin-bottom:16px}
-</style>
-<style>
-/* SIDEBAR RIGHT */
-.sidebar-right{display:flex;flex-direction:column;gap:24px}
-.sidebar-box.indicadores-box{background:var(--surface);padding:18px; border-radius:16px;box-shadow:var(--sombra);border:1px solid var(--border);}
-.sidebar-box.indicadores-box h4{font-size:16px;margin-bottom:12px;color:var(--text);font-weight:700;display:flex;align-items:center;gap:8px;}
-.indicadores-list{display:grid;gap:8px;font-size:14px;color:var(--text-dark);}
-.indicadores-list .label{color:var(--text-muted);font-weight:600;margin-right:6px;}
-.indicadores-list strong{font-weight:800;color:var(--azul);}
-.indicadores-footer{margin-top:10px;font-size:13px;color:var(--text-muted);display:flex;justify-content:space-between;align-items:center;gap:8px;}
-.refresh-btn{margin-top:10px;padding:8px 12px;border:1px solid var(--azul);background:#fff;color:var(--azul);font-weight:700;border-radius:8px;cursor:pointer;transition:all .2s;}
-.refresh-btn:hover{background:var(--azul);color:#fff;}
-.indicadores-box .small{margin-top:12px;font-size:12px;color:var(--text-muted);}
-.popular-box{background:var(--surface);padding:24px;border-radius:16px;box-shadow:var(--sombra);transition:background .3s}
-.popular-box h4{font-size:16px;margin-bottom:16px;color:var(--text);font-weight:700}
-.ad-box{background:var(--surface);padding:24px;border-radius:16px;box-shadow:var(--sombra);min-height:250px;display:flex;align-items:center;justify-content:center}
-.ad-whatsapp{background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;padding:24px;border-radius:20px;margin-bottom:32px;cursor:pointer;display:flex;align-items:center;gap:20px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(37,211,102,.3);transition:all .3s}
-.ad-whatsapp:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(37,211,102,.4)}
-.ad-whatsapp::before{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.1) 50%,transparent 70%);animation:shine 3s infinite}
-@keyframes shine{0%{transform:translateX(-100%) rotate(45deg)}100%{transform:translateX(100%) rotate(45deg)}}
-.icon-wa{width:60px;height:60px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.3);animation:waBounce 2s infinite;position:relative;z-index:1}
-@keyframes waBounce{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* MODAL */
-#modal{position:fixed;inset:0;background:rgba(15,23,42,.9);display:none;justify-content:center;align-items:center;z-index:9999;padding:20px;backdrop-filter:blur(8px)}
-#modal.open{display:flex}
-#modalContent{background:var(--surface);width:100%;max-width:900px;max-height:90vh;overflow-y:auto;border-radius:20px;position:relative;animation:modalIn .3s ease-out;box-shadow:0 25px 50px -12px rgba(0,0,0,.5)}
-@keyframes modalIn{from{opacity:0;transform:scale(.9) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
-.modal-header{position:relative;height:400px;overflow:hidden;background:#1e293b}
-.modal-header img{width:100%;height:100%;object-fit:cover}
-.modal-header::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8) 0%,transparent 60%)}
-.modal-title-wrap{position:absolute;bottom:0;left:0;right:0;padding:40px;color:#fff;z-index:2}
-.modal-body{padding:32px 40px}
-.modal-meta{display:flex;gap:24px;color:var(--text-muted);font-size:14px;margin-bottom:24px;padding-bottom:24px;border-bottom:2px solid var(--border)}
-.modal-text{font-size:17px;line-height:1.8;color:var(--text)}
-.close-btn{position:absolute;top:20px;right:20px;width:44px;height:44px;background:rgba(255,255,255,.2);backdrop-filter:blur(10px);border:2px solid rgba(255,255,255,.3);border-radius:50%;color:#fff;font-size:24px;cursor:pointer;z-index:10;transition:all .2s;display:flex;align-items:center;justify-content:center}
-.close-btn:hover{background:rgba(255,255,255,.3);transform:rotate(90deg)}
-.share-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:24px}
-.share-btn{padding:12px;border:none;border-radius:10px;color:#fff;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12px;font-weight:600;transition:all .2s}
-.share-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+    }
 
-/* FLOATING SHARE */
-.floating-share{position:fixed;bottom:24px;right:24px;width:56px;height:56px;background:var(--azul);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 8px 24px rgba(13,71,161,.4);transition:all .3s;z-index:100;border:none}
-.floating-share:hover{transform:scale(1.1) rotate(10deg);box-shadow:0 12px 32px rgba(13,71,161,.5)}
+    ul {
+      list-style: none;
+    }
 
-/* FOOTER */
-.footer{margin-top:60px;background:linear-gradient(135deg,#0f172a,#1e293b);color:#fff;padding:60px 24px 24px;position:relative;overflow:hidden}
-.footer::before{content:"";position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--azul),var(--sucesos),var(--deportes),var(--inter))}
-.footer-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px}
-.footer-brand{font-size:24px;font-weight:800;margin-bottom:16px;display:flex;align-items:center;gap:12px}
-.footer-logo-3d{width:45px;height:45px;position:relative;transform-style:preserve-3d}
-.footer-logo-shadow{position:absolute;width:35px;height:35px;background:var(--azul);border-radius:50%;bottom:-3px;left:5px;filter:blur(8px);opacity:.4;transform:translateZ(-15px)}
-.footer-logo-main{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#fff;box-shadow:0 5px 15px rgba(13,71,161,.3);border:2px solid var(--azul)}
-.footer-logo-main img{width:100%;height:100%;object-fit:cover;display:block}
-.footer-desc{color:#94a3b8;line-height:1.6;margin-bottom:24px}
-.footer-section h4{color:#fff;font-size:16px;margin-bottom:20px;display:flex;align-items:center;gap:8px}
-.footer-links{list-style:none}
-.footer-links li{margin:12px 0;color:#94a3b8;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
-.footer-links li:hover{color:#fff;transform:translateX(4px)}
-.footer-bottom{max-width:1200px;margin:0 auto;padding-top:24px;border-top:1px solid #334155;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;color:#64748b;font-size:14px}
-.footer-bottom a{color:#64748b;text-decoration:none;transition:color .2s}
-.footer-bottom a:hover{color:#fff}
+    /* ============================================
+       UTILITY CLASSES
+       ============================================ */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
 
-/* RESPONSIVE */
-@media(max-width:1200px){.main-wrapper{grid-template-columns:1fr 300px}.sidebar-left{display:none}}
-@media(max-width:900px){
-  .main-wrapper{grid-template-columns:1fr;padding:16px}.sidebar-right{display:none}
-  .hero-layout{grid-template-columns:1fr}.hero-main{min-height:400px}
-  .grid{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr 1fr}
-  .visit-counter{top:10px;right:10px;font-size:11px;padding:8px 12px}
-  .logo-3d-wrapper{width:45px;height:45px}.logo-title{font-size:16px}.logo-subtitle{display:none}
-  .search-bar{display:none}
-}
-@media(max-width:600px){
-  .topbar{flex-direction:column;gap:12px;text-align:center}.infoTop{text-align:center}
-  .menu{gap:8px}.menu button{padding:8px 16px;font-size:13px}
-  .hero-content h2{font-size:24px}.modal-header{height:250px}.modal-body{padding:24px}
-  .footer-grid{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}
-  .share-grid{grid-template-columns:repeat(2,1fr)}
-}
-</style>
-<base target="_blank">
+    .skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--border-light) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: skeleton-loading 1.5s infinite;
+      border-radius: var(--radius);
+    }
+
+    @keyframes skeleton-loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================
+       HEADER - EDITORIAL
+       ============================================ */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: var(--header-height);
+      transition: var(--transition);
+    }
+
+    [data-theme="dark"] .header {
+      background: rgba(28, 25, 23, 0.95);
+    }
+
+    .header.scrolled {
+      box-shadow: var(--shadow-md);
+      height: 64px;
+    }
+
+    .header-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: var(--space-8);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      flex-shrink: 0;
+    }
+
+    .brand-logo {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.5rem;
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+
+    .brand:hover .brand-logo {
+      transform: rotate(-5deg) scale(1.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    .brand-info {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      color: var(--text);
+    }
+
+    .brand-tagline {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* Navigation */
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-link {
+      position: relative;
+      padding: var(--space-2) var(--space-4);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      border-radius: var(--radius);
+      transition: var(--transition-fast);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+      background: var(--border-light);
+    }
+
+    .nav-link.active {
+      color: var(--color-primary);
+      background: rgba(196, 30, 58, 0.08);
+    }
+
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 4px;
+      background: var(--color-primary);
+      border-radius: 50%;
+    }
+
+    /* Header Actions */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .search-trigger {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    .search-trigger:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+
+    .search-box {
+      position: relative;
+      width: 280px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: var(--space-2) var(--space-4) var(--space-2) var(--space-10);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-full);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 0.875rem;
+      transition: var(--transition);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: 0 0 0 4px rgba(196, 30, 58, 0.1);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      transition: var(--transition-fast);
+      font-size: 1.125rem;
+    }
+
+    .theme-toggle:hover {
+      background: var(--border-light);
+      color: var(--text);
+      transform: rotate(15deg);
+    }
+
+    /* Live Badge */
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      animation: pulse-badge 2s infinite;
+    }
+
+    @keyframes pulse-badge {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.5); opacity: 0.5; }
+    }
+
+    /* ============================================
+       RADIO BAR - IMMERSIVE
+       ============================================ */
+    .radio-bar {
+      background: linear-gradient(90deg, #0f172a 0%, #1e293b 100%);
+      color: white;
+      padding: var(--space-3) 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .radio-bar::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-primary), var(--cat-deportes), var(--cat-internacionales));
+      animation: gradient-shift 10s linear infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    .radio-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .radio-control {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      background: rgba(255, 255, 255, 0.1);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      backdrop-filter: blur(10px);
+    }
+
+    .radio-play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      border: 2px solid transparent;
+    }
+
+    .radio-play-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 20px rgba(196, 30, 58, 0.5);
+    }
+
+    .radio-play-btn.playing {
+      background: var(--cat-deportes);
+      animation: pulse-playing 2s infinite;
+    }
+
+    @keyframes pulse-playing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(4, 120, 87, 0.7); }
+      50% { box-shadow: 0 0 0 10px rgba(4, 120, 87, 0); }
+    }
+
+    .radio-select {
+      background: transparent;
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      min-width: 200px;
+      font-size: 0.875rem;
+    }
+
+    .radio-select option {
+      background: #0f172a;
+    }
+
+    .radio-status {
+      font-size: 0.875rem;
+      opacity: 0.8;
+      font-weight: 500;
+    }
+
+    .visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 20px;
+    }
+
+    .visualizer-bar {
+      width: 3px;
+      background: var(--color-primary);
+      border-radius: 2px;
+      transition: height 0.1s ease;
+    }
+
+    /* ============================================
+       HERO - EDITORIAL LAYOUT
+       ============================================ */
+    .hero {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr;
+      gap: var(--space-6);
+      min-height: 600px;
+    }
+
+    .hero-main {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface);
+      box-shadow: var(--shadow-xl);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-main:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .hero-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-main:hover .hero-image {
+      transform: scale(1.05);
+    }
+
+    .hero-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-10);
+      color: white;
+    }
+
+    .hero-category {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-1) var(--space-3);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: var(--space-4);
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-excerpt {
+      font-size: 1.125rem;
+      opacity: 0.9;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+      font-size: 0.875rem;
+      opacity: 0.8;
+    }
+
+    /* Hero Sidebar */
+    .hero-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .side-card {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: var(--space-4);
+      padding: var(--space-4);
+      background: var(--surface);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      flex: 1;
+    }
+
+    .side-card:hover {
+      transform: translateX(8px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-primary);
+    }
+
+    .side-card-image {
+      height: 100%;
+      min-height: 100px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .side-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .side-card:hover .side-card-image img {
+      transform: scale(1.1);
+    }
+
+    .side-card-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .side-card-category {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .side-card-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ============================================
+       LAYOUT SYSTEM
+       ============================================ */
+    .layout {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-6);
+      display: grid;
+      grid-template-columns: 280px 1fr 320px;
+      gap: var(--space-8);
+    }
+
+    .main-content {
+      min-width: 0;
+    }
+
+    /* ============================================
+       SECTION HEADERS
+       ============================================ */
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.875rem;
+      font-weight: 900;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      position: relative;
+    }
+
+    .section-title::before {
+      content: '';
+      width: 4px;
+      height: 32px;
+      background: var(--color-primary);
+      border-radius: 2px;
+    }
+
+    .section-actions {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: var(--transition-fast);
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-primary-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: rgba(196, 30, 58, 0.05);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+    }
+
+    .btn-ghost:hover {
+      background: var(--border-light);
+      color: var(--text);
+    }
+
+    /* ============================================
+       NEWS GRID - MASONRY
+       ============================================ */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .news-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .news-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--color-primary);
+    }
+
+    .news-card-image {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+
+    .news-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .news-card:hover .news-card-image img {
+      transform: scale(1.08);
+    }
+
+    .news-card-category {
+      position: absolute;
+      top: var(--space-4);
+      left: var(--space-4);
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: white;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .news-card-content {
+      padding: var(--space-5);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .news-card-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--text);
+      margin-bottom: var(--space-3);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .news-card-excerpt {
+      font-size: 0.9375rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: var(--space-4);
+      flex: 1;
+    }
+
+    .news-card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border-light);
+    }
+
+    .news-card-views {
+      display: flex;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8125rem;
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    .news-card-views i {
+      font-size: 0.75rem;
+    }
+
+    .news-card-views.hot {
+      color: #dc2626;
+      animation: pulse-views 2s infinite;
+    }
+
+    @keyframes pulse-views {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .news-card-time {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ============================================
+       SIDEBAR WIDGETS
+       ============================================ */
+    .widget {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      margin-bottom: var(--space-6);
+    }
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-5);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--border);
+    }
+
+    .widget-title {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .widget-title i {
+      color: var(--color-primary);
+    }
+
+    /* Trending */
+    .trending-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .trending-item {
+      display: flex;
+      gap: var(--space-4);
+      cursor: pointer;
+      transition: var(--transition-fast);
+      padding: var(--space-2);
+      margin: calc(-1 * var(--space-2));
+      border-radius: var(--radius);
+    }
+
+    .trending-item:hover {
+      background: var(--border-light);
+    }
+
+    .trending-rank {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 900;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .trending-rank.gold { background: linear-gradient(135deg, #fbbf24, #f59e0b); }
+    .trending-rank.silver { background: linear-gradient(135deg, #9ca3af, #6b7280); }
+    .trending-rank.bronze { background: linear-gradient(135deg, #b45309, #92400e); }
+    .trending-rank.normal { background: var(--border); color: var(--text-muted); }
+
+    .trending-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .trending-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+      line-height: 1.4;
+      color: var(--text);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .trending-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* Indicators */
+    .indicator-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .indicator-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .indicator-item:last-child {
+      border-bottom: none;
+    }
+
+    .indicator-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .indicator-value {
+      font-family: var(--font-display);
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+
+    .indicator-change {
+      font-size: 0.75rem;
+      margin-left: var(--space-2);
+    }
+
+    .indicator-change.positive { color: var(--cat-deportes); }
+    .indicator-change.negative { color: var(--color-primary); }
+
+    /* ============================================
+       WEATHER WIDGET - REAL TIME
+       ============================================ */
+    .weather-widget {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .weather-live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      padding: 2px 8px;
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.625rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .weather-live-badge .live-dot {
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse-dot 2s infinite;
+    }
+
+    .weather-container {
+      position: relative;
+      text-align: center;
+      padding: var(--space-4) 0;
+    }
+
+    .weather-city-indicator {
+      position: absolute;
+      top: 0;
+      right: 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      background: var(--border-light);
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      font-weight: 600;
+    }
+
+    .weather-main {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-3);
+    }
+
+    .weather-icon {
+      font-size: 3rem;
+      color: #f59e0b;
+      animation: weather-float 3s ease-in-out infinite;
+    }
+
+    .weather-icon.rain {
+      color: #3b82f6;
+      animation: weather-bounce 1s ease-in-out infinite;
+    }
+
+    .weather-icon.cloud {
+      color: #6b7280;
+    }
+
+    .weather-icon.storm {
+      color: #6366f1;
+      animation: weather-shake 0.5s ease-in-out infinite;
+    }
+
+    @keyframes weather-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes weather-bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    @keyframes weather-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-3px); }
+      75% { transform: translateX(3px); }
+    }
+
+    .weather-temp {
+      font-size: 2.5rem;
+      font-weight: 900;
+      font-family: var(--font-display);
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .weather-city {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: var(--space-1);
+    }
+
+    .weather-desc {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      text-transform: capitalize;
+      margin-bottom: var(--space-4);
+    }
+
+    .weather-details {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+
+    .weather-detail {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-1);
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+
+    .weather-detail i {
+      font-size: 1rem;
+      color: var(--text-muted);
+    }
+
+    .weather-cities-nav {
+      display: flex;
+      gap: 4px;
+      justify-content: center;
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .weather-city-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .weather-city-dot:hover,
+    .weather-city-dot.active {
+      background: var(--color-primary);
+      transform: scale(1.3);
+    }
+
+    .weather-city-dot.active {
+      box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.2);
+    }
+
+    /* Weather transition animation */
+    .weather-fade {
+      animation: weatherFade 0.5s ease;
+    }
+
+    @keyframes weatherFade {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ============================================
+       MODAL - IMMERSIVE READER
+       ============================================ */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.9);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      z-index: 9999;
+      padding: var(--space-6);
+      overflow-y: auto;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-container {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      width: 100%;
+      max-width: 900px;
+      margin: auto;
+      overflow: hidden;
+      box-shadow: var(--shadow-xl);
+      transform: translateY(20px) scale(0.98);
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-container {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      position: relative;
+      height: 450px;
+      overflow: hidden;
+    }
+
+    .modal-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 60%);
+    }
+
+    .modal-category {
+      position: absolute;
+      top: var(--space-6);
+      left: var(--space-6);
+      padding: var(--space-1) var(--space-4);
+      background: var(--color-primary);
+      color: white;
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: var(--space-6);
+      right: var(--space-6);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: none;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+      z-index: 2;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: rotate(90deg);
+    }
+
+    .modal-title-wrap {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-8) var(--space-10);
+      color: white;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .modal-body {
+      padding: var(--space-8) var(--space-10);
+    }
+
+    .modal-back {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-primary);
+      border: none;
+      border-radius: var(--radius-full);
+      color: white;
+      font-size: 0.9375rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: var(--transition-fast);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: var(--space-4);
+      z-index: 10;
+    }
+
+    .modal-back:hover {
+      background: var(--color-primary-hover);
+      transform: translateX(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .modal-back i {
+      transition: transform 0.2s ease;
+    }
+
+    .modal-back:hover i {
+      transform: translateX(-2px);
+    }
+
+    .modal-back::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: var(--radius-full);
+      border: 2px solid transparent;
+      transition: border-color 0.2s ease;
+    }
+
+    .modal-back:focus::before {
+      border-color: var(--color-primary);
+    }
+
+    .modal-meta {
+      display: flex;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+
+    .modal-meta span {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    #modalViews {
+      color: var(--color-primary);
+      font-weight: 600;
+    }
+
+    #modalViews i {
+      animation: eye-blink 3s infinite;
+    }
+
+    @keyframes eye-blink {
+      0%, 90%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(0.1); }
+    }
+
+    .modal-content-text {
+      font-size: 1.125rem;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .modal-content-text::first-letter {
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 900;
+      float: left;
+      line-height: 0.8;
+      padding-right: var(--space-4);
+      padding-top: var(--space-2);
+      color: var(--color-primary);
+    }
+
+    .modal-content-text p {
+      margin-bottom: var(--space-6);
+      text-align: justify;
+    }
+
+    .share-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-8);
+      border-top: 2px solid var(--border);
+    }
+
+    .share-title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .share-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-3);
+    }
+
+    .share-btn {
+      padding: var(--space-4);
+      border-radius: var(--radius);
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-2);
+      transition: var(--transition-fast);
+      font-size: 0.875rem;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-4px);
+      filter: brightness(1.1);
+    }
+
+    .share-btn i {
+      font-size: 1.25rem;
+    }
+
+    /* Related News */
+    .related-section {
+      margin-top: var(--space-10);
+      padding-top: var(--space-8);
+      border-top: 2px solid var(--border);
+    }
+
+    .related-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-5);
+      margin-top: var(--space-6);
+    }
+
+    .related-card {
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .related-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .related-image {
+      height: 140px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+    }
+
+    .related-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .related-card:hover .related-image img {
+      transform: scale(1.05);
+    }
+
+    .related-category {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-1);
+    }
+
+    .related-title {
+      font-family: var(--font-display);
+      font-size: 0.9375rem;
+      font-weight: 700;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* ============================================
+       LOADING STATES
+       ============================================ */
+    .loading-skeleton {
+      background: linear-gradient(90deg, var(--border) 25%, var(--border-light) 50%, var(--border) 75%);
+      background-size: 200% 100%;
+      animation: loading 1.5s infinite;
+      border-radius: var(--radius);
+    }
+
+    @keyframes loading {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ============================================
+       FOOTER
+       ============================================ */
+    .footer {
+      background: var(--color-secondary);
+      color: var(--gray-300);
+      padding: var(--space-16) var(--space-6) var(--space-8);
+      margin-top: var(--space-16);
+    }
+
+    .footer-grid {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-10);
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .footer-logo {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 1.5rem;
+    }
+
+    .footer-title {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: white;
+    }
+
+    .footer-desc {
+      line-height: 1.7;
+      font-size: 0.9375rem;
+      max-width: 300px;
+    }
+
+    .footer-section h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .footer-link {
+      color: var(--gray-400);
+      transition: var(--transition-fast);
+      cursor: pointer;
+      font-size: 0.9375rem;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .footer-link:hover {
+      color: white;
+      transform: translateX(4px);
+    }
+
+    .footer-bottom {
+      max-width: var(--max-width);
+      margin: var(--space-10) auto 0;
+      padding-top: var(--space-8);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.875rem;
+      color: var(--gray-500);
+    }
+
+    /* ============================================
+       FLOATING ACTION BUTTON
+       ============================================ */
+    .fab {
+      position: fixed;
+      bottom: var(--space-8);
+      right: var(--space-8);
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      color: white;
+      border: none;
+      box-shadow: var(--shadow-xl);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: var(--transition);
+      z-index: 100;
+    }
+
+    .fab:hover {
+      transform: scale(1.1) rotate(15deg);
+      box-shadow: 0 20px 40px -10px rgba(196, 30, 58, 0.4);
+    }
+
+    /* ============================================
+       NOTIFICATION TOAST
+       ============================================ */
+    .toast {
+      position: fixed;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--color-secondary);
+      color: white;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: 600;
+      box-shadow: var(--shadow-xl);
+      z-index: 10000;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    /* ============================================
+       RESPONSIVE DESIGN
+       ============================================ */
+    @media (max-width: 1200px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .sidebar-left, .sidebar-right {
+        display: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+      .hero-main {
+        min-height: 400px;
+      }
+      .hero-sidebar {
+        display: none;
+      }
+      .header-inner {
+        padding: 0 var(--space-4);
+      }
+      .nav {
+        display: none;
+      }
+      .search-box {
+        display: none;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .related-grid {
+        grid-template-columns: 1fr;
+      }
+      .share-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero-title {
+        font-size: 1.75rem;
+      }
+      .modal-body {
+        padding: var(--space-6);
+      }
+      .modal-header {
+        height: 300px;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: var(--space-4);
+        text-align: center;
+      }
+    }
+
+    /* ============================================
+       ACCESSIBILITY
+       ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Print Styles */
+    @media print {
+      .header, .radio-bar, .fab, .modal-overlay {
+        display: none !important;
+      }
+      body {
+        background: white;
+        color: black;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<!-- TOAST CONTAINER -->
-<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="true"></div>
-
-<!-- CONTADOR DE VISITAS -->
-<div class="visit-counter" id="visitCounter" aria-label="Visitantes">
-  <i class="fas fa-eye" aria-hidden="true"></i>
-  <span id="visitCount">...</span>
-</div>
-
-<!-- HEADER -->
-<header class="topbar">
-  <a href="#" class="logo" onclick="location.reload();return false;" aria-label="Nicaragua Informate - Inicio">
-    <div class="logo-3d-wrapper" aria-hidden="true">
-      <div class="logo-shadow"></div>
-      <div class="logo-ring"></div>
-      <div class="logo-main">
-        <img src="logo.png" alt="" onerror="this.src='https://placehold.co/100x100/0d47a1/ffffff?text=NI'">
-      </div>
-      <div class="logo-shine"></div>
-    </div>
-    <div class="logo-text">
-      <span class="logo-title">Nicaragua Informate</span>
-      <span class="logo-subtitle">Tu fuente de noticias</span>
-    </div>
-  </a>
-  <div class="topbar-right">
-    <div class="search-bar" role="search">
-      <i class="fas fa-search" aria-hidden="true"></i>
-      <input type="search" id="searchInput" placeholder="Buscar noticias..." aria-label="Buscar noticias">
-    </div>
-    <div class="infoTop">
-      <div id="hora" aria-live="polite">--</div>
-      <div id="clima">⛅ --°C</div>
-    </div>
-    <button class="dark-toggle" id="darkToggle" aria-label="Cambiar modo oscuro" title="Modo oscuro">🌙</button>
-  </div>
-</header>
-
-<!-- MENÚ DE CATEGORÍAS -->
-<nav class="menu" aria-label="Categorías de noticias">
-  <button class="active" onclick="cambiar('Todas',this)" aria-pressed="true">🔥 Última hora</button>
-  <button onclick="cambiar('Sucesos',this)" aria-pressed="false">🚨 Sucesos</button>
-  <button onclick="cambiar('Deportes',this)" aria-pressed="false">⚽ Deportes</button>
-  <button onclick="cambiar('Internacionales',this)" aria-pressed="false">🌍 Internacionales</button>
-  <button onclick="cambiar('Tecnología',this)" aria-pressed="false">💻 Tecnología</button>
-</nav>
-
-<!-- RADIO EN VIVO v2 -->
-<div class="radio" role="complementary" aria-label="Radio en vivo">
-  <div class="live-indicator">
-    <span class="pulse-dot" aria-hidden="true"></span>
-    🔴 Radio en Vivo
-  </div>
-  <select id="radioSelect" onchange="cambiarRadio()" aria-label="Seleccionar radio" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;max-width:220px">
-    <option value="">📻 Elige una radio</option>
-    <option value="https://stream.zenolive.com/axr92qawesmtv">📻 Radio Ya</option>
-    <option value="https://online.radionicaragua.com.ni/stream.mp3">📻 Radio Nicaragua</option>
-    <option value="https://stream.zeno.fm/primerisima921">📻 La Primerísima</option>
-    <option value="https://stream.zeno.fm/futura913">📻 Radio Futura 91.3</option>
-    <option value="https://stream.zeno.fm/viva983">📻 Viva FM 98.3</option>
-    <option value="https://stream.zeno.fm/romantica987">📻 Romántica 98.7</option>
-    <option value="https://stream.zeno.fm/clasica1019">📻 Clásica 101.9</option>
-    <option value="https://stream.zeno.fm/buenisima931">📻 La Buenísima</option>
-  </select>
-  <button onclick="toggleRadio()" id="radioBtn" style="width:40px;height:40px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.15);color:#fff;font-size:16px;cursor:pointer" aria-label="Play/Pause">
-    <i class="fas fa-play" id="radioIcon"></i>
-  </button>
-  <span id="radioNombre" style="font-size:13px;font-weight:600;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Selecciona y dale play</span>
-  <audio id="radioAudio" preload="none"></audio>
-</div>
-<script>
-  const _ra = document.getElementById('radioAudio');
-  let _raActiva = false;
-  function toggleRadio() {
-    if (_raActiva) {
-      _ra.pause(); _ra.src = ''; _raActiva = false;
-      document.getElementById('radioIcon').className = 'fas fa-play';
-      document.getElementById('radioNombre').textContent = 'Selecciona y dale play';
-    } else {
-      const sel = document.getElementById('radioSelect');
-      if (!sel.value) return;
-      const nombre = sel.options[sel.selectedIndex].text.replace('📻 ','');
-      document.getElementById('radioNombre').textContent = '⏳ Conectando...';
-      _ra.src = sel.value;
-      _ra.play().then(() => {
-        _raActiva = true;
-        document.getElementById('radioIcon').className = 'fas fa-pause';
-        document.getElementById('radioNombre').textContent = '🎵 ' + nombre;
-      }).catch(() => {
-        _raActiva = false;
-        document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
-      });
-    }
-  }
-  function cambiarRadio() {
-    if (_raActiva) { _ra.pause(); _raActiva = false; document.getElementById('radioIcon').className = 'fas fa-play'; toggleRadio(); }
-  }
-  _ra.addEventListener('error', () => {
-    _raActiva = false;
-    document.getElementById('radioIcon').className = 'fas fa-play';
-    document.getElementById('radioNombre').textContent = '⚠️ Sin señal, prueba otra';
-  });
-</script>
-
-<!-- CARRUSEL NOTICIAS DESTACADAS -->
-<div style="background:var(--surface);padding:16px 0;border-bottom:2px solid var(--border);">
-  <div id="carruselNoticias" class="carousel slide" data-bs-ride="carousel" data-bs-interval="4000" style="max-width:1400px;margin:0 auto;">
-    <div class="carousel-indicators" id="carruselIndicadores"></div>
-    <div class="carousel-inner" id="carruselInner">
-      <!-- Se llena dinámicamente -->
-      <div class="carousel-item active">
-        <div style="height:420px;background:var(--border);display:flex;align-items:center;justify-content:center;">
-          <div style="width:40px;height:40px;border:4px solid var(--azul);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;"></div>
+  <!-- Header -->
+  <header class="header" id="header">
+    <div class="header-inner">
+      <a href="#" class="brand" onclick="app.refresh(); return false;" aria-label="Nicaragua Informate - Inicio">
+        <div class="brand-logo">NI</div>
+        <div class="brand-info">
+          <span class="brand-title">Nicaragua Informate</span>
+          <span class="brand-tagline">Noticias al Instante</span>
         </div>
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carruselNoticias" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carruselNoticias" data-bs-slide="next">
-      <span class="carousel-control-next-icon"></span>
-    </button>
-  </div>
-</div>
-
-<!-- MAIN WRAPPER -->
-<div class="main-wrapper">
-
-  <!-- SIDEBAR IZQUIERDA -->
-  <aside class="sidebar-left" aria-label="Redes sociales y trending">
-    <div class="social-box">
-      <h3>🚀 Síguenos</h3>
-      <p>Noticias de Nicaragua en tiempo real</p>
-      <div class="social-buttons-vertical">
-        <a href="https://www.facebook.com/profile.php?id=61578261125687" target="_blank" rel="noopener" class="social-btn-large facebook" aria-label="Facebook página 1">
-          <i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook 1
-        </a>
-        <a href="https://www.facebook.com/profile.php?id=61577962970892" target="_blank" rel="noopener" class="social-btn-large facebook" style="opacity:.9" aria-label="Facebook página 2">
-          <i class="fab fa-facebook-f" aria-hidden="true"></i> Facebook 2
-        </a>
-        <a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" rel="noopener" class="social-btn-large whatsapp" aria-label="Canal de WhatsApp">
-          <i class="fab fa-whatsapp" aria-hidden="true"></i> Canal WhatsApp
-        </a>
-        <a href="https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv" target="_blank" rel="noopener" class="social-btn-large whatsapp" style="background:#128C7E" aria-label="Grupo de WhatsApp">
-          <i class="fas fa-users" aria-hidden="true"></i> Grupo WhatsApp
-        </a>
-        <a href="https://t.me/fHHjncJqMQM3NjZh" target="_blank" rel="noopener" class="social-btn-large telegram" aria-label="Canal de Telegram">
-          <i class="fab fa-telegram-plane" aria-hidden="true"></i> Telegram
-        </a>
-      </div>
-    </div>
-    <div class="trending-sidebar">
-      <h4><i class="fas fa-fire" aria-hidden="true"></i> Trending</h4>
-      <div id="trendingContainer" aria-label="Noticias en tendencia">
-        <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
-        <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
-        <div class="trending-item"><div class="skeleton skeleton-line medium"></div></div>
-      </div>
-    </div>
-  </aside>
-
-  <!-- CONTENIDO CENTRAL -->
-  <main class="content-main" id="mainContent">
-    <div id="portada"></div>
-
-    <div class="ad-whatsapp" onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17','_blank')" role="button" tabindex="0" aria-label="Unirse al canal de WhatsApp">
-      <div class="icon-wa" aria-hidden="true"><i class="fab fa-whatsapp"></i></div>
-      <div style="position:relative;z-index:1;">
-        <div style="font-weight:800;font-size:18px;margin-bottom:4px;">📢 ¿Tienes una noticia?</div>
-        <div style="font-size:14px;opacity:.9;">Envíala a nuestro canal de WhatsApp</div>
-        <div style="font-size:12px;opacity:.7;margin-top:8px;"><i class="fas fa-paper-plane" aria-hidden="true"></i> Click para unirte</div>
-      </div>
-    </div>
-
-    <h2 class="section-title">📰 Más Noticias</h2>
-    <div id="lista" class="grid" aria-live="polite" aria-label="Lista de noticias">
-      <!-- Skeleton loaders -->
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
-      <div class="skeleton-card"><div class="skeleton skeleton-img"></div><div class="skeleton-body"><div class="skeleton skeleton-line short"></div><div class="skeleton skeleton-line medium"></div><div class="skeleton skeleton-line"></div></div></div>
-    </div>
-    <button class="load-more-btn" id="loadMoreBtn" onclick="cargarMas()" style="display:none" aria-label="Cargar más noticias">
-      <i class="fas fa-plus" aria-hidden="true"></i> Cargar más noticias
-    </button>
-  </main>
-
-  <!-- SIDEBAR DERECHA -->
-  <aside class="sidebar-right" aria-label="Noticias populares y publicidad">
-    <div class="sidebar-box indicadores-box">
-      <h4><i class="fas fa-chart-line"></i> Indicadores económicos</h4>
-      <div class="indicadores-list" aria-live="polite" aria-atomic="true">
-        <div><span class="label">Dólar BCN</span> <strong id="ind-dolar">C$ 36.62</strong></div>
-        <div><span class="label">Gasolina Regular</span> <strong id="ind-regular">C$ 47.84</strong> /ltr</div>
-        <div><span class="label">Gasolina Súper</span> <strong id="ind-super">C$ 49.03</strong> /ltr</div>
-        <div><span class="label">Diésel</span> <strong id="ind-diesel">C$ 43.21</strong> /ltr</div>
-      </div>
-      <div class="indicadores-footer">
-        <span>Última actualización:</span> <strong id="ind-last-updated">--:--</strong>
-      </div>
-      <button id="refreshIndicadoresBtn" type="button" class="refresh-btn" aria-label="Actualizar indicadores">Actualizar</button>
-      <p class="small">Se actualiza cada 30 minutos automáticamente.</p>
-    </div>
-    <div class="popular-box">
-      <h4>⭐ Populares</h4>
-      <div id="popularPosts">
-        <div class="skeleton skeleton-line medium" style="margin-bottom:12px;height:60px;border-radius:8px"></div>
-        <div class="skeleton skeleton-line medium" style="margin-bottom:12px;height:60px;border-radius:8px"></div>
-        <div class="skeleton skeleton-line medium" style="height:60px;border-radius:8px"></div>
-      </div>
-    </div>
-    <div class="ad-box">
-      <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-4115203339551838" data-ad-slot="8408634019" data-ad-format="auto" data-full-width-responsive="true"></ins>
-    </div>
-  </aside>
-
-</div>
-
-<!-- MODAL -->
-<div id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitulo" onclick="cerrarModal()">
-  <div id="modalContent" onclick="event.stopPropagation()">
-    <button class="close-btn" onclick="cerrarModal()" aria-label="Cerrar noticia">×</button>
-    <div class="modal-header">
-      <img id="mImg" src="" alt="">
-      <div class="modal-title-wrap">
-        <span id="mCat" class="tag"></span>
-        <h2 id="mTitulo" style="font-size:32px;font-weight:800;line-height:1.2;margin-top:12px;"></h2>
-      </div>
-    </div>
-    <div class="modal-body">
-      <div class="modal-meta">
-        <span id="mFecha">📅 </span>
-        <span>⏱️ <span id="mReadTime">3</span> min lectura</span>
-      </div>
-      <div class="modal-text" id="mCont"></div>
-      <div style="margin-top:32px;padding-top:24px;border-top:2px solid var(--border);">
-        <h4 style="margin-bottom:16px;color:var(--text);display:flex;align-items:center;gap:8px;">
-          <i class="fas fa-share-alt" aria-hidden="true"></i> Compartir Noticia
-        </h4>
-        <div class="share-grid">
-          <button class="share-btn" onclick="shareFacebook()" style="background:#1877f2" aria-label="Compartir en Facebook"><i class="fab fa-facebook-f" style="font-size:20px" aria-hidden="true"></i>Facebook</button>
-          <button class="share-btn" onclick="shareTwitter()" style="background:#1da1f2" aria-label="Compartir en Twitter"><i class="fab fa-twitter" style="font-size:20px" aria-hidden="true"></i>Twitter</button>
-          <button class="share-btn" onclick="shareWhatsApp()" style="background:#25d366" aria-label="Compartir en WhatsApp"><i class="fab fa-whatsapp" style="font-size:20px" aria-hidden="true"></i>WhatsApp</button>
-          <button class="share-btn" onclick="copyLink()" style="background:#64748b" aria-label="Copiar enlace"><i class="fas fa-link" style="font-size:20px" aria-hidden="true"></i>Copiar</button>
+      </a>
+      
+      <nav class="nav" role="navigation" aria-label="Navegación principal">
+        <button class="nav-link active" onclick="app.filter('Todas', this)" aria-current="page">
+          <i class="fas fa-home"></i> Inicio
+        </button>
+        <button class="nav-link" onclick="app.filter('Sucesos', this)">
+          <i class="fas fa-exclamation-triangle"></i> Sucesos
+        </button>
+        <button class="nav-link" onclick="app.filter('Nacionales', this)">
+          <i class="fas fa-building-columns"></i> Nacionales
+        </button>
+        <button class="nav-link" onclick="app.filter('Deportes', this)">
+          <i class="fas fa-futbol"></i> Deportes
+        </button>
+        <button class="nav-link" onclick="app.filter('Internacionales', this)">
+          <i class="fas fa-globe"></i> Internacionales
+        </button>
+        <button class="nav-link" onclick="app.filter('Espectáculo', this)">
+          <i class="fas fa-film"></i> Espectáculo
+        </button>
+        <button class="nav-link" onclick="app.filter('Premium', this)">
+          <i class="fas fa-crown"></i> Premium
+        </button>
+      </nav>
+      
+      <div class="header-actions">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="search" class="search-input" id="searchInput" 
+                 placeholder="Buscar noticias..." 
+                 oninput="app.search(this.value)"
+                 aria-label="Buscar noticias">
         </div>
+        <button class="theme-toggle" onclick="app.toggleTheme()" id="themeBtn" aria-label="Cambiar tema">
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
     </div>
+  </header>
+
+  <!-- Radio Bar -->
+  <div class="radio-bar" role="complementary" aria-label="Radio en vivo">
+    <div class="radio-inner">
+      <div class="live-badge">
+        <span class="live-dot" aria-hidden="true"></span>
+        En Vivo
+      </div>
+      
+      <div class="radio-control">
+        <button class="radio-play-btn" id="radioPlayBtn" onclick="app.radio.toggle()" aria-label="Reproducir radio">
+          <i class="fas fa-play" id="radioIcon"></i>
+        </button>
+        <select class="radio-select" id="radioStation" onchange="app.radio.change()" aria-label="Seleccionar emisora">
+          <option value="">Seleccionar emisora...</option>
+          <option value="https://stream.zenolive.com/axr92qawesmtv">Radio Ya</option>
+          <option value="https://online.radionicaragua.com.ni/stream.mp3">Radio Nicaragua</option>
+          <option value="https://stream.zeno.fm/primerisima921">La Primerísima 92.1</option>
+          <option value="https://stream.zeno.fm/futura913">Radio Futura 91.3</option>
+        </select>
+      </div>
+      
+      <span class="radio-status" id="radioStatus">Selecciona una emisora</span>
+      <div class="visualizer" id="visualizer" aria-hidden="true" style="opacity: 0;">
+        <div class="visualizer-bar" style="height: 5px;"></div>
+        <div class="visualizer-bar" style="height: 15px;"></div>
+        <div class="visualizer-bar" style="height: 10px;"></div>
+        <div class="visualizer-bar" style="height: 20px;"></div>
+        <div class="visualizer-bar" style="height: 8px;"></div>
+      </div>
+      
+      <audio id="radioAudio" preload="none" crossorigin="anonymous"></audio>
+    </div>
   </div>
-</div>
 
-<!-- BOTÓN FLOTANTE -->
-<button class="floating-share" onclick="sharePage()" aria-label="Compartir página">
-  <i class="fas fa-share-alt" aria-hidden="true"></i>
-</button>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <div class="footer-brand">
-        <div class="footer-logo-3d" aria-hidden="true">
-          <div class="footer-logo-shadow"></div>
-          <div class="footer-logo-main"><img src="logo.png" alt="" onerror="this.src='https://placehold.co/100x100/0d47a1/ffffff?text=NI'"></div>
+  <!-- Hero Section -->
+  <section class="hero" aria-label="Noticias destacadas">
+    <div class="hero-grid">
+      <article class="hero-main" onclick="app.openArticle(0)" role="button" tabindex="0" aria-label="Leer noticia principal">
+        <div class="hero-image-wrap">
+          <img src="https://picsum.photos/seed/hero1/800/600" alt="" class="hero-image" loading="eager" id="heroImg">
+          <div class="hero-image-overlay"></div>
         </div>
-        Nicaragua Informate
-      </div>
-      <p class="footer-desc">Tu fuente confiable de noticias de Nicaragua. Información al instante sobre sucesos, deportes, tecnología e internacionales.</p>
-    </div>
-    <div class="footer-section">
-      <h4>📂 Secciones</h4>
-      <ul class="footer-links">
-        <li onclick="cambiar('Todas',document.querySelector('.menu button'))">→ Última Hora</li>
-        <li onclick="cambiar('Sucesos',document.querySelectorAll('.menu button')[1])">→ Sucesos</li>
-        <li onclick="cambiar('Deportes',document.querySelectorAll('.menu button')[2])">→ Deportes</li>
-        <li onclick="cambiar('Internacionales',document.querySelectorAll('.menu button')[3])">→ Internacionales</li>
-        <li onclick="cambiar('Tecnología',document.querySelectorAll('.menu button')[4])">→ Tecnología</li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h4>📊 Indicadores</h4>
-      <ul class="footer-links">
-        <li>💵 Dólar: C$36.62</li>
-        <li>⛽ Gasolina: C$47.84</li>
-        <li>🛢 Diésel: C$43.21</li>
-      </ul>
-    </div>
-    <div class="footer-section">
-      <h4>📢 Síguenos</h4>
-      <ul class="footer-links">
-        <li onclick="window.open('https://www.facebook.com/profile.php?id=61578261125687','_blank')"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook 1</li>
-        <li onclick="window.open('https://www.facebook.com/profile.php?id=61577962970892','_blank')"><i class="fab fa-facebook" aria-hidden="true"></i> Facebook 2</li>
-        <li onclick="window.open('https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17','_blank')"><i class="fab fa-whatsapp" aria-hidden="true"></i> Canal WhatsApp</li>
-        <li onclick="window.open('https://chat.whatsapp.com/Cos0OkfKdFu49yBoVz6Wnv','_blank')"><i class="fas fa-users" aria-hidden="true"></i> Grupo WhatsApp</li>
-        <li onclick="window.open('https://t.me/fHHjncJqMQM3NjZh','_blank')"><i class="fab fa-telegram" aria-hidden="true"></i> Telegram</li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <div>© 2025 Nicaragua Informate. Todos los derechos reservados.</div>
-    <div style="display:flex;gap:24px;">
-      <a href="privacidad.html">Privacidad</a>
-      <a href="terminos.html">Términos</a>
-      <a href="cookies.html">Cookies</a>
-    </div>
-  </div>
-</footer>
-
-<script type="module">
-// ============================================
-// IMÁGENES DE RESPALDO POR CATEGORÍA
-// ============================================
-// Seeds fijos por categoría para que siempre salga la misma imagen de respaldo
-const IMAGENES_RESPALDO = {
-  'Sucesos':        [101, 102, 103, 104],
-  'Deportes':       [201, 202, 203],
-  'Internacionales':[301, 302, 303],
-  'Tecnología':     [401, 402, 403],
-  'Tecnologia':     [401, 402, 403],
-  'default':        [10,  20,  30]
-};
-
-const FB_PATTERNS = ['facebook.com','fbcdn.net','fbcdn.com','scontent-','scontent.','instagram.com','cdninstagram','fbstatic','fbsbx.com','fb.com','xx.fbcdn'];
-
-function esFacebookCDN(url) {
-  if (!url || typeof url !== 'string') return true;
-  const u = url.toLowerCase();
-  return FB_PATTERNS.some(p => u.includes(p));
-}
-
-function getImagenRespaldo(cat, idx = 0) {
-  const seeds = IMAGENES_RESPALDO[cat] || IMAGENES_RESPALDO['default'];
-  const seed = seeds[Math.abs(idx) % seeds.length];
-  return `https://picsum.photos/seed/${seed}/800/500`;
-}
-
-function sanitizarImagen(url, cat, idx = 0) {
-  if (!url || typeof url !== 'string' || !url.startsWith('http')) return getImagenRespaldo(cat, idx);
-  if (esFacebookCDN(url)) return getImagenRespaldo(cat, idx);
-  return url;
-}
-
-// Handler global de error de imagen — evita problemas con comillas en onerror inline
-window.imgError = function(el, cat, idx) {
-  el.onerror = null; // evitar loop
-  el.src = getImagenRespaldo(cat, idx);
-};
-
-function getColorCategoria(cat) {
-  const c = {'Sucesos':'#c62828','Deportes':'#2e7d32','Internacionales':'#6a1b9a','Tecnología':'#0288d1','Tecnologia':'#0288d1'};
-  return c[cat] || '#0d47a1';
-}
-
-function formatearFecha(fecha) {
-  if (!fecha) return 'Fecha no disponible';
-  try {
-    const d = fecha.toDate ? fecha.toDate() : (fecha instanceof Date ? fecha : new Date(fecha));
-    if (!isNaN(d.getTime())) return d.toLocaleString('es-NI', {day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
-  } catch(e) {}
-  return 'Fecha no disponible';
-}
-
-function calcularLectura(texto) {
-  if (!texto) return 1;
-  return Math.max(1, Math.ceil(texto.split(/\s+/).length / 200));
-}
-
-// ============================================
-// TOAST
-// ============================================
-function showToast(msg, type = 'default', duration = 3000) {
-  const container = document.getElementById('toastContainer');
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}" aria-hidden="true"></i> ${msg}`;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.style.animation = 'toastOut .3s ease-in forwards';
-    setTimeout(() => toast.remove(), 300);
-  }, duration);
-}
-
-// ============================================
-// FIREBASE
-// ============================================
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getFirestore, collection, getDocs, query, orderBy, onSnapshot, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
-  authDomain: "informate-instant-nicaragua.firebaseapp.com",
-  projectId: "informate-instant-nicaragua",
-  storageBucket: "informate-instant-nicaragua.firebasestorage.app",
-  messagingSenderId: "24988088146",
-  appId: "1:24988088146:web:d26a207508da055668ec8b",
-  measurementId: "G-W1B5J61WEP"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-
-let todas = [];
-let filtradas = [];
-let categoria = 'Todas';
-let searchQuery = '';
-let paginaActual = 0;
-const POR_PAGINA = 8;
-let currentNoticia = null;
-
-// ============================================
-// INDICADORES ECONÓMICOS (Firestore / API)
-// ============================================
-async function getIndicadoresConfig() {
-  try {
-    const ref = doc(db, 'config', 'indicadores');
-    const snapshot = await getDoc(ref);
-    return snapshot.exists() ? snapshot.data() : null;
-  } catch (e) {
-    console.warn('No se pudo leer config indicadores:', e);
-    return null;
-  }
-}
-
-// ============================================
-// CARGAR NOTICIAS (real-time)
-// ============================================
-async function cargar() {
-  try {
-    const q = query(collection(db, 'noticias'), orderBy('fecha', 'desc'));
-    onSnapshot(q, (snap) => {
-      todas = [];
-      snap.forEach((d, idx) => {
-        const data = d.data();
-        data.id = d.id;
-        const rawImg = data.imagen || data.image || data.img || data.urlImagen || data.photo || data.foto || '';
-        data.imagen = sanitizarImagen(rawImg, data.categoria, idx);
-        todas.push(data);
-      });
-      if (!todas.length) todas = getNoticiasEjemplo();
-      pintar();
-      cargarPopulares();
-      cargarTrending();
-    }, (err) => {
-      console.error('Error en snapshot de noticias:', err);
-      if (!todas.length) {
-        todas = getNoticiasEjemplo();
-        pintar();
-      }
-    });
-
-    incrementarVisita();
-  } catch(e) {
-    console.error('Error cargando:', e);
-    todas = getNoticiasEjemplo();
-    pintar();
-    cargarPopulares();
-    cargarTrending();
-    incrementarVisita();
-  }
-}
-
-function getNoticiasEjemplo() {
-  return [
-    {id:'1',titulo:'Gobierno anuncia nuevas medidas económicas para 2025',categoria:'Sucesos',imagen:getImagenRespaldo('Sucesos',0),resumen:'El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico.',contenido:'El gobierno de Nicaragua presentó este martes un paquete de medidas económicas destinadas a impulsar el crecimiento y la inversión extranjera directa en el país.',fecha:{toDate:()=>new Date()}},
-    {id:'2',titulo:'Selección Nicaragüense se prepara para eliminatorias',categoria:'Deportes',imagen:getImagenRespaldo('Deportes',0),resumen:'La selección nacional intensifica su preparación de cara a los próximos partidos.',contenido:'La selección nacional de fútbol de Nicaragua intensifica su preparación en el Centro de Alto Rendimiento.',fecha:{toDate:()=>new Date(Date.now()-3600000)}},
-    {id:'3',titulo:'Avances en tecnología: Nicaragua conecta más comunidades',categoria:'Tecnología',imagen:getImagenRespaldo('Tecnología',0),resumen:'Nuevas torres de telecomunicaciones permitirán llevar internet a zonas rurales.',contenido:'El Instituto Nicaragüense de Telecomunicaciones anunció la instalación de nuevas torres.',fecha:{toDate:()=>new Date(Date.now()-7200000)}},
-    {id:'4',titulo:'Descubrimiento arqueológico en ruinas precolombinas',categoria:'Internacionales',imagen:getImagenRespaldo('Internacionales',0),resumen:'Arqueólogos descubrieron nuevos vestigios de más de 1000 años de antigüedad.',contenido:'Un equipo de arqueólogos realizó un importante descubrimiento en el sitio arqueológico.',fecha:{toDate:()=>new Date(Date.now()-10800000)}},
-    {id:'5',titulo:'Nicaragua lidera exportaciones de café en Centroamérica',categoria:'Internacionales',imagen:getImagenRespaldo('Internacionales',1),resumen:'Las exportaciones de café nicaragüense alcanzaron un récord histórico este año.',contenido:'Nicaragua se posiciona como el mayor exportador de café de la región centroamericana.',fecha:{toDate:()=>new Date(Date.now()-14400000)}},
-    {id:'6',titulo:'Nuevo estadio de béisbol en Managua',categoria:'Deportes',imagen:getImagenRespaldo('Deportes',1),resumen:'El gobierno anunció la construcción de un moderno estadio de béisbol en la capital.',contenido:'Las obras del nuevo estadio de béisbol comenzarán el próximo mes.',fecha:{toDate:()=>new Date(Date.now()-18000000)}},
-    {id:'7',titulo:'Innovación tecnológica en el sector agrícola',categoria:'Tecnología',imagen:getImagenRespaldo('Tecnología',1),resumen:'Agricultores nicaragüenses adoptan drones para mejorar sus cosechas.',contenido:'El uso de tecnología de precisión está transformando la agricultura en Nicaragua.',fecha:{toDate:()=>new Date(Date.now()-21600000)}},
-    {id:'8',titulo:'Operativo policial en Managua deja varios detenidos',categoria:'Sucesos',imagen:getImagenRespaldo('Sucesos',1),resumen:'La Policía Nacional realizó un operativo en el barrio Oriental.',contenido:'Un operativo policial en el mercado Oriental resultó en la detención de varios sospechosos.',fecha:{toDate:()=>new Date(Date.now()-25200000)}}
-  ];
-}
-
-// ============================================
-// PINTAR NOTICIAS
-// ============================================
-function getFiltradas() {
-  let datos = categoria === 'Todas' ? todas : todas.filter(n => n.categoria === categoria);
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-    datos = datos.filter(n => n.titulo?.toLowerCase().includes(q) || n.resumen?.toLowerCase().includes(q));
-  }
-  return datos;
-}
-
-function pintar() {
-  const portada = document.getElementById('portada');
-  const lista = document.getElementById('lista');
-  const loadMoreBtn = document.getElementById('loadMoreBtn');
-
-  filtradas = getFiltradas();
-  paginaActual = 0;
-  portada.innerHTML = '';
-  lista.innerHTML = '';
-
-  if (!filtradas.length) {
-    lista.innerHTML = '<div class="no-results"><div class="icon">📭</div><p>No hay noticias en esta categoría</p></div>';
-    loadMoreBtn.style.display = 'none';
-    return;
-  }
-
-  const principal = filtradas[0];
-  const laterales = filtradas.slice(1, 4);
-  const resto = filtradas.slice(4, 4 + POR_PAGINA);
-
-  // HERO
-  if (principal) {
-    const heroImg = sanitizarImagen(principal.imagen, principal.categoria, 0);
-    const hero = document.createElement('div');
-    hero.className = 'hero-layout';
-    hero.innerHTML = `
-      <div class="hero-main" onclick="abrirPorId('${principal.id}')" role="button" tabindex="0" aria-label="Leer: ${principal.titulo}">
-        <img src="${heroImg}" alt="${principal.titulo}" onerror="imgError(this,'${principal.categoria}',1)" loading="eager">
         <div class="hero-content">
-          <span class="hero-badge" style="background:${getColorCategoria(principal.categoria)}">${principal.categoria}</span>
-          <h2>${principal.titulo}</h2>
-          <p>${principal.resumen || ''}</p>
-          <div class="hero-meta"><span>📅 ${formatearFecha(principal.fecha)}</span></div>
+          <span class="hero-category" id="heroCat">Sucesos</span>
+          <h1 class="hero-title" id="heroTitle">Gobierno anuncia nuevas medidas económicas para impulsar el crecimiento</h1>
+          <p class="hero-excerpt" id="heroExcerpt">El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico...</p>
+          <div class="hero-meta">
+            <span id="heroTime"><i class="far fa-clock" aria-hidden="true"></i> Hace 2 horas</span>
+            <span class="live-badge">
+              <span class="live-dot"></span>
+              Destacado
+            </span>
+          </div>
+        </div>
+      </article>
+      
+      <aside class="hero-sidebar" id="heroSidebar" aria-label="Noticias secundarias">
+        <!-- Generated by JS -->
+      </aside>
+    </div>
+  </section>
+
+  <!-- Main Layout -->
+  <div class="layout">
+    <!-- Left Sidebar -->
+    <aside class="sidebar-left" role="complementary">
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-fire" aria-hidden="true"></i> Tendencias</h3>
+        </div>
+        <div class="trending-list" id="trendingList">
+          <!-- Generated by JS -->
         </div>
       </div>
-      <div class="hero-side">
-        ${laterales.map((n, idx) => {
-          const img = sanitizarImagen(n.imagen, n.categoria, idx + 1);
-          return `<div class="side-item" onclick="abrirPorId('${n.id}')" role="button" tabindex="0" aria-label="Leer: ${n.titulo}">
-            <img src="${img}" alt="${n.titulo}" onerror="imgError(this,'${n.categoria}',${idx+2})" loading="lazy">
-            <div class="side-content">
-              <span class="side-tag" style="background:${getColorCategoria(n.categoria)}">${n.categoria}</span>
-              <h3>${n.titulo}</h3>
+
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-envelope" aria-hidden="true"></i> Newsletter</h3>
+        </div>
+        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: var(--space-4);">
+          Recibe las noticias más importantes cada mañana.
+        </p>
+        <input type="email" placeholder="tu@email.com" style="width: 100%; padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: var(--space-3); font-size: 0.875rem;">
+        <button class="btn btn-primary" style="width: 100%;">Suscribirse</button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content" role="main">
+      <header class="section-header">
+        <h2 class="section-title">Últimas Noticias</h2>
+        <div class="section-actions">
+          <button class="btn btn-secondary" onclick="app.loadMore()">
+            <i class="fas fa-sync-alt" aria-hidden="true"></i> Actualizar
+          </button>
+        </div>
+      </header>
+      
+      <div class="news-grid" id="newsGrid" aria-live="polite">
+        <!-- News cards generated by JS -->
+      </div>
+      
+      <div style="text-align: center; margin-top: var(--space-10);">
+        <button class="btn btn-primary" id="loadMoreBtn" onclick="app.loadMore()" style="min-width: 200px;">
+          <i class="fas fa-plus" aria-hidden="true"></i> Cargar más noticias
+        </button>
+      </div>
+    </main>
+
+    <!-- Right Sidebar -->
+    <aside class="sidebar-right" role="complementary">
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-chart-line" aria-hidden="true"></i> Indicadores</h3>
+        </div>
+        <div class="indicator-list" id="indicatorsList">
+          <div class="indicator-item">
+            <span class="indicator-label">Dólar BCN</span>
+            <div>
+              <span class="indicator-value" id="indDolar">C$ 36.62</span>
+              <span class="indicator-change positive">↑ 0.02%</span>
             </div>
-          </div>`;
-        }).join('')}
-      </div>`;
-    portada.appendChild(hero);
-  }
-
-  // GRID
-  renderCards(resto, lista);
-  paginaActual = 1;
-
-  const hayMas = filtradas.length > 4 + POR_PAGINA;
-  loadMoreBtn.style.display = hayMas ? 'block' : 'none';
-}
-
-function renderCards(items, container) {
-  items.forEach((n, idx) => {
-    const img = sanitizarImagen(n.imagen, n.categoria, idx + 4);
-    const card = document.createElement('div');
-    card.className = 'card';
-    card.setAttribute('role', 'button');
-    card.setAttribute('tabindex', '0');
-    card.setAttribute('aria-label', `Leer: ${n.titulo}`);
-    card.onclick = () => abrirPorId(n.id);
-    card.onkeydown = (e) => { if (e.key === 'Enter') abrirPorId(n.id); };
-    card.innerHTML = `
-      <div class="card-image-wrapper">
-        <img src="${img}" alt="${n.titulo}" onerror="imgError(this,'${n.categoria}',${idx+5})" loading="lazy">
-        <div class="card-overlay" aria-hidden="true"></div>
-      </div>
-      <div class="card-body">
-        <span class="tag ${n.categoria}">${n.categoria}</span>
-        <h3>${n.titulo}</h3>
-        <p>${n.resumen || ''}</p>
-        <div class="card-footer">
-          <span>${formatearFecha(n.fecha)}</span>
-          <span class="read-more" aria-hidden="true">Leer más →</span>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Euro</span>
+            <div>
+              <span class="indicator-value" id="indEuro">C$ 39.45</span>
+              <span class="indicator-change negative">↓ 0.15%</span>
+            </div>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Gasolina Regular</span>
+            <span class="indicator-value" id="indRegular">C$ 47.84</span>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Gasolina Súper</span>
+            <span class="indicator-value" id="indSuper">C$ 49.03</span>
+          </div>
+          <div class="indicator-item">
+            <span class="indicator-label">Diésel</span>
+            <span class="indicator-value" id="indDiesel">C$ 43.21</span>
+          </div>
         </div>
-      </div>`;
-    container.appendChild(card);
-  });
-}
-
-window.cargarMas = function() {
-  const btn = document.getElementById('loadMoreBtn');
-  btn.disabled = true;
-  btn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Cargando...';
-
-  const inicio = 4 + paginaActual * POR_PAGINA;
-  const fin = inicio + POR_PAGINA;
-  const mas = filtradas.slice(inicio, fin);
-
-  renderCards(mas, document.getElementById('lista'));
-  paginaActual++;
-
-  const hayMas = filtradas.length > 4 + (paginaActual * POR_PAGINA);
-  btn.disabled = false;
-  btn.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Cargar más noticias';
-  btn.style.display = hayMas ? 'block' : 'none';
-};
-
-// ============================================
-// POPULARES Y TRENDING
-// ============================================
-function cargarPopulares() {
-  const container = document.getElementById('popularPosts');
-  const items = todas.slice(0, 5);
-  if (!items.length) { container.innerHTML = '<p style="color:#94a3b8;font-size:13px;">No hay noticias aún</p>'; return; }
-  container.innerHTML = items.map((n, idx) => {
-    const img = sanitizarImagen(n.imagen, n.categoria, idx);
-    return `<div style="display:flex;gap:12px;margin-bottom:16px;cursor:pointer;" onclick="abrirPorId('${n.id}')" role="button" tabindex="0" aria-label="Leer: ${n.titulo}">
-      <div style="width:60px;height:60px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--border);">
-        <img src="${img}" style="width:100%;height:100%;object-fit:cover;" onerror="imgError(this,'${n.categoria}',${idx+1})" loading="lazy" alt="">
+        <button class="btn btn-ghost" style="width:100%; margin-top: var(--space-4);" onclick="app.updateIndicators()">
+          <i class="fas fa-sync-alt" aria-hidden="true"></i> Actualizar datos
+        </button>
       </div>
-      <div style="flex:1;">
-        <div style="font-size:13px;font-weight:600;line-height:1.4;color:var(--text);display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">${n.titulo}</div>
-        <div style="font-size:11px;color:#94a3b8;margin-top:4px;">${n.categoria}</div>
+      
+      <div class="widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-fire" style="color: #dc2626;" aria-hidden="true"></i> Más Leídas</h3>
+        </div>
+        <div class="trending-list" id="popularesList">
+          <!-- Generated by JS -->
+        </div>
       </div>
-    </div>`;
-  }).join('');
-}
 
-function cargarTrending() {
-  const container = document.getElementById('trendingContainer');
-  const items = todas.slice(0, 3);
-  if (!items.length) { container.innerHTML = '<div class="trending-item">No hay noticias aún</div>'; return; }
-  container.innerHTML = items.map((n, i) => `
-    <div class="trending-item" onclick="abrirPorId('${n.id}')" role="button" tabindex="0" aria-label="Leer: ${n.titulo}">
-      <div class="trending-number">${i + 1}</div>
-      <div class="trending-title">${n.titulo}</div>
-      <div class="trending-meta"><i class="fas fa-clock" aria-hidden="true"></i> ${formatearFecha(n.fecha)} • ${n.categoria}</div>
-    </div>`).join('');
-}
+      <div class="widget weather-widget">
+        <div class="widget-header">
+          <h3 class="widget-title"><i class="fas fa-cloud-sun" aria-hidden="true"></i> Clima Nicaragua</h3>
+          <span class="weather-live-badge"><span class="live-dot"></span> EN VIVO</span>
+        </div>
+        <div class="weather-container" id="weatherContainer">
+          <div class="weather-city-indicator" id="weatherCityIndicator">1 / 12</div>
+          <div class="weather-main">
+            <i class="fas fa-sun weather-icon" id="weatherIcon"></i>
+            <div class="weather-temp" id="weatherTemp">--°C</div>
+          </div>
+          <div class="weather-city" id="weatherCity">Cargando...</div>
+          <div class="weather-desc" id="weatherDesc">Obteniendo datos...</div>
+          <div class="weather-details">
+            <div class="weather-detail">
+              <i class="fas fa-tint"></i>
+              <span id="weatherHumidity">--%</span>
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-wind"></i>
+              <span id="weatherWind">-- km/h</span>
+            </div>
+            <div class="weather-detail">
+              <i class="fas fa-eye"></i>
+              <span id="weatherVisibility">-- km</span>
+            </div>
+          </div>
+        </div>
+        <div class="weather-cities-nav" id="weatherCitiesNav">
+          <!-- Generated by JS -->
+        </div>
+      </div>
+    </aside>
+  </div>
 
-// ============================================
-// MODAL
-// ============================================
-window.abrirPorId = function(id) {
-  const n = todas.find(x => x.id === id);
-  if (n) abrir(n);
-};
+  <!-- Article Modal -->
+  <div class="modal-overlay" id="modal" onclick="app.closeModal(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <header class="modal-header">
+        <img src="" alt="" class="modal-image" id="modalImg">
+        <div class="modal-image-overlay"></div>
+        <span class="modal-category" id="modalCat">Categoría</span>
+        <button class="modal-close" onclick="app.closeModal()" aria-label="Cerrar artículo">
+          <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <div class="modal-title-wrap">
+          <h2 class="modal-title" id="modalTitle">Título del artículo</h2>
+        </div>
+      </header>
+      
+      <div class="modal-body">
+        <button class="modal-back" onclick="app.closeModal()" aria-label="Cerrar artículo y volver a noticias">
+          <i class="fas fa-arrow-left" aria-hidden="true"></i> 
+          Cerrar y volver a noticias
+        </button>
+        
+        <div class="modal-meta">
+          <span id="modalTime"><i class="far fa-calendar" aria-hidden="true"></i> 11 Abr 2025</span>
+          <span id="modalReadTime"><i class="far fa-clock" aria-hidden="true"></i> 3 min lectura</span>
+          <span id="modalAuthor"><i class="far fa-user" aria-hidden="true"></i> Redacción NI</span>
+          <span id="modalViews" title="Veces leída"><i class="fas fa-eye" aria-hidden="true"></i> <span id="modalViewsCount">0</span> lecturas</span>
+        </div>
+        
+        <article class="modal-content-text" id="modalText">
+          <!-- Content -->
+        </article>
 
-function abrir(n) {
-  currentNoticia = n;
-  document.getElementById('mCat').className = 'tag ' + n.categoria;
-  document.getElementById('mCat').textContent = n.categoria;
-  document.getElementById('mTitulo').textContent = n.titulo;
-  const img = sanitizarImagen(n.imagen, n.categoria, 0);
-  const mImg = document.getElementById('mImg');
-  mImg.src = img;
-  mImg.alt = n.titulo;
-  mImg.onerror = () => { mImg.onerror = null; mImg.src = getImagenRespaldo(n.categoria, 1); };
-  document.getElementById('mCont').textContent = n.contenido || n.resumen || 'Contenido no disponible';
-  document.getElementById('mFecha').textContent = '📅 ' + formatearFecha(n.fecha);
-  document.getElementById('mReadTime').textContent = calcularLectura(n.contenido || n.resumen);
-  const modal = document.getElementById('modal');
-  modal.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  history.pushState({id: n.id}, n.titulo, '#' + n.id);
-  document.getElementById('modalContent').focus();
-}
+        <div class="share-section">
+          <h4 class="share-title">Compartir artículo</h4>
+          <div class="share-grid">
+            <button class="share-btn" style="background:#1877f2" onclick="app.share('facebook')">
+              <i class="fab fa-facebook-f"></i>Facebook
+            </button>
+            <button class="share-btn" style="background:#1da1f2" onclick="app.share('twitter')">
+              <i class="fab fa-twitter"></i>Twitter
+            </button>
+            <button class="share-btn" style="background:#25d366" onclick="app.share('whatsapp')">
+              <i class="fab fa-whatsapp"></i>WhatsApp
+            </button>
+            <button class="share-btn" style="background:#64748b" onclick="app.copyLink()">
+              <i class="fas fa-link"></i>Copiar
+            </button>
+          </div>
+        </div>
 
-window.cerrarModal = function() {
-  document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-  history.pushState({}, document.title, window.location.pathname);
-  currentNoticia = null;
-};
+        <div class="related-section">
+          <h4 class="share-title" style="display: flex; align-items: center; gap: var(--space-2);">
+            <i class="fas fa-newspaper" style="color: var(--color-primary);"></i> 
+            Noticias Relacionadas
+          </h4>
+          <div class="related-grid" id="noticiasRelacionadas">
+            <!-- Generated by JS -->
+          </div>
+        </div>
 
-// ============================================
-// COMPARTIR
-// ============================================
-window.shareFacebook = function() {
-  if (!currentNoticia) return;
-  window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-};
-window.shareTwitter = function() {
-  if (!currentNoticia) return;
-  window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(currentNoticia.titulo)}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
-};
-window.shareWhatsApp = function() {
-  if (!currentNoticia) return;
-  window.open(`https://wa.me/?text=${encodeURIComponent(currentNoticia.titulo + ' - ' + window.location.href)}`, '_blank');
-};
-window.copyLink = function() {
-  navigator.clipboard.writeText(window.location.href)
-    .then(() => showToast('Enlace copiado al portapapeles', 'success'))
-    .catch(() => {
-      const input = document.createElement('input');
-      input.value = window.location.href;
-      document.body.appendChild(input);
-      input.select();
-      document.execCommand('copy');
-      document.body.removeChild(input);
-      showToast('Enlace copiado al portapapeles', 'success');
-    });
-};
-window.sharePage = function() {
-  if (navigator.share) {
-    navigator.share({title:'Nicaragua Informate',text:'Noticias de Nicaragua al momento',url:window.location.href}).catch(()=>{});
-  } else {
-    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
-  }
-};
+        <!-- Botón regresar al final del artículo -->
+        <div style="text-align: center; margin-top: var(--space-10); padding-top: var(--space-8); border-top: 2px solid var(--border);">
+          <button class="modal-back" onclick="app.closeModal()" style="position: static; display: inline-flex;">
+            <i class="fas fa-arrow-left" aria-hidden="true"></i> 
+            Volver a todas las noticias
+          </button>
+          <p style="color: var(--text-muted); font-size: 0.875rem; margin-top: var(--space-3);">
+            Presiona <kbd style="background: var(--border); padding: 2px 8px; border-radius: 4px; font-family: inherit;">ESC</kbd> para cerrar
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-// ============================================
-// CATEGORÍAS Y BÚSQUEDA
-// ============================================
-window.cambiar = function(cat, btn) {
-  categoria = cat;
-  searchQuery = '';
-  document.getElementById('searchInput').value = '';
-  document.querySelectorAll('.menu button').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
-  if (btn) { btn.classList.add('active'); btn.setAttribute('aria-pressed','true'); }
-  pintar();
-  window.scrollTo({top: 0, behavior: 'smooth'});
-};
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-document.getElementById('searchInput').addEventListener('input', function() {
-  searchQuery = this.value.trim();
-  pintar();
-});
+  <!-- Floating Action Button -->
+  <button class="fab" onclick="app.sharePage()" aria-label="Compartir página">
+    <i class="fas fa-share-alt" aria-hidden="true"></i>
+  </button>
 
-// ============================================
-// CONTADOR DE VISITAS
-// ============================================
-function incrementarVisita() {
-  try {
-    const hoy = new Date().toDateString();
-    const ultima = localStorage.getItem('ultimaVisitaNI');
-    let visitas = parseInt(localStorage.getItem('visitasTotalNI') || '1250');
-    if (ultima !== hoy) { localStorage.setItem('ultimaVisitaNI', hoy); visitas++; localStorage.setItem('visitasTotalNI', visitas); }
-    document.getElementById('visitCount').textContent = visitas.toLocaleString();
-  } catch(e) { document.getElementById('visitCount').textContent = '1,250+'; }
-}
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-logo">NI</div>
+        <h3 class="footer-title">Nicaragua Informate</h3>
+        <p class="footer-desc">Periodismo de Precisión. Cobertura integral de Sucesos, Nacionales, Deportes, Internacionales, Espectáculo y contenido Premium.</p>
+      </div>
+      
+      <div class="footer-section">
+        <h4><i class="fas fa-folder" aria-hidden="true"></i> Secciones</h4>
+        <ul class="footer-links">
+          <li><span class="footer-link" onclick="app.filter('Todas')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Última Hora</span></li>
+          <li><span class="footer-link" onclick="app.filter('Sucesos')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Sucesos</span></li>
+          <li><span class="footer-link" onclick="app.filter('Nacionales')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Nacionales</span></li>
+          <li><span class="footer-link" onclick="app.filter('Deportes')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Deportes</span></li>
+          <li><span class="footer-link" onclick="app.filter('Internacionales')"><i class="fas fa-chevron-right" style="font-size: 0.75rem;"></i> Internacionales</span></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4><i class="fas fa-chart-bar" aria-hidden="true"></i> Servicios</h4>
+        <ul class="footer-links">
+          <li><span class="footer-link">Indicadores Económicos</span></li>
+          <li><span class="footer-link">Clima</span></li>
+          <li><span class="footer-link">Radio en Vivo</span></li>
+          <li><span class="footer-link">Archivo Histórico</span></li>
+        </ul>
+      </div>
+      
+      <div class="footer-section">
+        <h4><i class="fas fa-bullhorn" aria-hidden="true"></i> Síguenos</h4>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a></li>
+          <li><a href="#" class="footer-link"><i class="fab fa-twitter"></i> X (Twitter)</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <div>&copy; 2025 Nicaragua Informate. Todos los derechos reservados.</div>
+      <div style="display: flex; gap: var(--space-6);">
+        <a href="#" style="color: inherit;">Privacidad</a>
+        <a href="#" style="color: inherit;">Términos</a>
+        <a href="#" style="color: inherit;">Cookies</a>
+      </div>
+    </div>
+  </footer>
 
-// ============================================
-// EVENTOS
-// ============================================
-document.addEventListener('keydown', e => { if (e.key === 'Escape') window.cerrarModal(); });
-window.addEventListener('popstate', () => { if (!location.hash) window.cerrarModal(); });
+  <script>
+    /**
+     * Nicaragua Informate - Application Controller
+     * Arquitectura modular profesional con manejo de estado
+     */
+    const app = (function() {
+      'use strict';
 
-// Keyboard nav para hero/side items
-document.addEventListener('keydown', e => {
-  if (e.key === 'Enter' && e.target.getAttribute('role') === 'button') e.target.click();
-});
+      // ==========================================
+      // DATA LAYER - Modelo de datos robusto
+      // ==========================================
+      const data = {
+        categories: {
+          'Sucesos': { color: '#dc2626', icon: 'fa-exclamation-triangle' },
+          'Nacionales': { color: '#1e40af', icon: 'fa-building-columns' },
+          'Deportes': { color: '#047857', icon: 'fa-futbol' },
+          'Internacionales': { color: '#7c3aed', icon: 'fa-globe' },
+          'Espectáculo': { color: '#db2777', icon: 'fa-film' },
+          'Premium': { color: '#d97706', icon: 'fa-crown' },
+          'Economía': { color: '#0369a1', icon: 'fa-chart-line' }
+        },
 
-cargar();
-</script>
+        // 12 CIUDADES DE NICARAGUA - Clima en tiempo real
+        cities: [
+          { id: 0, name: 'Managua', lat: 12.1328, lon: -86.2504, region: 'Pacifico' },
+          { id: 1, name: 'León', lat: 12.4379, lon: -86.8784, region: 'Pacifico' },
+          { id: 2, name: 'Estelí', lat: 13.0900, lon: -86.3600, region: 'Norte' },
+          { id: 3, name: 'Bluefields', lat: 12.0137, lon: -83.7634, region: 'Atlantico' },
+          { id: 4, name: 'Nueva Guinea', lat: 11.6833, lon: -84.4563, region: 'Zelaya Central' },
+          { id: 5, name: 'Matagalpa', lat: 12.9259, lon: -85.9177, region: 'Norte' },
+          { id: 6, name: 'Granada', lat: 11.9299, lon: -85.9560, region: 'Pacifico' },
+          { id: 7, name: 'Rivas', lat: 11.4432, lon: -85.8153, region: 'Pacifico' },
+          { id: 8, name: 'Masaya', lat: 11.9734, lon: -86.0949, region: 'Pacifico' },
+          { id: 9, name: 'Jinotepe', lat: 11.8500, lon: -86.2000, region: 'Pacifico' },
+          { id: 10, name: 'Jinotega', lat: 13.0917, lon: -85.9994, region: 'Norte' },
+          { id: 11, name: 'Ocotal', lat: 13.4667, lon: -86.4833, region: 'Nueva Segovia' }
+        ],
 
-<script>
-// ============================================
-// HORA, CLIMA Y DARK MODE
-// ============================================
-function actualizarHora() {
-  try {
-    const ahora = new Date();
-    document.getElementById('hora').textContent = ahora.toLocaleDateString('es-NI', {weekday:'long',day:'numeric',month:'long',hour:'2-digit',minute:'2-digit'});
-    const fecha = ahora.toLocaleDateString('es-NI');
-    const tickerDate = document.getElementById('tickerDate');
-    const tickerDate2 = document.getElementById('tickerDate2');
-    if (tickerDate) tickerDate.textContent = fecha;
-    if (tickerDate2) tickerDate2.textContent = fecha;
-  } catch(e) {}
-}
-actualizarHora();
-setInterval(actualizarHora, 1000);
+        weatherState: {
+          currentCityIndex: 0,
+          weatherData: {},
+          autoRotateInterval: null,
+          lastUpdate: null
+        },
 
-async function cargarClima() {
-  const el = document.getElementById('clima');
-  try {
-    const ctrl = new AbortController();
-    const tid = setTimeout(() => ctrl.abort(), 5000);
-    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=12.1364&longitude=-86.2514&current_weather=true', {signal: ctrl.signal});
-    clearTimeout(tid);
-    if (!r.ok) throw new Error();
-    const d = await r.json();
-    const temp = Math.round(d.current_weather.temperature);
-    const iconos = {0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',61:'🌧️',95:'⛈️'};
-    el.innerHTML = `${iconos[d.current_weather.weathercode] || '🌡️'} Managua: <strong>${temp}°C</strong>`;
-  } catch(e) {
-    el.innerHTML = '🌡️ Managua: <strong>28°C</strong>';
-  }
-}
-setTimeout(cargarClima, 1000);
+        // Mapeo de códigos WMO a iconos FontAwesome
+        weatherCodes: {
+          0: { icon: 'fa-sun', label: 'Despejado', class: '' },
+          1: { icon: 'fa-cloud-sun', label: 'Parcialmente nublado', class: '' },
+          2: { icon: 'fa-cloud-sun', label: 'Parcialmente nublado', class: '' },
+          3: { icon: 'fa-cloud', label: 'Nublado', class: 'cloud' },
+          45: { icon: 'fa-smog', label: 'Niebla', class: 'cloud' },
+          48: { icon: 'fa-smog', label: 'Niebla', class: 'cloud' },
+          51: { icon: 'fa-cloud-rain', label: 'Llovizna', class: 'rain' },
+          53: { icon: 'fa-cloud-rain', label: 'Llovizna', class: 'rain' },
+          55: { icon: 'fa-cloud-rain', label: 'Llovizna fuerte', class: 'rain' },
+          61: { icon: 'fa-cloud-rain', label: 'Lluvia', class: 'rain' },
+          63: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia moderada', class: 'rain' },
+          65: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia fuerte', class: 'rain' },
+          71: { icon: 'fa-snowflake', label: 'Nieve', class: '' },
+          73: { icon: 'fa-snowflake', label: 'Nieve', class: '' },
+          75: { icon: 'fa-snowflake', label: 'Nieve fuerte', class: '' },
+          80: { icon: 'fa-cloud-rain', label: 'Lluvia', class: 'rain' },
+          81: { icon: 'fa-cloud-showers-heavy', label: 'Lluvia fuerte', class: 'rain' },
+          82: { icon: 'fa-cloud-showers-heavy', label: 'Tormenta', class: 'storm' },
+          95: { icon: 'fa-bolt', label: 'Tormenta eléctrica', class: 'storm' },
+          96: { icon: 'fa-bolt', label: 'Tormenta con granizo', class: 'storm' },
+          99: { icon: 'fa-bolt', label: 'Tormenta severa', class: 'storm' }
+        },
 
-async function obtenerTasaDolarNIO() {
-  const sources = [
-    'https://api.exchangerate-api.com/v4/latest/USD',
-    'https://open.er-api.com/v6/latest/USD',
-    'https://api.frankfurter.app/latest?from=USD&to=NIO'
-  ];
+        // Datos de ejemplo (fallback)
+        newsExample: [
+          // SUCESOS
+          { id: 1, title: 'Gobierno anuncia nuevas medidas económicas para impulsar el crecimiento', category: 'Sucesos', excerpt: 'El gobierno de Nicaragua presentó un paquete de medidas destinadas a impulsar el crecimiento económico y la inversión extranjera directa.', content: '<p>El gobierno de Nicaragua presentó este martes un paquete integral de medidas económicas destinadas a dinamizar el crecimiento y atraer inversión extranjera directa al país. Las iniciativas incluyen incentivos fiscales significativos para nuevas inversiones, simplificación de trámites administrativos mediante plataformas digitales, y programas de capacitación técnica para emprendedores.</p><p>El Ministro de Hacienda y Crédito Público destacó que estas medidas están proyectadas para generar más de 50,000 empleos directos en los próximos 24 meses, concentrándose principalmente en zonas francas y pequeña y mediana empresa.</p><p>Además, se anunció la creación de un fondo de garantía de $100 millones para facilitar el acceso al crédito de las MIPYMES, con tasas preferenciales que oscilarán entre el 8% y el 12% anual.</p>', date: new Date(), image: 101, author: 'Redacción Economía', readTime: 4 },
+          
+          { id: 8, title: 'Operativo policial en Managua deja varios detenidos y recupera objetos robados', category: 'Sucesos', excerpt: 'La Policía Nacional realizó un operativo en el barrio Oriental de Managua.', content: '<p>Un operativo táctico de la Policía Nacional en el mercado Oriental de Managua resultó en la detención de 12 sospechosos y la recuperación de mercadería valorada en más de 500,000 córdobas.</p><p>La operación "Seguridad Ciudadana", que duró más de seis horas, fue realizada en coordinación con la Fiscalía General de la República y contó con el apoyo de unidades especializadas de investigación criminal.</p>', date: new Date(Date.now() - 25200000), image: 103, author: 'Juan Pérez', readTime: 2 },
+          
+          { id: 15, title: 'Rescatan a 23 víctimas de tráfico humano en operativo binacional', category: 'Sucesos', excerpt: 'Autoridades de Nicaragua y Costa Rica realizaron operativo conjunto.', content: '<p>Un total de 23 personas, entre ellas 8 menores de edad, fueron rescatadas en un operativo binacional contra el tráfico humano coordinado entre las autoridades de Nicaragua y Costa Rica.</p><p>Las víctimas, originarias de Honduras, Guatemala y El Salvador, eran transportadas hacia Estados Unidos. Ya reciben atención psicológica y legal integral en albergues especializados.</p>', date: new Date(Date.now() - 86400000), image: 105, author: 'María González', readTime: 3 },
 
-  for (const url of sources) {
-    try {
-      const resp = await fetch(url, { cache: 'no-store', mode: 'cors' });
-      if (!resp.ok) continue;
-      const data = await resp.json();
-      if (data?.rates?.NIO) return Number(data.rates.NIO).toFixed(4);
-      const key = Object.keys(data?.rates || {}).find(k => k.toUpperCase() === 'NIO');
-      if (key) return Number(data.rates[key]).toFixed(4);
-    } catch (e) {
-      continue;
-    }
-  }
-  return null;
-}
+          // NACIONALES
+          { id: 10, title: 'Presidente inaugura nuevo hospital en León con tecnología de punta', category: 'Nacionales', excerpt: 'El centro médico contará con 200 camas y equipamiento moderno para toda la región.', content: '<p>El nuevo Hospital Dr. Oscar Danilo Rosales Argüello fue inaugurado este jueves en la ciudad de León, representando una inversión de más de 80 millones de dólares en infraestructura hospitalaria.</p><p>El centro médico cuenta con 200 camas hospitalarias, 10 quirófanos equipados con tecnología robótica, una unidad de cuidados intensivos de última generación y el primer tomógrafo de 256 cortes en el país.</p>', date: new Date(Date.now() - 18000000), image: 501, author: 'Carlos López', readTime: 5 },
+          
+          { id: 11, title: 'Más de 100,000 turistas visitaron Granada durante Semana Santa', category: 'Nacionales', excerpt: 'La ciudad colonial vivió una temporada récord de visitantes nacionales y extranjeros.', content: '<p>La histórica ciudad de Granada recibió más de 100,000 turistas durante la Semana Santa, generando ingresos económicos superiores a 5 millones de dólares para la economía local.</p><p>Los hoteles de la ciudad reportaron una ocupación del 95%, mientras que los restaurantes y tour operadores registraron cifras históricas de atención al cliente.</p>', date: new Date(Date.now() - 43200000), image: 502, author: 'Ana Martínez', readTime: 3 },
+          
+          { id: 12, title: 'Programa social beneficia a 50,000 familias con viviendas dignas', category: 'Nacionales', excerpt: 'El programa Bismarck Martínez continúa transformando comunidades.', content: '<p>El programa de viviendas Bismarck Martínez entregó este mes 2,500 nuevas viviendas a familias de escasos recursos de todo el país, alcanzando la cifra histórica de 50,000 hogares beneficiados desde su creación.</p><p>Las nuevas viviendas cuentan con todos los servicios básicos y están construidas con materiales sismorresistentes.</p>', date: new Date(Date.now() - 60480000), image: 503, author: 'Pedro Castillo', readTime: 4 },
 
-async function actualizarIndicadoresEconomicos() {
-  const defaultValues = {dolar:'36.62', regular:'47.84', super:'49.03', diesel:'43.21'};
-  const hora = new Date().toLocaleTimeString('es-NI', {hour:'2-digit', minute:'2-digit'});
+          // DEPORTES
+          { id: 2, title: 'Selección Nicaragüense se prepara intensamente para eliminatorias', category: 'Deportes', excerpt: 'La selección nacional intensifica su preparación de cara a los próximos partidos.', content: '<p>La selección nacional de fútbol de Nicaragua intensifica su preparación en el Centro de Alto Rendimiento de Managua con miras a los próximos compromisos internacionales de eliminatorias mundialistas.</p><p>El director técnico, Michael Adams, ha convocado a 26 jugadores para la concentración que iniciará el próximo lunes, incluyendo tres legionarios que militan en ligas de Europa.</p>', date: new Date(Date.now() - 3600000), image: 201, author: 'Luis Sports', readTime: 3 },
+          
+          { id: 6, title: 'Nuevo estadio de béisbol en Managua impulsará el deporte nacional', category: 'Deportes', excerpt: 'El gobierno anunció la construcción de un moderno estadio de béisbol.', content: '<p>Las obras del nuevo estadio de béisbol "Dennis Martínez" comenzarán el próximo mes, con una inversión de 45 millones de dólares que incluye las más modernas instalaciones para deportistas y espectadores.</p><p>El recinto tendrá capacidad para 15,000 personas y cumplirá con estándares internacionales para albergar torneos clasificatorios al Clásico Mundial de Béisbol.</p>', date: new Date(Date.now() - 18000000), image: 202, author: 'Roberto Baseball', readTime: 4 },
+          
+          { id: 16, title: 'Atleta nicaragüense gana medalla de oro en Juegos Centroamericanos', category: 'Deportes', excerpt: 'María José López se coronó campeona en atletismo femenino.', content: '<p>La velocista nicaragüense María José López ganó la medalla de oro en los 400 metros planos de los Juegos Centroamericanos y del Caribe, estableciendo un nuevo récord nacional con tiempo de 52.34 segundos.</p><p>La atleta de 22 años superó a competidoras de Jamaica y Trinidad y Tobago, convirtiéndose en la primera nicaragüense en ganar oro en esta disciplina desde 1998.</p>', date: new Date(Date.now() - 129600000), image: 203, author: 'Diana Sport', readTime: 3 },
 
-  let dolar = null;
-  let fuelValues = null;
+          // INTERNACIONALES
+          { id: 4, title: 'Descubrimiento arqueológico revela vestigios de más de 1000 años', category: 'Internacionales', excerpt: 'Arqueólogos internacionales descubrieron importantes vestigios precolombinos.', content: '<p>Un equipo internacional de arqueólogos realizó un importante descubrimiento en la región del Pacífico nicaragüense, encontrando vestigios de una antigua civilización que datan de más de 1,000 años de antigüedad.</p><p>El hallazgo incluye cerámicas únicas, herramientas de obsidiana y los restos de lo que parece ser un centro ceremonial precolombino de gran magnitud.</p>', date: new Date(Date.now() - 10800000), image: 401, author: 'Dr. Arqueólogo', readTime: 5 },
+          
+          { id: 5, title: 'Nicaragua consolida liderazgo en exportaciones de café centroamericano', category: 'Internacionales', excerpt: 'Las exportaciones de café nicaragüense alcanzaron cifras récord.', content: '<p>Nicaragua se posicionó como el mayor exportador de café de especialidad de Centroamérica durante el último año, superando las cifras históricas con más de 2.5 millones de quintales exportados.</p><p>El café nicaragüense ha obtenido la más alta calificación en subastas internacionales, llegando a precios récord de $45 por libra en el mercado de especialidad.</p>', date: new Date(Date.now() - 14400000), image: 102, author: 'Economía Global', readTime: 4 },
 
-  try {
-    dolar = await obtenerTasaDolarNIO();
-    if (!dolar) throw new Error('No rate');
+          // ESPECTÁCULO
+          { id: 21, title: 'Banda nicaragüense Filarmónica estrena disco en Teatro Nacional', category: 'Espectáculo', excerpt: 'El concierto de presentación agotó entradas en menos de 24 horas.', content: '<p>La banda de rock alternativo nicaragüense Filarmónica presentó su tercer álbum de estudio "Volcanes" en una noche memorable en el Teatro Nacional Rubén Darío de Managua.</p><p>Los 1,200 boletos disponibles se agotaron en menos de 24 horas, demostrando el creciente apoyo del público nacional a la música local de alta calidad.</p>', date: new Date(Date.now() - 21600000), image: 601, author: 'Cultura NI', readTime: 3 },
+          
+          { id: 22, title: 'Netflix anuncia serie documental sobre historia de Nicaragua', category: 'Espectáculo', excerpt: 'La producción estará disponible en 190 países.', content: '<p>La plataforma Netflix anunció la producción de una serie documental de 8 episodios sobre la historia contemporánea de Nicaragua, dirigida por la reconocida cineasta mexicana María Novaro.</p><p>La producción, que llevará por título "Tierra de Lagos y Volcanes", se estrenará globalmente en junio próximo y contará con testimonios exclusivos de historiadores y protagonistas de la vida nacional.</p>', date: new Date(Date.now() - 93600000), image: 602, author: 'Cine y Series', readTime: 4 },
 
-    const config = await getIndicadoresConfig();
-    if (config?.gasolina) {
-      fuelValues = {
-        regular: config.gasolina.regular ?? defaultValues.regular,
-        super: config.gasolina.super ?? defaultValues.super,
-        diesel: config.gasolina.diesel ?? defaultValues.diesel,
+          // ESPECTÁCULO - Más noticias
+          { id: 23, title: 'Festival Internacional de Teatro llega a 10 ciudades del país', category: 'Espectáculo', excerpt: 'Más de 50 compañías teatrales participarán en esta edición.', content: '<p>El Festival Internacional de Teatro "Luis Alberto Sánchez" se desarrollará durante todo abril en 10 ciudades nicaragüenses, con la participación de compañías de España, Argentina, México y Nicaragua.</p><p>El evento incluirá obras clásicas y contemporáneas, talleres de actuación y encuentros con directores internacionales.</p>', date: new Date(Date.now() - 120000000), image: 603, author: 'Cultura NI', readTime: 3 },
+          { id: 24, title: 'Artista nicaragüense expone en Museo de Arte Moderno de Nueva York', category: 'Espectáculo', excerpt: 'Patricia Solórzano presenta su colección "Raíces Volcánicas".', content: '<p>La artista nicaragüense Patricia Solórzano inauguró su exposición "Raíces Volcánicas" en el MoMA de Nueva York, convirtiéndose en la primera centroamericana en exponer individualmente en este prestigioso museo.</p><p>La colección incluye 25 obras que exploran la relación entre la identidad nicaragüense y los elementos naturales del país.</p>', date: new Date(Date.now() - 180000000), image: 604, author: 'Arte Global', readTime: 4 },
+          { id: 30, title: 'Gala de Ballet Clásico en el Teatro Nacional Rubén Darío', category: 'Espectáculo', excerpt: 'Compañía nacional presenta "El Lago de los Cisnes".', content: '<p>La Compañía Nacional de Ballet de Nicaragua presentará "El Lago de los Cisnes" en una gala benéfica en el Teatro Nacional Rubén Darío. Los fondos recaudados servirán para becar a jóvenes bailarines de escasos recursos.</p>', date: new Date(Date.now() - 3600000), image: 605, author: 'Danza NI', readTime: 3 },
+
+          // PREMIUM - Más contenido exclusivo
+          { id: 25, title: 'Análisis: Impacto de la nueva reforma tributaria en economía familiar', category: 'Premium', excerpt: 'Estudio exclusivo revela efectos en el poder adquisitivo.', content: '<p>Un análisis detallado de la nueva reforma tributaria muestra que el 78% de los hogares nicaragüenses verán un impacto positivo en su economía familiar durante el próximo año fiscal.</p><p>El estudio, realizado por economistas de la Universidad Nacional Autónoma de Nicaragua (UNAN), proyecta una reducción del 12% en el costo de la canasta básica para 2026, gracias a las exenciones en productos de primera necesidad.</p><p>Los sectores más beneficiados serán las familias con ingresos entre 15,000 y 30,000 córdobos mensuales, que verán un aumento real en su poder adquisitivo.</p>', date: new Date(Date.now() - 7200000), image: 701, author: 'Análisis Económico', readTime: 8 },
+          { id: 26, title: 'Investigación especial: Los 10 empresarios que transforman Nicaragua', category: 'Premium', excerpt: 'Perfiles exclusivos de los líderes empresariales del año.', content: '<p>Esta investigación especial presenta perfiles en profundidad de los 10 empresarios más influyentes de Nicaragua en 2025, analizando sus estrategias de negocio y su impacto en la generación de empleo.</p><p>Entre ellos destacan líderes del sector tecnológico, agrícola y manufacturero que han logrado expandir sus operaciones internacionalmente.</p>', date: new Date(Date.now() - 90000000), image: 702, author: 'Negocios Pro', readTime: 6 },
+          { id: 27, title: 'Reportaje: Así es la vida en la Zona Económica Especial más grande de Centroamérica', category: 'Premium', excerpt: 'Recorrido exclusivo por el interior de las empresas que operan en la ZEE.', content: '<p>Un reportaje especial con acceso exclusivo a las instalaciones de la Zona Económica Especial muestra el día a día de más de 15,000 trabajadores y las operaciones de empresas exportadoras líderes.</p><p>La investigación incluye entrevistas con trabajadores, directivos y autoridades gubernamentales sobre el impacto económico de esta zona.</p>', date: new Date(Date.now() - 150000000), image: 703, author: 'Reportajes NI', readTime: 7 },
+          { id: 28, title: 'Entrevista exclusiva: El futuro de la educación universitaria en Nicaragua', category: 'Premium', excerpt: 'Rector de la UNAN-Managua habla sobre innovación y nuevas carreras.', content: '<p>En esta entrevista exclusiva, el rector de la UNAN-Managua detalla los planes de expansión de la universidad, incluyendo 5 nuevas carreras tecnológicas y convenios internacionales con universidades de Alemania y España.</p><p>También aborda los desafíos de la educación post-pandemia y la digitalización de los programas académicos.</p>', date: new Date(Date.now() - 200000000), image: 704, author: 'Educación 360', readTime: 5 },
+          { id: 29, title: 'Análisis profundo: El sector turístico nicaragüense post-pandemia', category: 'Premium', excerpt: 'Datos exclusivos sobre la recuperación del turismo en 2025.', content: '<p>Un análisis detallado basado en datos oficiales del Instituto Nicaragüense de Turismo (INTUR) muestra una recuperación del 85% del sector turístico comparado con niveles pre-pandemia.</p><p>El estudio identifica las zonas de mayor crecimiento y las estrategias que han funcionado para atraer turismo internacional.</p>', date: new Date(Date.now() - 250000000), image: 705, author: 'Turismo Pro', readTime: 6 },
+
+          // INTERNACIONALES - Más noticias
+          { id: 31, title: 'Cumbre de Presidentes Centroamericanos aborda crisis climática', category: 'Internacionales', excerpt: 'Líderes de la región acuerdan plan de acción conjunto.', content: '<p>Los presidentes de Centroamérica se reunieron en San José, Costa Rica, para acordar un plan regional de acción contra el cambio climático, incluyendo medidas de protección de bosques y gestión de desastres.</p><p>Nicaragua propuso la creación de un fondo regional para la protección de los bosques tropicales.</p>', date: new Date(Date.now() - 86400000), image: 405, author: 'Diplomacia NI', readTime: 4 },
+          { id: 32, title: 'Turistas europeos eligen a Nicaragua como destino emergente 2025', category: 'Internacionales', excerpt: 'Revista alemana destaca la seguridad y belleza natural del país.', content: '<p>La reconocida revista alemana Geo Saison seleccionó a Nicaragua como uno de los destinos turísticos emergentes de 2025, destacando sus volcanes, playas vírgenes y seguridad para visitantes.</p><p>El artículo destaca particularmente Granada, Ometepe y San Juan del Sur como destinos imperdibles.</p>', date: new Date(Date.now() - 120000000), image: 406, author: 'Turismo Global', readTime: 4 },
+          { id: 33, title: 'UE anuncia cooperación millonaria para proyectos sostenibles en Nicaragua', category: 'Internacionales', excerpt: 'Fondos para energías renovables y agricultura orgánica.', content: '<p>La Unión Europea anunció un paquete de cooperación de 45 millones de euros para proyectos de energías renovables y agricultura orgánica en Nicaragua.</p><p>El acuerdo incluye transferencia de tecnología y capacitación para técnicos nicaragüenses en Europa.</p>', date: new Date(Date.now() - 200000000), image: 407, author: 'Cooperación EU', readTime: 5 }
+        ],
+
+        // Noticias activas (se carga desde Firebase o usa ejemplo)
+        news: [],
+
+        state: {
+          currentCategory: 'Todas',
+          searchQuery: '',
+          isPlaying: false,
+          favorites: JSON.parse(localStorage.getItem('ni_favorites') || '[]'),
+          theme: localStorage.getItem('ni_theme') || 'light',
+          views: JSON.parse(localStorage.getItem('ni_views') || '{}')
+        },
+
+        // Contador de vistas
+        getViews(articleId) {
+          return data.state.views[articleId] || 0;
+        },
+
+        incrementViews(articleId) {
+          if (!data.state.views[articleId]) {
+            data.state.views[articleId] = 0;
+          }
+          data.state.views[articleId]++;
+          localStorage.setItem('ni_views', JSON.stringify(data.state.views));
+          return data.state.views[articleId];
+        },
+
+        // Cargar noticias desde Firebase - Informate 3.0
+        async loadFromFirebase() {
+          try {
+            // Esperar a que Firebase esté listo
+            if (!window.firebaseDB) {
+              console.log('⏳ Esperando Firebase...');
+              await new Promise(resolve => setTimeout(resolve, 1500));
+              if (!window.firebaseDB) {
+                console.warn('❌ Firebase no disponible después de esperar');
+                return false;
+              }
+            }
+
+            const { collection, query, orderBy, getDocs, onSnapshot } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+            
+            const q = query(collection(window.firebaseDB, 'noticias'), orderBy('fecha', 'desc'));
+            
+            console.log('🔍 Cargando noticias desde Firestore...');
+            
+            // PRIMERO: Carga inicial con getDocs (más confiable)
+            const snapshot = await getDocs(q);
+            console.log(`📄 Documentos encontrados: ${snapshot.size}`);
+            
+            const noticiasFirebase = [];
+            
+            snapshot.forEach((doc, index) => {
+              const noticia = doc.data();
+              noticia.id = doc.id;
+              
+              console.log(`📝 Noticia ${index + 1}:`, noticia.titulo || noticia.title || 'Sin título');
+              console.log(`   📸 Campo 'imagen':`, noticia.imagen);
+              console.log(`   📸 Campo 'image':`, noticia.image);
+              
+              // Normalizar campos
+              noticia.title = noticia.titulo || noticia.title || 'Sin título';
+              noticia.category = noticia.categoria || noticia.category || 'Nacionales';
+              noticia.excerpt = noticia.resumen || noticia.excerpt || noticia.content?.substring(0, 150) + '...' || '';
+              noticia.content = noticia.contenido || noticia.content || '';
+              noticia.date = noticia.fecha?.toDate ? noticia.fecha.toDate() : new Date(noticia.fecha || Date.now());
+              noticia.author = noticia.autor || noticia.author || 'Redacción NI';
+              noticia.readTime = noticia.tiempoLectura || noticia.readTime || 3;
+              
+              // Procesar imagen - validar y usar número para picsum si es inválido
+              let rawImage = noticia.imagen || noticia.image;
+              
+              // Validar: si no es string válido o es "NaN", usar número para picsum placeholder
+              if (!rawImage || typeof rawImage !== 'string' || rawImage === 'NaN' || rawImage === 'null' || rawImage === 'undefined') {
+                console.log(`   ⚠️ Imagen inválida en noticia ${noticia.id}, usando placeholder picsum`);
+                rawImage = index + 100; // Número para picsum.photos
+              }
+              
+              console.log(`   📸 Raw image value:`, rawImage);
+              noticia.image = this.processImage(rawImage, index);
+              console.log(`   📸 Processed image:`, noticia.image);
+              
+              noticiasFirebase.push(noticia);
+            });
+            
+            if (noticiasFirebase.length > 0) {
+              console.log(`✅ ${noticiasFirebase.length} noticias cargadas de Firebase`);
+              data.news = noticiasFirebase;
+              controller.renderAll();
+              controller.showToast(`${noticiasFirebase.length} noticias cargadas de Firebase`, 'success');
+            } else {
+              console.log('ℹ️ No hay noticias en Firebase, usando datos de ejemplo');
+              return false;
+            }
+            
+            // LUEGO: Activar listener en tiempo real con onSnapshot
+            onSnapshot(q, (snapshotRealtime) => {
+              const noticiasRealtime = [];
+              snapshotRealtime.forEach((doc, index) => {
+                const noticia = doc.data();
+                noticia.id = doc.id;
+                noticia.title = noticia.titulo || noticia.title || 'Sin título';
+                noticia.excerpt = noticia.resumen || noticia.excerpt || '';
+                noticia.content = noticia.contenido || noticia.content || '<p>Contenido no disponible</p>';
+                noticia.category = noticia.categoria || noticia.category || 'Nacionales';
+                noticia.date = noticia.fecha?.toDate ? noticia.fecha.toDate() : new Date(noticia.fecha || Date.now());
+                noticia.author = noticia.autor || noticia.author || 'Redacción NI';
+                noticia.readTime = noticia.tiempoLectura || noticia.readTime || 3;
+                
+                // Validar imagen en tiempo real
+                let imgValue = noticia.imagen || noticia.image;
+                if (!imgValue || typeof imgValue !== 'string' || imgValue === 'NaN') {
+                  imgValue = index + 100; // Número para picsum.photos placeholder
+                }
+                noticia.image = this.processImage(imgValue, index);
+                
+                noticiasRealtime.push(noticia);
+              });
+              
+              if (noticiasRealtime.length > 0) {
+                console.log(`🔄 Actualización en tiempo real: ${noticiasRealtime.length} noticias`);
+                data.news = noticiasRealtime;
+                controller.renderAll();
+              }
+            });
+            
+            return true;
+          } catch (error) {
+            console.error('❌ Error cargando Firebase:', error);
+            console.error('Detalle:', error.message);
+            controller.showToast('Error al cargar de Firebase', 'error');
+            return false;
+          }
+        },
+
+        // Lista de imágenes que existen localmente (extraído del directorio)
+        imagenesDisponibles: new Set([
+          '1774024854629_655278217_18005774471850823_1069036113521707958_n_jpg.webp',
+          '1774026861491_hue_jpg.webp',
+          '1774027225845_g_png.webp',
+          '1774028977124_chuck_norris_texas_webp.webp',
+          '1774030005635_unnamed_jpg.webp',
+          '1774043060134_haa_webp.webp',
+          '1774045561737_leon_webp.webp',
+          '1774048380338_preso_webp.webp',
+          '1774062057495_122_webp.webp',
+          '1774062696605_ruben_webp.webp',
+          '1774064218765_ruta_webp.webp',
+          '1774064490349_SELE_webp.webp',
+          '1774086809370_incend_webp.webp',
+          '1774088285400_Captura_de_pantalla_2026_03_21_041635_webp.webp',
+          '1774091802394_JSDJS_webp.webp',
+          '1774092678008_SEELE_webp.webp',
+          '1774098956732_63139_webp.webp',
+          '1774116834145_63328_webp.webp',
+          '1774128476900_63435_webp.webp',
+          '1774130407030_63477_webp.webp',
+          '1774132339385_63483_webp.webp',
+          '1774133749920_63513_webp.webp',
+          '1774134733172_63518_webp.webp',
+          '1774136909877_63536_webp.webp',
+          '1774178981611_63963_webp.webp',
+          '1774195735279_64051_webp.webp',
+          '1774196293698_64064_webp.webp',
+          '1774201298947_64131_webp.webp',
+          '1774282483211_aveja_webp.webp',
+          '1774286298283_12_webp.webp',
+          '1774287327911_avion_webp.webp',
+          '1774288701609_jalapa_webp.webp',
+          '1774289649734_grecia_webp.webp',
+          '1774291041891_WhatsApp_Image_2026_03_23_at_12_32_03_PM_webp.webp',
+          '1774291866168_alfabetizacion_webp.webp',
+          '1774295719228_norr_webp.webp',
+          '1774296209489_minsa_webp.webp',
+          '1774296735187_madris_webp.webp',
+          '1774297565420_bar_webp.webp',
+          '1774299337338_bad_webp.webp',
+          '1774300622526_WhatsApp_Image_2026_03_23_at_3_16_23_PM_webp.webp',
+          '1774301873801_657540689_1626468092210788_1787147465049955445_n_webp.webp',
+          '1774320901279_65270_webp.webp',
+          '1774355917105_65537_webp.webp',
+          '1774374057364_WhatsApp_Image_2026_03_24_at_11_37_48_AM_webp.webp',
+          '1774382299072_DarkSword_1300x867_webp.webp',
+          '1774383407437_Policia_Nacional_1_webp.webp',
+          '1774393881872_655479942_1473903334334383_4143752232754479216_n_webp.webp',
+          '1774455200705_silla_webp.webp',
+          '1774456418543_pn_webp.webp',
+          '1774459872277_rivas_webp.webp',
+          '1774461493954_WhatsApp_Image_2026_03_25_at_11_51_51_AM_webp.webp',
+          '1774470174159_sina_webp.webp',
+          '1774472771613_iran_webp.webp',
+          '1774476610060_pn_webp.webp',
+          '1774479210380_peaton_webp.webp',
+          '1774480548263_656710854_1371480261671726_2712724060909172517_n_webp.webp',
+          '1774536365593_nica_webp.webp',
+          '1774560444701_leon_webp.webp',
+          '1774564411657_crimen_webp.webp',
+          '1774567322024_nindiri_webp.webp',
+          '1774574986569_67703_webp.webp',
+          '1774576371421_67713_webp.webp',
+          '1774577788947_67723_webp.webp',
+          '1774578485042_67840_webp.webp',
+          '1774582808832_67864_webp.webp',
+          '1774665327981_68524_webp.webp',
+          '1774666976642_68540_webp.webp',
+          '1774669025820_68547_webp.webp',
+          '1774670328647_68560_webp.webp',
+          '1774683244534_68613_webp.webp',
+          '1774911901066_pn_protected_jpg.webp',
+          '1774971472475_piscina_protected_jpg.webp',
+          '1774972133597_luz_protected_jpg.webp',
+          '1774972694965_managua_protected_jpg.webp',
+          '1774973047767_ricardo_protected_jpg.webp',
+          '1774990388572_esteli_protected_jpg.webp',
+          '1774990790985_dise_ador_protected_jpg.webp',
+          '1774992909013_FERI_protected_jpg.webp',
+          '1774993515743_madriz_protected_jpg.webp',
+          '1774994904090_fuentes_protected_jpg.webp',
+          '1774995994066_copa_protected_jpg.webp',
+          '1774996378384_Shakira_protected_jpg.webp',
+          '1774996632541_italia_protected_jpg.webp',
+          '1774997303476_ejercito_protected_jpg.webp',
+          '1774997514950_WhatsApp_Image_2026_03_31_at_4_51_14_PM_protected_jpg.webp',
+          '1774998353499_Telescopio_Espacial_Hubble_de_la_NAS_protected_jpg.webp',
+          '1774998516873_mujer_protected_jpg.webp',
+          '1774999553418_ulises_protected_jpg.webp',
+          '1774999678817_WhatsApp_Image_2026_03_31_at_5_27_25_PM_protected_jpg.webp',
+          '1775000026972_espa_a_protected_jpg.webp',
+          '1775000252839_haiti_protected_jpg.webp',
+          '1775000906310_motoo_protected_jpg.webp',
+          '1775018081750_72946_protected_jpg.webp',
+          '1775019075378_72973_protected_jpg.webp',
+          '1775019391021_72976_protected_jpg.webp',
+          '1775056477194_CHAVALO_protected_jpg.webp',
+          '1775081451501_chavalooo_protected_jpg.webp',
+          '1775081745624_retroescavadora_protected_jpg.webp',
+          '1775092920621_73846_protected_jpg.webp',
+          '1775093518695_73848_protected_jpg.webp',
+          '1775110944352_san_marco_protected_jpg.webp',
+          '1775112479190_joaooaoa_protected_jpg.webp',
+          '1775168963993_WhatsApp_Image_2026_04_02_at_4_28_04_PM_protected_jpg.webp',
+          '1775180228536_xilo_protected_jpg.webp',
+          '1775180600629_lago_apanas_protected_jpg.webp',
+          '1775180737006_masyyaaa_protected_jpg.webp',
+          '1775180988992_caribe_protected_jpg.webp',
+          '1775181638829_leon_protected_jpg.webp',
+          '1775181841907_jinotega_protected_jpg.webp',
+          '1775182333508_WhatsApp_Image_2026_04_02_at_8_07_16_PM_protected_jpg.webp',
+          '1775182574700_EBRIO_protected_jpg.webp',
+          '1775182833993_FALLLE_protected_jpg.webp',
+          '1775185257151_ahogado_protected_jpg.webp',
+          '1775185840922_pn_protected_jpg.webp',
+          '1775194191464_HACKER_protected_jpg.webp',
+          '1775194577059_NIGER_protected_jpg.webp',
+          '1775234031877_peaton_protected_jpg.webp',
+          '1775238636487_WhatsApp_Image_2026_04_03_at_11_48_34_AM_protected_jpg.webp',
+          '1775239778405_reli_protected_jpg.webp'
+        ]),
+
+        // Procesar imágenes - usar valor de Firebase directamente
+        processImage(imageUrl, index) {
+          if (!imageUrl) return index + 100;
+          if (typeof imageUrl === 'number') return imageUrl;
+          
+          // Si es URL http completa, devolverla tal cual
+          if (typeof imageUrl === 'string' && imageUrl.startsWith('http')) {
+            return imageUrl;
+          }
+          
+          // Usar el nombre del campo imagen de Firebase directamente
+          if (typeof imageUrl === 'string' && imageUrl.includes('.webp')) {
+            const cleanFileName = imageUrl.split('/').pop().split('\\').pop();
+            console.log(`🖼️ Usando imagen de Firebase: ${cleanFileName}`);
+            return cleanFileName;
+          }
+          
+          return index + 100;
+        },
+
+        // Fallback a datos de ejemplo
+        useFallbackData() {
+          console.log('📦 Usando datos de ejemplo');
+          return data.newsExample || [];
+        }
       };
-    }
-  } catch (e) {
-    const saved = JSON.parse(localStorage.getItem('indicadoresEconomicos') || 'null');
-    dolar = (saved && saved.dolar) ? saved.dolar : defaultValues.dolar;
-    if (saved && saved.regular && saved.super && saved.diesel) {
-      fuelValues = {regular: saved.regular, super: saved.super, diesel: saved.diesel};
-    } else {
-      fuelValues = defaultValues;
-    }
-  }
 
-  const finalFuel = fuelValues || defaultValues;
+      // ==========================================
+      // CONTROLLER - Lógica de negocio
+      // ==========================================
+      const controller = {
+        async init() {
+          this.applyTheme(data.state.theme);
+          
+          // Intentar cargar desde Firebase primero
+          const firebaseLoaded = await data.loadFromFirebase();
+          
+          if (!firebaseLoaded || data.news.length === 0) {
+            // Usar datos de ejemplo como fallback
+            data.news = [...data.newsExample];
+            this.renderAll();
+          }
+          
+          this.initWeather(); // Inicializar clima en tiempo real
+          this.setupEventListeners();
+          this.startClock();
+          
+          // Simular carga progresiva
+          setTimeout(() => {
+            document.body.classList.add('loaded');
+          }, 100);
+        },
 
-  document.getElementById('ind-dolar').textContent = `C$ ${dolar}`;
-  document.getElementById('ind-regular').textContent = `C$ ${finalFuel.regular}`;
-  document.getElementById('ind-super').textContent = `C$ ${finalFuel.super}`;
-  document.getElementById('ind-diesel').textContent = `C$ ${finalFuel.diesel}`;
-  document.getElementById('ind-last-updated').textContent = hora;
+        // Helper para obtener URL de imagen - jsDelivr desde GitHub
+        getImageUrl(image, width = 400, height = 300) {
+          // Si es número, usar picsum
+          if (typeof image === 'number') {
+            return `https://picsum.photos/seed/${image}/${width}/${height}`;
+          }
+          
+          if (typeof image === 'string' && image.length > 0 && image !== 'NaN') {
+            // Limpiar nombre
+            let cleanName = image.split('/').pop().split('\\').pop();
+            
+            // 🎯 jsDelivr CDN desde GitHub
+            return `https://cdn.jsdelivr.net/gh/Nicmay18/informate-nicaragua@main/images/${cleanName}`;
+          }
+          
+          // Fallback a picsum
+          return `https://picsum.photos/seed/1/${width}/${height}`;
+        },
 
-  localStorage.setItem('indicadoresEconomicos', JSON.stringify({dolar, ...finalFuel, updated: hora}));
-}
+        // ==========================================
+        // WEATHER SYSTEM - Clima en tiempo real
+        // ==========================================
+        initWeather() {
+          this.loadWeatherForCity(0); // Cargar primera ciudad
+          this.renderWeatherNav(); // Renderizar navegación
+          this.startWeatherRotation(); // Iniciar rotación automática
+        },
 
+        async loadWeatherForCity(cityIndex) {
+          const city = data.cities[cityIndex];
+          if (!city) return;
 
-actualizarIndicadoresEconomicos();
-setInterval(actualizarIndicadoresEconomicos, 1000 * 60 * 5); // cada 5 minutos (mayor frecuencia para noticias recientes)
+          // Mostrar estado de carga
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = 'Actualizando...';
 
-// DARK MODE
-const darkToggle = document.getElementById('darkToggle');
-const savedTheme = localStorage.getItem('theme') || 'light';
-if (savedTheme === 'dark') { document.documentElement.setAttribute('data-theme','dark'); darkToggle.textContent = '☀️'; }
+          try {
+            // Usar Open-Meteo API (gratuita, sin API key)
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${city.lat}&longitude=${city.lon}&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m,visibility&timezone=America%2FManagua`;
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Error en API');
+            
+            const weatherData = await response.json();
+            this.displayWeather(city, weatherData.current);
+            
+            // Guardar en cache
+            data.weatherState.weatherData[city.id] = weatherData.current;
+            data.weatherState.lastUpdate = Date.now();
+          } catch (error) {
+            console.error('Error cargando clima:', error);
+            // Usar datos simulados realistas si falla la API
+            this.displaySimulatedWeather(city);
+          }
+        },
 
-darkToggle.addEventListener('click', () => {
-  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-  if (isDark) {
-    document.documentElement.removeAttribute('data-theme');
-    darkToggle.textContent = '🌙';
-    localStorage.setItem('theme', 'light');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    darkToggle.textContent = '☀️';
-    localStorage.setItem('theme', 'dark');
-  }
-});
+        displayWeather(city, current) {
+          const code = current.weather_code || 0;
+          const weatherInfo = data.weatherCodes[code] || data.weatherCodes[0];
+          
+          // Actualizar UI
+          const iconEl = document.getElementById('weatherIcon');
+          iconEl.className = `fas ${weatherInfo.icon} weather-icon ${weatherInfo.class}`;
+          
+          document.getElementById('weatherTemp').textContent = `${Math.round(current.temperature_2m)}°C`;
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = weatherInfo.label;
+          document.getElementById('weatherHumidity').textContent = `${current.relative_humidity_2m || 65}%`;
+          document.getElementById('weatherWind').textContent = `${current.wind_speed_10m || 8} km/h`;
+          document.getElementById('weatherVisibility').textContent = `${((current.visibility || 10000) / 1000).toFixed(1)} km`;
+          document.getElementById('weatherCityIndicator').textContent = `${data.weatherState.currentCityIndex + 1} / ${data.cities.length}`;
+          
+          // Animación de fade
+          const container = document.getElementById('weatherContainer');
+          container.classList.remove('weather-fade');
+          void container.offsetWidth; // Trigger reflow
+          container.classList.add('weather-fade');
+        },
 
-// SERVICE WORKER
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(() => {});
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        displaySimulatedWeather(city) {
+          // Datos simulados pero realistas según la región
+          const regionTemps = {
+            'Pacifico': 32,
+            'Norte': 26,
+            'Atlantico': 29,
+            'Zelaya Central': 28,
+            'Nueva Segovia': 25
+          };
+          
+          const baseTemp = regionTemps[city.region] || 28;
+          const variation = Math.floor(Math.random() * 5) - 2;
+          const temp = baseTemp + variation;
+          
+          const conditions = [
+            { code: 0, prob: 0.3 },
+            { code: 1, prob: 0.4 },
+            { code: 3, prob: 0.2 },
+            { code: 61, prob: 0.1 }
+          ];
+          
+          const rand = Math.random();
+          let selectedCode = 0;
+          let cumProb = 0;
+          
+          for (const cond of conditions) {
+            cumProb += cond.prob;
+            if (rand <= cumProb) {
+              selectedCode = cond.code;
+              break;
+            }
+          }
+          
+          const weatherInfo = data.weatherCodes[selectedCode];
+          
+          document.getElementById('weatherIcon').className = `fas ${weatherInfo.icon} weather-icon ${weatherInfo.class}`;
+          document.getElementById('weatherTemp').textContent = `${temp}°C`;
+          document.getElementById('weatherCity').textContent = city.name;
+          document.getElementById('weatherDesc').textContent = weatherInfo.label;
+          document.getElementById('weatherHumidity').textContent = `${60 + Math.floor(Math.random() * 25)}%`;
+          document.getElementById('weatherWind').textContent = `${8 + Math.floor(Math.random() * 15)} km/h`;
+          document.getElementById('weatherVisibility').textContent = `${(8 + Math.random() * 4).toFixed(1)} km`;
+          document.getElementById('weatherCityIndicator').textContent = `${data.weatherState.currentCityIndex + 1} / ${data.cities.length}`;
+        },
+
+        renderWeatherNav() {
+          const nav = document.getElementById('weatherCitiesNav');
+          nav.innerHTML = data.cities.map((city, index) => `
+            <div class="weather-city-dot ${index === 0 ? 'active' : ''}" 
+                 onclick="app.weather.goToCity(${index})" 
+                 title="${city.name}"></div>
+          `).join('');
+        },
+
+        startWeatherRotation() {
+          // Cambiar ciudad cada 10 segundos
+          data.weatherState.autoRotateInterval = setInterval(() => {
+            const nextIndex = (data.weatherState.currentCityIndex + 1) % data.cities.length;
+            this.changeWeatherCity(nextIndex);
+          }, 10000);
+        },
+
+        changeWeatherCity(index) {
+          data.weatherState.currentCityIndex = index;
+          
+          // Actualizar dots de navegación
+          document.querySelectorAll('.weather-city-dot').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+          
+          // Cargar clima de la nueva ciudad
+          this.loadWeatherForCity(index);
+        },
+
+        stopWeatherRotation() {
+          if (data.weatherState.autoRotateInterval) {
+            clearInterval(data.weatherState.autoRotateInterval);
+          }
+        },
+
+        // Weather public API
+        weather: {
+          goToCity: (index) => {
+            controller.stopWeatherRotation();
+            controller.changeWeatherCity(index);
+            controller.startWeatherRotation(); // Reiniciar rotación
+          },
+          refresh: () => {
+            controller.loadWeatherForCity(data.weatherState.currentCityIndex);
+          },
+          pause: () => controller.stopWeatherRotation(),
+          resume: () => controller.startWeatherRotation()
+        },
+
+        applyTheme(theme) {
+          document.documentElement.setAttribute('data-theme', theme);
+          const btn = document.getElementById('themeBtn');
+          if (btn) {
+            btn.innerHTML = theme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+          }
+          localStorage.setItem('ni_theme', theme);
+        },
+
+        toggleTheme() {
+          const newTheme = data.state.theme === 'light' ? 'dark' : 'light';
+          data.state.theme = newTheme;
+          this.applyTheme(newTheme);
+        },
+
+        filter(category, btn) {
+          data.state.currentCategory = category;
+          
+          // Update UI - si no viene btn (ej: desde footer), buscar el botón correspondiente
+          document.querySelectorAll('.nav-link').forEach(b => {
+            b.classList.remove('active');
+            // Remover aria-current de todos
+            b.removeAttribute('aria-current');
+          });
+          
+          let activeBtn = btn;
+          if (!activeBtn) {
+            // Buscar el botón que coincida con la categoría
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+              const linkText = link.textContent.trim();
+              if (category === 'Todas' && linkText.includes('Inicio')) {
+                activeBtn = link;
+              } else if (linkText.includes(category)) {
+                activeBtn = link;
+              }
+            });
+          }
+          
+          if (activeBtn) {
+            activeBtn.classList.add('active');
+            activeBtn.setAttribute('aria-current', 'page');
+          }
+          
+          this.renderNews();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          
+          // Mostrar toast de confirmación
+          if (category !== 'Todas') {
+            this.showToast(`Mostrando noticias de ${category}`);
+          }
+          
+          // Analytics
+          this.trackEvent('filter', category);
+        },
+
+        search(query) {
+          data.state.searchQuery = query.toLowerCase();
+          this.renderNews();
+        },
+
+        getFilteredNews() {
+          let filtered = data.state.currentCategory === 'Todas' 
+            ? [...data.news] 
+            : data.news.filter(n => n.category === data.state.currentCategory);
+          
+          if (data.state.searchQuery) {
+            filtered = filtered.filter(n => 
+              n.title.toLowerCase().includes(data.state.searchQuery) ||
+              n.excerpt.toLowerCase().includes(data.state.searchQuery)
+            );
+          }
+          
+          return filtered.sort((a, b) => b.date - a.date);
+        },
+
+        openArticle(id) {
+          const article = data.news.find(n => n.id === id) || data.news[0];
+          if (!article) return;
+
+          const modal = document.getElementById('modal');
+          const img = document.getElementById('modalImg');
+          
+          img.src = this.getImageUrl(article.image, 900, 500);
+          document.getElementById('modalCat').textContent = article.category;
+          document.getElementById('modalCat').style.background = data.categories[article.category]?.color || '#c41e3a';
+          document.getElementById('modalTitle').textContent = article.title;
+          document.getElementById('modalTime').innerHTML = `<i class="far fa-calendar" aria-hidden="true"></i> ${this.formatDate(article.date)}`;
+          document.getElementById('modalReadTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${article.readTime || 3} min lectura`;
+          document.getElementById('modalAuthor').innerHTML = `<i class="far fa-user" aria-hidden="true"></i> ${article.author || 'Redacción NI'}`;
+          document.getElementById('modalText').innerHTML = article.content;
+          
+          // Incrementar y mostrar contador de vistas
+          const currentViews = data.incrementViews(article.id);
+          document.getElementById('modalViewsCount').textContent = currentViews.toLocaleString('es-NI');
+          
+          // Actualizar contador en la tarjeta si está visible
+          this.renderNews();
+          
+          this.renderRelated(article);
+          
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          
+          // Focus management for accessibility
+          setTimeout(() => {
+            document.querySelector('.modal-close').focus();
+          }, 100);
+          
+          this.trackEvent('article_view', article.title);
+        },
+
+        closeModal(e) {
+          if (!e || e.target.id === 'modal') {
+            document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = '';
+            // Return focus to trigger element
+            if (this.lastFocused) {
+              this.lastFocused.focus();
+            }
+          }
+        },
+
+        renderRelated(currentArticle) {
+          const container = document.getElementById('noticiasRelacionadas');
+          const related = data.news
+            .filter(n => n.id !== currentArticle.id && n.category === currentArticle.category)
+            .slice(0, 3);
+          
+          // If not enough related, add trending
+          const trending = data.news
+            .filter(n => n.id !== currentArticle.id && !related.includes(n))
+            .slice(0, 3 - related.length);
+          
+          const combined = [...related, ...trending];
+          
+          container.innerHTML = combined.map(n => `
+            <article class="related-card" onclick="app.openArticle('\${n.id}')">
+              <div class="related-image">
+                <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
+              </div>
+              <div class="related-category" style="color: ${data.categories[n.category]?.color || '#c41e3a'}">${n.category}</div>
+              <h5 class="related-title">${n.title}</h5>
+            </article>
+          `).join('');
+        },
+
+        renderAll() {
+          this.renderHero();
+          this.renderNews();
+          this.renderTrending();
+          this.renderPopulares();
+        },
+
+        renderHero() {
+          const hero = data.news[0];
+          document.getElementById('heroImg').src = this.getImageUrl(hero.image, 800, 600);
+          document.getElementById('heroCat').textContent = hero.category;
+          document.getElementById('heroTitle').textContent = hero.title;
+          document.getElementById('heroExcerpt').textContent = hero.excerpt;
+          document.getElementById('heroTime').innerHTML = `<i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(hero.date)}`;
+          
+          // Sidebar
+          const sidebar = document.getElementById('heroSidebar');
+          const lateral = data.news.slice(1, 4);
+          
+          sidebar.innerHTML = lateral.map(n => `
+            <article class="side-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+              <div class="side-card-image">
+                <img src="${this.getImageUrl(n.image, 300, 200)}" alt="" loading="lazy">
+              </div>
+              <div class="side-card-content">
+                <span class="side-card-category" style="color: ${data.categories[n.category]?.color || '#c41e3a'}">${n.category}</span>
+                <h3 class="side-card-title">${n.title}</h3>
+              </div>
+            </article>
+          `).join('');
+        },
+
+        renderNews() {
+          const grid = document.getElementById('newsGrid');
+          const filtered = this.getFilteredNews();
+          const sectionTitle = document.querySelector('.section-title');
+          
+          // Actualizar título según categoría
+          const categoryColors = {
+            'Todas': 'var(--text)',
+            'Sucesos': 'var(--cat-sucesos)',
+            'Nacionales': 'var(--cat-nacionales)',
+            'Deportes': 'var(--cat-deportes)',
+            'Internacionales': 'var(--cat-internacionales)',
+            'Espectáculo': 'var(--cat-espectaculo)',
+            'Premium': 'var(--cat-premium)'
+          };
+          
+          const activeCategory = data.state.currentCategory;
+          if (sectionTitle) {
+            if (activeCategory === 'Todas') {
+              sectionTitle.innerHTML = 'Últimas Noticias';
+            } else {
+              sectionTitle.innerHTML = `<span style="color: ${categoryColors[activeCategory] || 'var(--text)'}"><i class="fas fa-folder-open"></i></span> ${activeCategory}`;
+            }
+          }
+          
+          if (filtered.length === 0) {
+            grid.innerHTML = `
+              <div style="grid-column: 1/-1; text-align: center; padding: var(--space-10);">
+                <i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: var(--space-4); color: var(--text-muted);"></i>
+                <p style="color: var(--text-muted); font-size: 1.125rem; margin-bottom: var(--space-4);">No hay noticias en esta categoría</p>
+                <button class="btn btn-primary" onclick="app.filter('Todas', document.querySelector('.nav-link'))">
+                  <i class="fas fa-home"></i> Ver todas las noticias
+                </button>
+              </div>`;
+            return;
+          }
+          
+          grid.innerHTML = filtered.map(n => `
+            <article class="news-card" onclick="app.openArticle('\${n.id}')" tabindex="0" role="button" aria-label="Leer ${n.title}">
+              <div class="news-card-image">
+                <img src="${this.getImageUrl(n.image, 400, 300)}" alt="" loading="lazy">
+                <span class="news-card-category" style="background: ${data.categories[n.category]?.color || '#000'}">${n.category}</span>
+              </div>
+              <div class="news-card-content">
+                <h3 class="news-card-title">${n.title}</h3>
+                <p class="news-card-excerpt">${n.excerpt}</p>
+                <div class="news-card-meta">
+                  <span class="news-card-time">
+                    <i class="far fa-clock" aria-hidden="true"></i> ${this.timeAgo(n.date)}
+                  </span>
+                  <span class="news-card-views ${data.getViews(n.id) > 50 ? 'hot' : ''}" title="${data.getViews(n.id)} lecturas">
+                    <i class="fas fa-eye" aria-hidden="true"></i> ${data.getViews(n.id) > 999 ? (data.getViews(n.id)/1000).toFixed(1) + 'k' : data.getViews(n.id)}
+                  </span>
+                </div>
+              </div>
+            </article>
+          `).join('');
+        },
+
+        renderTrending() {
+          const list = document.getElementById('trendingList');
+          const trending = data.news.slice(0, 5);
+          const ranks = ['gold', 'silver', 'bronze', 'normal', 'normal'];
+          
+          list.innerHTML = trending.map((n, i) => `
+            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+              <div class="trending-rank ${ranks[i]}">${i + 1}</div>
+              <div class="trending-content">
+                <div class="trending-title">${n.title}</div>
+                <div class="trending-meta">${n.category} • ${this.timeAgo(n.date)}</div>
+              </div>
+            </div>
+          `).join('');
+        },
+
+        renderPopulares() {
+          const list = document.getElementById('popularesList');
+          // Ordenar por vistas (más leídas primero)
+          const populares = [...data.news]
+            .sort((a, b) => data.getViews(b.id) - data.getViews(a.id))
+            .slice(0, 4);
+          
+          list.innerHTML = populares.map((n, index) => {
+            const views = data.getViews(n.id);
+            const isHot = views > 20;
+            return `
+            <div class="trending-item" onclick="app.openArticle('\${n.id}')">
+              <div style="width: 60px; height: 60px; border-radius: var(--radius); overflow: hidden; flex-shrink: 0; position: relative;">
+                <img src="${this.getImageUrl(n.image, 100, 100)}" alt="" loading="lazy" style="width: 100%; height: 100%; object-fit: cover;">
+                ${isHot ? `<div style="position: absolute; top: 2px; right: 2px; background: #dc2626; color: white; font-size: 0.625rem; padding: 1px 4px; border-radius: 4px; font-weight: 700;"><i class="fas fa-fire"></i></div>` : ''}
+              </div>
+              <div class="trending-content">
+                <div class="trending-title">${n.title}</div>
+                <div class="trending-meta">
+                  ${n.category} • <i class="fas fa-eye" style="font-size: 0.75rem; color: var(--color-primary);"></i> ${views}
+                </div>
+              </div>
+            </div>
+          `}).join('');
+        },
+
+        loadMore() {
+          const btn = document.getElementById('loadMoreBtn');
+          const originalText = btn.innerHTML;
+          
+          btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Cargando...';
+          btn.disabled = true;
+          
+          // Simular carga de API
+          setTimeout(() => {
+            // En producción, aquí se haría fetch a la API
+            this.showToast('Noticias actualizadas');
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 1500);
+        },
+
+        updateIndicators() {
+          // Simular actualización de API
+          this.showToast('Indicadores actualizados');
+          
+          // Animar valores
+          const elements = ['indDolar', 'indEuro', 'indRegular', 'indSuper', 'indDiesel'];
+          elements.forEach(id => {
+            const el = document.getElementById(id);
+            el.style.opacity = '0.5';
+            setTimeout(() => {
+              el.style.opacity = '1';
+            }, 300);
+          });
+        },
+
+        // Radio Controller
+        radio: {
+          audio: document.getElementById('radioAudio'),
+          isPlaying: false,
+          visualizerInterval: null,
+
+          toggle() {
+            if (this.isPlaying) {
+              this.stop();
+            } else {
+              this.play();
+            }
+          },
+
+          play() {
+            const station = document.getElementById('radioStation').value;
+            if (!station) {
+              controller.showToast('Selecciona una emisora primero');
+              return;
+            }
+
+            document.getElementById('radioStatus').textContent = 'Conectando...';
+            this.audio.src = station;
+            
+            this.audio.play().then(() => {
+              this.isPlaying = true;
+              document.getElementById('radioPlayBtn').classList.add('playing');
+              document.getElementById('radioIcon').className = 'fas fa-pause';
+              document.getElementById('radioStatus').textContent = 'Reproduciendo';
+              document.getElementById('visualizer').style.opacity = '1';
+              this.startVisualizer();
+            }).catch(err => {
+              console.error('Error:', err);
+              document.getElementById('radioStatus').textContent = 'Error de conexión';
+              controller.showToast('Error al conectar con la emisora');
+            });
+          },
+
+          stop() {
+            this.audio.pause();
+            this.audio.src = '';
+            this.isPlaying = false;
+            document.getElementById('radioPlayBtn').classList.remove('playing');
+            document.getElementById('radioIcon').className = 'fas fa-play';
+            document.getElementById('radioStatus').textContent = 'Selecciona una emisora';
+            document.getElementById('visualizer').style.opacity = '0';
+            this.stopVisualizer();
+          },
+
+          change() {
+            if (this.isPlaying) {
+              this.stop();
+              setTimeout(() => this.play(), 300);
+            }
+          },
+
+          startVisualizer() {
+            const bars = document.querySelectorAll('.visualizer-bar');
+            this.visualizerInterval = setInterval(() => {
+              bars.forEach(bar => {
+                const height = Math.random() * 20 + 5;
+                bar.style.height = `${height}px`;
+              });
+            }, 100);
+          },
+
+          stopVisualizer() {
+            if (this.visualizerInterval) {
+              clearInterval(this.visualizerInterval);
+              document.querySelectorAll('.visualizer-bar').forEach(bar => {
+                bar.style.height = '5px';
+              });
+            }
+          }
+        },
+
+        // Sharing
+        share(platform) {
+          const url = encodeURIComponent(window.location.href);
+          const text = encodeURIComponent('Nicaragua Informate - Noticias de Nicaragua');
+          
+          const urls = {
+            facebook: `https://facebook.com/sharer/sharer.php?u=${url}`,
+            twitter: `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+            whatsapp: `https://wa.me/?text=${text}%20${url}`
+          };
+          
+          window.open(urls[platform], '_blank', 'width=600,height=400,noopener,noreferrer');
+        },
+
+        sharePage() {
+          if (navigator.share) {
+            navigator.share({
+              title: 'Nicaragua Informate',
+              text: 'Noticias de Nicaragua al instante',
+              url: window.location.href
+            }).catch(() => {});
+          } else {
+            this.share('facebook');
+          }
+        },
+
+        copyLink() {
+          navigator.clipboard.writeText(window.location.href).then(() => {
+            this.showToast('Enlace copiado al portapapeles');
+          });
+        },
+
+        // Utilities
+        showToast(message) {
+          const toast = document.getElementById('toast');
+          toast.textContent = message;
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+          }, 3000);
+        },
+
+        formatDate(date) {
+          return date.toLocaleDateString('es-NI', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          });
+        },
+
+        timeAgo(date) {
+          const seconds = Math.floor((new Date() - date) / 1000);
+          if (seconds < 60) return 'Hace un momento';
+          const minutes = Math.floor(seconds / 60);
+          if (minutes < 60) return `Hace ${minutes} min`;
+          const hours = Math.floor(minutes / 60);
+          if (hours < 24) return `Hace ${hours} h`;
+          return this.formatDate(date);
+        },
+
+        trackEvent(event, value) {
+          // Aquí iría integración con Google Analytics o similar
+          console.log(`[Analytics] ${event}: ${value}`);
+        },
+
+        setupEventListeners() {
+          // Header scroll effect
+          window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+              header.classList.add('scrolled');
+            } else {
+              header.classList.remove('scrolled');
+            }
+          });
+
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+              this.closeModal();
+            }
+          });
+
+          // Save focus before opening modal
+          document.addEventListener('click', (e) => {
+            if (e.target.closest('.news-card, .side-card, .hero-main')) {
+              this.lastFocused = e.target;
+            }
+          });
+        },
+
+        startClock() {
+          // Actualizar "hace X tiempo" cada minuto
+          setInterval(() => {
+            this.renderNews();
+            this.renderHero();
+          }, 60000);
+        },
+
+        refresh() {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          this.renderAll();
+          this.showToast('Página actualizada');
+        }
+      };
+
+      // Initialize
+      document.addEventListener('DOMContentLoaded', () => {
+        controller.init();
+      });
+
+      // Public API
+      return {
+        filter: (cat, btn) => controller.filter(cat, btn),
+        search: (query) => controller.search(query),
+        openArticle: (id) => controller.openArticle(id),
+        closeModal: (e) => controller.closeModal(e),
+        toggleTheme: () => controller.toggleTheme(),
+        loadMore: () => controller.loadMore(),
+        updateIndicators: () => controller.updateIndicators(),
+        share: (platform) => controller.share(platform),
+        sharePage: () => controller.sharePage(),
+        copyLink: () => controller.copyLink(),
+        refresh: () => controller.refresh(),
+        radio: controller.radio,
+        weather: controller.weather
+      };
+    })();
+  </script>
 </body>
 </html>

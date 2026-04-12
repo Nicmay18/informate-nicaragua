@@ -10,7 +10,14 @@ export default async (req, res) => {
     const TG_TOKEN = config?.telegram?.token || process.env.TG_TOKEN;
     const TG_CHAT_ID = config?.telegram?.chatId || process.env.TG_CHAT_ID;
 
-    if (!TG_TOKEN || !TG_CHAT_ID) return res.status(400).json({ error: 'Token o Chat ID faltante' });
+    if (!TG_TOKEN || !TG_CHAT_ID) {
+      return res.status(200).json({ 
+        success: true, 
+        skipped: true,
+        message: 'Telegram no configurado - publicación local solamente',
+        setup: 'Crea un bot con @BotFather en Telegram, obtén el token y el chat ID'
+      });
+    }
     if (!noticia?.titulo) return res.status(400).json({ error: 'Falta título' });
 
     const emoji = {

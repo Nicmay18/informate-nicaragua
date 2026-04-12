@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Test Telegram API</title>
+  <style>
+    body { font-family: Arial; max-width: 800px; margin: 50px auto; padding: 20px; }
+    button { padding: 15px 30px; font-size: 16px; cursor: pointer; background: #0088cc; color: white; border: none; border-radius: 8px; }
+    button:hover { background: #006699; }
+    #result { margin-top: 20px; padding: 20px; background: #f0f0f0; border-radius: 8px; white-space: pre-wrap; }
+    .success { color: green; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Test API Telegram</h1>
+  <p>Este test verifica si la API de Telegram está funcionando correctamente.</p>
+  
+  <button onclick="testTelegram()">Probar API Telegram</button>
+  
+  <div id="result">Esperando...</div>
+
+  <script>
+    async function testTelegram() {
+      const result = document.getElementById('result');
+      result.textContent = 'Enviando petición...';
+      
+      const testNoticia = {
+        titulo: 'Test de noticia desde Admin',
+        categoria: 'Sucesos',
+        contenido: 'Esta es una noticia de prueba para verificar que la API de Telegram funciona correctamente.',
+        imagen: 'https://picsum.photos/seed/test/800/600'
+      };
+      
+      try {
+        const resp = await fetch('/api/telegram', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ noticia: testNoticia })
+        });
+        
+        const data = await resp.json();
+        
+        if (data.success && data.skipped) {
+          result.innerHTML = `<span class="success">✅ API funciona!</span>\n\nTelegram no está configurado (esto es normal).\n\nPara configurar:\n1. Busca @BotFather en Telegram\n2. Crea un nuevo bot (/newbot)\n3. Obtén el token (ej: 123456:ABC-DEF... )\n4. Agrega TG_TOKEN y TG_CHAT_ID en Vercel Dashboard`;
+        } else if (data.success) {
+          result.innerHTML = `<span class="success">✅ Noticia enviada a Telegram!</span>\nMessage ID: ${data.messageId}`;
+        } else {
+          result.innerHTML = `<span class="error">❌ Error:</span>\n${data.error || 'Error desconocido'}`;
+        }
+        
+      } catch (err) {
+        result.innerHTML = `<span class="error">❌ Error de conexión:</span>\n${err.message}`;
+      }
+    }
+  </script>
+</body>
+</html>

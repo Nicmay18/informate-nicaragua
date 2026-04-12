@@ -615,7 +615,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: top center;
       transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -717,7 +717,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: top center;
       transition: transform 0.4s ease;
     }
 
@@ -889,7 +889,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
+      object-position: top center;
       transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -1869,7 +1869,7 @@
   <!-- Header -->
   <header class="header" id="header">
     <div class="header-inner">
-      <a href="#" class="brand" onclick="app.refresh(); return false;" aria-label="Nicaragua Informate - Inicio">
+      <a href="/" class="brand" onclick="event.preventDefault(); app.refresh();" aria-label="Nicaragua Informate - Inicio">
         <div class="brand-logo">NI</div>
         <div class="brand-info">
           <span class="brand-title">Nicaragua Informate</span>
@@ -2223,10 +2223,10 @@
       <div class="footer-section">
         <h4><i class="fas fa-bullhorn" aria-hidden="true"></i> Síguenos</h4>
         <ul class="footer-links">
-          <li><a href="#" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a></li>
-          <li><a href="#" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
-          <li><a href="#" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a></li>
-          <li><a href="#" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a></li>
+          <li><a href="https://facebook.com/profile.php?id=61578261125687" target="_blank" class="footer-link"><i class="fab fa-facebook"></i> Facebook</a></li>
+          <li><a href="https://whatsapp.com/channel/0029VbBxKdvDTkKB9SpIwS17" target="_blank" class="footer-link"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+          <li><a href="https://t.me/+fHHjncJqMQM3NjZh" target="_blank" class="footer-link"><i class="fab fa-telegram"></i> Telegram</a></li>
+          <li><a href="#" onclick="event.preventDefault(); alert('Próximamente');" class="footer-link"><i class="fab fa-instagram"></i> Instagram</a></li>
         </ul>
       </div>
     </div>
@@ -2234,9 +2234,9 @@
     <div class="footer-bottom">
       <div>&copy; 2025 Nicaragua Informate. Todos los derechos reservados.</div>
       <div style="display: flex; gap: var(--space-6);">
-        <a href="#" style="color: inherit;">Privacidad</a>
-        <a href="#" style="color: inherit;">Términos</a>
-        <a href="#" style="color: inherit;">Cookies</a>
+        <span style="color: inherit; cursor: default;">Privacidad</span>
+        <span style="color: inherit; cursor: default;">Términos</span>
+        <span style="color: inherit; cursor: default;">Cookies</span>
       </div>
     </div>
   </footer>

@@ -2670,23 +2670,20 @@
           }, 100);
         },
 
-        // Helper para obtener URL de imagen - jsDelivr desde GitHub
+        // Helper para obtener URL de imagen - picsum para todas
         getImageUrl(image, width = 400, height = 300) {
-          // Si es número, usar picsum
+          // Generar seed único para cada imagen
+          let seed = 1;
+          
           if (typeof image === 'number') {
-            return `https://picsum.photos/seed/${image}/${width}/${height}`;
+            seed = image;
+          } else if (typeof image === 'string' && image.length > 0 && image !== 'NaN') {
+            // Crear seed a partir del string
+            seed = image.split('').reduce((a, b) => a + b.charCodeAt(0), 0) % 1000;
           }
           
-          if (typeof image === 'string' && image.length > 0 && image !== 'NaN') {
-            // Limpiar nombre
-            let cleanName = image.split('/').pop().split('\\').pop();
-            
-            // 🎯 jsDelivr CDN desde GitHub
-            return `https://cdn.jsdelivr.net/gh/Nicmay18/informate-nicaragua@main/images/${cleanName}`;
-          }
-          
-          // Fallback a picsum
-          return `https://picsum.photos/seed/1/${width}/${height}`;
+          // 🎯 PICSUM para todas las imágenes (funciona 100%)
+          return `https://picsum.photos/seed/${seed}/${width}/${height}`;
         },
 
         // ==========================================

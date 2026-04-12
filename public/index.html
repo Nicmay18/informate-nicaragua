@@ -2877,6 +2877,11 @@
           const article = data.news.find(n => n.id === id) || data.news[0];
           if (!article) return;
 
+          // Generar slug para URL limpia
+          const slug = article.slug || this.generateSlug(article.title);
+          const newUrl = `/noticia/${slug}`;
+          window.history.pushState({ articleId: id }, article.title, newUrl);
+
           const modal = document.getElementById('modal');
           const img = document.getElementById('modalImg');
           
@@ -3254,6 +3259,18 @@
           const hours = Math.floor(minutes / 60);
           if (hours < 24) return `Hace ${hours} h`;
           return this.formatDate(date);
+        },
+
+        generateSlug(title) {
+          if (!title) return 'sin-titulo';
+          return title
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z0-9\s-]/g, '')
+            .trim()
+            .replace(/\s+/g, '-')
+            .substring(0, 100);
         },
 
         trackEvent(event, value) {

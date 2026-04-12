@@ -4,6 +4,7 @@
     { "source": "/api/:path*", "destination": "/api/:path*" },
     { "source": "/admin", "destination": "/public/admin/index.html" },
     { "source": "/admin/", "destination": "/public/admin/index.html" },
+    { "source": "/noticia/:slug", "destination": "/public/noticia.html?slug=:slug" },
     { "source": "/((?!ads\\.txt$|robots\\.txt$).*)", "destination": "/public/$1" }
   ],
   "headers": [

@@ -175,6 +175,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center 20%;
 }
 
 .article-content {
@@ -529,7 +530,7 @@ body {
 <script type="module">
 // FIREBASE CONFIG
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js';
-import { getFirestore, doc, getDoc, updateDoc, increment } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
+import { getFirestore, doc, getDoc, updateDoc, increment, query, where, limit, collection, getDocs } from 'https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDVsqRGr7dtdi5ecO14THIdbnEzKKOJxcA",
@@ -543,26 +544,43 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// OBTENER ID DE LA NOTICIA
+// OBTENER ID O SLUG DE LA NOTICIA
 const urlParams = new URLSearchParams(window.location.search);
 const noticiaId = urlParams.get('id');
+const noticiaSlug = urlParams.get('slug');
 
-if (!noticiaId) {
+if (!noticiaId && !noticiaSlug) {
   window.location.href = '/';
 }
 
 // CARGAR NOTICIA
 async function cargarNoticia() {
   try {
-    const docRef = doc(db, 'noticias', noticiaId);
-    const docSnap = await getDoc(docRef);
+    let noticia = null;
+    let docRef = null;
     
-    if (!docSnap.exists()) {
+    if (noticiaId) {
+      // Buscar por ID
+      docRef = doc(db, 'noticias', noticiaId);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        noticia = docSnap.data();
+      }
+    } else if (noticiaSlug) {
+      // Buscar por slug
+      const q = query(collection(db, 'noticias'), where('slug', '==', noticiaSlug), limit(1));
+      const querySnap = await getDocs(q);
+      if (!querySnap.empty) {
+        const docSnap = querySnap.docs[0];
+        noticia = docSnap.data();
+        docRef = doc(db, 'noticias', docSnap.id);
+      }
+    }
+    
+    if (!noticia) {
       window.location.href = '/';
       return;
     }
-    
-    const noticia = docSnap.data();
     
     // Incrementar vistas
     await updateDoc(docRef, {

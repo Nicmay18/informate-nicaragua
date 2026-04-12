@@ -10,7 +10,15 @@ export default async function handler(req, res) {
   if (!titulo) return res.status(400).json({ error: 'Falta el titular' });
 
   const GROQ_KEY = process.env.GROQ_API_KEY;
-  if (!GROQ_KEY) return res.status(500).json({ error: 'GROQ_API_KEY no configurada en Vercel' });
+  
+  // Si no hay API key, devolver mensaje instructivo pero no fallar
+  if (!GROQ_KEY) {
+    return res.status(200).json({ 
+      success: true, 
+      contenido: `[MODO MANUAL ACTIVADO]\n\nNo hay API key de Groq configurada.\n\nEscribe la noticia manualmente usando el titular: "${titulo}"\n\nCategoría: ${categoria || 'General'}\n\nNotas proporcionadas:\n${notas || 'Ninguna'}`,
+      manual: true 
+    });
+  }
 
   const prompt = notas
     ? `Eres un redactor de BBC News Mundo. Tienes este titular: "${titulo}" y estas notas/información:

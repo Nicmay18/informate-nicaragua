@@ -10,15 +10,18 @@ export default async (req, res) => {
     if (!imagen) return res.status(400).json({ error: 'Falta imagen' });
 
     const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+    
+    // Verificar que existe el token
+    if (!GITHUB_TOKEN) {
+      return res.status(500).json({ error: 'GITHUB_TOKEN no configurado en Vercel' });
+    }
+    
     const REPO = 'Nicmay18/informate-nicaragua';
     const BRANCH = 'main';
 
-    // Comprimir imagen antes de subir
-    const imagenComprimida = await comprimirImagen(imagen);
-
-    // imagen viene como base64 puro (sin el prefijo data:image/...;base64,)
-    const base64 = imagenComprimida.includes(',') ? imagenComprimida.split(',')[1] : imagenComprimida;
-    const ext = imagenComprimida.includes('data:image/') ? imagenComprimida.split(';')[0].split('/')[1] : 'webp';
+    // imagen viene como base64 (con o sin prefijo data:image/...;base64,)
+    const base64 = imagen.includes(',') ? imagen.split(',')[1] : imagen;
+    const ext = imagen.includes('data:image/') ? imagen.split(';')[0].split('/')[1] : 'webp';
     const filename = `public/images/${Date.now()}_${(nombre||'img').replace(/[^a-zA-Z0-9]/g,'_')}.${ext}`;
 
     const apiUrl = `https://api.github.com/repos/${REPO}/contents/${filename}`;
@@ -52,51 +55,5 @@ export default async (req, res) => {
   }
 };
 
-/**
- * Comprime una imagen usando Canvas HTML5
- * Redimensiona a máximo 1200px de ancho manteniendo aspect ratio
- * Convierte a WebP con calidad 0.85
- */
-async function comprimirImagen(base64Image) {
-  return new Promise((resolve, reject) => {
-    try {
-      const img = new Image();
-      
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        
-        // Calcular nuevas dimensiones (máximo 1200px de ancho)
-        const MAX_WIDTH = 1200;
-        let width = img.width;
-        let height = img.height;
-        
-        if (width > MAX_WIDTH) {
-          height = (height * MAX_WIDTH) / width;
-          width = MAX_WIDTH;
-        }
-        
-        canvas.width = width;
-        canvas.height = height;
-        
-        // Dibujar imagen redimensionada
-        ctx.drawImage(img, 0, 0, width, height);
-        
-        // Convertir a WebP con calidad 0.85 (85%)
-        const comprimida = canvas.toDataURL('image/webp', 0.85);
-        resolve(comprimida);
-      };
-      
-      img.onerror = () => {
-        // Si falla, devolver imagen original
-        resolve(base64Image);
-      };
-      
-      img.src = base64Image;
-      
-    } catch (error) {
-      // Si hay error, devolver imagen original
-      resolve(base64Image);
-    }
-  });
-}
+// Nota: La compresión de imágenes se hace en el cliente (admin) antes de enviar
+// para evitar usar Canvas en el servidor Node.js

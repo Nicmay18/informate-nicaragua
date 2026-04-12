@@ -17,7 +17,11 @@ export default async function handler(req, res) {
   const FB_PAGE_2_ID = config?.facebook?.page2?.id || '';
 
   if (!FB_PAGE_ACCESS_TOKEN) {
-    return res.status(500).json({ error: 'Token no configurado' });
+    return res.status(200).json({ 
+      success: true, 
+      skipped: true,
+      message: 'Facebook no configurado - publicación local solamente'
+    });
   }
 
   try {
